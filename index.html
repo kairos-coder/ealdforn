@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Ealdforn – A mythic text adventure where folklore meets interactive storytelling. Explore ancient narratives reimagined." />
+  <meta name="theme-color" content="#2B1F1F" />
+  <meta property="og:title" content="Ealdforn – Folklore Text Adventure" />
+  <meta property="og:description" content="Step into a world of ancient tales and modern myth. Your choices shape the story." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=1200&q=80" />
+  <meta property="og:type" content="website" />
+  <title>Ealdforn · The Whispering Wilds (Text Adventure)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --parchment: #F5F1E9;
+      --aged-copper: #A67C52;
+      --dark-copper: #5A4635; 
+      --deep-umber: #2B1F1F;
+      --shadow-elevation: 0 12px 30px rgba(0,0,0,0.15);
+      --border-radius-card: 6px;
+      --font-scale: clamp(1rem, 0.95rem + 0.2vw, 1.2rem);
+      --max-text-width: 68ch;
+      --transition-smooth: all 0.25s ease;
+    }
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--parchment);
+      color: var(--dark-copper);
+      line-height: 1.6;
+      font-size: var(--font-scale);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    h1, h2, h3, h4 {
+      font-family: 'Merriweather', Georgia, serif;
+      color: var(--aged-copper);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    a { color: var(--aged-copper); text-decoration: none; transition: var(--transition-smooth); }
+    a:hover { text-decoration: underline; color: var(--deep-umber); }
+    img { max-width:100%; height:auto; display:block; }
+    .container {
+      width: min(95%, 1100px);
+      margin: 0 auto;
+      padding: 2rem 0;
+    }
+    /* ── Header & Navigation ── */
+    header {
+      background: var(--parchment);
+      border-bottom: 1px solid rgba(166,124,82,0.3);
+      backdrop-filter: blur(6px);
+      position: relative;
+      z-index: 10;
+    }
+    .logo {
+      font-family: 'Merriweather', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--deep-umber);
+      letter-spacing: 1px;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 0.75rem 0;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .nav-links a {
+      font-weight: 500;
+      color: var(--dark-copper);
+      border-bottom: 2px solid transparent;
+      padding-bottom: 0.15rem;
+    }
+    .nav-links a:hover { border-bottom-color: var(--aged-copper); text-decoration: none; }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      padding: 0.3rem;
+    }
+    .hamburger span {
+      width: 26px;
+      height: 2.5px;
+      background: var(--aged-copper);
+      transition: 0.3s;
+      display: block;
+    }
+    /* ── Game Interface ── */
+    .game-wrapper {
+      background: #fefcf7;
+      border: 1px solid rgba(166,124,82,0.25);
+      border-radius: 12px;
+      box-shadow: var(--shadow-elevation);
+      padding: 2rem 1.8rem;
+      margin: 2rem 0;
+      max-width: 780px;
+      margin-left: auto;
+      margin-right: auto;
+      background-image: radial-gradient(circle at 10% 20%, rgba(166,124,82,0.05) 0%, transparent 35%);
+    }
+    .story-text {
+      font-family: 'Merriweather', serif;
+      font-size: 1.3rem;
+      line-height: 1.7;
+      color: var(--deep-umber);
+      margin-bottom: 2rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .story-text i, .story-text em {
+      color: #7b5e3b;
+    }
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 2rem 0 1.2rem;
+    }
+    .choice-btn {
+      background: #fff;
+      border: 2px solid var(--aged-copper);
+      background: rgba(255,255,245,0.85);
+      padding: 1rem 1.5rem;
+      border-radius: 30px;
+      font-weight: 500;
+      font-size: 1.1rem;
+      color: var(--dark-copper);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      backdrop-filter: blur(2px);
+    }
+    .choice-btn:hover {
+      background: var(--aged-copper);
+      color: white;
+      border-color: var(--deep-umber);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 18px -10px rgba(90,70,53,0.3);
+    }
+    .choice-btn:focus-visible {
+      outline: 3px solid var(--deep-umber);
+      outline-offset: 3px;
+    }
+    .game-status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      color: #7b6e60;
+      margin-top: 1.2rem;
+      border-top: 1px dashed var(--aged-copper);
+      padding-top: 1rem;
+    }
+    .restart-btn {
+      background: transparent;
+      border: 1px solid var(--aged-copper);
+      padding: 0.4rem 1.2rem;
+      border-radius: 20px;
+      color: var(--aged-copper);
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+    .restart-btn:hover {
+      background: var(--aged-copper);
+      color: white;
+    }
+    /* ── About / Lore section ── */
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 1.8rem;
+      position: relative;
+    }
+    .section-title::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--aged-copper);
+      margin: 0.5rem auto;
+    }
+    .lore-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid rgba(166,124,82,0.3);
+      border-radius: var(--border-radius-card);
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px -12px rgba(0,0,0,0.2);
+    }
+    .card img {
+      height: 160px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 1.2rem;
+    }
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 2rem 0;
+      font-size: 0.9rem;
+      color: #6b5e53;
+      border-top: 1px solid var(--aged-copper);
+      background: #efe8db;
+    }
+    /* Mobile navigation */
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #faf7f0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+      }
+      .nav-links.open { max-height: 350px; }
+      .nav-links a {
+        padding: 1rem 2rem;
+        border-bottom: 1px solid #e2d7c6;
+      }
+      .game-wrapper {
+        padding: 1.5rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo" aria-label="Ealdforn Home">Ealdforn</div>
+        <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+          <a href="#adventure">Play Adventure</a>
+          <a href="#about">Lore</a>
+          <a href="#newsletter">Newsletter</a>
+          <a href="#commentary">Community</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="adventure">
+    <div class="container">
+      <div class="game-wrapper" id="game-container">
+        <!-- Dynamic game content injected by JS -->
+        <div id="storyDisplay" class="story-text">
+          <!-- Initial story loaded via JS -->
+        </div>
+        <div id="choicesContainer" class="choices"></div>
+        <div class="game-status">
+          <span id="locationIndicator">🌲 The Elderwood Edge</span>
+          <button id="restartButton" class="restart-btn" aria-label="Restart adventure">↺ Begin Anew</button>
+        </div>
+      </div>
+    </div>
+
+    <section id="about" class="container">
+      <h2 class="section-title">The Ealdforn Tapestry</h2>
+      <p style="max-width: 700px; margin: 0 auto 1.5rem; text-align: center;">
+        This interactive tale draws from authentic folklore motifs—tree spirits, runic wisdom, and ancient fire rituals. 
+        Each choice weaves a new thread into a living myth.
+      </p>
+      <div class="lore-grid">
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=600&q=70" alt="Mystical forest" loading="lazy" />
+          <div class="card-body">
+            <h3>Whispering Woods</h3>
+            <p>European tales of tree spirits and the wild guardians of old.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1526401133449-311607830b45?auto=format&fit=crop&w=600&q=70" alt="Rune stone" loading="lazy" />
+          <div class="card-body">
+            <h3>Runes of Renewal</h3>
+            <p>Ancient Germanic symbols reinterpreted for personal transformation.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=70" alt="Fire ritual" loading="lazy" />
+          <div class="card-body">
+            <h3>Fire & Folklore</h3>
+            <p>Ritual flames across cultures and their mythic echoes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="newsletter" class="container" style="text-align: center; background: #f3ede3; border-radius: 30px; padding: 2.5rem;">
+      <h2 class="section-title">Receive the Chronicle</h2>
+      <p style="max-width: 500px; margin: 0 auto 1.5rem;">New story branches, folklore essays, and exclusive adventure expansions.</p>
+      <form action="#" method="post" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem;">
+        <input type="email" name="email" placeholder="Your email address" required aria-label="Email" style="padding:0.75rem 1.2rem; border:1px solid var(--aged-copper); border-radius: 30px; min-width: 230px;" />
+        <button type="submit" class="choice-btn" style="border-radius: 30px; padding:0.75rem 2rem;">Subscribe</button>
+      </form>
+    </section>
+
+    <section id="commentary" class="container" style="text-align: center;">
+      <h2 class="section-title">Fireside Commentary</h2>
+      <p>Share your interpretations and discuss the ancient threads with fellow wanderers.</p>
+      <div style="margin-top:1.5rem; padding:1rem; background:#fff; border-radius: 12px; max-width: 600px; margin-left:auto; margin-right:auto;">
+        <p><em>Giscus commentary embed placeholder – integrated with GitHub Discussions for a timeless, lightweight feel.</em></p>
+        <p style="font-size:0.85rem;">(Configure with your repository details to activate)</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="year"></span> Ealdforn · Crafted with ancient words & modern code</p>
+      <p style="font-size:0.8rem;">Content synchronised from Substack via RSS · Static & eternal</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      // ── Text Adventure Engine ──
+      const storyDisplay = document.getElementById('storyDisplay');
+      const choicesContainer = document.getElementById('choicesContainer');
+      const locationIndicator = document.getElementById('locationIndicator');
+      const restartBtn = document.getElementById('restartButton');
+      
+      // Game state nodes (scenes)
+      const scenes = {
+        start: {
+          id: 'start',
+          location: '🌳 The Elderwood Edge',
+          text: 'You stand at the edge of the Elderwood, where the ancient oaks whisper secrets. A faint rune glows on a stone to the north. The path splits: east toward a flickering firelight, west into deep mist.',
+          choices: [
+            { text: '🌿 Follow the glowing rune north', nextScene: 'rune' },
+            { text: '🔥 Head toward the firelight east', nextScene: 'fire' },
+            { text: '🌫 Step into the western mist', nextScene: 'mist' }
+          ]
+        },
+        rune: {
+          id: 'rune',
+          location: 'ᚱ Runestone Clearing',
+          text: 'The rune "Algiz" pulses with a warm light. A spectral deer appears and speaks: "Protection is offered, but only to those who understand sacrifice. Will you give up a memory to gain the warding?"',
+          choices: [
+            { text: '🦌 Offer a cherished memory', nextScene: 'rune_accept' },
+            { text: '🚶 Decline and return to the edge', nextScene: 'start' },
+            { text: '📖 Trace the rune with your finger', nextScene: 'rune_trace' }
+          ]
+        },
+        rune_accept: {
+          id: 'rune_accept',
+          location: '✨ Warded Path',
+          text: 'A warm amber light envelops you. The memory fades, but you feel an invisible shield. The deer bows and vanishes. Ahead, a hidden glade reveals a stone altar with a silver acorn.',
+          choices: [
+            { text: '🌰 Take the silver acorn', nextScene: 'victory_acorn' },
+            { text: '↩ Leave the glade respectfully', nextScene: 'start' }
+          ]
+        },
+        rune_trace: {
+          id: 'rune_trace',
+          location: '🌀 Rune Echo',
+          text: 'As you trace the symbol, the world blurs. You glimpse a future where the forest burns. A voice: "Knowledge is a burden." You gain insight but are shaken.',
+          choices: [
+            { text: '📜 Remember the vision', nextScene: 'mist_vision' },
+            { text: '🌲 Return to the Elderwood edge', nextScene: 'start' }
+          ]
+        },
+        fire: {
+          id: 'fire',
+          location: '🔥 Ember Circle',
+          text: 'A circle of stones surrounds a merry fire. A hooded figure offers you a clay cup. "Drink, and you will dance with the spirits of flame. Refuse, and you must tell a true story to pass."',
+          choices: [
+            { text: '🍷 Accept the cup', nextScene: 'fire_dance' },
+            { text: '📖 Tell a true story', nextScene: 'fire_story' },
+            { text: '↩ Back to the forest edge', nextScene: 'start' }
+          ]
+        },
+        fire_dance: {
+          id: 'fire_dance',
+          location: '💃 Spirit Flame',
+          text: 'The liquid tastes of smoked honey. You whirl with fire-spirits, and they gift you a coal that never extinguishes. A warmth stays in your heart.',
+          choices: [
+            { text: '🔥 Keep the eternal coal', nextScene: 'victory_coal' },
+            { text: '🌳 Return to the woods', nextScene: 'start' }
+          ]
+        },
+        fire_story: {
+          id: 'fire_story',
+          location: '📚 Tale Weaver',
+          text: 'You recount a personal legend. The figure nods, removing their hood to reveal an ancient face of bark. "Well told. The forest will remember." They grant you a rune of safe passage.',
+          choices: [
+            { text: '🍂 Accept the rune', nextScene: 'victory_rune' },
+            { text: '🙏 Bow and leave', nextScene: 'start' }
+          ]
+        },
+        mist: {
+          id: 'mist',
+          location: '🌁 Veil of Mists',
+          text: 'Shapes drift in the fog—half-memory, half-dream. A child’s laughter, then silence. You find a moss-covered stone with an inscription: "Breathe, and the path reveals."',
+          choices: [
+            { text: '🌬 Breathe deeply and focus', nextScene: 'mist_reveal' },
+            { text: '👣 Stumble forward blindly', nextScene: 'start' },
+            { text: '🎵 Hum an old lullaby', nextScene: 'mist_lullaby' }
+          ]
+        },
+        mist_reveal: {
+          id: 'mist_reveal',
+          location: '🌤 Clearing Light',
+          text: 'The mist parts to show a hidden waterfall. A silver fish leaps, offering a pearl of wisdom. You feel a profound connection to the forgotten tales.',
+          choices: [
+            { text: '🐟 Accept the pearl', nextScene: 'victory_pearl' },
+            { text: '🌊 Stay and listen to the water', nextScene: 'start' }
+          ]
+        },
+        mist_lullaby: {
+          id: 'mist_lullaby',
+          location: '🎶 Echoing Song',
+          text: 'The lullaby resonates. A wispy figure—your ancestor—appears. "You carry our stories." They place a hand on your shoulder, and you feel courage renewed.',
+          choices: [
+            { text: '✨ Receive ancestral blessing', nextScene: 'victory_blessing' },
+            { text: '🌫 Return quietly', nextScene: 'start' }
+          ]
+        },
+        victory_acorn: { id: 'victory_acorn', location: '🌿 Silver Acorn Glade', text: '🏆 You have claimed the silver acorn. It will grow into a tree that bridges worlds. The forest celebrates your choice.', choices: [{ text: '🔄 Begin a new journey', nextScene: 'start' }] },
+        victory_coal: { id: 'victory_coal', location: '🔥 Eternal Ember', text: '🏆 The eternal coal warms your spirit. Wherever you go, you carry the hearth of the old tales.', choices: [{ text: '🔄 Wander again', nextScene: 'start' }] },
+        victory_rune: { id: 'victory_rune', location: '🛡 Rune of Safe Passage', text: '🏆 The rune glows on your palm. You are now a keeper of the threshold, welcome in all ancient places.', choices: [{ text: '🔄 Restart adventure', nextScene: 'start' }] },
+        victory_pearl: { id: 'victory_pearl', location: '🫧 Pearl of Wisdom', text: '🏆 The pearl whispers forgotten legends. You have become a lore speaker.', choices: [{ text: '🔄 New tale', nextScene: 'start' }] },
+        victory_blessing: { id: 'victory_blessing', location: '👤 Ancestor’s Blessing', text: '🏆 Blessed by the ancestors, your path is illuminated. The Ealdforn welcomes you.', choices: [{ text: '🔄 Begin again', nextScene: 'start' }] },
+        mist_vision: { id: 'mist_vision', location: '🔮 Vision Keeper', text: 'You hold the vision of possible futures. Use this knowledge wisely.', choices: [{ text: '🌲 Return to Elderwood', nextScene: 'start' }] }
+      };
+
+      function renderScene(sceneId) {
+        const scene = scenes[sceneId];
+        if (!scene) {
+          console.error('Scene not found:', sceneId);
+          return renderScene('start');
+        }
+        
+        storyDisplay.textContent = scene.text;
+        locationIndicator.textContent = scene.location;
+        
+        // Clear and rebuild choices
+        choicesContainer.innerHTML = '';
+        scene.choices.forEach(choice => {
+          const button = document.createElement('button');
+          button.className = 'choice-btn';
+          button.textContent = choice.text;
+          button.addEventListener('click', (e) => {
+            e.preventDefault();
+            renderScene(choice.nextScene);
+          });
+          choicesContainer.appendChild(button);
+        });
+      }
+
+      function restartGame() {
+        renderScene('start');
+      }
+
+      // Event listeners
+      restartBtn.addEventListener('click', restartGame);
+      
+      // Mobile hamburger menu
+      const hamburger = document.getElementById('hamburger');
+      const navLinks = document.getElementById('navLinks');
+      if (hamburger && navLinks) {
+        hamburger.addEventListener('click', () => {
+          const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+          hamburger.setAttribute('aria-expanded', !expanded);
+          navLinks.classList.toggle('open');
+        });
+        
+        // Close menu when a link is clicked (mobile)
+        navLinks.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+            hamburger.setAttribute('aria-expanded', 'false');
+          });
+        });
+      }
+
+      // Set footer year
+      const yearSpan = document.getElementById('year');
+      if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+      // Start the game
+      renderScene('start');
+    })();
+  </script>
+</body>
+          </html>
