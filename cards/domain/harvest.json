@@ -1,0 +1,38 @@
+[
+  {
+    "id": "harvest_001",
+    "text": "Plant Demeter's sacred seed in the courtyard",
+    "glyph": "🌱",
+    "trait": "devotion",
+    "tones": ["green", "original"],
+    "outcome": "You dig the soil with your own hands. The seed slips in — small, dark, humming with something ancient. Demeter smiles. 'Now we wait. Growth cannot be rushed. But when it comes, your land will remember this moment.'",
+    "weight": 1.0
+  },
+  {
+    "id": "harvest_002",
+    "text": "Ask Demeter to restore the dying orchard",
+    "glyph": "🍎",
+    "trait": "devotion",
+    "tones": ["green"],
+    "outcome": "She touches the oldest tree — a gnarled thing that has not borne fruit in a decade. It shudders. A single apple falls into her hand. 'This orchard will live. But you will owe the earth a harvest. Not for me — for the land itself.'",
+    "weight": 0.9
+  },
+  {
+    "id": "harvest_003",
+    "text": "Learn the cycles of the land from Demeter",
+    "glyph": "🌾",
+    "trait": "wisdom",
+    "tones": ["green", "original"],
+    "outcome": "She kneels in the dirt beside you — a goddess, kneeling. 'The earth does not care that you are a bastard. It only cares that you show up. That you learn its rhythms. That you tend what is given to you.' You learn. The fields will show the difference.",
+    "weight": 0.85
+  },
+  {
+    "id": "harvest_004",
+    "text": "Negotiate a tribute of grain to secure Demeter's blessing",
+    "glyph": "🌽",
+    "trait": "authority",
+    "tones": ["silver", "original"],
+    "outcome": "You offer a portion of every harvest — not to Demeter, but to the village, in her name. She is surprised. 'You bargain for your people, not yourself. That is... unusual in a lord. I accept. Your fields will prosper. Your people will eat.'",
+    "weight": 0.8
+  }
+]
