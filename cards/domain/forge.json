@@ -1,0 +1,38 @@
+[
+  {
+    "id": "forge_001",
+    "text": "Commission Hephaestus to forge you a weapon worthy of a lord",
+    "glyph": "⚒️",
+    "trait": "courage",
+    "tones": ["iron", "original"],
+    "outcome": "Hephaestus examines your broken sword with disgust. 'This is pig iron. I will make you something that sings.' The forge burns through the night. In the morning, a blade lies on the anvil — dark metal, edge like starlight. 'It has no name. You must earn one for it.'",
+    "weight": 1.0
+  },
+  {
+    "id": "forge_002",
+    "text": "Ask Hephaestus to repair the keep's crumbling defenses",
+    "glyph": "🏰",
+    "trait": "authority",
+    "tones": ["iron", "original"],
+    "outcome": "He walks the walls, grunting at every crack, every loose stone. By sunset, the gates are reinforced, the watchtower stands straighter, the murder holes are cleared. 'Functional,' he growls. 'Don't ask for pretty.' The garrison cheers anyway.",
+    "weight": 0.9
+  },
+  {
+    "id": "forge_003",
+    "text": "Learn the smith's art from Hephaestus himself",
+    "glyph": "🔥",
+    "trait": "wisdom",
+    "tones": ["iron", "green", "original"],
+    "outcome": "He hands you a hammer. 'Strike here. Not there — HERE. Good. Again.' Your arms ache. Your hands blister. But by the end, you have made something — a nail, crude but true. 'Your first forging. Ugly. Functional. Keep it.' You do. It is still in your pocket.",
+    "weight": 0.85
+  },
+  {
+    "id": "forge_004",
+    "text": "Ask Hephaestus to forge a crown from star-metal",
+    "glyph": "👑",
+    "trait": "cunning",
+    "tones": ["iron", "silver"],
+    "outcome": "He laughs — a rare sound, like an avalanche. 'A crown? For a bastard? I LIKE it.' He works through the night. The crown is simple — iron and something that glows faintly blue. 'It is not gold. Gold is soft. This is harder than any kingdom.'",
+    "weight": 0.8
+  }
+]
