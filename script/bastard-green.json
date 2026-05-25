@@ -1,0 +1,163 @@
+{
+  "title": "The Green Bastard",
+  "subtitle": "Roots and Stone – The Green Knight of Glimthaven",
+  "requires": {
+    "set": "storm-coast",
+    "cast": ["olympians"]
+  },
+  "maxScenes": 6,
+  "player": {
+    "name": "the Green Bastard of Helm-hallen",
+    "backstory": "You are the unacknowledged son of King Haldric, abandoned as an infant upon the storm cliffs and raised by the old woman called the Sea-Witch. She named you for the green moss that grew over your cradle of driftwood and the holly that crowned your brow. You grew tall and wild, your skin carrying the hue of deep forest and living bronze. The king summons you only when the old pacts fray — for you are the living echo of the Green Knight of elder tales, the one who tends the boundaries between court and wild, life and death, axe and oath.",
+    "location": "Glimthaven Keep",
+    "traits": {
+      "authority": 0,
+      "wisdom": 0,
+      "courage": 0,
+      "cunning": 0,
+      "devotion": 0
+    }
+  },
+  "prologue": "In the deep of winter, when the year turns green beneath the snow, Glimthaven Keep stands as a lonely green chapel upon the Storm Coast. Year 847 of the Ealdforn Reckoning. You, the Green Bastard, dwell here not as lord but as keeper of the ancient game — the pact between mortal pride and the wild green that outlasts all kings. \n\nThe old woman once told you: every generation a Green Knight must rise to test and be tested. Now six Olympian gods come, wearing the faces of ancient powers, to play the beheading game anew. They do not seek a bastard’s obedience. They seek the green truth within you — the courage to offer your neck, the honor to keep your word, the wild grace to renew what has withered. The axe hangs heavy. The holly and ivy stir. Choose, Green Knight, for the land itself watches.",
+  "scenes": [
+    {
+      "sceneNumber": 1,
+      "god": "Zeus",
+      "description": "A colossal figure strides from the storm, skin like thunderstruck oak, beard of moss and lightning. The Green Knight’s ancient kin, he carries a great axe of petrified lightning-bolt, his eyes the color of winter skies.",
+      "choices": [
+        {
+          "text": "Stand and claim the right to rule the boundaries as the true Green Lord.",
+          "trait": "authority",
+          "effect": "You assert your place in the ancient covenant of storm and stone."
+        },
+        {
+          "text": "Ask what wound in the world has caused even the Thunderer to seek renewal.",
+          "trait": "wisdom",
+          "effect": "You seek the deeper rot beneath the storm’s rage."
+        },
+        {
+          "text": "Bare your neck and invite the axe, offering your life for the land’s oath.",
+          "trait": "courage",
+          "effect": "You play the Green Knight’s game without flinching."
+        }
+      ]
+    },
+    {
+      "sceneNumber": 2,
+      "god": "Demeter",
+      "description": "She emerges from the frozen earth like spring breaking winter’s neck — green-skinned, crowned in holly and withered wheat, her breath the scent of turned soil and blood-rich sap.",
+      "choices": [
+        {
+          "text": "Vow to command the seasons so that Glimthaven may never starve.",
+          "trait": "authority",
+          "effect": "You bind the harvest to your will as Green Steward."
+        },
+        {
+          "text": "Listen to the secret rhythm of death feeding life and ask her hidden name.",
+          "trait": "wisdom",
+          "effect": "You honor the green truth that rot and renewal are one."
+        },
+        {
+          "text": "Kneel and let her press seeds beneath your skin, accepting the green fire.",
+          "trait": "devotion",
+          "effect": "You become the living vessel of the earth’s eternal cycle."
+        }
+      ]
+    },
+    {
+      "sceneNumber": 3,
+      "god": "Poseidon",
+      "description": "The Earth-Shaker rises from the black tide pools beneath the keep, barnacled and green as deep kelp, his trident an ancient axe of coral and bone.",
+      "choices": [
+        {
+          "text": "Command the sea to honor the old shoreline pacts once more.",
+          "trait": "authority",
+          "effect": "You speak with the voice of the first Green Knight who drew the line."
+        },
+        {
+          "text": "Ask what forgotten oath caused the sea to devour the cliffs in grief.",
+          "trait": "wisdom",
+          "effect": "You seek the ancient betrayal still bleeding salt."
+        },
+        {
+          "text": "Walk into the freezing waves and offer your head to the deep.",
+          "trait": "courage",
+          "effect": "You accept the beheading game beneath the green water."
+        }
+      ]
+    },
+    {
+      "sceneNumber": 4,
+      "god": "Artemis",
+      "description": "A wild huntress stalks the mist-shrouded woods pressing against the keep. Her skin is the green of young oak, arrows fletched with holly leaves, eyes bright as a wolf’s in starlight.",
+      "choices": [
+        {
+          "text": "Ask her to bless the wild border between keep and untamed forest.",
+          "trait": "wisdom",
+          "effect": "You guard the thin green veil between tame and wild."
+        },
+        {
+          "text": "Offer to hunt beside her through the longest night, axe in hand.",
+          "trait": "courage",
+          "effect": "You embrace the primal chase that renews the blood."
+        },
+        {
+          "text": "Propose a cunning exchange — your secrets for her protection of the green paths.",
+          "trait": "cunning",
+          "effect": "You weave a living pact between hunter and hunted."
+        }
+      ]
+    },
+    {
+      "sceneNumber": 5,
+      "god": "Hermes",
+      "description": "A laughing figure dances on the wind, half man, half green leaf and quicksilver. He carries a caduceus entwined with ivy and holly, messenger between the green world and the gray.",
+      "choices": [
+        {
+          "text": "Ask him to carry tidings between the stones of the keep and the things that sleep below.",
+          "trait": "wisdom",
+          "effect": "You restore the conversation across the green veil."
+        },
+        {
+          "text": "Attempt to outwit the trickster in the ancient game of words and bargains.",
+          "trait": "cunning",
+          "effect": "You play the beheading game with tongue instead of axe."
+        },
+        {
+          "text": "Offer your true name as a green seed to be carried into other realms.",
+          "trait": "devotion",
+          "effect": "You let the wild wind plant part of your soul."
+        }
+      ]
+    },
+    {
+      "sceneNumber": 6,
+      "god": "Persephone",
+      "description": "She rises from the old well, half winter queen, half spring maiden, her skin the living green of new growth over old decay. In her hands she holds both a crown of thorns and a sprig of holly.",
+      "choices": [
+        {
+          "text": "Demand she renew the keep’s life in exchange for your stewardship.",
+          "trait": "authority",
+          "effect": "You claim the Green Knight’s ancient right."
+        },
+        {
+          "text": "Gaze into her eyes and ask the true cost the Sea-Witch paid to raise you.",
+          "trait": "wisdom",
+          "effect": "You seek the hidden bargain written in your green blood."
+        },
+        {
+          "text": "Lay your head upon the stone and offer it freely to her axe of seasons.",
+          "trait": "devotion",
+          "effect": "You complete the cycle — death, sleep, and green rebirth."
+        }
+      ]
+    }
+  ],
+  "endings": {
+    "authority": "The Green Throne. You become the living Green Knight of the realm. Trees bow as you pass. The keep grows into a green chapel where stone and root are one. King Haldric kneels before the wild covenant you embody. You rule not by mortal law but by the deeper law of holly and axe. Yet every winter you feel the old wound at your neck — the reminder that even the Green Lord must one day offer his head again.",
+    "wisdom": "The Keeper of the Green Game. You see the truth behind every mask the gods wear. You understand that the beheading is never fatal for those who accept the cycle. Glimthaven becomes a place of quiet wisdom where kings come to learn humility beneath the holly. You walk the boundary between worlds, green and eternal, knowing that wisdom is the scar that never fully heals.",
+    "courage": "The Green Knight Reborn. You met every god’s axe without flinching. When the final blow fell, green blood flowed — and renewed you. The land sings your name. Villagers leave offerings of holly at your door. You have proven that true courage is not refusing death, but embracing the green life that follows it. The Bastard has become the Legend.",
+    "cunning": "The Shadow of the Green Wood. You turned every divine challenge into a new living pact. Through clever words and hidden bargains you bound the gods to the land’s own terms. Glimthaven thrives in secret green abundance. Few call you lord, yet all obey the turning of the seasons you command. Cunning has made you immortal — a green whisper in every winter wind.",
+    "devotion": "The Green Saint of Holly and Axe. You gave yourself utterly to the old ways. The Sea-Witch appears in visions and calls you son with pride. Persephone plants a holly tree where your blood touched stone. The keep is no longer a fortress but a living green heart. You belong fully to the land now — neither bastard nor knight, but the eternal Green One who dies and rises with every turning year. The game is complete. The land remembers."
+  }
+}
