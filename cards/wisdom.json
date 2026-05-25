@@ -1,0 +1,56 @@
+[
+  {
+    "id": "wis_001",
+    "text": "Ask the god a question about the nature of rule",
+    "glyph": "🦉",
+    "trait": "wisdom",
+    "tones": ["original", "iron", "silver", "green"],
+    "outcome": "The god considers your question. For a long moment, they are not a deity but a scholar — weighing words, measuring truth. Their answer changes something in you. You understand rule differently now.",
+    "weight": 1.0
+  },
+  {
+    "id": "wis_002",
+    "text": "Seek the god's counsel on a matter of strategy",
+    "glyph": "🗺️",
+    "trait": "wisdom",
+    "tones": ["iron", "silver"],
+    "outcome": "The god traces lines in the dust — troop movements, supply routes, the weaknesses of your enemies. 'Your father's generals think like this. Here is how you outthink them.' You memorize every line before the wind erases them.",
+    "weight": 0.9
+  },
+  {
+    "id": "wis_003",
+    "text": "Ask the god to reveal a secret about your lineage",
+    "glyph": "👁️",
+    "trait": "wisdom",
+    "tones": ["original", "silver", "green"],
+    "outcome": "The god is silent for a moment. Then: 'Your mother was not who they told you she was. Do you want to know more?' The question hangs in the air like a drawn blade. Some truths cannot be un-known.",
+    "weight": 0.95
+  },
+  {
+    "id": "wis_004",
+    "text": "Study the god's nature to understand your own",
+    "glyph": "🔍",
+    "trait": "wisdom",
+    "tones": ["green", "silver"],
+    "outcome": "You watch. You listen. The god is not merely powerful — they are a pattern, a force, a lesson written in divine flesh. By understanding them, you understand something about yourself. The bastard's blood is not weakness. It is potential.",
+    "weight": 0.85
+  },
+  {
+    "id": "wis_005",
+    "text": "Solve the god's riddle",
+    "glyph": "🧩",
+    "trait": "wisdom",
+    "tones": ["original", "silver", "green"],
+    "outcome": "The god poses a riddle — old as mountains, sharp as grief. You think. The answer comes not from knowledge but from something deeper. When you speak, the god nods slowly. 'You have your mother's mind. That is a dangerous gift.'",
+    "weight": 0.9
+  },
+  {
+    "id": "wis_006",
+    "text": "Meditate with the god on the cliff's edge",
+    "glyph": "🧘",
+    "trait": "wisdom",
+    "tones": ["green"],
+    "outcome": "You sit together in silence as the tide comes in. The god does not speak. Neither do you. The waves teach more than words could. When you rise, you understand the rhythm of the sea — and the rhythm of power.",
+    "weight": 0.8
+  }
+]
