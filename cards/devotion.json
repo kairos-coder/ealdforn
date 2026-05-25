@@ -1,0 +1,56 @@
+[
+  {
+    "id": "dev_001",
+    "text": "Offer a prayer from the heart, not the book",
+    "glyph": "🙏",
+    "trait": "devotion",
+    "tones": ["original", "green"],
+    "outcome": "You do not recite the old words. You speak from somewhere deeper — the place where hope lives alongside despair. The god listens. When you finish, they touch your forehead. 'That was not worship. That was a conversation. I prefer it.'",
+    "weight": 1.0
+  },
+  {
+    "id": "dev_002",
+    "text": "Make a blood offering to seal a sacred pact",
+    "glyph": "🩸",
+    "trait": "devotion",
+    "tones": ["iron", "green", "original"],
+    "outcome": "You draw the blade across your palm. The blood falls on the old stones — stones that have not tasted an offering in centuries. The god inhales sharply. 'The pact is sealed. Your blood is known to me now, bastard. I will come when you call.'",
+    "weight": 0.9
+  },
+  {
+    "id": "dev_003",
+    "text": "Tend the sacred ground the god has neglected",
+    "glyph": "🌱",
+    "trait": "devotion",
+    "tones": ["green"],
+    "outcome": "You clear the weeds from the old shrine. You replace the fallen stones. You light a fire that has been cold for longer than you have been alive. The god watches in silence. When you finish, their voice is thick. 'No one has done this for me. Not in living memory.'",
+    "weight": 0.85
+  },
+  {
+    "id": "dev_004",
+    "text": "Vow to build a temple to the god on the sea cliffs",
+    "glyph": "⛪",
+    "trait": "devotion",
+    "tones": ["original", "green", "iron"],
+    "outcome": "You swear it — on your mother's name, on your father's crown, on the stones of Glimthaven Keep. The god does not smile. This is too serious for smiling. 'If you build it, I will come. This I swear in return.' A god's oath. You now hold one.",
+    "weight": 0.8
+  },
+  {
+    "id": "dev_005",
+    "text": "Ask the god to bless your dead",
+    "glyph": "🕯️",
+    "trait": "devotion",
+    "tones": ["green", "original"],
+    "outcome": "You lead the god to the graves on the cliff — soldiers, villagers, the mother you never knew. The god speaks words older than any living language. The wind stills. The sea quiets. The dead do not rise. But they are remembered. That is its own resurrection.",
+    "weight": 0.95
+  },
+  {
+    "id": "dev_006",
+    "text": "Surrender your pride and kneel in true humility",
+    "glyph": "🧎",
+    "trait": "devotion",
+    "tones": ["green", "original", "silver"],
+    "outcome": "You kneel. Not as a subject kneels to a ruler — but as a student kneels to a teacher, a child to a parent, a mortal to the mystery. The god is silent. Then their hand rests on your head. 'Rise. You are not a bastard in this moment. You are a pilgrim. And I welcome you.'",
+    "weight": 0.9
+  }
+]
