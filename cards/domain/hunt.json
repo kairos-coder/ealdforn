@@ -1,0 +1,38 @@
+[
+  {
+    "id": "hunt_001",
+    "text": "Join Artemis in the hunt through the dark forest",
+    "glyph": "🏹",
+    "trait": "courage",
+    "tones": ["iron", "green", "original"],
+    "outcome": "She moves like silver wind. You follow as best you can. The forest is older than the keep, older than memory. Something waits in the dark. Artemis nocks an arrow. 'Stay close. Stay quiet. And when I loose — do not flinch.'",
+    "weight": 1.0
+  },
+  {
+    "id": "hunt_002",
+    "text": "Ask Artemis to track the traitor in your court",
+    "glyph": "🔍",
+    "trait": "cunning",
+    "tones": ["silver", "original"],
+    "outcome": "She does not need names. She follows scent — the scent of betrayal, she calls it. Her arrow points to a shadow in the corner of your hall. The shadow screams. A name is revealed. You know who to watch now.",
+    "weight": 0.9
+  },
+  {
+    "id": "hunt_003",
+    "text": "Learn the hunter's patience from Artemis",
+    "glyph": "🌙",
+    "trait": "wisdom",
+    "tones": ["green", "original"],
+    "outcome": "She teaches you to wait. To breathe. To become still as stone, patient as winter. 'The hunt is not the kill,' she says. 'It is the watching. The knowing. The moment before the moment.' You learn more in silence than you ever did in speech.",
+    "weight": 0.85
+  },
+  {
+    "id": "hunt_004",
+    "text": "Hunt the beast that has been killing villagers",
+    "glyph": "🐺",
+    "trait": "courage",
+    "tones": ["iron", "green"],
+    "outcome": "You track it together — a creature of the old dark, all teeth and hunger. Artemis looses. You strike. The beast falls. The village will sleep tonight. Artemis nods at you. 'You have the hunter's heart, bastard. You could have been one of mine.'",
+    "weight": 0.95
+  }
+]
