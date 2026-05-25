@@ -1,0 +1,134 @@
+{
+  "Zeus": {
+    "glyph": "⚡", "domain": "authority", "aspect": "king", "color": "#f0c040",
+    "entrance": "arrives in a thunderclap, the torches guttering in his presence",
+    "scenes": {
+      "arrival": [
+        "appears in a bolt of lightning above the keep, his voice shaking the very stones",
+        "descends on a storm cloud, beard crackling with restrained thunder, eyes judging all they see",
+        "sits upon the empty throne without asking, as if it has always been his"
+      ]
+    }
+  },
+  "Hera": {
+    "glyph": "👑", "domain": "order", "aspect": "queen", "color": "#c0a0d0",
+    "entrance": "arrives in a procession of peacocks, surveying the disorder of your household",
+    "scenes": {
+      "arrival": [
+        "walks through your halls touching each doorframe, assessing the quality of your rule",
+        "examines the keep's ledgers with a disapproving eye, but says nothing — yet",
+        "offers you a marriage alliance, her smile not quite reaching her eyes"
+      ]
+    }
+  },
+  "Poseidon": {
+    "glyph": "🌊", "domain": "depths", "aspect": "tide", "color": "#4060a0",
+    "entrance": "rises from the sea cliffs below the keep, water streaming from his beard",
+    "scenes": {
+      "arrival": [
+        "appears in a spray of salt water on the battlements, smelling of the deep",
+        "speaks of a treasure hidden in the sea — and a monster guarding it",
+        "warns of an earthquake coming, his trident tapping impatiently on the stone"
+      ]
+    }
+  },
+  "Demeter": {
+    "glyph": "🌿", "domain": "harvest", "aspect": "growth", "color": "#6b9e5a",
+    "entrance": "walks through your barren fields, and where she steps, green shoots rise",
+    "scenes": {
+      "arrival": [
+        "appears in the courtyard, the mud drying beneath her feet, the air smelling of spring",
+        "offers you a single seed — plant it, and your land will prosper, but it requires sacrifice",
+        "mourns the dying orchard at the edge of your land; she can save it, for a price"
+      ]
+    }
+  },
+  "Athena": {
+    "glyph": "🦉", "domain": "wisdom", "aspect": "strategy", "color": "#8090c0",
+    "entrance": "appears as an owl on your windowsill, then steps into the room as a woman armored in thought",
+    "scenes": {
+      "arrival": [
+        "arrives without announcement, already seated at your strategy table, studying your maps",
+        "speaks in riddles about your father's court — each word a key to a lock you didn't know existed",
+        "tests you with a question that has no right answer, only a true one"
+      ]
+    }
+  },
+  "Apollo": {
+    "glyph": "☀️", "domain": "light", "aspect": "synthesis", "color": "#f0a040",
+    "entrance": "arrives at dawn, golden light spilling over the walls, and sings a prophecy",
+    "scenes": {
+      "arrival": [
+        "appears as the sun crests the horizon, his voice carrying the weight of things that will be",
+        "offers to illuminate the dark corners of your lineage — but warns the truth may burn",
+        "challenges you to create something beautiful before sunset, his eyes bright with expectation"
+      ]
+    }
+  },
+  "Artemis": {
+    "glyph": "🏹", "domain": "hunt", "aspect": "pursuit", "color": "#7eb8a0",
+    "entrance": "appears at the edge of the forest, silver bow in hand, tracking something in the dark",
+    "scenes": {
+      "arrival": [
+        "arrives without sound, already standing behind you when you turn",
+        "offers to teach you to hunt — not deer, but the traitors hiding in your own court",
+        "warns of a beast in the woods that has been killing villagers. She will help you track it — if you are worthy."
+      ]
+    }
+  },
+  "Hephaestus": {
+    "glyph": "🔨", "domain": "forge", "aspect": "craft", "color": "#e89040",
+    "entrance": "sets up his anvil in your courtyard without asking, the fire already burning",
+    "scenes": {
+      "arrival": [
+        "arrives with the smell of smoke and hot iron, already inspecting your garrison's weapons with disgust",
+        "offers to forge you a crown — but it requires metal from each of the other eleven gods",
+        "inspects the keep's defenses with a grunt; they are inadequate. He can fix them. It will cost you."
+      ]
+    }
+  },
+  "Aphrodite": {
+    "glyph": "💋", "domain": "beauty", "aspect": "desire", "color": "#e06090",
+    "entrance": "appears in your mirror, more beautiful than anything you've seen, and asks if you feel worthy",
+    "scenes": {
+      "arrival": [
+        "arrives without warning, already seated by your fire, warming her hands as if she's always been there",
+        "offers to make you irresistible to your enemies — but warns that love is a weapon that cuts both ways",
+        "whispers that one of your advisors is in love with you, and one plans to betray you. She knows which is which."
+      ]
+    }
+  },
+  "Ares": {
+    "glyph": "⚔️", "domain": "war", "aspect": "fury", "color": "#c04040",
+    "entrance": "arrives in full battle armor, bloodied from some unseen conflict, and demands your swords",
+    "scenes": {
+      "arrival": [
+        "kicks open the gate, breathing hard, grinning at the sight of your meager garrison",
+        "challenges you to single combat before he even tells you his name",
+        "warns of an invasion coming from the south. He will fight beside you — if you prove you can fight at all."
+      ]
+    }
+  },
+  "Hermes": {
+    "glyph": "🪽", "domain": "messengers", "aspect": "speed", "color": "#c060c0",
+    "entrance": "appears suddenly behind you, out of breath, carrying a sealed scroll from Olympus",
+    "scenes": {
+      "arrival": [
+        "arrives mid-sentence, already talking, having started the conversation three miles away",
+        "offers to deliver a message to any god in the pantheon — but his price is a secret you hold",
+        "challenges you to a race across the keep's walls. If you win, he owes you a favor. If you lose, you owe him."
+      ]
+    }
+  },
+  "Persephone": {
+    "glyph": "🖤", "domain": "underworld", "aspect": "return", "color": "#a08090",
+    "entrance": "rises from a crack in the keep's foundation, smelling of pomegranate and grave soil",
+    "scenes": {
+      "arrival": [
+        "appears at midnight, the torches dimming, the temperature dropping as she steps into the room",
+        "offers you a glimpse of your dead mother — but you must hold her hand and then let it go",
+        "warns that your father's death is coming sooner than anyone thinks. She knows the hour. She will not tell you."
+      ]
+    }
+  }
+}
