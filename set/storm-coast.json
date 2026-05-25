@@ -1,0 +1,20 @@
+{
+  "name": "Glimthaven Keep",
+  "description": "A crumbling fortress on the Storm Coast. The walls are thick but the mortar is old. The great hall has a leaking roof. The village below looks to the keep with hunger and fading hope.",
+  "weather": [
+    "Rain hammers the roof. The wind howls through the arrow slits like a living thing.",
+    "A rare patch of sun breaks through the clouds. The village children play in the mud beneath the walls.",
+    "Fog rolls in from the sea, thick as wool. You cannot see the village from the walls. You cannot see anything.",
+    "The wind carries the smell of salt and something else — smoke, from a distant fire. Or a distant battle.",
+    "Snow falls on the Storm Coast. It almost never snows here. The villagers call it an omen.",
+    "The moon is full and red — a hunter's moon. Something howls in the forest beyond the walls."
+  ],
+  "worldBeats": [
+    "The rain has not stopped for three days. The keep's roof leaks in the great hall — a steady drip that has worn a hollow in the stone. Your steward suggests moving the court to the lower chambers, but that would mean admitting the keep is failing. You refuse. The water drips. The stone hollows.",
+    "A ship wrecks on the rocks below the keep. The villagers salvage what they can — timber, cloth, a crate of oranges from the southern isles. You watch from the tower as they work. The sea gives and the sea takes. Today it gave oranges. Yesterday it took a fisherman. No one speaks of him.",
+    "Your father's banner arrives — the crowned stag of Haldric — carried by a rider who does not dismount. He delivers a letter sealed with the royal signet and rides away without a word. The letter sits on your table. You have not opened it. The seal watches you like an eye.",
+    "The garrison drills in the courtyard. Fifteen men. Three are too old to fight. Two are boys who should be apprenticed to the smith. The rest are loyal but untested. You train with them — not because you must, but because they need to see you bleed. A lord who does not bleed is not a lord they will follow.",
+    "Snow on the Storm Coast. It almost never snows here. The old woman who lives by the well — the one the villagers call the Sea-Witch — says it means a god is walking the earth nearby. She says the snow is the god's breath, frozen by the mortal air. You watch the flakes fall and wonder which god is breathing on your keep.",
+    "The moon is full and red — a hunter's moon. Something howls in the forest. Your sentries are afraid. You order the gates barred and the watch doubled, but the howling continues. It sounds closer now. It sounds like it's learning your name."
+  ]
+}
