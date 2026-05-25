@@ -1,0 +1,163 @@
+{
+  "title": "The Ealdforn Stage: Silver Bastard",
+  "subtitle": "Whispers of the Olympians in Glimthaven Keep",
+  "requires": {
+    "set": "storm-coast",
+    "cast": ["olympians"]
+  },
+  "maxScenes": 6,
+  "player": {
+    "name": "The Silver Bastard of Helm-hallen",
+    "backstory": "You are the unacknowledged child of King Haldric, born of a fleeting union with a courtier whose name was swiftly forgotten. Raised in the shadowed halls of Helm-hallen, your silver hair and piercing gaze mark you as both kin and outcast. The world measures worth by bloodlines forged in ancient vows, yet yours flows half-unclaimed, a bastard's curse that sharpens your every ambition into a blade.",
+    "location": "Glimthaven Keep",
+    "traits": {
+      "authority": 0,
+      "wisdom": 0,
+      "courage": 0,
+      "cunning": 0,
+      "devotion": 0
+    }
+  },
+  "prologue": "In the storm-lashed halls of Glimthaven Keep, where salt wind howls through arrow-slits like the voices of drowned kings, you stand as the Silver Bastard—unblooded heir to a throne that dares not name you. King Haldric's court feasts on lineage and legacy, while you linger in the margins, your silver locks a banner of disputed claim. Tonight, the veil thins. Six Olympian gods, drawn by ancient pacts woven into the Storm-Coast's stones, descend one by one. Each offers a bargain, a test of your fractured soul. In their divine gaze, your bastard blood weighs heavy: proof of frailty or forge of singular strength? Choose wisely, for the dominant trait shall crown—or doom—your fate among the ealdforn echoes.",
+  "scenes": [
+    {
+      "sceneNumber": 1,
+      "god": "Zeus",
+      "description": "The Thunderer materializes in a crackle of lightning within the great hall, his form towering over the flickering braziers. Eagles circle the rafters as he regards you with storm-grey eyes.",
+      "choices": [
+        {
+          "text": "Kneel and swear fealty to his divine order, demanding recognition of your bloodright through royal decree.",
+          "trait": "authority",
+          "effect": "Your voice rings with commanded presence, asserting the king's hidden duty."
+        },
+        {
+          "text": "Question the fairness of divine and mortal laws that bind bastards to shadows.",
+          "trait": "wisdom",
+          "effect": "You probe the hypocrisies of gods and kings alike."
+        },
+        {
+          "text": "Defy him openly, challenging his authority as you have been challenged your whole life.",
+          "trait": "courage",
+          "effect": "Steel in your spine, you meet thunder with unyielding gaze."
+        }
+      ]
+    },
+    {
+      "sceneNumber": 2,
+      "god": "Athena",
+      "description": "The goddess of wisdom emerges from a tapestry of woven battles, owl perched upon her shoulder, her armor gleaming with strategic light in the moonlit chamber.",
+      "choices": [
+        {
+          "text": "Plead for her guidance in crafting a council that elevates merit over birth.",
+          "trait": "authority",
+          "effect": "You seek to reshape the court's hierarchy in your image."
+        },
+        {
+          "text": "Engage her in a riddle of lineage, weaving philosophy with the politics of the keep.",
+          "trait": "wisdom",
+          "effect": "Your words dance through layered truths and ancient precedents."
+        },
+        {
+          "text": "Propose a cunning alliance, trading secrets of the Storm-Coast for her favor against rivals.",
+          "trait": "cunning",
+          "effect": "You navigate the shadows of court intrigue with deft precision."
+        }
+      ]
+    },
+    {
+      "sceneNumber": 3,
+      "god": "Ares",
+      "description": "War's embodiment strides through the armory doors, blood-red cloak billowing, his presence igniting the steel of forgotten blades.",
+      "choices": [
+        {
+          "text": "Lead a daring raid on border reavers to prove your valor to the king.",
+          "trait": "courage",
+          "effect": "Blood calls to blood in the heat of righteous battle."
+        },
+        {
+          "text": "Whisper strategies of asymmetric warfare, turning the keep's weaknesses into traps.",
+          "trait": "cunning",
+          "effect": "Victory through intellect rather than brute force."
+        },
+        {
+          "text": "Vow undying service to the god of war, seeking martial glory to eclipse your bastard stain.",
+          "trait": "devotion",
+          "effect": "You offer your sword and soul to the eternal clash."
+        }
+      ]
+    },
+    {
+      "sceneNumber": 4,
+      "god": "Hermes",
+      "description": "The trickster god slips in through a half-open window, winged sandals silent, a sly grin playing across his mercurial features amid maps and missives.",
+      "choices": [
+        {
+          "text": "Negotiate a treaty with rival houses using silver-tongued diplomacy.",
+          "trait": "authority",
+          "effect": "You wield words as instruments of command and alliance."
+        },
+        {
+          "text": "Unravel a web of courtly lies through careful observation and deduction.",
+          "trait": "wisdom",
+          "effect": "Truth emerges from the labyrinth of deception."
+        },
+        {
+          "text": "Execute a bold deception against a scheming advisor threatening your claim.",
+          "trait": "cunning",
+          "effect": "Illusion and misdirection become your sharpest weapons."
+        }
+      ]
+    },
+    {
+      "sceneNumber": 5,
+      "god": "Demeter",
+      "description": "The Earth Mother appears in the ancient gardens, vines curling at her feet, her aura heavy with the scent of fertile soil and harvest rites.",
+      "choices": [
+        {
+          "text": "Inspire the smallfolk with promises of just rule rooted in the land's bounty.",
+          "trait": "authority",
+          "effect": "You bind loyalty through vision of prosperous order."
+        },
+        {
+          "text": "Seek ancient lore of the Storm-Coast's cycles to foresee threats to the realm.",
+          "trait": "wisdom",
+          "effect": "Harmony with nature reveals hidden patterns of fate."
+        },
+        {
+          "text": "Perform a solemn rite of devotion, offering your unclaimed blood to the soil.",
+          "trait": "devotion",
+          "effect": "You surrender to the ancient, earthy mysteries."
+        }
+      ]
+    },
+    {
+      "sceneNumber": 6,
+      "god": "Apollo",
+      "description": "The radiant god of prophecy illuminates the oracle chamber, lyre in hand, his light casting long shadows that dance like future possibilities.",
+      "choices": [
+        {
+          "text": "Demand prophetic validation of your right to rule, confronting fate directly.",
+          "trait": "courage",
+          "effect": "You seize destiny with unblinking resolve."
+        },
+        {
+          "text": "Interpret ambiguous oracles with layered insight into courtly machinations.",
+          "trait": "wisdom",
+          "effect": "Clarity pierces the veil of divine ambiguity."
+        },
+        {
+          "text": "Forge a prophetic vision through subtle manipulation of symbols and signs.",
+          "trait": "cunning",
+          "effect": "You shape the future's narrative to your advantage."
+        }
+      ]
+    }
+  ],
+  "endings": {
+    "authority": "The Silver Throne: Your unyielding command reshapes Glimthaven. Though bastard-born, you forge a new lineage of iron will. The gods recede, leaving you master of the Storm-Coast, where blood yields to the authority you alone have earned. Yet in quiet halls, the weight of unacknowledged origins lingers—a crown heavy with the ghosts of what might have been.",
+    "wisdom": "The Veiled Oracle: Insight becomes your scepter. You navigate the treacherous waters of court and divinity with profound understanding, elevating Glimthaven through enlightened rule. The Olympians smile upon your tempered mind, but the bastard's shadow teaches that true wisdom is knowing the ache of exclusion even as you guide the realm toward harmony.",
+    "courage": "The Stormbreaker: Bold deeds and defiant heart carve your legend. You charge into the fray of politics and divine trials, earning respect through valor that transcends blood. The keep stands stronger, your name whispered in awe, yet courage's fire reminds you that every victory is bought with the isolation of the unclaimed son.",
+    "cunning": "The Shadow Regent: Whispers and webs secure your power. Through clever machinations, you become the unseen hand guiding kings and gods alike. Glimthaven thrives in subtle prosperity, but the Silver Bastard knows the lonely cost of cunning: trust is a currency rarely spent, and the mirror reflects a victor forever marked by the game's deceit.",
+    "devotion": "The Earthbound Saint: Your soul's surrender to higher powers and ancient rites sanctifies your bastard blood. Olympians and land spirits alike embrace you as conduit. The keep blooms with mystical renewal, yet devotion demands you remain apart—servant to forces greater than any throne, your worth measured not in mortal acclaim but in eternal, earthy grace."
+  }
+}
