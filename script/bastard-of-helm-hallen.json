@@ -1,6 +1,7 @@
 {
   "title": "The Bastard of Helm-hallen",
   "subtitle": "A Pantheon Cycle in Six Scenes",
+  "tone": "original"
   "requires": {
     "set": "storm-coast",
     "cast": ["olympians"]
