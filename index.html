@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ealdforn — The Bastard of Helm-hallen</title>
+<title>Ealdforn Stage — Playbill</title>
 <style>
 :root {
   --bg: #0d0a05; --surface: #1a1410; --border: #2a1f18;
-  --text: #d4c0a0; --text-bright: #f0dcc0; --text-dim: #7a6a50;
-  --gold: #c9a84c; --amber: #c9702e; --rubric: #8b3a3a;
+  --text: #d4c0a0; --text-dim: #7a6a50; --gold: #c9a84c; --rubric: #8b3a3a;
   --font-body: 'Georgia', 'Times New Roman', serif;
   --font-mono: 'Courier New', monospace;
 }
@@ -20,475 +19,88 @@ body {
     radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.04) 0%, transparent 60%),
     radial-gradient(ellipse at 30% 100%, rgba(139,58,58,0.03) 0%, transparent 40%);
 }
-
-.game-container {
-  max-width:750px; width:100%; margin:20px; display:flex; flex-direction:column; gap:0;
+.playbill {
+  max-width:700px; width:100%; margin:30px 20px;
   border:1px solid var(--border); border-radius:6px; overflow:hidden;
-  box-shadow:0 0 60px rgba(0,0,0,0.4);
+  background:var(--surface); box-shadow:0 0 60px rgba(0,0,0,0.4);
 }
-
-/* HEADER */
-.game-header {
-  background:var(--surface); padding:16px 20px; border-bottom:1px solid var(--border);
-  display:flex; align-items:center; gap:12px;
+.playbill-header {
+  padding:24px; text-align:center; border-bottom:1px solid var(--border);
+  background:linear-gradient(180deg, rgba(201,168,76,0.05) 0%, transparent 100%);
 }
-.game-header .crest { font-size:28px; }
-.game-header .titles { flex:1; }
-.game-header .title { font-size:16px; color:var(--gold); letter-spacing:2px; }
-.game-header .subtitle { font-size:9px; color:var(--text-dim); letter-spacing:2px; text-transform:uppercase; font-family:var(--font-mono); margin-top:2px; }
-.game-header .turn-badge {
-  font-family:var(--font-mono); font-size:9px; padding:4px 10px;
-  border:1px solid var(--amber); border-radius:8px; color:var(--amber);
-  white-space:nowrap;
+.playbill-header h1 { font-size:24px; color:var(--gold); letter-spacing:4px; font-weight:normal; }
+.playbill-header .subtitle { font-size:10px; color:var(--text-dim); letter-spacing:3px; text-transform:uppercase; font-family:var(--font-mono); margin-top:6px; }
+.playbill-scripts { padding:16px; display:flex; flex-direction:column; gap:10px; }
+.script-card {
+  padding:16px; border:1px solid var(--border); border-radius:4px;
+  display:flex; align-items:center; gap:14px; text-decoration:none;
+  transition:all 0.2s; background:rgba(0,0,0,0.2);
 }
-
-/* IMAGE ANCHOR */
-.image-anchor {
-  width:100%; max-height:300px; overflow:hidden; border-bottom:1px solid var(--border);
-  background:var(--surface); display:flex; align-items:center; justify-content:center;
-}
-.image-anchor img {
-  width:100%; height:auto; max-height:300px; object-fit:cover; display:block;
-}
-.image-anchor .img-placeholder {
-  padding:40px; text-align:center; color:var(--text-dim); font-style:italic; font-size:13px;
-}
-
-/* NARRATIVE */
-.narrative {
-  padding:20px; background:var(--surface); border-bottom:1px solid var(--border);
-  font-size:14px; line-height:1.8; min-height:100px;
-}
-.narrative .god-name { color:var(--gold); font-weight:bold; }
-.narrative .location { color:var(--amber); }
-.narrative .speaker { color:var(--rubric); }
-
-/* CHOICES */
-.choices {
-  padding:12px 20px; display:flex; flex-direction:column; gap:8px;
-  background:var(--bg);
-}
-.choice-btn {
-  background:var(--surface); border:1px solid var(--border); color:var(--text);
-  padding:14px 18px; font-family:var(--font-body); font-size:13px;
-  border-radius:4px; cursor:pointer; text-align:left; transition:all 0.2s;
-  line-height:1.5; display:flex; align-items:center; gap:10px;
-}
-.choice-btn:hover { border-color:var(--gold); background:rgba(201,168,76,0.05); color:var(--text-bright); }
-.choice-btn .choice-glyph { font-size:22px; flex-shrink:0; }
-.choice-btn .choice-text { flex:1; }
-.choice-btn .choice-hint { font-size:9px; color:var(--text-dim); font-family:var(--font-mono); }
-
-/* HISTORY */
-.history {
-  padding:16px 20px; background:rgba(0,0,0,0.3); border-top:1px solid var(--border);
-  max-height:150px; overflow-y:auto;
-}
-.history-title { font-family:var(--font-mono); font-size:8px; letter-spacing:2px; color:var(--text-dim); text-transform:uppercase; margin-bottom:8px; }
-.history-entry { font-size:10px; color:var(--text-dim); margin-bottom:3px; line-height:1.4; }
-.history-entry .h-turn { color:var(--amber); font-family:var(--font-mono); }
-.history-entry .h-god { color:var(--gold); }
-
-/* FOOTER */
-.game-footer {
-  padding:10px 20px; background:var(--surface); border-top:1px solid var(--border);
+.script-card:hover { border-color:var(--gold); background:rgba(201,168,76,0.04); }
+.script-card .card-glyph { font-size:28px; flex-shrink:0; }
+.script-card .card-info { flex:1; }
+.script-card .card-title { font-size:14px; color:var(--text); letter-spacing:1px; }
+.script-card .card-subtitle { font-size:10px; color:var(--text-dim); margin-top:3px; }
+.script-card .card-meta { font-size:8px; color:var(--text-dim); font-family:var(--font-mono); letter-spacing:1px; margin-top:4px; }
+.script-card .card-arrow { color:var(--gold); font-size:18px; }
+.playbill-footer {
+  padding:14px 24px; border-top:1px solid var(--border);
   display:flex; justify-content:space-between; align-items:center;
 }
-.game-footer .nexus-link { font-family:var(--font-mono); font-size:8px; color:var(--text-dim); text-decoration:none; letter-spacing:1px; transition:all 0.2s; }
-.game-footer .nexus-link:hover { color:var(--gold); }
-
+.playbill-footer a { font-family:var(--font-mono); font-size:9px; color:var(--text-dim); text-decoration:none; letter-spacing:1px; transition:all 0.2s; }
+.playbill-footer a:hover { color:var(--gold); }
 @media (max-width:500px) {
-  .game-header .title { font-size:14px; }
-  .narrative { font-size:12px; padding:14px; }
-  .choice-btn { font-size:11px; padding:10px 14px; }
+  .playbill-header h1 { font-size:18px; }
+  .script-card { flex-direction:column; text-align:center; }
 }
 </style>
 </head>
 <body>
 
-<div class="game-container">
+<div class="playbill">
+  <div class="playbill-header">
+    <h1>🎭 The Ealdforn Stage</h1>
+    <div class="subtitle">A Theater of Gods and Mortals</div>
+  </div>
 
-  <!-- HEADER -->
-  <div class="game-header">
-    <span class="crest">🏰</span>
-    <div class="titles">
-      <div class="title">The Bastard of Helm-hallen</div>
-      <div class="subtitle">An Ealdforn Text Adventure · The Order of Olympus</div>
+  <div class="playbill-scripts">
+    <a href="play.html?script=bastard-of-helm-hallen&set=storm-coast&cast=olympians" class="script-card">
+      <span class="card-glyph">🏰</span>
+      <div class="card-info">
+        <div class="card-title">The Bastard of Helm-hallen</div>
+        <div class="card-subtitle">A Pantheon Cycle — Six gods visit a crumbling keep. A bastard proves their worth.</div>
+        <div class="card-meta">6 scenes · Set: Storm Coast · Cast: Olympians</div>
+      </div>
+      <span class="card-arrow">▶</span>
+    </a>
+
+    <div class="script-card" style="opacity:0.4;">
+      <span class="card-glyph">🔨</span>
+      <div class="card-info">
+        <div class="card-title">The Forge of Hephaestus</div>
+        <div class="card-subtitle">Coming soon — Forge your masterpiece or remain an apprentice forever.</div>
+        <div class="card-meta">In development</div>
+      </div>
+      <span class="card-arrow" style="color:var(--text-dim);">◈</span>
     </div>
-    <span class="turn-badge" id="turnBadge">Turn 1/6</span>
+
+    <div class="script-card" style="opacity:0.4;">
+      <span class="card-glyph">🌿</span>
+      <div class="card-info">
+        <div class="card-title">The Garden of Demeter</div>
+        <div class="card-subtitle">Coming soon — Tend a dying garden. The harvest determines your fate.</div>
+        <div class="card-meta">In development</div>
+      </div>
+      <span class="card-arrow" style="color:var(--text-dim);">◈</span>
+    </div>
   </div>
 
-  <!-- IMAGE ANCHOR -->
-  <div class="image-anchor" id="imageAnchor">
-    <div class="img-placeholder">The mists of Glimthaven Keep swirl as the tale begins...</div>
+  <div class="playbill-footer">
+    <a href="/nexus/">◈ NEXUS</a>
+    <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-dim);">Ealdforn Stage v1.0</span>
+    <a href="/wiki/">📜 ARCHIVE</a>
   </div>
-
-  <!-- NARRATIVE -->
-  <div class="narrative" id="narrative">
-    <span class="location">Glimthaven Keep, the Storm Coast</span> — Year 847 of the Ealdforn Reckoning.<br><br>
-    You are the <span class="speaker">bastard of King Haldric</span>, lord of the minor house of Helm-hallen. Your father has given you a crumbling keep on the edge of the Storm Coast — a test, or an exile. The stones are cold. The garrison is thin. The village looks to you with hunger in their eyes.<br><br>
-    A raven arrives at dawn. The gods of Olympus have taken notice of your bloodline. One of them will visit you today.
-  </div>
-
-  <!-- CHOICES -->
-  <div class="choices" id="choices"></div>
-
-  <!-- HISTORY -->
-  <div class="history" id="history">
-    <div class="history-title">Chronicle</div>
-    <div class="history-entry" style="color:var(--text-dim);font-style:italic;">No entries yet. Your saga begins now.</div>
-  </div>
-
-  <!-- FOOTER -->
-  <div class="game-footer">
-    <a href="/nexus/" class="nexus-link">◈ NEXUS</a>
-    <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-dim);">Ealdforn v2.0 · The Pantheon Cycle</span>
-    <a href="/wiki/" class="nexus-link">📜 ARCHIVE</a>
-  </div>
-
 </div>
 
-<script>
-// ════════════════════════════════════
-// EALDFORN — The Bastard of Helm-hallen
-// Pantheon Text Adventure · 6 Turns
-// ════════════════════════════════════
-
-// ── GOD DECK ──
-var GOD_DECK = [
-  { name:'Zeus',      glyph:'⚡', path:'/zeus/',      domain:'authority',  aspect:'king',       color:'#f0c040' },
-  { name:'Hera',      glyph:'👑', path:'/hera/',      domain:'order',      aspect:'queen',      color:'#c0a0d0' },
-  { name:'Poseidon',  glyph:'🌊', path:'/poseidon/',  domain:'depths',     aspect:'tide',       color:'#4060a0' },
-  { name:'Demeter',   glyph:'🌿', path:'/demeter/',   domain:'harvest',    aspect:'growth',     color:'#6b9e5a' },
-  { name:'Athena',    glyph:'🦉', path:'/athena/',    domain:'wisdom',     aspect:'strategy',   color:'#8090c0' },
-  { name:'Apollo',    glyph:'☀️', path:'/apollo/',    domain:'light',      aspect:'synthesis',  color:'#f0a040' },
-  { name:'Artemis',   glyph:'🏹', path:'/artemis/',   domain:'hunt',       aspect:'pursuit',    color:'#7eb8a0' },
-  { name:'Hephaestus',glyph:'🔨', path:'/hephaestus/',domain:'forge',      aspect:'craft',      color:'#e89040' },
-  { name:'Aphrodite', glyph:'💋', path:'/aphrodite/', domain:'beauty',     aspect:'desire',     color:'#e06090' },
-  { name:'Ares',      glyph:'⚔️', path:'/ares/',      domain:'war',        aspect:'fury',       color:'#c04040' },
-  { name:'Hermes',    glyph:'🪽', path:'/hermes/',    domain:'messengers', aspect:'speed',      color:'#c060c0' },
-  { name:'Persephone',glyph:'🖤', path:'/persephone/',domain:'underworld',  aspect:'return',     color:'#a08090' }
-];
-
-// ── GAME STATE ──
-var state = {
-  turn: 0,
-  maxTurns: 6,
-  visitedGods: [],
-  currentGod: null,
-  chronicle: [],
-  playerName: 'Bastard of Helm-hallen',
-  location: 'Glimthaven Keep',
-  traits: { authority:0, wisdom:0, courage:0, cunning:0, devotion:0 }
-};
-
-// ── NIGHTCAFE IMAGE GENERATION ──
-function generateNightCafeImage(god, scene) {
-  var prompt = 'dark fantasy, ' + god.aspect + ' god ' + god.name + ', ' + scene + 
-    ', mythic atmosphere, cinematic lighting, oil painting style, ancient stone keep, storm coast, raven, medieval, 4k';
-  var seed = Math.floor(Math.random() * 99999);
-  var url = 'https://image.pollinations.ai/prompt/' + encodeURIComponent(prompt) + 
-    '?width=1024&height=768&seed=' + seed + '&nologo=true';
-  return url;
-}
-
-// ── SCENE GENERATION ──
-function generateScene(god) {
-  var scenes = {
-    authority: [
-      'appears in a thunderclap above the keep, his voice shaking the stones',
-      'descends on a bolt of lightning, demanding an oath of fealty',
-      'sits upon your father\'s empty throne, judging your worth'
-    ],
-    order: [
-      'arrives in a procession of peacocks, surveying the disorder of your household',
-      'examines the keep\'s ledgers with a disapproving eye',
-      'offers you a marriage alliance — but the price is your independence'
-    ],
-    depths: [
-      'rises from the sea cliffs below the keep, water streaming from his beard',
-      'speaks of a treasure hidden in the deep — and a monster guarding it',
-      'warns of an earthquake coming, and demands you prepare the village'
-    ],
-    harvest: [
-      'walks through your barren fields, and where she steps, green shoots rise',
-      'offers you a seed — plant it, and your land will prosper, but it requires blood to grow',
-      'mourns the dying orchard; she will save it if you promise to tend it forever'
-    ],
-    wisdom: [
-      'appears as an owl on your windowsill, speaking in riddles about your father\'s court',
-      'offers strategic counsel about the neighboring lords who plot against you',
-      'tests you with a question: what is the difference between a king and a tyrant?'
-    ],
-    light: [
-      'arrives at dawn, golden light spilling over the walls, and sings a prophecy',
-      'offers to illuminate the dark corners of your lineage — but the truth may burn',
-      'challenges you to create something beautiful for the keep before sunset'
-    ],
-    hunt: [
-      'appears at the edge of the forest, silver bow in hand, tracking something in the dark',
-      'offers to teach you to hunt — not deer, but the traitors hiding in your court',
-      'warns of a beast in the woods that has been killing villagers. She will help you track it.'
-    ],
-    forge: [
-      'sets up his anvil in your courtyard, demanding the broken swords of your garrison',
-      'offers to forge you a crown — but it requires metal from each of the other eleven gods',
-      'inspects the keep\'s defenses with a grunt; they are inadequate. He can fix them.'
-    ],
-    beauty: [
-      'appears in your mirror, more beautiful than anything you\'ve seen, and asks if you feel worthy',
-      'offers to make you irresistible to your enemies — but warns that love is a weapon',
-      'whispers that one of your advisors is in love with you, and one plans to betray you'
-    ],
-    war: [
-      'arrives in full battle armor, bloodied from some unseen conflict, and demands your swords',
-      'challenges you to single combat to prove your worth as a lord',
-      'warns of an invasion coming from the south. He will fight beside you — if you are brave enough.'
-    ],
-    messengers: [
-      'appears suddenly behind you, out of breath, carrying a sealed scroll from Olympus',
-      'offers to deliver a message to any god — but his price is a secret you hold',
-      'challenges you to a race across the keep\'s walls. If you win, he owes you a favor.'
-    ],
-    underworld: [
-      'rises from a crack in the keep\'s foundation, smelling of pomegranate and grave soil',
-      'offers you a glimpse of your dead mother — but you must hold her hand and let go',
-      'warns that your father\'s death is coming sooner than you think. She knows the hour.'
-    ]
-  };
-
-  var domainScenes = scenes[god.domain] || scenes['authority'];
-  return domainScenes[state.turn % domainScenes.length];
-}
-
-// ── CHOICE GENERATION ──
-function generateChoices(god) {
-  var domainActions = {
-    authority: [
-      { text:'Swear fealty to ' + god.name, glyph:'⚡', trait:'authority', outcome:'The thunder quiets. You have bent the knee. ' + god.name + ' nods — once. You are now under the protection of Olympus.' },
-      { text:'Demand ' + god.name + ' prove their worth first', glyph:'🗡️', trait:'courage', outcome:'A dangerous gamble. ' + god.name + '\'s eyes narrow. But there is a flicker of respect there. The god inclines their head — barely. "Bold. Foolish. But bold."' },
-      { text:'Ask ' + god.name + ' about your father, King Haldric', glyph:'👑', trait:'wisdom', outcome:god.name + ' grows still. "Your father... there is much you do not know. The king keeps secrets even from Olympus."' }
-    ],
-    order: [
-      { text:'Accept ' + god.name + '\'s counsel on ruling your keep', glyph:'👑', trait:'wisdom', outcome:'The goddess smiles — a rare thing. "Order is not chains, little lord. It is the rhythm that keeps the chaos at bay."' },
-      { text:'Ask ' + god.name + ' to bless your household', glyph:'🏠', trait:'devotion', outcome:'She walks through your halls, touching each doorframe. The keep feels... warmer. Safer. "A blessed house stands longer than a strong one."' },
-      { text:'Request ' + god.name + ' arrange an alliance through marriage', glyph:'💍', trait:'authority', outcome:'She produces a scroll. Three names. Three houses. Each alliance would strengthen your claim. But you must choose one by sunset.' }
-    ],
-    depths: [
-      { text:'Follow ' + god.name + ' to the sea cliffs to seek the treasure', glyph:'🌊', trait:'courage', outcome:'The god leads you down a path you never knew existed. At the bottom, where waves crash, something glitters in the dark.' },
-      { text:'Ask ' + god.name + ' to bless your fishing village', glyph:'🐟', trait:'devotion', outcome:'The sea god raises a hand. The waves still. The fishermen cry out in joy as nets come up full for the first time in months.' },
-      { text:'Demand ' + god.name + ' reveal the monster in the deep', glyph:'👁️', trait:'wisdom', outcome:'"You are not ready for what sleeps below," ' + god.name + ' rumbles. "But I will tell you this — it was your father who put it there."' }
-    ],
-    harvest: [
-      { text:'Plant ' + god.name + '\'s seed in the courtyard', glyph:'🌱', trait:'devotion', outcome:'You dig the soil with your own hands. The seed slips in. ' + god.name + ' smiles — a mother\'s smile. "Now we wait. Growth cannot be rushed."' },
-      { text:'Ask ' + god.name + ' to teach you to tend the land', glyph:'🌿', trait:'wisdom', outcome:'She kneels in the dirt beside you — a goddess, kneeling. "The earth does not care that you are a bastard. It only cares that you show up."' },
-      { text:'Offer ' + god.name + ' the dying orchard in exchange for her favor', glyph:'🍎', trait:'cunning', outcome:'She touches the oldest tree. It shudders. A single apple falls into her hand. "This orchard will live. But you will owe me a harvest."' }
-    ],
-    wisdom: [
-      { text:'Answer ' + god.name + '\'s riddle', glyph:'🦉', trait:'wisdom', outcome:'You think carefully before speaking. The owl tilts her head. "Correct. You have more of your mother in you than your father."' },
-      { text:'Ask ' + god.name + ' to teach you statecraft', glyph:'📜', trait:'authority', outcome:'She produces a map of the Storm Coast. Every house. Every alliance. Every weakness. "Study this. Your enemies already have."' },
-      { text:'Request ' + god.name + ' reveal a secret about your court', glyph:'👁️', trait:'cunning', outcome:'"The chamberlain. He writes letters to your father every week. He is not a spy — he is a judge. Your father wants to know if you are worthy."' }
-    ],
-    light: [
-      { text:'Listen to ' + god.name + '\'s prophecy', glyph:'☀️', trait:'devotion', outcome:'The god sings. The words burn themselves into your memory. You will face three trials. You will lose something precious. You will rise.' },
-      { text:'Ask ' + god.name + ' to illuminate your lineage', glyph:'🔆', trait:'wisdom', outcome:'Light floods the hall. Shadows you never noticed appear — and in them, faces. Your mother. Your grandmother. A line of bastards stretching back centuries.' },
-      { text:'Create something beautiful as ' + god.name + ' commands', glyph:'🎨', trait:'devotion', outcome:'You take up a quill, a chisel, a brush — whatever is near. The work is crude. But ' + god.name + ' touches it and it gleams. "Beauty is effort. You have made effort."' }
-    ],
-    hunt: [
-      { text:'Join ' + god.name + ' in the hunt', glyph:'🏹', trait:'courage', outcome:'You run through the dark forest, bow in hand. The god moves like silver wind beside you. Ahead — something breathing. Something waiting.' },
-      { text:'Ask ' + god.name + ' to track the traitors in your court', glyph:'🔍', trait:'cunning', outcome:'She draws her bow. An arrow looses — not at flesh, but at shadow. The shadow screams. A name is revealed. You know who to watch now.' },
-      { text:'Learn the hunter\'s craft from ' + god.name, glyph:'🏕️', trait:'wisdom', outcome:'"The hunt is not the kill," she says. "It is the tracking. The patience. The knowing when to loose and when to wait. Remember this."' }
-    ],
-    forge: [
-      { text:'Commission ' + god.name + ' to forge you a weapon', glyph:'⚒️', trait:'courage', outcome:'The god examines your broken sword. "This is garbage. I will make you something that sings." Sparks fly. The anvil rings.' },
-      { text:'Ask ' + god.name + ' to repair the keep\'s defenses', glyph:'🏰', trait:'authority', outcome:'He walks the walls, grunting. By sunset, the gates are reinforced. The watchtower stands straighter. "Functional. Don\'t ask for pretty."' },
-      { text:'Learn smithing from ' + god.name, glyph:'🔥', trait:'wisdom', outcome:'He hands you a hammer. "Strike here. Not there — HERE. Good. Again." By the end, your arms ache. But you have made something. It is ugly. It is yours.' }
-    ],
-    beauty: [
-      { text:'Ask ' + god.name + ' who among your court loves you', glyph:'💕', trait:'cunning', outcome:'She laughs — a sound like bells. "The stable girl. She has loved you since you arrived. She will never say it."' },
-      { text:'Ask ' + god.name + ' who among your court will betray you', glyph:'🗡️', trait:'wisdom', outcome:'Her smile fades. "The castellan. He thinks you are weak. He writes to your half-brother, offering to open the gates."' },
-      { text:'Request ' + god.name + '\'s blessing to command attention', glyph:'✨', trait:'authority', outcome:'She touches your cheek. "You were always beautiful, bastard. You just didn\'t believe it. Now — go. They will listen."' }
-    ],
-    war: [
-      { text:'Accept ' + god.name + '\'s challenge to single combat', glyph:'⚔️', trait:'courage', outcome:'You raise your sword. The god charges. The clash echoes across the cliffs. You do not win — but you do not fall. "Good," he growls. "You can fight."' },
-      { text:'Ask ' + god.name + ' to train your garrison', glyph:'🛡️', trait:'authority', outcome:'He puts your soldiers through drills that leave them gasping. By evening, they stand taller. They look at you differently now. You trained alongside them.' },
-      { text:'Seek ' + god.name + '\'s counsel on the coming invasion', glyph:'🗺️', trait:'wisdom', outcome:'He draws in the dirt — troop movements, choke points, supply lines. "The south will come in spring. You have until then to prepare. Do not waste it."' }
-    ],
-    messengers: [
-      { text:'Send ' + god.name + ' with a message to another god', glyph:'✉️', trait:'cunning', outcome:'He grins. "Which god?" You name one. He vanishes. Returns in three heartbeats with a reply. "They said yes. Whatever you asked — they said yes."' },
-      { text:'Race ' + god.name + ' across the keep walls', glyph:'🏃', trait:'courage', outcome:'You run. He lets you almost win. "Fast for a mortal! But not fast enough." He hands you a token — a feather that will summon him once.' },
-      { text:'Ask ' + god.name + ' what secret he knows about you', glyph:'🪽', trait:'wisdom', outcome:'He leans close. "Your mother is not dead. She is in the underworld. Persephone knows where. I was not supposed to tell you this."' }
-    ],
-    underworld: [
-      { text:'Accept ' + god.name + '\'s offer to see your mother', glyph:'🖤', trait:'devotion', outcome:'She takes your hand. The world goes cold. And there — standing in a field of asphodel — your mother. She turns. She sees you. She smiles.' },
-      { text:'Ask ' + god.name + ' about your father\'s death', glyph:'💀', trait:'wisdom', outcome:'"Soon," she whispers. "The king\'s heart is weak. He will not see another winter. When he dies, your half-brother will move against you. Be ready."' },
-      { text:'Request ' + god.name + ' to bless your ancestors', glyph:'🕯️', trait:'devotion', outcome:'She kneels. Touches the ground. Ghostly forms rise — Helm-hallen lords going back seven generations. They look at you. They nod. You are recognized.' }
-    ]
-  };
-
-  var actions = domainActions[god.domain] || domainActions['authority'];
-  // Pick 3 unique actions
-  var shuffled = actions.slice();
-  for (var i = shuffled.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    var temp = shuffled[i]; shuffled[i] = shuffled[j]; shuffled[j] = temp;
-  }
-  return shuffled.slice(0, 3);
-}
-
-// ── DRAW A GOD ──
-function drawGod() {
-  var remaining = GOD_DECK.filter(function(g) {
-    return state.visitedGods.indexOf(g.name) === -1;
-  });
-  if (remaining.length === 0) {
-    remaining = GOD_DECK;
-  }
-  var drawn = remaining[Math.floor(Math.random() * remaining.length)];
-  state.currentGod = drawn;
-  state.visitedGods.push(drawn.name);
-  return drawn;
-}
-
-// ── RENDER TURN ──
-function renderTurn() {
-  state.turn++;
-  document.getElementById('turnBadge').textContent = 'Turn ' + state.turn + '/' + state.maxTurns;
-
-  var god = drawGod();
-  var scene = generateScene(god);
-  var imageUrl = generateNightCafeImage(god, scene);
-
-  // Update image
-  var anchor = document.getElementById('imageAnchor');
-  anchor.innerHTML = '<img src="' + imageUrl + '" alt="' + god.name + ' appears" onerror="this.parentElement.innerHTML=\'<div class=img-placeholder>The mists part as '+god.name+' arrives...</div>\'">';
-
-  // Update narrative
-  var narrative = document.getElementById('narrative');
-  narrative.innerHTML = 
-    '<span class="location">Glimthaven Keep, Turn ' + state.turn + '</span> — ' +
-    'A presence fills the hall. The torches flicker. <span class="god-name">' + god.glyph + ' ' + god.name + '</span>, ' +
-    'god of ' + god.domain + ', ' + scene + '.<br><br>' +
-    '<span class="speaker">' + god.name + ' speaks:</span> "I have watched you, bastard of Helm-hallen. ' +
-    'Your blood is thin but your will is iron. Choose your next step carefully."';
-
-  // Update choices
-  var choices = generateChoices(god);
-  var choicesEl = document.getElementById('choices');
-  choicesEl.innerHTML = choices.map(function(c, i) {
-    return '<button class="choice-btn" onclick="makeChoice(\'' + c.trait + '\', \'' + 
-      escapeHTML(c.outcome) + '\', \'' + god.name + '\', \'' + c.glyph + '\')">' +
-      '<span class="choice-glyph">' + c.glyph + '</span>' +
-      '<span class="choice-text">' + c.text + '</span>' +
-      '<span class="choice-hint">+' + c.trait + '</span></button>';
-  }).join('');
-}
-
-function escapeHTML(str) {
-  return String(str).replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
-// ── MAKE A CHOICE ──
-function makeChoice(trait, outcome, godName, godGlyph) {
-  // Update trait
-  state.traits[trait] = (state.traits[trait] || 0) + 1;
-
-  // Add to chronicle
-  state.chronicle.push({
-    turn: state.turn,
-    god: godName,
-    glyph: godGlyph,
-    trait: trait,
-    outcome: outcome
-  });
-
-  // Update history
-  var historyEl = document.getElementById('history');
-  var entries = state.chronicle.map(function(entry) {
-    return '<div class="history-entry"><span class="h-turn">Turn ' + entry.turn + '</span> — ' +
-      '<span class="h-god">' + entry.glyph + ' ' + entry.god + '</span>: ' +
-      entry.outcome.substring(0, 100) + '...</div>';
-  });
-  if (entries.length === 0) {
-    historyEl.innerHTML = '<div class="history-title">Chronicle</div><div class="history-entry" style="color:var(--text-dim);font-style:italic;">No entries yet.</div>';
-  } else {
-    historyEl.innerHTML = '<div class="history-title">Chronicle</div>' + entries.join('');
-    historyEl.scrollTop = historyEl.scrollHeight;
-  }
-
-  // Update narrative with outcome
-  var narrative = document.getElementById('narrative');
-  narrative.innerHTML = 
-    '<span class="speaker">' + godGlyph + ' ' + godName + ':</span> "' + outcome + '"<br><br>' +
-    '<span style="color:var(--text-dim);">Trait gained: <span style="color:var(--gold);">+' + trait + '</span> · ' +
-    'Current traits — Authority:' + (state.traits.authority||0) + 
-    ' Wisdom:' + (state.traits.wisdom||0) + 
-    ' Courage:' + (state.traits.courage||0) + 
-    ' Cunning:' + (state.traits.cunning||0) + 
-    ' Devotion:' + (state.traits.devotion||0) + '</span>';
-
-  // Clear choices
-  document.getElementById('choices').innerHTML = '';
-
-  // Next turn or end
-  if (state.turn >= state.maxTurns) {
-    endGame();
-  } else {
-    setTimeout(renderTurn, 2000);
-  }
-}
-
-// ── END GAME ──
-function endGame() {
-  var narrative = document.getElementById('narrative');
-  var dominantTrait = Object.keys(state.traits).reduce(function(a, b) {
-    return state.traits[a] > state.traits[b] ? a : b;
-  });
-
-  var endings = {
-    authority: 'You have become a true lord of Helm-hallen. The gods recognize your authority. Your father, King Haldric, sends word — he will visit your keep. This is either a great honor or a final test. You are ready for both.',
-    wisdom: 'You sought knowledge above all else. The gods have taught you well. You know the secrets of your court, the weaknesses of your enemies, and the truth about your mother. Knowledge is power — and you are now powerful.',
-    courage: 'You faced every challenge the gods threw at you. You fought. You ran. You stood your ground. The garrison cheers your name. The village calls you the Bastard Lion. Your father will hear of this.',
-    cunning: 'You played the gods\' games and won. You have secrets, alliances, and leverage. The castellan has been replaced. The chamberlain now reports to you. Your half-brother does not know what you have become.',
-    devotion: 'You gave your heart to the gods, and they gave theirs in return. The keep is blessed. The fields grow. Your mother smiled at you from beyond the grave. You are loved by Olympus — and that is its own power.'
-  };
-
-  narrative.innerHTML = 
-    '<span class="god-name">✦ The Saga of the Bastard of Helm-hallen ✦</span><br><br>' +
-    'Six turns. Six gods. Your path is forged.<br><br>' +
-    '<span class="speaker">Your dominant trait:</span> <span class="god-name">' + dominantTrait.toUpperCase() + '</span><br><br>' +
-    endings[dominantTrait] + '<br><br>' +
-    '<span style="color:var(--text-dim);">' +
-    'Authority:' + (state.traits.authority||0) + ' · ' +
-    'Wisdom:' + (state.traits.wisdom||0) + ' · ' +
-    'Courage:' + (state.traits.courage||0) + ' · ' +
-    'Cunning:' + (state.traits.cunning||0) + ' · ' +
-    'Devotion:' + (state.traits.devotion||0) + '</span><br><br>' +
-    '<button class="choice-btn" onclick="restartGame()" style="display:inline-block;width:auto;">' +
-    '<span class="choice-glyph">🔄</span> Play Again</button>';
-
-  document.getElementById('choices').innerHTML = '';
-}
-
-function restartGame() {
-  state = {
-    turn: 0,
-    maxTurns: 6,
-    visitedGods: [],
-    currentGod: null,
-    chronicle: [],
-    playerName: 'Bastard of Helm-hallen',
-    location: 'Glimthaven Keep',
-    traits: { authority:0, wisdom:0, courage:0, cunning:0, devotion:0 }
-  };
-  document.getElementById('history').innerHTML = '<div class="history-title">Chronicle</div><div class="history-entry" style="color:var(--text-dim);font-style:italic;">No entries yet.</div>';
-  renderTurn();
-}
-
-// ════════════════════════════════════
-// INIT
-// ════════════════════════════════════
-renderTurn();
-</script>
 </body>
 </html>
