@@ -1,0 +1,56 @@
+[
+  {
+    "id": "auth_001",
+    "text": "Demand the god recognize your bloodright",
+    "glyph": "👑",
+    "trait": "authority",
+    "tones": ["original", "iron", "silver"],
+    "outcome": "You speak with the voice of kings — or what you imagine kings sound like. The god inclines their head, barely. Recognition, or amusement. You cannot tell which.",
+    "weight": 1.0
+  },
+  {
+    "id": "auth_002",
+    "text": "Command the god to swear an oath of alliance",
+    "glyph": "⚡",
+    "trait": "authority",
+    "tones": ["iron", "silver"],
+    "outcome": "The audacity. The god laughs — thunder, or bells, or grinding stone. 'No mortal has demanded my oath in three hundred years.' They do not refuse. They do not accept. They are... interested.",
+    "weight": 0.9
+  },
+  {
+    "id": "auth_003",
+    "text": "Assert your rule over Glimthaven Keep in the god's presence",
+    "glyph": "🏰",
+    "trait": "authority",
+    "tones": ["original", "iron", "silver", "green"],
+    "outcome": "You speak the words of lordship — old words, legal words, words that bind stone to bone. The keep listens. The god listens too. The walls feel sturdier. The torches burn brighter. You have claimed what was already yours.",
+    "weight": 1.0
+  },
+  {
+    "id": "auth_004",
+    "text": "Demand the god kneel before you",
+    "glyph": "⚡",
+    "trait": "authority",
+    "tones": ["iron"],
+    "outcome": "Silence. The god does not kneel. But they do not strike you down either. They look at you — really look — and something shifts in their expression. 'You are either the bravest mortal I have met, or the stupidest. I will enjoy finding out which.'",
+    "weight": 0.7
+  },
+  {
+    "id": "auth_005",
+    "text": "Negotiate terms with the god as an equal",
+    "glyph": "🤝",
+    "trait": "authority",
+    "tones": ["silver", "green"],
+    "outcome": "You do not kneel. You do not demand. You propose terms. The god is taken aback — this is not how mortals usually speak. 'Equal terms? From a bastard in a crumbling keep?' They smile. 'I accept. This is more interesting than worship.'",
+    "weight": 0.9
+  },
+  {
+    "id": "auth_006",
+    "text": "Invoke the old laws that bind gods to this coast",
+    "glyph": "📜",
+    "trait": "authority",
+    "tones": ["green", "silver"],
+    "outcome": "You recite words older than the keep, older than your father's line, older than some of the gods themselves. The god goes still. The air thickens. 'Those laws were not meant for mortal tongues. Who taught you?' You do not answer. You do not need to.",
+    "weight": 0.85
+  }
+]
