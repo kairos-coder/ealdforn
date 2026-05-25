@@ -1,0 +1,56 @@
+[
+  {
+    "id": "cour_001",
+    "text": "Accept the god's challenge to single combat",
+    "glyph": "⚔️",
+    "trait": "courage",
+    "tones": ["original", "iron"],
+    "outcome": "You raise your weapon. The god charges. The clash echoes across the cliffs. You do not win — but you do not fall. 'Good,' the god growls. 'You can fight. I was beginning to think your father's blood had thinned.'",
+    "weight": 1.0
+  },
+  {
+    "id": "cour_002",
+    "text": "Stand your ground as the god tests your resolve",
+    "glyph": "🛡️",
+    "trait": "courage",
+    "tones": ["original", "iron", "green"],
+    "outcome": "The god brings their power to bear — not to strike, but to crush. The weight of divinity presses down on you. Your knees buckle. Your bones scream. But you do not kneel. When the pressure lifts, the god is smiling. 'Iron. Good. I can work with iron.'",
+    "weight": 0.95
+  },
+  {
+    "id": "cour_003",
+    "text": "Lead the garrison in a show of mortal defiance",
+    "glyph": "🏴",
+    "trait": "courage",
+    "tones": ["iron"],
+    "outcome": "You call your soldiers — all fifteen of them, old men and boys — and form a line before the god. They are terrified. So are you. But you stand together. The god looks at the line of trembling steel and nods. 'A lord who is loved. That is rarer than a lord who is strong.'",
+    "weight": 0.85
+  },
+  {
+    "id": "cour_004",
+    "text": "Venture into the dark with the god as your only guide",
+    "glyph": "🌑",
+    "trait": "courage",
+    "tones": ["green", "original"],
+    "outcome": "The god leads you beyond the walls, beyond the firelight, into the dark where older things dwell. You follow. Your heart pounds. But you follow. When you return, something has changed in you. The dark is not your enemy. It is just another country.",
+    "weight": 0.9
+  },
+  {
+    "id": "cour_005",
+    "text": "Speak truth to the god, even if it means your death",
+    "glyph": "💀",
+    "trait": "courage",
+    "tones": ["iron", "green"],
+    "outcome": "You say what you have never said aloud — to anyone. The words are treason. They are heresy. They are true. The god listens. The silence afterward is worse than any thunder. Then: 'No one has spoken to me like that since the old kings died. I have missed it.'",
+    "weight": 0.8
+  },
+  {
+    "id": "cour_006",
+    "text": "Challenge the god to prove their own worth",
+    "glyph": "⚡",
+    "trait": "courage",
+    "tones": ["iron", "original"],
+    "outcome": "The audacity. The god stares. Your garrison holds its breath. 'You want ME to prove MY worth? To YOU?' The laugh that follows shakes the walls. 'I like you, bastard. I will not kill you today. I want to see what you become.'",
+    "weight": 0.75
+  }
+]
