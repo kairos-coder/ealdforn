@@ -1,0 +1,38 @@
+[
+  {
+    "id": "war_001",
+    "text": "Challenge Ares to single combat with your garrison as witness",
+    "glyph": "⚔️",
+    "trait": "courage",
+    "tones": ["iron", "original"],
+    "outcome": "Ares grins — a wolf's grin. 'Finally. A mortal who understands.' The fight is brutal. He does not hold back. You take wounds that will scar for life. But you land one blow — one — and his blood spatters the cobblestones. He laughs. 'IRON. You are IRON, bastard.'",
+    "weight": 1.0
+  },
+  {
+    "id": "war_002",
+    "text": "Ask Ares to train your garrison in the art of war",
+    "glyph": "🛡️",
+    "trait": "authority",
+    "tones": ["iron"],
+    "outcome": "Ares puts your soldiers through drills that leave them gasping, bleeding, vomiting. Three quit. Two you dismiss yourself. The ten who remain are no longer farmers and boys. They are killers. 'A small army,' Ares says, 'but a sharp one. They will hold.'",
+    "weight": 0.9
+  },
+  {
+    "id": "war_003",
+    "text": "Learn the battle-song of the ancient warriors",
+    "glyph": "🎵",
+    "trait": "devotion",
+    "tones": ["iron", "green"],
+    "outcome": "Ares sings — a low, brutal thing, more growl than melody. It is the song warriors sang before they had words for war. You learn it. When you sing it later, alone on the battlements, you feel something ancient stir in your blood. The Iron Bastard has found his anthem.",
+    "weight": 0.85
+  },
+  {
+    "id": "war_004",
+    "text": "Strategize with Ares about the coming invasion",
+    "glyph": "🗺️",
+    "trait": "wisdom",
+    "tones": ["iron", "silver"],
+    "outcome": "Ares draws in the dirt — not just troop movements, but the psychology of your enemies. 'Fear is a weapon. Use it before you use steel.' You study his diagrams. You learn more about war in one hour than in a lifetime of drilling.",
+    "weight": 0.9
+  }
+]
