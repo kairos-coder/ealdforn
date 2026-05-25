@@ -1,0 +1,56 @@
+[
+  {
+    "id": "cun_001",
+    "text": "Propose a bargain the god did not expect",
+    "glyph": "🤝",
+    "trait": "cunning",
+    "tones": ["silver", "green"],
+    "outcome": "You offer something the god did not know they wanted. Their eyes narrow. 'You bargain like a merchant. I mean that as a compliment — merchants survive where kings fall.' The deal is struck. Both of you know you got the better half.",
+    "weight": 1.0
+  },
+  {
+    "id": "cun_002",
+    "text": "Turn the god's own words against them",
+    "glyph": "🪝",
+    "trait": "cunning",
+    "tones": ["silver"],
+    "outcome": "The god speaks. You listen. And in their words, you find the crack — the contradiction, the loophole, the opening. You drive your argument through it like a blade. The god blinks. 'Clever. I will remember that.' They are not angry. They are impressed.",
+    "weight": 0.9
+  },
+  {
+    "id": "cun_003",
+    "text": "Reveal a secret you've been holding about the god's rivals",
+    "glyph": "🗝️",
+    "trait": "cunning",
+    "tones": ["silver", "original"],
+    "outcome": "You whisper something you learned from the old woman by the well — something about another god, another pact, another broken promise. The god's expression shifts. 'That changes things. You have given me a weapon, little lord. I will not forget the debt.'",
+    "weight": 0.85
+  },
+  {
+    "id": "cun_004",
+    "text": "Lay a trap of words and let the god walk into it",
+    "glyph": "🕸️",
+    "trait": "cunning",
+    "tones": ["silver"],
+    "outcome": "You ask an innocent question. Then another. Then a third. The god answers each one freely — and only at the end realizes what they have admitted. 'You led me there. Like a sheep to slaughter.' The smile that follows is almost proud. 'Well played.'",
+    "weight": 0.8
+  },
+  {
+    "id": "cun_005",
+    "text": "Offer the god something that costs you nothing but means everything to them",
+    "glyph": "🎭",
+    "trait": "cunning",
+    "tones": ["silver", "green", "original"],
+    "outcome": "You give them a name. Just a name. But it is the name of someone who broke an oath to them centuries ago — someone they thought was beyond their reach. 'How did you know?' You smile. You do not answer. The god owes you now. That is enough.",
+    "weight": 0.9
+  },
+  {
+    "id": "cun_006",
+    "text": "Play dumb and let the god underestimate you",
+    "glyph": "🃏",
+    "trait": "cunning",
+    "tones": ["silver", "original"],
+    "outcome": "You slouch. You stammer. You let the god think you are just another frightened mortal. And then, when their guard is down, you ask the question that changes everything. The god freezes. 'You... you are not what you appear, bastard.' No. You are not.",
+    "weight": 0.75
+  }
+]
