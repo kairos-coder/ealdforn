@@ -1,0 +1,23 @@
+{
+  "title": "The Iron Bastard",
+  "subtitle": "Blood and Steel in Glimthaven Keep",
+  "requires": {
+    "set": "storm-coast",
+    "cast": ["olympians"]
+  },
+  "maxScenes": 6,
+  "player": {
+    "name": "the Iron Bastard of Helm-hallen",
+    "backstory": "You were born on a battlefield, your mother a camp follower who died bringing you into the world. King Haldric claimed you with a grunt and sent you to the harshest keep on the Storm Coast. You were raised by the garrison — old soldiers, broken men, killers who had outlived their wars. They taught you to fight before they taught you to read. Your hands are callused. Your accent is common. The courtiers sneer at your rough edges. But when the raiders come from the south, it is your name the villagers whisper. Not the king's. Yours.",
+    "location": "Glimthaven Keep",
+    "traits": { "authority": 0, "wisdom": 0, "courage": 0, "cunning": 0, "devotion": 0 }
+  },
+  "prologue": "Glimthaven Keep, the Storm Coast — winter of the 847th year. The walls are ice. The garrison is half-starved. Three raiding parties have been sighted in the last fortnight. The villagers look to the keep not with hope but with the hollow eyes of those who have forgotten what hope feels like. You are the Iron Bastard — unacknowledged son of a king who has never set foot in this frozen hall. Your mother is a name on a grave you have never visited. Your father is a seal on letters you no longer open. The gods of Olympus have watched your struggle from their peak. Six of them will descend to test your mettle. You will meet them with steel in your hand and ice in your heart.",
+  "endings": {
+    "authority": "You stand on the battlements as the sun rises over a quiet sea. The raiders are dead or scattered. The garrison stands at attention — not because they must, but because they choose to. You are no longer the king's bastard. You are the Lord of the Storm Coast, and you earned that title with blood and iron. Your father sends a letter. You read it. Then you burn it. Some crowns are inherited. Yours was forged.",
+    "wisdom": "The last raiding party did not attack. They sent an emissary instead — an old warrior who recognized the tactics you deployed. He offered peace in exchange for winter passage through your lands. You accepted. The villagers called it weakness. Then spring came, and the raiders brought trade instead of torches. You knew the difference between a battle worth fighting and one worth avoiding. That knowledge saved more lives than any sword. Your father hears of this. He is... confused. Kings do not understand peace. You do.",
+    "courage": "You met the final raiding party at the gate. Alone. They laughed at first — one bastard against twenty warriors. Then you raised your sword and screamed your mother's name. The garrison charged behind you. The battle was brutal. You took three wounds. You gave back more than you received. The raiders broke. The villagers carried you through the streets on their shoulders. Your blood stained the cobblestones. The stones are still red. The garrison calls you the Bastard Lion. The name is earned. The scars are proof.",
+    "cunning": "The raiders expected a siege. They found an empty keep — the gates open, the fires burning, the food laid out on the tables. They ate. They drank. They fell asleep. You had poisoned the wine. Not enough to kill — enough to paralyze. By dawn, every raider was in chains. You sent them back to their chieftain with a message: 'Come yourself next time. I would rather fight a leader than butcher children.' The chieftain came. He knelt. The Iron Bastard had won without losing a single soldier. Your father's spies report this to the king. He does not know whether to be proud or afraid. Good.",
+    "devotion": "You buried your dead on the sea cliffs — the soldiers who fell, the villagers who starved, the mother you never knew. You carved the stones yourself. Your hands bled. The old woman by the well watched and said nothing. When you finished, she spoke: 'The gods have been watching. They have never seen a bastard grieve like a king before.' You did not answer. You did not need to. The cliffs are sacred now. The villagers leave offerings there — bread, salt, small iron nails. The gods walk those cliffs at night. The Iron Bastard gave them something they had never received from a mortal: humility."
+  }
+}
