@@ -8,16 +8,78 @@
   "maxScenes": 6,
   "player": {
     "name": "the Bastard of Helm-hallen",
-    "backstory": "You are the unacknowledged child of King Haldric, sent to govern a failing keep on the edge of the realm. It is a test — or an exile. The gods of Olympus have taken an interest in your bloodline. Six of them will visit you. What you learn from them will determine whether you remain a bastard — or become something more.",
+    "backstory": "You are the unacknowledged child of King Haldric, sent to govern the failing outpost of Glimthaven Keep on the edge of the realm. It is a test — or a polite exile. The court hopes you will disappear into the salt wind and freezing rain. Instead, the gods of Olympus have taken a dangerous interest in your tainted bloodline.",
     "location": "Glimthaven Keep",
     "traits": { "authority": 0, "wisdom": 0, "courage": 0, "cunning": 0, "devotion": 0 }
   },
-  "prologue": "Glimthaven Keep, the Storm Coast — Year 847 of the Ealdforn Reckoning. The stones are cold. The garrison is thin. The village looks to you with hunger in their eyes. A raven arrives at dawn with a message: the gods of Olympus have taken notice of your bloodline. Six of them will visit your keep. The first arrives tonight.",
+  "prologue": "Glimthaven Keep clings to the Storm Coast like a dying man to a cliff’s edge. Year 847 of the Ealdforn Reckoning. The walls are cold and damp, the garrison half-starved and half-loyal. The villagers watch you with wary, hungry eyes, unsure whether you are their last hope or merely the latest punishment sent by a distant king who refuses to name you son. \n\nAt dawn, a black raven beats against your shutter. The scroll it carries is sealed with no wax, only a single drop of gold. Six Olympian gods have taken notice of your blood. They will come to you, one by one, beneath this storm-battered roof. Each will offer gifts and trials. Each will weigh the bastard in you against the king that might yet be. \n\nIn a world that measures worth by blood, you possess none that the realm will openly honor. Tonight, the first god arrives.",
+  "scenes": [
+    {
+      "sceneNumber": 1,
+      "god": "Zeus",
+      "description": "The King of Gods appears in the great hall amid a thunderclap, lightning crawling across the rafters like living veins.",
+      "choices": [
+        { "text": "Kneel and demand he compel King Haldric to acknowledge you as true heir.", "trait": "authority", "effect": "+ Authority" },
+        { "text": "Question why the gods allow kings to break their own blood oaths so easily.", "trait": "wisdom", "effect": "+ Wisdom" },
+        { "text": "Stand tall and declare that even a bastard can earn a throne through strength alone.", "trait": "courage", "effect": "+ Courage" }
+      ]
+    },
+    {
+      "sceneNumber": 2,
+      "god": "Athena",
+      "description": "Athena steps from behind an ancient tapestry, her owl perched silently on her shoulder, eyes gleaming with cold intelligence.",
+      "choices": [
+        { "text": "Ask her to help you forge a new order in Glimthaven based on merit, not blood.", "trait": "authority", "effect": "+ Authority" },
+        { "text": "Engage her in a battle of wits regarding the nature of legitimacy and power.", "trait": "wisdom", "effect": "+ Wisdom" },
+        { "text": "Propose a subtle alliance of information and manipulation against your rivals.", "trait": "cunning", "effect": "+ Cunning" }
+      ]
+    },
+    {
+      "sceneNumber": 3,
+      "god": "Ares",
+      "description": "Ares stalks into the torchlit armory, his armor still wet with the blood of forgotten wars.",
+      "choices": [
+        { "text": "Vow to lead the garrison in a glorious charge against the southern raiders.", "trait": "courage", "effect": "+ Courage" },
+        { "text": "Offer him a campaign of clever ambushes and psychological warfare.", "trait": "cunning", "effect": "+ Cunning" },
+        { "text": "Swear your sword and your life to his eternal service.", "trait": "devotion", "effect": "+ Devotion" }
+      ]
+    },
+    {
+      "sceneNumber": 4,
+      "god": "Hermes",
+      "description": "Hermes slips through a crack in the window shutters, grinning like a thief who has already stolen tomorrow.",
+      "choices": [
+        { "text": "Negotiate with him to sway the loyalty of neighboring lords through silver words.", "trait": "authority", "effect": "+ Authority" },
+        { "text": "Ask him to reveal the hidden truths and betrayals running through your keep.", "trait": "wisdom", "effect": "+ Wisdom" },
+        { "text": "Propose a daring scheme of deception against your father’s spies.", "trait": "cunning", "effect": "+ Cunning" }
+      ]
+    },
+    {
+      "sceneNumber": 5,
+      "god": "Demeter",
+      "description": "Demeter rises from the frozen garden soil, her breath carrying the scent of turned earth and coming spring.",
+      "choices": [
+        { "text": "Promise the people just rule and bountiful harvests under your authority.", "trait": "authority", "effect": "+ Authority" },
+        { "text": "Seek her ancient knowledge of the land’s rhythms and coming omens.", "trait": "wisdom", "effect": "+ Wisdom" },
+        { "text": "Offer her your bastard blood in a solemn rite of devotion.", "trait": "devotion", "effect": "+ Devotion" }
+      ]
+    },
+    {
+      "sceneNumber": 6,
+      "god": "Apollo",
+      "description": "Apollo appears in the oracle chamber, radiant and terrible, his lyre humming with prophecies yet unsung.",
+      "choices": [
+        { "text": "Demand he proclaim your right to rule before gods and men.", "trait": "courage", "effect": "+ Courage" },
+        { "text": "Carefully interpret his riddles to uncover hidden paths to power.", "trait": "wisdom", "effect": "+ Wisdom" },
+        { "text": "Attempt to subtly shape the prophecy itself through clever wording.", "trait": "cunning", "effect": "+ Cunning" }
+      ]
+    }
+  ],
   "endings": {
-    "authority": "You stand in the great hall as the crowned stag banner is raised — not your father's banner, but your own. The steward calls you 'Lord of Helm-hallen' and for the first time, it does not feel like a courtesy. The gods have witnessed you. Your father will come. You are ready for whatever judgment he brings.",
-    "wisdom": "You sit by candlelight with the letter from your father finally open. It names you heir — conditional on the approval of the neighboring lords. You know their secrets now. You know their weaknesses. You know which ones can be bought, which can be threatened, and which — just one — can be trusted. You will not ask for their approval. You will earn it. Or you will take it.",
-    "courage": "The garrison no longer looks at you with doubt. You fought beside them. You bled beside them. When the raiders came from the south, you stood at the gate with your sword drawn and did not flinch. The Bastard Lion, they call you now. The name fits. You have earned it with blood and iron.",
-    "cunning": "Your half-brother's spy has been turned. He now reports to you. The castellan has been replaced by someone loyal — someone who owes you their life. The chamberlain's letters to your father now speak of your competence, your wisdom, your quiet strength. You wrote those letters yourself. The chamberlain signed them willingly. This is not deception — it is survival.",
-    "devotion": "The old woman by the well was right. The gods walked the earth — and they walked into your keep. Your halls are blessed. Your fields grow even in winter. And somewhere in the underworld, your mother knows. Persephone carried word of you. Your mother smiled. She is proud of you. That is worth more than any crown, any title, any kingdom."
+    "authority": "The Silver Crown of Will. When the final god departs, you stand alone in the great hall as the banners of a new house are raised — not the stag of your father, but a silver bastion upon black. The garrison kneels. The villagers cheer. King Haldric’s raven arrives with reluctant words of acknowledgment. You have not begged for your bloodright. You have forged a greater one through raw command. Yet in the quiet hours, you still feel the old wound: the knowledge that you had to earn what others were simply given.",
+    "wisdom": "The Shadow Sage of Glimthaven. You sit by candlelight reading your father’s letter at last. He names you heir, but only if the lords of the Storm Coast consent. You smile. You already know their secrets, their debts, their fears, and their one true weakness. You will not plead for their approval. You will become the only choice they have left. Wisdom has armed you better than any sword, but it has also shown you the lonely cost of seeing too clearly.",
+    "courage": "The Bastard Lion. The southern raiders came in force and found you waiting at the broken gate with sword in hand. You fought beside your men in the freezing rain. When the battle ended, they no longer saw a bastard — they saw their lord. The name spreads along the coast: the Bastard Lion. You have earned with blood and iron what your father withheld with ink and pride. Victory tastes sweet, yet every scar reminds you that courage is the refuge of those denied easier paths.",
+    "cunning": "The Unseen Regent. Your half-brother’s spy now feeds him exactly what you wish him to hear. The castellan serves you in fear and gratitude. The chamberlain’s glowing reports to your father bear the man’s own signature — though you wrote every word. Glimthaven prospers quietly under your hidden hand. No one calls you lord aloud, yet everyone moves to your design. Cunning has kept you alive, but sometimes, in the dead of night, you wonder if you have become the very shadow you once despised.",
+    "devotion": "The God-Touched Bastard. The old woman by the well spoke truly. The gods walked Glimthaven’s halls. Your fields now yield in winter. Your people grow strong and unafraid. Even the stones of the keep seem warmer. Somewhere beyond the veil, your mother knows what you have become. Persephone carried the word. Your mother smiled. In the end, you chose not a crown of mortal gold, but the quiet, ancient blessing of something far older and deeper. The gods called you worthy. That is enough."
   }
 }
