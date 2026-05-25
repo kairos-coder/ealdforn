@@ -1,0 +1,23 @@
+{
+  "title": "The Bastard of Helm-hallen",
+  "subtitle": "A Pantheon Cycle in Six Scenes",
+  "requires": {
+    "set": "storm-coast",
+    "cast": ["olympians"]
+  },
+  "maxScenes": 6,
+  "player": {
+    "name": "the Bastard of Helm-hallen",
+    "backstory": "You are the unacknowledged child of King Haldric, sent to govern a failing keep on the edge of the realm. It is a test — or an exile. The gods of Olympus have taken an interest in your bloodline. Six of them will visit you. What you learn from them will determine whether you remain a bastard — or become something more.",
+    "location": "Glimthaven Keep",
+    "traits": { "authority": 0, "wisdom": 0, "courage": 0, "cunning": 0, "devotion": 0 }
+  },
+  "prologue": "Glimthaven Keep, the Storm Coast — Year 847 of the Ealdforn Reckoning. The stones are cold. The garrison is thin. The village looks to you with hunger in their eyes. A raven arrives at dawn with a message: the gods of Olympus have taken notice of your bloodline. Six of them will visit your keep. The first arrives tonight.",
+  "endings": {
+    "authority": "You stand in the great hall as the crowned stag banner is raised — not your father's banner, but your own. The steward calls you 'Lord of Helm-hallen' and for the first time, it does not feel like a courtesy. The gods have witnessed you. Your father will come. You are ready for whatever judgment he brings.",
+    "wisdom": "You sit by candlelight with the letter from your father finally open. It names you heir — conditional on the approval of the neighboring lords. You know their secrets now. You know their weaknesses. You know which ones can be bought, which can be threatened, and which — just one — can be trusted. You will not ask for their approval. You will earn it. Or you will take it.",
+    "courage": "The garrison no longer looks at you with doubt. You fought beside them. You bled beside them. When the raiders came from the south, you stood at the gate with your sword drawn and did not flinch. The Bastard Lion, they call you now. The name fits. You have earned it with blood and iron.",
+    "cunning": "Your half-brother's spy has been turned. He now reports to you. The castellan has been replaced by someone loyal — someone who owes you their life. The chamberlain's letters to your father now speak of your competence, your wisdom, your quiet strength. You wrote those letters yourself. The chamberlain signed them willingly. This is not deception — it is survival.",
+    "devotion": "The old woman by the well was right. The gods walked the earth — and they walked into your keep. Your halls are blessed. Your fields grow even in winter. And somewhere in the underworld, your mother knows. Persephone carried word of you. Your mother smiled. She is proud of you. That is worth more than any crown, any title, any kingdom."
+  }
+}
