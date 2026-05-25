@@ -1,0 +1,38 @@
+[
+  {
+    "id": "beauty_001",
+    "text": "Ask Aphrodite who among your court truly loves you",
+    "glyph": "💕",
+    "trait": "cunning",
+    "tones": ["silver", "original"],
+    "outcome": "She laughs — a sound like pearls falling into honey. 'The stable girl. She has loved you since the day you arrived, mud-spattered and half-frozen. She will never say it. But she leaves fresh straw in your chambers every morning. That is her love letter.'",
+    "weight": 1.0
+  },
+  {
+    "id": "beauty_002",
+    "text": "Ask Aphrodite who among your court will betray you",
+    "glyph": "🗡️",
+    "trait": "wisdom",
+    "tones": ["silver"],
+    "outcome": "Her smile fades. 'The castellan. He thinks you are weak — a bastard propped up by a distant king. He writes to your half-brother, offering to open the gates when the time comes.' She touches your cheek. 'Do not kill him. Turn him. A turned spy is worth ten dead ones.'",
+    "weight": 0.9
+  },
+  {
+    "id": "beauty_003",
+    "text": "Request Aphrodite's blessing to command attention",
+    "glyph": "✨",
+    "trait": "authority",
+    "tones": ["silver", "original"],
+    "outcome": "She touches your face. A warmth spreads through you — not desire, but presence. 'You were always compelling, bastard. You just did not believe it. Now — go. When you speak, they will listen.' You do. They do.",
+    "weight": 0.85
+  },
+  {
+    "id": "beauty_004",
+    "text": "Learn the art of persuasion from Aphrodite herself",
+    "glyph": "🎭",
+    "trait": "cunning",
+    "tones": ["silver", "green"],
+    "outcome": "She teaches you not how to seduce, but how to see — to read desire in others, to understand what they truly want. 'Love is a weapon,' she says. 'But understanding love is a shield. Learn both. You will need them.'",
+    "weight": 0.9
+  }
+]
