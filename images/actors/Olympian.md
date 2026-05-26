@@ -1,1 +1,0 @@
-Olympian images
