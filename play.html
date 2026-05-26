@@ -11,6 +11,7 @@
   --gold: #c9a84c; --amber: #c9702e; --rubric: #8b3a3a;
   --font-body: 'Georgia', 'Times New Roman', serif;
   --font-mono: 'Courier New', monospace;
+  --block-bg: rgba(10, 8, 4, 0.88);
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
@@ -30,14 +31,18 @@ body {
 .stage-main {
   flex:1; display:flex; flex-direction:column; gap:0;
   border:1px solid var(--border); border-radius:6px; overflow:hidden;
-  background:var(--surface); box-shadow:0 0 40px rgba(0,0,0,0.3);
+  box-shadow:0 0 40px rgba(0,0,0,0.3);
+  position:relative;
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
   min-width:0;
 }
 
 .stage-header {
   padding:12px 18px; border-bottom:1px solid var(--border);
   display:flex; align-items:center; gap:10px;
-  background:rgba(0,0,0,0.2);
+  background:rgba(10,8,4,0.92); position:relative; z-index:2;
 }
 .stage-header .header-icon { font-size:20px; }
 .stage-header .header-title { font-size:13px; color:var(--gold); letter-spacing:1px; }
@@ -53,14 +58,14 @@ body {
 }
 .stage-header a:hover { color:var(--gold); }
 
-/* ── STAGE CONTENT ── */
+/* ── STAGE CONTENT BLOCKS — dark backing for readability ── */
 #stageContainer {
   flex:1; display:flex; flex-direction:column;
 }
 
 .scene-image {
   width:100%; max-height:280px; overflow:hidden; border-bottom:1px solid var(--border);
-  background:var(--bg);
+  background:rgba(10,8,4,0.6); position:relative; z-index:1;
 }
 .scene-image img {
   width:100%; height:auto; max-height:280px; object-fit:cover; display:block;
@@ -71,13 +76,15 @@ body {
 
 .scene-world {
   padding:8px 18px; display:flex; justify-content:space-between;
-  border-bottom:1px solid rgba(42,31,24,0.5); background:rgba(0,0,0,0.15);
+  border-bottom:1px solid rgba(42,31,24,0.5); background:var(--block-bg);
+  position:relative; z-index:1;
 }
 .scene-location { font-size:10px; color:var(--amber); letter-spacing:1px; }
 .scene-weather { font-size:10px; color:var(--text-dim); font-style:italic; }
 
 .scene-prologue, .scene-narration {
   padding:18px; font-size:14px; line-height:1.8; border-bottom:1px solid var(--border);
+  background:var(--block-bg); position:relative; z-index:1;
 }
 .prologue-title { font-size:18px; color:var(--gold); letter-spacing:2px; margin-bottom:4px; }
 .prologue-subtitle { font-size:10px; color:var(--text-dim); letter-spacing:1px; margin-bottom:12px; font-family:var(--font-mono); text-transform:uppercase; }
@@ -87,6 +94,7 @@ body {
 
 .scene-arrival {
   padding:14px 18px; font-size:14px; line-height:1.7; border-bottom:1px solid var(--border);
+  background:var(--block-bg); position:relative; z-index:1;
 }
 .actor-glyph { font-size:20px; }
 .actor-name { font-weight:bold; letter-spacing:1px; }
@@ -94,21 +102,24 @@ body {
 
 .scene-speech {
   padding:14px 18px; font-size:15px; line-height:1.7; font-style:italic;
-  border-bottom:1px solid var(--border); background:rgba(0,0,0,0.1);
-  color:var(--text-bright);
+  border-bottom:1px solid var(--border); background:rgba(10,8,4,0.82);
+  color:var(--text-bright); position:relative; z-index:1;
 }
 
 .scene-outcome {
   padding:18px; font-size:14px; line-height:1.8;
+  background:var(--block-bg); position:relative; z-index:1;
 }
 .trait-gain {
   padding:8px 18px; font-size:10px; color:var(--text-dim);
   font-family:var(--font-mono); border-top:1px solid var(--border);
+  background:rgba(10,8,4,0.92); position:relative; z-index:1;
 }
 .trait-name { color:var(--gold); }
 
 .scene-curtain {
   padding:24px 18px; text-align:center;
+  background:var(--block-bg); position:relative; z-index:1;
 }
 .curtain-title { font-size:20px; color:var(--gold); letter-spacing:3px; margin-bottom:6px; }
 .curtain-subtitle { font-size:12px; color:var(--text-dim); margin-bottom:16px; }
@@ -118,31 +129,33 @@ body {
 
 .scene-actions {
   padding:14px 18px; display:flex; gap:10px; justify-content:center;
+  background:rgba(10,8,4,0.92); position:relative; z-index:1;
 }
 
 /* ── CHOICES ── */
 #choicesContainer {
   padding:12px 18px; display:flex; flex-direction:column; gap:8px;
-  background:var(--bg); border-top:1px solid var(--border);
+  background:rgba(10,8,4,0.92); border-top:1px solid var(--border);
+  position:relative; z-index:1;
 }
 .stage-choice {
-  background:var(--surface); border:1px solid var(--border); color:var(--text);
+  background:rgba(26,20,16,0.9); border:1px solid var(--border); color:var(--text);
   padding:12px 16px; font-family:var(--font-body); font-size:13px;
   border-radius:4px; cursor:pointer; text-align:left; transition:all 0.2s;
   line-height:1.5; display:flex; align-items:center; gap:10px;
 }
-.stage-choice:hover { border-color:var(--gold); background:rgba(201,168,76,0.05); color:var(--text-bright); }
+.stage-choice:hover { border-color:var(--gold); background:rgba(201,168,76,0.08); color:var(--text-bright); }
 .choice-glyph { font-size:20px; flex-shrink:0; }
 .choice-text { flex:1; }
 .choice-hint { font-size:9px; color:var(--text-dim); font-family:var(--font-mono); }
 
 .stage-btn {
-  background:var(--surface); border:1px solid var(--gold); color:var(--gold);
+  background:rgba(26,20,16,0.9); border:1px solid var(--gold); color:var(--gold);
   padding:10px 20px; font-family:var(--font-body); font-size:13px;
   border-radius:4px; cursor:pointer; text-align:center; transition:all 0.2s;
   text-decoration:none; display:inline-block;
 }
-.stage-btn:hover { background:rgba(201,168,76,0.1); color:var(--text-bright); }
+.stage-btn:hover { background:rgba(201,168,76,0.12); color:var(--text-bright); }
 
 /* ── CHRONICLE SIDEBAR ── */
 .stage-sidebar {
@@ -189,7 +202,7 @@ body {
 <div class="stage-wrapper">
 
   <!-- MAIN STAGE -->
-  <div class="stage-main">
+  <div class="stage-main" id="stageMain">
     <div class="stage-header">
       <span class="header-icon">🎭</span>
       <span class="header-title" id="headerTitle">Ealdforn Stage</span>
