@@ -63,9 +63,9 @@ body {
   flex:1; display:flex; flex-direction:column;
 }
 
-.scene-image {
-  width:100%; max-height:280px; overflow:hidden; border-bottom:1px solid var(--border);
-  background:rgba(10,8,4,0.6); position:relative; z-index:1;
+.scene-image img {
+  width:100%; height:auto; max-height:300px; object-fit:contain; display:block;
+  background: rgba(10,8,4,0.6);
 }
 .scene-image img {
   width:100%; height:auto; max-height:280px; object-fit:cover; display:block;
