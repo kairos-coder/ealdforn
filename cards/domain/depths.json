@@ -1,0 +1,38 @@
+[
+  {
+    "id": "depths_001",
+    "text": "Follow Poseidon to the sea cliffs to seek the treasure below",
+    "glyph": "🌊",
+    "trait": "courage",
+    "tones": ["iron", "green", "original"],
+    "outcome": "He leads you down a path you never knew existed — cut into the cliff face, slick with spray. At the bottom, where the waves crash against black rock, something glitters in a tide pool. 'Take it,' Poseidon rumbles. 'It has been waiting for someone brave enough to climb down.'",
+    "weight": 1.0
+  },
+  {
+    "id": "depths_002",
+    "text": "Ask Poseidon to bless your fishing village",
+    "glyph": "🐟",
+    "trait": "devotion",
+    "tones": ["green", "original"],
+    "outcome": "He raises a hand. The waves still. The fishermen cry out as their nets come up full — silver fish, more than they have seen in years. 'The sea gives,' Poseidon says. 'And the sea takes. Today, it gives. Because you asked.'",
+    "weight": 0.9
+  },
+  {
+    "id": "depths_003",
+    "text": "Demand Poseidon reveal the monster in the deep",
+    "glyph": "👁️",
+    "trait": "wisdom",
+    "tones": ["iron", "green"],
+    "outcome": "He is silent for a long moment. The tide seems to pause. 'You are not ready for what sleeps below. But I will tell you this — it was your father's father who put it there. A pact. A betrayal. The monster is the price.' He looks at you. 'Are you willing to pay your grandfather's debt?'",
+    "weight": 0.85
+  },
+  {
+    "id": "depths_004",
+    "text": "Negotiate sea passage rights with Poseidon for your people",
+    "glyph": "⚓",
+    "trait": "authority",
+    "tones": ["silver", "original"],
+    "outcome": "You bargain like a merchant lord — calm, precise, unwilling to flinch. Poseidon is surprised. 'Most mortals beg. You negotiate. I respect that.' He grants your ships safe passage for a year and a day. 'Use the time well, little lord. The sea has a short memory.'",
+    "weight": 0.8
+  }
+]
