@@ -1,0 +1,57 @@
+[
+  {
+    "id": "ghost_wis_01",
+    "tones": ["ghost"],
+    "domain": "wisdom",
+    "text": "Ask the god what the names meant before the war renamed them.",
+    "subtext": "The dead had other names once. Knowing them might change what you owe.",
+    "glyph": "🜁",
+    "trait": "wisdom",
+    "outcome": "Athena tells you. The names on the stones are war-names — titles claimed in battle and carried to the grave. The true names, she says, were softer. Domestic. She recites three of them and you find yourself weeping without knowing why.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_wis_02",
+    "tones": ["ghost"],
+    "domain": "light",
+    "text": "Ask why the torch burns that color. Listen to the whole answer.",
+    "subtext": "You have been watching this flame for seven winters. Tonight it speaks. Pay attention.",
+    "glyph": "🜁",
+    "trait": "wisdom",
+    "outcome": "Apollo tells you that fire changes color when it burns something that was never meant to be consumed. The torch is feeding on the oath-smoke still trapped in these stones from the original compact. You understand now what the keep is made of: not stone, but promise.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_wis_03",
+    "tones": ["ghost"],
+    "domain": "underworld",
+    "text": "Ask the goddess what the dead in this keep are still waiting for.",
+    "subtext": "She moves between worlds. She knows what the dead cannot say for themselves.",
+    "glyph": "🜁",
+    "trait": "wisdom",
+    "outcome": "Persephone is quiet for a moment. Then: they are waiting to be wrong. They believed certain things when they died — about who would come back, who would remember, what the keep would become. They need someone to tell them they were right, or let them know they weren't.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_wis_04",
+    "tones": ["ghost"],
+    "domain": "harvest",
+    "text": "Ask what this keep was before it was a fortress. Before the first stone was cut.",
+    "subtext": "The land remembers what the builders forgot. There was something here before the war.",
+    "glyph": "🜁",
+    "trait": "wisdom",
+    "outcome": "Demeter kneels and presses her palm to the floor. A threshold, she says. Not a building — a crossing-point. People have been coming here to make decisions at the edge of the sea since before any of your names for things existed. The stones were laid around the threshold, not the other way.",
+    "weight": 1
+  },
+  {
+    "id": "ghost_wis_05",
+    "tones": ["ghost"],
+    "domain": "depths",
+    "text": "Ask what the sea has taken from this cliff that you were supposed to keep.",
+    "subtext": "You know the answer. You need the god to confirm it before you can act.",
+    "glyph": "🜁",
+    "trait": "wisdom",
+    "outcome": "Poseidon looks at you with something close to sympathy. One name, he says. A person who fell in the second winter. Not in battle. Not dramatically. Just fell. You were supposed to be watching. You were watching. You watched, and still could not stop it. He confirms this without judgment. The knowing is enough.",
+    "weight": 1
+  }
+]
