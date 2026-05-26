@@ -1,0 +1,23 @@
+{
+  "id": "glimthaven-keep",
+  "name": "Glimthaven Keep",
+  "atmosphere": "glimthaven-keep.jpg",
+  "weather": [
+    "Rain hammers the battlements in long, horizontal sheets.",
+    "A brief silence between squalls — the sea breathes.",
+    "Lightning, far out over the water. No thunder yet.",
+    "The wind has dropped to a moan in the arrow-slits.",
+    "Hail on stone. Then nothing. Then hail again.",
+    "The storm has turned the world to gray and white.",
+    "The torch in the high window flickers. Holds.",
+    "Something moves along the cliff face that is not the wind."
+  ],
+  "worldBeats": [
+    "Seven winters have carved lines in your face that weren't there before. The keep has given you its own kind of aging: patient, salt-scoured, thorough.",
+    "The great hall holds the cold in its stones the way a body holds an old wound. It aches in certain weather. Tonight it aches.",
+    "You have memorized every sound this keep makes. The creak of the north gate. The particular groan of the third step. Tonight there is a new sound. You cannot place it.",
+    "The chest sits where it always sits — beside the wall, beneath the shield that was here when you arrived. You have checked the lock twelve times today. It is still locked. The things inside are still inside.",
+    "The names carved below the hall. You know them by heart now. Some of them you knew in life — briefly, by sight, by reputation. Most of them you only know by stone.",
+    "A torch has been burning in the high window for seven winters. You did not light it. You have never been able to reach the room it comes from. Tonight the color of its light has changed."
+  ]
+}
