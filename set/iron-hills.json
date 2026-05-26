@@ -1,0 +1,19 @@
+{
+  "name": "The Iron Hills",
+  "description": "A fortress carved into highland rock, scarred by a hundred winters of war. The walls are thick and gray, stained with old smoke. The garrison is small but hard — veterans who have forgotten how to surrender.",
+  "atmosphere": "iron-hills.jpg",
+  "weather": [
+    "Sleet drives against the walls like tiny arrows. The forges burn through the night.",
+    "The wind carries the smell of smoke from the south — a village burning, or an army camping.",
+    "Frost on every stone. The soldiers break ice with their spear-butts and curse the cold.",
+    "A rare clear morning. The garrison drills in the yard. Steel on steel. The sound of survival."
+  ],
+  "worldBeats": [
+    "The armory walls are lined with broken blades — each one a battle survived, a soldier lost. The smith works through the night. You can hear his hammer from your chambers. It sounds like a heartbeat.",
+    "The old sergeant who taught you to fight has the cough again. It is worse this winter. He will not see spring. You sit with him in the infirmary. He tells you stories of your mother — a camp follower, brave and frightened, who sang to you before she died.",
+    "A deserter is caught at the postern gate. The garrison wants him hanged. You look at him — a boy, barely sixteen, terrified. The law demands death. But you remember being sixteen and terrified. The garrison watches. The gods are coming. Choose.",
+    "The raiders' banner is sighted on the horizon — a red serpent on a black field. They are three days away. Your scouts report twenty fighting men. You have fifteen. The arithmetic of death is simple. The gods will arrive before the raiders do. Perhaps that is mercy.",
+    "Snow in the highlands. It almost never snows this early. The old sergeant says it means a god is walking the earth nearby. He says the snow is the god's breath, frozen by the mortal air.",
+    "The moon is full and red — a hunter's moon. Something howls in the passes. Your sentries are afraid. You order the gates barred, but the howling continues. It sounds closer now."
+  ]
+}
