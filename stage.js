@@ -1,15 +1,16 @@
 // ============================================
-// EALDFORN STAGE v3.0 — The Player
+// EALDFORN STAGE v2.2 — The Player
 // ============================================
 // Reads script, set, cast, and choice cards.
-// Supports tone-specific card files (cards/[tone].json).
-// Implements Claude's engine improvements:
-//   - Memory Cards (persistent choice echoes)
-//   - God Return Mechanic (second visitation)
-//   - Trait Tension System (opposed traits)
-//   - The Silence Option (fourth choice)
-//   - Narrative Register (voice field in screenplay)
-//   - Warden's Burden (player flavor text)
+// Uses local images from images/ folder.
+// Falls back to Pollinations for missing images.
+//
+// v2.2 additions:
+//   - Memory Cards: prior choices flavor later scenes
+//   - Voice Parameters: screenplay controls speech rate/pitch
+//   - Curtain Call God Reactions: each god gets a closing line
+//   - Ghost tone: card loading from tone-specific folder
+//   - God Return Mechanic: second visits feel different
 // ============================================
 
 var EaldfornStage = (function() {
@@ -23,27 +24,21 @@ var EaldfornStage = (function() {
     scene: 0,
     maxScenes: 6,
     currentActor: null,
-    visitedActors: [],
-    returnedActors: [],
+    visitedActors: [],       // god names seen this run
+    visitCounts: {},         // { godName: N } for return mechanic
     chronicle: [],
-    memoryCards: [],
     traits: {},
     worldBeatIndex: 0,
     tone: 'original',
-    traitTensions: []
+    memoryCards: [],         // brief residue sentences from prior choices
+    curtainActors: []        // ordered list of { name, glyph, color, domain } for curtain
   };
 
   // ── CHOICE CARD CACHE ──
   var choiceCache = {};
-  var toneCards = null;
 
-  // ── OPPOSED TRAIT PAIRS ──
-  var OPPOSED_TRAITS = {
-    'authority': 'devotion',
-    'devotion': 'authority',
-    'cunning': 'courage',
-    'courage': 'cunning'
-  };
+  // ── VOICE ──
+  var voiceParams = { rate: 0.92, pitch: 1.0, pauseBetweenSentences: 400 };
 
   // ════════════════════════════════════
   // INITIALIZATION
@@ -54,7 +49,7 @@ var EaldfornStage = (function() {
     var setId = params.get('set') || 'storm-coast';
     var castIds = params.get('cast') || 'olympians';
 
-    console.log('🎭 Ealdforn Stage v3.0 — Raising the curtain...');
+    console.log('🎭 Ealdforn Stage v2.2 — Raising the curtain...');
     console.log('   Script:', scriptId);
     console.log('   Set:', setId);
     console.log('   Cast:', castIds);
@@ -68,6 +63,14 @@ var EaldfornStage = (function() {
       document.title = script.title + ' — Ealdforn Stage';
       console.log('   ✓ Script loaded:', script.title);
       console.log('   Tone:', state.tone);
+
+      // Apply voice parameters from screenplay
+      if (script.voice) {
+        voiceParams.rate = script.voice.rate || voiceParams.rate;
+        voiceParams.pitch = script.voice.pitch || voiceParams.pitch;
+        voiceParams.pauseBetweenSentences = script.voice.pause_between_sentences || voiceParams.pauseBetweenSentences;
+        console.log('   ✓ Voice params:', voiceParams);
+      }
     } catch (e) {
       console.error('   ✗ Script not found:', scriptId);
       renderError('Script not found: ' + scriptId);
@@ -81,9 +84,9 @@ var EaldfornStage = (function() {
       console.log('   ✓ Set loaded:', set.name);
     } catch (e) {
       console.warn('   ○ Set not found, using defaults');
-      set = { 
-        name: 'Unknown Stage', 
-        weather: ['The air is still.'], 
+      set = {
+        name: 'Unknown Stage',
+        weather: ['The air is still.'],
         worldBeats: ['The world waits.'],
         atmosphere: 'storm-coast.jpg'
       };
@@ -118,24 +121,162 @@ var EaldfornStage = (function() {
       state.traits = { authority: 0, wisdom: 0, courage: 0, cunning: 0, devotion: 0 };
     }
 
-    // Preload tone-specific cards
-    await preloadToneCards();
+    // Preload choice cards
+    await preloadChoiceCards();
 
     renderPrologue();
     return true;
   }
 
   // ════════════════════════════════════
-  // TONE CARD LOADING
+  // IMAGE LAYER
   // ════════════════════════════════════
-  async function preloadToneCards() {
-    var tone = state.tone || 'original';
-    toneCards = await loadChoiceCards(tone + '.json');
-    if (toneCards) {
-      console.log('   ✓ Tone cards loaded: ' + tone + '.json (' + toneCards.length + ' choices)');
-    }
+  function applySetBackground() {
+    var stageMain = document.querySelector('.stage-main');
+    if (!stageMain) return;
+    var bgImage = set.atmosphere || 'storm-coast.jpg';
+    stageMain.style.backgroundImage = 'url(images/sets/' + bgImage + ')';
+    stageMain.style.backgroundSize = 'cover';
+    stageMain.style.backgroundPosition = 'center';
+    stageMain.style.backgroundAttachment = 'fixed';
   }
 
+  function getActorImage(actor) {
+    if (actor.image) return 'images/actors/' + actor.image;
+    console.log('   ⚡ No local image for ' + actor.name + ' — using Pollinations fallback');
+    var prompt = 'dark fantasy, ' + (actor.aspect || 'mythic') + ' god ' + (actor.name || '') +
+      ', ' + (actor.domain || '') + ', mythic atmosphere, cinematic lighting, oil painting style, portrait, 4k';
+    var seed = Math.floor(Math.random() * 99999);
+    return 'https://image.pollinations.ai/prompt/' + encodeURIComponent(prompt) +
+      '?width=1024&height=768&seed=' + seed + '&nologo=true';
+  }
+
+  // ════════════════════════════════════
+  // VOICE NARRATION
+  // ════════════════════════════════════
+  function narrate(text) {
+    if (!window.speechSynthesis || !text) return;
+    window.speechSynthesis.cancel();
+    var sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+    var index = 0;
+    function speakNext() {
+      if (index >= sentences.length) return;
+      var utt = new SpeechSynthesisUtterance(sentences[index].trim());
+      utt.rate = voiceParams.rate;
+      utt.pitch = voiceParams.pitch;
+      utt.onend = function() {
+        index++;
+        setTimeout(speakNext, voiceParams.pauseBetweenSentences);
+      };
+      window.speechSynthesis.speak(utt);
+    }
+    speakNext();
+  }
+
+  // ════════════════════════════════════
+  // MEMORY CARD SYSTEM
+  // ════════════════════════════════════
+  var MEMORY_TEMPLATES = {
+    authority: [
+      'You named yourself. The word has not left the room since.',
+      'You held the door. The hall still carries the echo of that refusal.',
+      'The compact is still yours. You said so, and it became true.',
+      'Authority, once claimed aloud, does not easily unclaim itself.'
+    ],
+    wisdom: [
+      'You asked the right question. The answer is still reshaping things inside you.',
+      'You know something now that changes the shape of everything before it.',
+      'A god told you a truth. You have been carrying it quietly ever since.',
+      'The knowing sits heavy, but less heavy than the not-knowing did.'
+    ],
+    courage: [
+      'You were afraid and stayed anyway. The keep has not forgotten that.',
+      'A god was surprised by you. That is rarer than it sounds.',
+      'You stood at an edge and did not step back. The sea noted this.',
+      'What you said to the god cannot be unsaid. This is not a problem.'
+    ],
+    cunning: [
+      'You gave away something worthless and received something valuable. The arithmetic of it still pleases you.',
+      'A god left satisfied with the wrong thing. This is your doing.',
+      'You moved three things while the divine attention was elsewhere. They are still moved.',
+      'Hermes has been in the world for a very long time. You still surprised him.'
+    ],
+    devotion: [
+      'You gave something back. The lightness afterward was unexpected.',
+      'The released thing is gone. You keep reaching for it and finding only air.',
+      'Something has been witnessed. The witnessing is complete.',
+      'You let go. The keep is different for it. So are you.'
+    ]
+  };
+
+  function generateMemoryCard(trait) {
+    var pool = MEMORY_TEMPLATES[trait] || ['The scene has passed. Something has changed.'];
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  function getMemoryLine() {
+    if (state.memoryCards.length === 0) return null;
+    // Return the most recent memory card
+    return state.memoryCards[state.memoryCards.length - 1];
+  }
+
+  // ════════════════════════════════════
+  // CURTAIN CALL GOD REACTIONS
+  // ════════════════════════════════════
+  var CURTAIN_REACTIONS = {
+    authority: {
+      Zeus: 'He watched you from the end. He does not say whether he approves. He doesn\'t need to.',
+      Hera: 'She folded her hands and made a sound that was neither agreement nor disagreement. You will hear about this later.',
+      Ares: 'He clapped once — sharp, final — and left without looking back.',
+      Hephaestus: 'He was already thinking about something else. The compliment, when it came, arrived three days later in the form of a lock that could not be opened by anything divine.'
+    },
+    wisdom: {
+      Athena: 'She left you with a question you haven\'t answered yet. You suspect you\'re not supposed to.',
+      Apollo: 'He sang something on the way out. You didn\'t recognize the tune, but you\'ve been humming it ever since.',
+      Persephone: 'She paused at the door. "The dead will know," she said. She meant it kindly.',
+      Demeter: 'She pressed her thumb to the floor on her way out. Something in the stones is growing.'
+    },
+    courage: {
+      Ares: 'He left a sword in the corner. Not a gift — more like punctuation.',
+      Artemis: 'She notched an arrow and didn\'t fire it. This, you understood, was the point.',
+      Poseidon: 'He looked at the cliffs one more time before he went. You had the feeling he was recalculating something.',
+      Zeus: 'He left a bruise on your shoulder from where he gripped it. You will not remember receiving it.'
+    },
+    cunning: {
+      Hermes: 'He left a coin on the windowsill. You found it was blank on both sides.',
+      Aphrodite: 'She was still looking at the wet stones when she left. You think she came back later, when you were sleeping.',
+      Athena: 'She told you afterward that she knew what you were doing. She also told you it worked.',
+      Zeus: 'He sent a messenger three days later with a letter that said only: "Well played." The messenger seemed offended to be carrying it.'
+    },
+    devotion: {
+      Persephone: 'She took everything you gave her with both hands, which is how she receives things that matter.',
+      Demeter: 'She blessed the keep on her way out. You didn\'t ask her to. The kitchen garden is doing better.',
+      Apollo: 'He stood in the doorway for a long moment after the names were gone, watching the torch burn white.',
+      Hera: 'She said: "The oath is closed." Three words. But the way she said them made them feel like an ending that had been waiting a very long time.'
+    }
+  };
+
+  function getDefaultCurtainReaction(actorName, trait) {
+    var generic = {
+      authority: actorName + ' departed without ceremony. The weight they left in the room was considerable.',
+      wisdom: actorName + ' left you with more than you came in with. Whether that is a gift is still unclear.',
+      courage: actorName + ' looked at you one last time at the door. The look said several things.',
+      cunning: actorName + ' smiled when they left. You are still not sure why.',
+      devotion: actorName + ' carried what you gave them carefully, like something that might break if handled without attention.'
+    };
+    return generic[trait] || actorName + ' has witnessed you. This is not nothing.';
+  }
+
+  function getCurtainReaction(actorName, trait) {
+    if (CURTAIN_REACTIONS[trait] && CURTAIN_REACTIONS[trait][actorName]) {
+      return CURTAIN_REACTIONS[trait][actorName];
+    }
+    return getDefaultCurtainReaction(actorName, trait);
+  }
+
+  // ════════════════════════════════════
+  // CHOICE CARD DATABASE
+  // ════════════════════════════════════
   async function loadChoiceCards(cardFile) {
     if (choiceCache[cardFile]) return choiceCache[cardFile];
     try {
@@ -143,65 +284,80 @@ var EaldfornStage = (function() {
       if (!resp.ok) throw new Error('HTTP ' + resp.status);
       var data = await resp.json();
       choiceCache[cardFile] = data;
+      console.log('   ✓ Cards loaded:', cardFile, '(' + data.length + ' choices)');
       return data;
     } catch (e) {
+      console.warn('   ○ Cards not found: ' + cardFile);
       return null;
     }
+  }
+
+  async function preloadChoiceCards() {
+    var tone = state.tone || 'original';
+    var cardFiles = [
+      'authority.json', 'wisdom.json', 'courage.json', 'cunning.json', 'devotion.json',
+      'domain/war.json', 'domain/forge.json', 'domain/hunt.json', 'domain/harvest.json',
+      'domain/underworld.json', 'domain/beauty.json', 'domain/depths.json',
+      'domain/light.json', 'domain/wisdom-domain.json', 'domain/authority-domain.json',
+      'domain/order.json', 'domain/messengers.json'
+    ];
+
+    // Tone-specific cards: try loading from tone subfolder
+    if (tone !== 'original') {
+      var toneFiles = [
+        tone + '/authority.json',
+        tone + '/wisdom.json',
+        tone + '/courage.json',
+        tone + '/cunning.json',
+        tone + '/devotion.json'
+      ];
+      cardFiles = cardFiles.concat(toneFiles);
+    }
+
+    var promises = cardFiles.map(function(f) { return loadChoiceCards(f); });
+    await Promise.allSettled(promises);
+    console.log('   ✓ Choice card preload complete');
   }
 
   async function getActorChoices(actor) {
     var domain = actor.domain || 'authority';
     var tone = state.tone || 'original';
-    var godName = (actor.name || '').toLowerCase();
     var choices = [];
 
-    // 1. Try tone-specific cards first (cards/[tone].json)
-    if (toneCards && toneCards.length > 0) {
-      // Filter by this god's domain
-      var domainFiltered = toneCards.filter(function(c) {
-        return c.domain === domain || c.god === godName;
+    // 1. Try domain-specific cards first
+    var domainFile = 'domain/' + domain + '.json';
+    var domainCards = await loadChoiceCards(domainFile);
+
+    if (domainCards && domainCards.length > 0) {
+      var domainFiltered = domainCards.filter(function(c) {
+        return !c.tones || c.tones.indexOf(tone) > -1 || c.tones.indexOf('original') > -1;
       });
-      
-      if (domainFiltered.length >= 3) {
-        choices = domainFiltered;
-      } else if (domainFiltered.length > 0) {
-        // Not enough domain cards — use domain ones plus any tone cards
-        choices = domainFiltered.concat(
-          toneCards.filter(function(c) {
-            return domainFiltered.indexOf(c) === -1;
-          }).slice(0, 5 - domainFiltered.length)
-        );
-      } else {
-        // No domain match — use all tone cards
-        choices = toneCards.slice();
-      }
+      choices = choices.concat(domainFiltered);
     }
 
-    // 2. If no tone cards, fall back to domain + trait pools
-    if (choices.length === 0) {
-      var domainFile = 'domain/' + domain + '.json';
-      var domainCards = await loadChoiceCards(domainFile);
-      
-      if (domainCards && domainCards.length > 0) {
-        var domainFiltered = domainCards.filter(function(c) {
-          return !c.tones || c.tones.indexOf(tone) > -1 || c.tones.indexOf('original') > -1;
+    // 2. Pull from trait pools (standard + tone-specific)
+    var traitPools = ['authority', 'wisdom', 'courage', 'cunning', 'devotion'];
+
+    for (var i = 0; i < traitPools.length; i++) {
+      // Standard
+      var traitCards = await loadChoiceCards(traitPools[i] + '.json');
+      if (traitCards) {
+        var traitFiltered = traitCards.filter(function(c) {
+          return (!c.tones || c.tones.indexOf(tone) > -1 || c.tones.indexOf('original') > -1);
         });
-        choices = choices.concat(domainFiltered);
+        choices = choices.concat(traitFiltered);
       }
 
-      var traitPools = ['authority', 'wisdom', 'courage', 'cunning', 'devotion'];
-      for (var i = 0; i < traitPools.length; i++) {
-        var traitCards = await loadChoiceCards(traitPools[i] + '.json');
-        if (traitCards) {
-          var traitFiltered = traitCards.filter(function(c) {
-            return (!c.tones || c.tones.indexOf(tone) > -1 || c.tones.indexOf('original') > -1);
-          });
-          choices = choices.concat(traitFiltered);
+      // Tone-specific
+      if (tone !== 'original') {
+        var toneTraitCards = await loadChoiceCards(tone + '/' + traitPools[i] + '.json');
+        if (toneTraitCards) {
+          choices = choices.concat(toneTraitCards);
         }
       }
     }
 
-    // 3. Deduplicate by id
+    // 3. Deduplicate by ID
     var seen = {};
     var unique = [];
     for (var d = 0; d < choices.length; d++) {
@@ -219,7 +375,7 @@ var EaldfornStage = (function() {
       var temp = shuffled[s]; shuffled[s] = shuffled[j]; shuffled[j] = temp;
     }
 
-    // 5. Select 3 choices ensuring trait diversity
+    // 5. Select 3 with trait diversity
     var selected = [];
     var traitsUsed = {};
 
@@ -241,38 +397,11 @@ var EaldfornStage = (function() {
     return selected.slice(0, 3).map(function(c) {
       return {
         text: c.text,
-        subtext: c.subtext || '',
-        glyph: c.glyph || '◈',
+        glyph: c.glyph,
         trait: c.trait,
-        outcome: c.outcome || 'The god acknowledges your choice.'
+        outcome: c.outcome || 'The god acknowledges your choice with a silence that contains entire seasons.'
       };
     });
-  }
-
-  // ════════════════════════════════════
-  // IMAGE LAYER
-  // ════════════════════════════════════
-  function applySetBackground() {
-    var stageMain = document.querySelector('.stage-main');
-    if (!stageMain) return;
-
-    var bgImage = set.atmosphere || 'storm-coast.jpg';
-    stageMain.style.backgroundImage = 'url(images/sets/' + bgImage + ')';
-    stageMain.style.backgroundSize = 'cover';
-    stageMain.style.backgroundPosition = 'center';
-    stageMain.style.backgroundAttachment = 'fixed';
-  }
-
-  function getActorImage(actor) {
-    if (actor.image) {
-      return 'images/actors/' + actor.image;
-    }
-    console.log('   ⚡ No local image for ' + actor.name + ' — using Pollinations fallback');
-    var prompt = 'dark fantasy, ' + (actor.aspect || 'mythic') + ' god ' + (actor.name || '') + 
-      ', ' + (actor.domain || '') + ', mythic atmosphere, cinematic lighting, oil painting style, portrait, 4k';
-    var seed = Math.floor(Math.random() * 99999);
-    return 'https://image.pollinations.ai/prompt/' + encodeURIComponent(prompt) + 
-      '?width=1024&height=768&seed=' + seed + '&nologo=true';
   }
 
   // ════════════════════════════════════
@@ -280,32 +409,58 @@ var EaldfornStage = (function() {
   // ════════════════════════════════════
   function drawActor() {
     var actorNames = Object.keys(cast).filter(function(name) {
-      return cast[name].domain;
+      return state.visitedActors.indexOf(name) === -1 && cast[name].domain;
     });
 
-    if (actorNames.length === 0) return null;
-
-    // Prefer gods that haven't been visited yet
-    var unvisited = actorNames.filter(function(name) {
-      return state.visitedActors.indexOf(name) === -1;
-    });
-
-    var pool = unvisited.length > 0 ? unvisited : actorNames;
-    var drawn = pool[Math.floor(Math.random() * pool.length)];
-
-    // Check if this is a return visit
-    if (state.visitedActors.indexOf(drawn) > -1) {
-      state.returnedActors.push(drawn);
+    if (actorNames.length === 0) {
+      actorNames = Object.keys(cast).filter(function(name) {
+        return cast[name].domain;
+      });
     }
 
+    var drawn = actorNames[Math.floor(Math.random() * actorNames.length)];
     state.currentActor = cast[drawn];
     state.currentActor.name = drawn;
     state.visitedActors.push(drawn);
+
+    // Track visit counts for return mechanic
+    state.visitCounts[drawn] = (state.visitCounts[drawn] || 0) + 1;
+
+    // Track for curtain call
+    state.curtainActors.push({
+      name: drawn,
+      glyph: state.currentActor.glyph || '◈',
+      color: state.currentActor.color || '#c9a84c',
+      domain: state.currentActor.domain || 'unknown',
+      trait: null // filled on choice
+    });
+
     return state.currentActor;
   }
 
-  function isReturnVisit(actorName) {
-    return state.returnedActors.indexOf(actorName) > -1;
+  function isGodReturning(actorName) {
+    return (state.visitCounts[actorName] || 0) > 1;
+  }
+
+  function getActorEntrance(actor) {
+    var isReturn = isGodReturning(actor.name);
+
+    // Return entrance: check for return_entrance field first
+    if (isReturn && actor.return_entrance) {
+      return actor.return_entrance[Math.floor(Math.random() * actor.return_entrance.length)];
+    }
+
+    // Standard entrance
+    if (actor.scenes && actor.scenes.arrival && actor.scenes.arrival.length > 0) {
+      return actor.scenes.arrival[Math.floor(Math.random() * actor.scenes.arrival.length)];
+    }
+    if (actor.entrance) return actor.entrance;
+
+    // Fallback with return note
+    if (isReturn) {
+      return 'has returned. This visit feels different — more deliberate, as though the first was reconnaissance.';
+    }
+    return 'appears before you, unmistakably divine.';
   }
 
   function getWorldBeat() {
@@ -328,12 +483,12 @@ var EaldfornStage = (function() {
     var greetings = {
       authority: [
         'I have watched you from the peak of Olympus. You carry yourself like a ruler. But are you one?',
-        'The blood of kings runs thin in you, Warden. But it runs. That is enough to begin with.',
-        'You sit in a forgotten keep on the edge of a forgotten coast. And yet — you are interesting. Do you know how rare that is?'
+        'The blood of kings runs thin in you, bastard. But it runs. That is enough to begin with.',
+        'You sit in a crumbling keep on the edge of a forgotten coast. And yet — you are interesting. Do you know how rare that is?'
       ],
       order: [
         'This keep is in chaos. I can help you order it — but order has a price.',
-        'Structure, little Warden. Without it, you are just a soul in a crumbling castle waiting to be swept away.',
+        'Structure, little lord. Without it, you are just a man in a crumbling castle waiting to be swept away.',
         'I have seen kingdoms fall because they lacked what I offer. Do you want to know what that is?'
       ],
       depths: [
@@ -348,13 +503,13 @@ var EaldfornStage = (function() {
       ],
       wisdom: [
         'I have a question for you. There is no wrong answer — only a true one and a coward\'s one.',
-        'Knowledge is the only inheritance that cannot be stolen. Your predecessor gave you none. I can give you some.',
+        'Knowledge is the only inheritance that cannot be stolen. Your father gave you none. I can give you some.',
         'You think you know your situation. You do not. Let me show you what you are missing.'
       ],
       light: [
         'The sun still rises on this place. That is my doing. Do you know why?',
         'I see a shadow on you — old, cold, not yours. Do you want me to illuminate it?',
-        'Prophecy is not prediction. It is pattern. And you, Warden, are part of a very old pattern.'
+        'Prophecy is not prediction. It is pattern. And you, bastard, are part of a very old pattern.'
       ],
       hunt: [
         'Something is tracking you. It has been for weeks. Do you want to know what it is?',
@@ -362,65 +517,33 @@ var EaldfornStage = (function() {
         'I have been watching you watch the forest. You have good instincts. Untrained, but good.'
       ],
       forge: [
-        'Your walls are weak. Your wards are dull. I can fix both — but I do not work for free.',
-        'You have the hands of a Warden, not a smith. But that can change. Everything can change.',
+        'Your walls are weak. Your swords are dull. I can fix both — but I do not work for free.',
+        'You have the hands of a lord, not a smith. But that can change. Everything can change.',
         'I looked at your armory. It made me angry. Let me make it right.'
       ],
       beauty: [
-        'You are more compelling than you know, Warden. That is a weapon. Have you learned to wield it?',
+        'You are more beautiful than you know, bastard. That is a weapon. Have you learned to wield it?',
         'Love is everywhere in this keep — unspoken, unacknowledged, unreturned. I can see it all.',
-        'Do you know why the dead stay? It is not the compact. It is something else. Do you want to know what?'
+        'Do you know why people follow you? It is not your blood. It is something else. Do you want to know what?'
       ],
       war: [
-        'I smell blood. Old blood, but not forgotten. Are you ready to defend what you keep?',
+        'I smell blood. Yours, soon, unless you prepare. Are you ready to fight?',
         'Fight me. Right now. Show me what you are. I will know in three seconds if you are worth my time.',
-        'There is something coming. You know this. What you do not know is when, or from where. I do.'
+        'There is an army coming. You know this. What you do not know is how many, or when, or from where. I do.'
       ],
       messengers: [
-        'I have a message for you. It arrived seven winters ago. I ran here. Do you want to hear it?',
+        'I have a message for you. It arrived three days ago. I ran here. Do you want to hear it?',
         'Quick — before the next god arrives — what do you need delivered? I can go anywhere. Anywhere.',
-        'I know something about the Bastard that no one else knows. Not even Zeus. Want to trade?'
+        'I know something about your father that no one else knows. Not even Zeus. Want to trade?'
       ],
       underworld: [
-        'The dead in this keep are not resting. They are waiting. Do you know what they are waiting for?',
-        'The dead speak of you, Warden. Do you want to know what they say? It is not what you expect.',
-        'Winter always comes. But spring always follows. I should know — I am both.'
+        'Your mother is not gone. She is just... elsewhere. I can take you to her.',
+        'The dead speak of you. Do you want to know what they say? It is not what you expect.',
+        'Winter always comes, bastard. But spring always follows. I should know — I am both.'
       ]
     };
     var pool = greetings[actor.domain] || ['I am here. Choose wisely, for these moments echo in eternity.'];
     return pool[Math.floor(Math.random() * pool.length)];
-  }
-
-  // ════════════════════════════════════
-  // TRAIT TENSION
-  // ════════════════════════════════════
-  function checkTraitTension() {
-    var tensions = [];
-    var checked = {};
-
-    Object.keys(OPPOSED_TRAITS).forEach(function(trait) {
-      var opposed = OPPOSED_TRAITS[trait];
-      var pairKey = trait < opposed ? trait + '_' + opposed : opposed + '_' + trait;
-      
-      if (!checked[pairKey]) {
-        checked[pairKey] = true;
-        var traitVal = state.traits[trait] || 0;
-        var opposedVal = state.traits[opposed] || 0;
-        
-        if (traitVal >= 2 && opposedVal >= 2) {
-          tensions.push({
-            trait: trait,
-            opposed: opposed,
-            traitVal: traitVal,
-            opposedVal: opposedVal,
-            message: 'You have pursued ' + trait + ' and ' + opposed + ' in equal measure. The gods notice this contradiction.'
-          });
-        }
-      }
-    });
-
-    state.traitTensions = tensions;
-    return tensions;
   }
 
   // ════════════════════════════════════
@@ -429,7 +552,7 @@ var EaldfornStage = (function() {
   function renderError(message) {
     var container = document.getElementById('stageContainer');
     if (container) {
-      container.innerHTML = 
+      container.innerHTML =
         '<div class="scene-prologue" style="text-align:center;padding:40px;">' +
         '<div style="font-size:18px;color:var(--rubric);margin-bottom:12px;">✗</div>' +
         '<div style="color:var(--text-dim);">' + message + '</div>' +
@@ -447,7 +570,13 @@ var EaldfornStage = (function() {
     var location = script.player ? script.player.location : 'an unknown place';
     var burden = script.player ? script.player.burden : null;
 
-    container.innerHTML = 
+    // Format prologue with paragraph breaks
+    var prologueHtml = (script.prologue || 'The curtain rises.')
+      .split('\n\n').map(function(p) {
+        return '<p style="margin-bottom:10px;">' + p.trim() + '</p>';
+      }).join('');
+
+    container.innerHTML =
       '<div class="scene-world">' +
         '<div class="scene-location">' + (set.name || location) + '</div>' +
         '<div class="scene-weather">' + weather + '</div>' +
@@ -455,7 +584,7 @@ var EaldfornStage = (function() {
       '<div class="scene-prologue">' +
         '<div class="prologue-title">' + script.title + '</div>' +
         '<div class="prologue-subtitle">' + (script.subtitle || '') + ' · ' + state.tone.charAt(0).toUpperCase() + state.tone.slice(1) + ' Path</div>' +
-        '<div class="prologue-text">' + (script.prologue || 'The curtain rises.') + '</div>' +
+        '<div class="prologue-text">' + prologueHtml + '</div>' +
         '<div class="prologue-player">You are <span class="player-name">' + playerName + '</span>. ' + (script.player ? script.player.backstory : '') + '</div>' +
         (burden ? '<div class="prologue-burden">' + burden + '</div>' : '') +
       '</div>' +
@@ -463,6 +592,7 @@ var EaldfornStage = (function() {
         '<button class="stage-btn" onclick="EaldfornStage.nextScene()">Begin the Tale</button>' +
       '</div>';
 
+    if (script.prologue) narrate(script.prologue);
     updateChronicle();
     updateHeader();
   }
@@ -473,51 +603,37 @@ var EaldfornStage = (function() {
 
     state.scene++;
     var actor = drawActor();
-    if (!actor) {
-      renderError('No actors available.');
-      return;
-    }
-
     var worldBeat = getWorldBeat();
     var weather = getWeather();
-    var returned = isReturnVisit(actor.name);
+    var isReturn = isGodReturning(actor.name);
 
-    // Prepend memory card if available
-    if (state.memoryCards.length > 0) {
-      var memoryCard = state.memoryCards[Math.floor(Math.random() * state.memoryCards.length)];
-      worldBeat = memoryCard + ' ' + worldBeat;
-    }
-
-    // Pick arrival description
-    var arrival = '';
-    if (returned && actor.scenes && actor.scenes.return_arrival && actor.scenes.return_arrival.length > 0) {
-      arrival = actor.scenes.return_arrival[Math.floor(Math.random() * actor.scenes.return_arrival.length)];
-    } else if (actor.scenes && actor.scenes.arrival && actor.scenes.arrival.length > 0) {
-      arrival = actor.scenes.arrival[Math.floor(Math.random() * actor.scenes.arrival.length)];
-    } else if (actor.entrance) {
-      arrival = actor.entrance;
-    } else {
-      arrival = 'appears before you, unmistakably divine.';
-    }
-
-    if (returned && !arrival.includes('return')) {
-      arrival = 'returns — ' + arrival;
-    }
-
+    var arrival = getActorEntrance(actor);
     var imageUrl = getActorImage(actor);
-    var returnLabel = returned ? ' (Return)' : '';
 
-    container.innerHTML = 
+    // Memory card: inject residue from prior choice if available
+    var memoryLine = getMemoryLine();
+    var memoryHtml = memoryLine
+      ? '<div class="scene-memory">' + memoryLine + '</div>'
+      : '';
+
+    // Return god badge
+    var returnBadge = isReturn
+      ? '<span class="return-badge">returned</span> '
+      : '';
+
+    container.innerHTML =
       '<div class="scene-image">' +
         '<img src="' + imageUrl + '" alt="' + actor.name + ' appears" onerror="this.parentElement.innerHTML=\'<div class=img-placeholder>The mists part as ' + actor.name + ' arrives...</div>\'">' +
       '</div>' +
       '<div class="scene-world">' +
-        '<div class="scene-location">' + (set.name || 'The Stage') + ' · Scene ' + state.scene + '/' + state.maxScenes + returnLabel + '</div>' +
+        '<div class="scene-location">' + (set.name || 'The Stage') + ' · Scene ' + state.scene + '/' + state.maxScenes + '</div>' +
         '<div class="scene-weather">' + weather + '</div>' +
       '</div>' +
+      memoryHtml +
       '<div class="scene-narration">' + worldBeat + '</div>' +
       '<div class="scene-arrival">' +
         '<span class="actor-glyph" style="color:' + (actor.color || '#c9a84c') + '">' + (actor.glyph || '◈') + '</span> ' +
+        returnBadge +
         '<span class="actor-name" style="color:' + (actor.color || '#c9a84c') + '">' + actor.name + '</span>, ' +
         '<span class="actor-domain">god of ' + (actor.domain || 'the unknown') + '</span>, ' + arrival + '.' +
       '</div>' +
@@ -528,6 +644,7 @@ var EaldfornStage = (function() {
         '<button class="stage-btn" onclick="EaldfornStage.loadChoices()">Make Your Choice →</button>' +
       '</div>';
 
+    narrate(worldBeat);
     updateHeader();
     state._pendingChoices = await getActorChoices(actor);
   }
@@ -543,114 +660,66 @@ var EaldfornStage = (function() {
       choices = await getActorChoices(actor);
     }
 
-    // Add silence option as fourth card
-    var silenceCard = {
-      text: 'Say nothing.',
-      subtext: 'Let the god interpret your silence.',
-      glyph: '🌫️',
-      trait: getLeadingTrait(),
-      outcome: getSilenceOutcome(actor)
-    };
-
-    var allChoices = choices.concat([silenceCard]);
-
-    choicesEl.innerHTML = allChoices.map(function(c, i) {
-      var isSilence = i === allChoices.length - 1;
-      return '<button class="stage-choice' + (isSilence ? ' silence-choice' : '') + '" onclick="EaldfornStage.makeChoice(\'' + 
-        (c.trait || 'unknown') + '\', \'' + 
+    choicesEl.innerHTML = choices.map(function(c, i) {
+      return '<button class="stage-choice" onclick="EaldfornStage.makeChoice(\'' +
+        (c.trait || 'unknown') + '\', \'' +
         escapeHTML(c.outcome || 'The god acknowledges your choice.') + '\', \'' +
-        (actor ? actor.name || '' : '') + '\', \'' + (actor ? actor.glyph || '' : '') + '\', ' + isSilence + ')">' +
+        (actor ? escapeHTML(actor.name || '') : '') + '\', \'' + (actor ? actor.glyph || '' : '') + '\')">' +
         '<span class="choice-glyph">' + (c.glyph || '◈') + '</span>' +
         '<span class="choice-text">' + (c.text || 'Act') + '</span>' +
-        (c.subtext ? '<span class="choice-subtext">' + c.subtext + '</span>' : '') +
-        '<span class="choice-hint">+' + (c.trait || '?') + (isSilence ? ' (½)' : '') + '</span></button>';
+        '<span class="choice-hint">+' + (c.trait || '?') + '</span></button>';
     }).join('');
-  }
-
-  function getLeadingTrait() {
-    var leading = 'wisdom';
-    var highest = 0;
-    Object.keys(state.traits).forEach(function(t) {
-      if ((state.traits[t] || 0) > highest) {
-        highest = state.traits[t];
-        leading = t;
-      }
-    });
-    return leading;
-  }
-
-  function getSilenceOutcome(actor) {
-    var outcomes = {
-      'Zeus': 'The Thunderer waits. You do not speak. The silence stretches — and then he nods, slowly. "Few mortals understand the weight of silence. You do."',
-      'Hera': 'She watches you with unreadable eyes. The quiet between you fills with the sound of the sea. "You refuse to perform. That is... unexpected."',
-      'Poseidon': 'The god of the deep listens to your silence as if it were a language. Perhaps it is. The tide withdraws. He withdraws with it.',
-      'Athena': 'She tilts her head. The owl on her shoulder hoots once. "Silence is a strategy. I respect strategy."',
-      'Apollo': 'The god of prophecy waits for words that do not come. "Even silence is a kind of prophecy," he says. "It foretells nothing. And everything."',
-      'Artemis': 'She does not press. The huntress knows the value of stillness. She fades into the dark, leaving only footprints.',
-      'Hephaestus': 'He grunts. "Not a talker. Good. Neither am I." He sets down his hammer and waits with you.',
-      'Aphrodite': 'She smiles — not the dazzling smile, but something quieter. "You do not need to speak for me to see you."',
-      'Ares': 'He snorts. "Silence. Either you are a coward or you are thinking. I will assume thinking."',
-      'Hermes': 'He laughs — but it is not unkind. "No message? No bargain? You are the strangest Warden I have met."',
-      'Demeter': 'She kneels beside you in the quiet. The earth breathes. Nothing needs to be said.',
-      'Persephone': 'She takes your hand. The underworld is full of silences. She knows them all. This one, she tells you, is the good kind.'
-    };
-    return outcomes[actor.name] || 'The god waits. You do not speak. The silence itself becomes the answer.';
   }
 
   // ════════════════════════════════════
   // CHOICE RESOLUTION
   // ════════════════════════════════════
-  function makeChoice(trait, outcome, actorName, actorGlyph, isSilence) {
-    var pointsToAdd = isSilence ? 0.5 : 1;
-    state.traits[trait] = (state.traits[trait] || 0) + pointsToAdd;
+  function makeChoice(trait, outcome, actorName, actorGlyph) {
+    state.traits[trait] = (state.traits[trait] || 0) + 1;
 
-    // Add memory card
-    if (!isSilence) {
-      state.memoryCards.push(outcome.substring(0, 120));
-      if (state.memoryCards.length > 6) state.memoryCards.shift();
+    // Generate and store a memory card from this choice
+    var memory = generateMemoryCard(trait);
+    state.memoryCards.push(memory);
+
+    // Tag curtain actor with the trait chosen during their scene
+    for (var i = state.curtainActors.length - 1; i >= 0; i--) {
+      if (state.curtainActors[i].name === actorName && !state.curtainActors[i].trait) {
+        state.curtainActors[i].trait = trait;
+        break;
+      }
     }
-
-    // Check trait tensions
-    checkTraitTension();
 
     state.chronicle.push({
       scene: state.scene,
       actor: actorName,
       glyph: actorGlyph,
       trait: trait,
-      outcome: outcome,
-      silence: isSilence || false
+      outcome: outcome
     });
 
     var container = document.getElementById('stageContainer');
-    var tensionNote = '';
-    if (state.traitTensions.length > 0) {
-      var latestTension = state.traitTensions[state.traitTensions.length - 1];
-      tensionNote = '<div class="trait-tension">⚡ ' + latestTension.message + '</div>';
-    }
-
-    container.innerHTML = 
+    container.innerHTML =
       '<div class="scene-outcome">' +
         '<span class="actor-glyph" style="color:' + (state.currentActor ? state.currentActor.color : '#c9a84c') + '">' + actorGlyph + '</span> ' +
-        '<span class="actor-name">' + actorName + ':</span> "' + outcome + '"' +
+        '<span class="actor-name">' + actorName + ':</span> ' + outcome +
       '</div>' +
       '<div class="trait-gain">' +
-        'Trait: <span class="trait-name">+' + trait + (isSilence ? ' (½)' : '') + '</span> · ' +
+        'Trait gained: <span class="trait-name">+' + trait + '</span> · ' +
         'Authority:' + (state.traits.authority||0) + ' ' +
         'Wisdom:' + (state.traits.wisdom||0) + ' ' +
         'Courage:' + (state.traits.courage||0) + ' ' +
         'Cunning:' + (state.traits.cunning||0) + ' ' +
         'Devotion:' + (state.traits.devotion||0) +
-      '</div>' +
-      tensionNote;
+      '</div>';
 
+    narrate(outcome);
     document.getElementById('choicesContainer').innerHTML = '';
     updateChronicle();
 
     if (state.scene >= state.maxScenes) {
       setTimeout(curtainCall, 2500);
     } else {
-      document.getElementById('choicesContainer').innerHTML = 
+      document.getElementById('choicesContainer').innerHTML =
         '<button class="stage-btn" onclick="EaldfornStage.nextScene()">Continue the Tale →</button>';
     }
   }
@@ -675,32 +744,22 @@ var EaldfornStage = (function() {
 
     var ending = script.endings ? script.endings[dominantTrait] : 'Your tale is complete. The gods have witnessed you.';
 
-    // Build god reactions
-    var godReactions = '';
-    var visitedNames = [];
-    state.chronicle.forEach(function(entry) {
-      if (visitedNames.indexOf(entry.actor) === -1) {
-        visitedNames.push(entry.actor);
-        godReactions += '<div class="god-reaction">' +
-          '<span class="reaction-glyph">' + (entry.glyph || '◈') + '</span> ' +
-          '<span class="reaction-name">' + entry.actor + '</span> — ' +
-          getGodReaction(entry.actor, dominantTrait) + '</div>';
-      }
-    });
-
-    var tensionNote = '';
-    if (state.traitTensions.length > 0) {
-      tensionNote = '<div class="curtain-tension">The gods noticed your contradictions. ' + 
-        state.traitTensions.map(function(t) { return t.message; }).join(' ') + '</div>';
-    }
+    // Build god reaction cards
+    var godReactionsHtml = state.curtainActors.map(function(a) {
+      var reaction = getCurtainReaction(a.name, a.trait || dominantTrait);
+      return '<div class="curtain-god-card">' +
+        '<span class="actor-glyph" style="color:' + a.color + '">' + a.glyph + '</span> ' +
+        '<span class="curtain-god-name" style="color:' + a.color + '">' + a.name + '</span>' +
+        '<div class="curtain-god-reaction">' + reaction + '</div>' +
+      '</div>';
+    }).join('');
 
     var container = document.getElementById('stageContainer');
-    container.innerHTML = 
+    container.innerHTML =
       '<div class="scene-curtain">' +
         '<div class="curtain-title">✦ Curtain Call ✦</div>' +
         '<div class="curtain-subtitle">' + script.title + ' — Complete</div>' +
         '<div class="curtain-ending">' + ending + '</div>' +
-        tensionNote +
         '<div class="curtain-traits">' +
           'Dominant Trait: <span class="trait-name">' + dominantTrait.toUpperCase() + '</span><br>' +
           'Authority:' + (state.traits.authority||0) + ' · ' +
@@ -709,7 +768,7 @@ var EaldfornStage = (function() {
           'Cunning:' + (state.traits.cunning||0) + ' · ' +
           'Devotion:' + (state.traits.devotion||0) +
         '</div>' +
-        (godReactions ? '<div class="curtain-reactions">' + godReactions + '</div>' : '') +
+        '<div class="curtain-gods">' + godReactionsHtml + '</div>' +
         '<div class="curtain-actions">' +
           '<button class="stage-btn" onclick="EaldfornStage.restart()">Play Again</button>' +
           '<a href="index.html" class="stage-btn">Return to Playbill</a>' +
@@ -717,113 +776,24 @@ var EaldfornStage = (function() {
       '</div>';
 
     document.getElementById('choicesContainer').innerHTML = '';
-  }
-
-  function getGodReaction(godName, endingTrait) {
-    var reactions = {
-      'Zeus': {
-        authority: 'He left a thunderbolt frozen in the stone above your door. A signature. A warning. A compliment.',
-        wisdom: 'He asked a question as he departed. You are still thinking about it.',
-        courage: 'He did not smile. But he did not strike. From Zeus, that is approval.',
-        cunning: 'He laughed — once, sharp. "You would have made a terrible king. You would have made an excellent advisor."',
-        devotion: 'He bowed his head. Just slightly. The King of Gods, bowing to a Warden.'
-      },
-      'Hera': {
-        authority: 'She straightened a tapestry on her way out. Order recognized.',
-        wisdom: 'She left a book on the table. It was not there before.',
-        courage: 'She touched your shoulder. "You remind me of someone I respected."',
-        cunning: 'She smiled — the real one, not the court one. "Well played."',
-        devotion: 'She wept. Just one tear. It froze on the stone.'
-      },
-      'Persephone': {
-        authority: 'She left a pomegranate on the chest. Unsplit. A question.',
-        wisdom: 'She told you a name no one living knows. Now you carry it.',
-        courage: 'She kissed your forehead. It was cold. It was kind.',
-        cunning: 'She laughed. "You bargained with the dead and won. I like you."',
-        devotion: 'She took the names. All of them. And thanked you.'
-      },
-      'Hermes': {
-        authority: 'He left a coin on the windowsill. You found it was blank on both sides.',
-        wisdom: 'He told you a secret about the next town over. It will save a life.',
-        courage: 'He raced the wind on your behalf. You heard the echo for hours.',
-        cunning: 'He winked. "We should do business again."',
-        devotion: 'He delivered your message to the dead. They received it.'
-      },
-      'Artemis': {
-        authority: 'She marked a tree outside your wall with an arrow. Your territory. Respected.',
-        wisdom: 'She showed you a trail you had never seen. It leads somewhere important.',
-        courage: 'She nodded once. Hunters understand each other.',
-        cunning: 'She left a snare at your door. "You already know how to use this."',
-        devotion: 'She released a white stag into the forest. It was yours to follow or not.'
-      },
-      'Demeter': {
-        authority: 'She made the garden bloom. In winter. For one hour. A gift.',
-        wisdom: 'She taught you the name of every plant in the courtyard. Even the dead ones.',
-        courage: 'She stood with you in the frost. "The cold does not frighten those who grow."',
-        cunning: 'She left seeds that only grow in secret. You know where to plant them.',
-        devotion: 'She cried. The soil will remember.'
-      },
-      'Ares': {
-        authority: 'He saluted. A warrior\'s salute. You earned it.',
-        wisdom: 'He said, "You think before you fight. That is rarer than courage."',
-        courage: 'He clasped your arm. "You would have stood. I know it."',
-        cunning: 'He grinned. "You fight with your head. I respect that more than the sword."',
-        devotion: 'He knelt. Ares knelt. The Warden witnessed it.'
-      },
-      'Hephaestus': {
-        authority: 'He fixed the lock on the chest without being asked. A craftsman\'s tribute.',
-        wisdom: 'He showed you how the keep\'s foundations were laid. You understand it now.',
-        courage: 'He worked through the night beside you. No words. Just work.',
-        cunning: 'He forged a key that opens one door. He did not tell you which door.',
-        devotion: 'He left his hammer. "You will need this more than I will."'
-      },
-      'Aphrodite': {
-        authority: 'She told you that you are more beautiful than you know. She was not lying.',
-        wisdom: 'She showed you who in the village is in love. It was not who you thought.',
-        courage: 'She said, "Loving something that might leave is the bravest thing."',
-        cunning: 'She kissed your cheek. "That will fade. Use the memory while it lasts."',
-        devotion: 'She wept. Aphrodite does not weep for mortals. She wept for you.'
-      },
-      'Athena': {
-        authority: 'She left an owl feather on your desk. Strategy approved.',
-        wisdom: 'She answered the question you were too afraid to ask.',
-        courage: 'She said, "You thought clearly under pressure. That is the only courage that matters."',
-        cunning: 'She smiled. "You planned for this. I appreciate preparation."',
-        devotion: 'She bowed. Athena bows to no one. She bowed to you.'
-      },
-      'Apollo': {
-        authority: 'He sang one note. The keep hummed with it for hours. Recognition.',
-        wisdom: 'He told you a prophecy. You will carry it alone.',
-        courage: 'He said, "You faced the dark. The dark remembers."',
-        cunning: 'He laughed. "You tricked prophecy itself. That is rare."',
-        devotion: 'He played his lyre for the dead. They listened.'
-      },
-      'Poseidon': {
-        authority: 'He calmed the sea for your fishing boats. A lord\'s tribute.',
-        wisdom: 'He showed you what the tide had hidden. It was a gift.',
-        courage: 'He said, "The deep did not frighten you. It should have."',
-        cunning: 'He gave you a shell that whispers secrets. You decide which are true.',
-        devotion: 'He returned something the sea took. It was personal.'
-      }
-    };
-
-    var godReactions = reactions[godName];
-    if (godReactions) {
-      return godReactions[endingTrait] || 'They departed without a word, but the silence was meaningful.';
-    }
-    return 'They departed. The space they occupied still hums.';
+    narrate(ending);
   }
 
   function restart() {
     state.scene = 0;
     state.currentActor = null;
     state.visitedActors = [];
-    state.returnedActors = [];
+    state.visitCounts = {};
     state.chronicle = [];
-    state.memoryCards = [];
     state.traits = {};
     state.worldBeatIndex = 0;
-    state.traitTensions = [];
+    state.memoryCards = [];
+    state.curtainActors = [];
+    if (script.player && script.player.traits) {
+      state.traits = JSON.parse(JSON.stringify(script.player.traits));
+    } else {
+      state.traits = { authority: 0, wisdom: 0, courage: 0, cunning: 0, devotion: 0 };
+    }
     document.getElementById('chronicleBody').innerHTML = '<div class="chronicle-empty">The chronicle awaits...</div>';
     renderPrologue();
   }
@@ -850,7 +820,7 @@ var EaldfornStage = (function() {
         '<span class="c-scene">Scene ' + entry.scene + '</span> — ' +
         '<span class="c-actor">' + (entry.glyph || '') + ' ' + entry.actor + '</span>: ' +
         entry.outcome.substring(0, 100) + '... ' +
-        '<span class="c-trait">(+' + entry.trait + (entry.silence ? ' ½' : '') + ')</span></div>';
+        '<span class="c-trait">(+' + entry.trait + ')</span></div>';
     }).join('');
     body.scrollTop = body.scrollHeight;
   }
