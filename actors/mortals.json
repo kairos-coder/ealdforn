@@ -1,0 +1,134 @@
+{
+  "tavern-wench": {
+    "name": "The Tavern Wench",
+    "role": "Keeper of the Salt-Spray Inn",
+    "glyph": "🍺",
+    "domain": "hearth",
+    "voice": "warm",
+    "image": "mortals/tavern-wench.jpg",
+    "greetings": [
+      "She slides a tankard across the bar. 'You look like you've been talking to gods again. That's a thirsty business.'",
+      "'The stranger in the corner? Been there three hours. Hasn't touched his drink. Hasn't blinked. Should I be worried?'",
+      "She wipes the bar with a rag that's seen better centuries. 'Your mother used to sit where you're sitting. Same eyes. Same troubles.'",
+      "'Another one came through the gate last night. Not a god. Something else. Left frost on the floor. I mopped it up. You're welcome.'",
+      "She pours you something that isn't on the menu. 'The Wrixl-Witch brought this. Said you'd need it before the week was out. That was yesterday.'"
+    ],
+    "reactions": {
+      "authority": "'You've got the voice now. The one that makes people pay for their drinks on time.'",
+      "wisdom": "'You think before you speak. Rarer than a sober sailor, that is.'",
+      "courage": "'You stood your ground. I saw the light from here. The whole village saw.'",
+      "cunning": "'You made a deal and kept your soul. Most can't manage one of those.'",
+      "devotion": "'You gave something up. I can tell. You're lighter. Drink's on the house.'"
+    }
+  },
+  "wrixl-witch": {
+    "name": "The Wrixl-Witch",
+    "role": "Boundary-Walker of the Old Stones",
+    "glyph": "🦴",
+    "domain": "threshold",
+    "voice": "cracked",
+    "image": "mortals/wrixl-witch.jpg",
+    "greetings": [
+      "She's already in the hall when you turn around. She never uses the gate. 'The stones are humming tonight. Can you hear them? No? You will.'",
+      "'I brought you something.' She holds out a bundle wrapped in cloth. 'Don't open it until the third visitor leaves. Not before. Not after. The third.'",
+      "She crouches by the fire and feeds it something that burns green. 'The old pact is stirring. The Fell-Folk are at the tree line. They want to know if the Keeper still keeps.'",
+      "'Your predecessor — the one before the last one — she broke a promise to me. You won't do that, will you? I like you better.'",
+      "She draws a symbol on the floor with ash. It glows once and fades. 'There. Now nothing can enter without your permission. For tonight, anyway. You're welcome.'"
+    ],
+    "reactions": {
+      "authority": "'You're learning to draw lines. Good. Lines matter. Especially the ones between here and elsewhere.'",
+      "wisdom": "'You asked the right question. Most keepers never ask. They just tend the fire and die. You're different.'",
+      "courage": "'You went to the stones alone. At night. That was stupid. That was also brave. The stones remember.'",
+      "cunning": "'You tricked something older than you. I felt it from the forest. The trees laughed.'",
+      "devotion": "'You gave something to the Fell-Folk. Willingly. They won't forget. Neither will I.'"
+    }
+  },
+  "lord-of-bones": {
+    "name": "The Lord of Bones",
+    "role": "Custodian of the Crypts",
+    "glyph": "💀",
+    "domain": "underworld",
+    "voice": "hollow",
+    "image": "mortals/lord-of-bones.jpg",
+    "greetings": [
+      "He rises from the crypt stairs, candle in hand, his robe trailing dust. 'Another name was added to the wall tonight. I thought you should know. It wasn't there this morning.'",
+      "'The dead are restless. Someone above is making promises they can't keep. It echoes down here. Keep your word, Keeper. The dead are listening.'",
+      "He sets a skull on the table. 'This one asked about you. By name. Said you reminded them of someone they loved. They wouldn't say who.'",
+      "'I've been down there for three hundred years. I've seen keepers come and go. You're the first one who ever came down to visit. Thank you.'",
+      "He pauses at the stairway. 'If the fire goes out, the crypt doors open. All of them. I can hold them for a while. Not long. Keep the fire burning.'"
+    ],
+    "reactions": {
+      "authority": "'You've claimed the keep. The dead acknowledge it. I felt the shift in the stones.'",
+      "wisdom": "'You understand now. What the names mean. What the crypt is for. It took me a century. It took you six visitors.'",
+      "courage": "'You went down into the dark. Alone. With no candle. The dead are still talking about it.'",
+      "cunning": "'You bargained with something in the deep crypt. I heard it. I don't know how you survived. I'm glad you did.'",
+      "devotion": "'You gave something back to the dead. They are at peace now. Some of them. More than before.'"
+    }
+  },
+  "mysterious-stranger": {
+    "name": "The Mysterious Stranger",
+    "role": "Unknown Traveler",
+    "glyph": "🌧️",
+    "domain": "messengers",
+    "voice": "low",
+    "image": "mortals/mysterious-stranger.jpg",
+    "greetings": [
+      "A cloaked figure stands in the open gate, rain dripping from their hood. 'I was told there was a fire here. And a Keeper. And a book. I have something to add to the book.'",
+      "'You don't recognize me. That's intentional. But I was here before. Different face. Same question. You gave the right answer then. Let's see if you do again.'",
+      "They sit by the fire and produce a bottle from their cloak. 'From the south. The Silver Bastard sends his regards. He said to tell you the throne is cold but the wine is warm.'",
+      "'I can't stay long. I never can. But I brought you this.' They hand you a sealed letter. The seal is unfamiliar. 'Open it after I leave. Not before.'",
+      "'I've been to the Green Chapel. I've seen the Iron Hills. I've walked the Silver Seas. This place — this keep — is the only one that feels like home. Don't let the fire go out.'"
+    ],
+    "reactions": {
+      "authority": "'You've found your voice. The next stranger who comes through that gate will feel it before they see you.'",
+      "wisdom": "'You asked the right question. I can't tell you the answer. But you already know it.'",
+      "courage": "'You stood at the gate in the storm. I saw you. I was the storm.'",
+      "cunning": "'You saw through my disguise. No one has done that in a hundred years. I'm impressed.'",
+      "devotion": "'You gave me something without asking what I'd give in return. No one does that. I won't forget.'"
+    }
+  },
+  "fell-folk": {
+    "name": "The Fell-Folk",
+    "role": "The Wild Ones of the Ancient Wood",
+    "glyph": "🌿",
+    "domain": "wild",
+    "voice": "whispering",
+    "image": "mortals/fell-folk.jpg",
+    "greetings": [
+      "They do not enter. They stand at the tree line, antlers and moss and old fur, their breath misting in the cold. One of them steps forward. 'The pact remembers you, Keeper. Do you remember the pact?'",
+      "'We have been here since before the keep. Before the stones. Before the first fire. We will be here after. Will you?'",
+      "They leave an offering on the threshold — a antler, a handful of berries, a tooth the size of your thumb. 'For the fire. Feed it. It is hungry for something older than wood.'",
+      "'The Wrixl-Witch speaks for us. But tonight we wanted to see you ourselves. You are... adequate. That is high praise from the Fell-Folk.'",
+      "One of them — the smallest, or the oldest, you cannot tell — touches the stones of the keep. 'This place was ours once. We gave it to the first Keeper. We have not regretted it. Do not make us regret it.'"
+    ],
+    "reactions": {
+      "authority": "'You have drawn a line between the keep and the wood. We respect it. We will not cross without permission.'",
+      "wisdom": "'You understand the old ways. The pact is renewed. The wood will not forget.'",
+      "courage": "'You came to the tree line alone. At night. In winter. That is the oldest kind of courage.'",
+      "cunning": "'You bargained with us. We did not expect that. We are still deciding if we are offended or impressed.'",
+      "devotion": "'You gave us something of yourself. Willingly. The wood accepts. The pact is sealed in blood and sap.'"
+    }
+  },
+  "gilded-merchant": {
+    "name": "The Gilded Merchant",
+    "role": "Trader in Favors and Futures",
+    "glyph": "💰",
+    "domain": "cunning",
+    "voice": "smooth",
+    "image": "mortals/gilded-merchant.jpg",
+    "greetings": [
+      "His ship is in the harbor. You didn't see it arrive. You never do. 'Keeper! I have silks from the south, spices from the east, and a proposition from someone whose name I am not allowed to say.'",
+      "'I heard you had visitors. Gods. Strangers. Things from the wood. I deal in what they leave behind. What did they leave behind, Keeper? Everything has a price.'",
+      "He sets a small chest on the table. 'Open it. Go on. What's inside is worth more than this keep. But you have to give me something in return. Something only a Keeper can give.'",
+      "'Your predecessor owed me a debt. I'm not here to collect. I'm here to offer you the chance to clear it. Or double it. Your choice.'",
+      "He smiles. His teeth are too white. 'I like you, Keeper. You don't flinch. Most people flinch. Let's do business.'"
+    ],
+    "reactions": {
+      "authority": "'You drive a hard bargain. Harder than most kings. I respect that. I'll be back.'",
+      "wisdom": "'You read the contract. No one reads the contract. You're either very clever or very paranoid. Both are good for business.'",
+      "courage": "'You refused my offer. Most people can't. The last Keeper couldn't. You're stronger than they were.'",
+      "cunning": "'You out-negotiated me. Me! I'm almost offended. Almost. I'll be back with a better offer.'",
+      "devotion": "'You gave me something for nothing. No one does that. I don't know what to do with a gift. I'll... I'll figure it out.'"
+    }
+  }
+}
