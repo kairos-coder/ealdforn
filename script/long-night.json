@@ -1,0 +1,26 @@
+{
+  "title": "The Long Night at Glimthaven",
+  "subtitle": "An infinite tale of gods, mortals, and the keep that holds them",
+  "tone": "infinite",
+  "requires": {
+    "set": "storm-coast",
+    "cast": ["olympians", "norse", "mortals"]
+  },
+  "maxScenes": 0,
+  "loopMode": true,
+  "player": {
+    "name": "the Keeper of Glimthaven",
+    "backstory": "You are the latest in a long line of keepers. The role is simple: tend the fire, record the names, and witness whoever — or whatever — comes through the gate. Some nights it's a god. Some nights it's a stranger. Some nights it's something older than both. The fire must never go out. The book must never close. You must never leave. This is not a sentence. This is a purpose. You chose it. Or it chose you. After enough winters, the difference stops mattering.",
+    "burden": "The fire must not go out.",
+    "location": "Glimthaven Keep",
+    "traits": { "authority": 0, "wisdom": 0, "courage": 0, "cunning": 0, "devotion": 0 }
+  },
+  "prologue": "The fire in the great hall has burned for eight hundred years. It was lit by the first Keeper — a woman whose name is carved in the oldest stone, worn smooth by centuries of fingers tracing it. No one remembers why the fire must not go out. Only that it must not. You feed it driftwood from the sea cliffs and peat from the bog and, on the longest nights, something the Wrixl-Witch brings you wrapped in old cloth that you do not unwrap.\n\nThe gate is always open. This is not a metaphor. The great door of Glimthaven Keep has no lock. It swings wide to the sea wind and the rain and whatever else cares to enter. Most nights, nothing does. Some nights, everything does.\n\nYou keep the book. You record the names. You tend the fire. And when a god or a stranger or something older steps through the gate, you offer them a seat by the hearth and ask the only question that matters: 'Who are you, and what do you seek?'\n\nThey always answer. They don't always tell the truth. But they always answer.",
+  "endings": {
+    "authority": "The fire still burns. You are still here. That is the only ending that matters.",
+    "wisdom": "The fire still burns. You are still here. That is the only ending that matters.",
+    "courage": "The fire still burns. You are still here. That is the only ending that matters.",
+    "cunning": "The fire still burns. You are still here. That is the only ending that matters.",
+    "devotion": "The fire still burns. You are still here. That is the only ending that matters."
+  }
+}
