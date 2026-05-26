@@ -1,0 +1,292 @@
+{
+  "authority": [
+    {
+      "id": "inf_auth_01",
+      "text": "Command the visitor to state their name and purpose before they may enter.",
+      "subtext": "The gate is always open — but hospitality is not surrender. You are the Keeper. You set the terms.",
+      "glyph": "⚡",
+      "trait": "authority",
+      "outcome": "The visitor pauses at the threshold. Something flickers in their expression — respect, or amusement, or something older than both. They state their name. The fire burns brighter. The book records it."
+    },
+    {
+      "id": "inf_auth_02",
+      "text": "Remind the visitor that this keep has stood for eight hundred years and will stand for eight hundred more.",
+      "subtext": "Gods come and go. The fire remains. You are the latest Keeper, but the keep itself is eternal.",
+      "glyph": "🏰",
+      "trait": "authority",
+      "outcome": "The visitor looks at the stones — really looks — and something shifts in their posture. 'You are right,' they say. 'This place is older than me. I had forgotten.' They enter with something that might be humility."
+    },
+    {
+      "id": "inf_auth_03",
+      "text": "Invoke the ancient covenant between the keep and all who cross its threshold.",
+      "subtext": "There are rules older than gods. The first Keeper wrote them in stone. You still honor them.",
+      "glyph": "📜",
+      "trait": "authority",
+      "outcome": "The words leave your mouth and the stones hum in response. The visitor goes still. 'The old covenant,' they murmur. 'I did not think anyone still spoke it.' They bow their head. Just slightly. It is enough."
+    },
+    {
+      "id": "inf_auth_04",
+      "text": "Bar the door and demand the visitor prove their worth before entering.",
+      "subtext": "Not all who come through the gate are welcome. You have the right to refuse.",
+      "glyph": "🚪",
+      "trait": "authority",
+      "outcome": "You step into the doorway. The visitor stops. For a long moment, the only sound is the fire. Then they laugh — thunder, or bells, or grinding stone. 'No one has barred a door against me in centuries. I like you, Keeper.'"
+    },
+    {
+      "id": "inf_auth_05",
+      "text": "Claim this keep in the name of all who have kept the fire before you.",
+      "subtext": "You are not the first Keeper. You will not be the last. But tonight, you speak for all of them.",
+      "glyph": "👑",
+      "trait": "authority",
+      "outcome": "You speak the names of the Keepers who came before — all of them, from the first woman whose name is worn smooth on the oldest stone to the one before you. The fire roars. The book opens. The keep remembers."
+    },
+    {
+      "id": "inf_auth_06",
+      "text": "Negotiate terms with the visitor as an equal, not a supplicant.",
+      "subtext": "You may be mortal, but this is your ground. Even gods must respect the threshold.",
+      "glyph": "🤝",
+      "trait": "authority",
+      "outcome": "You do not kneel. You do not demand. You propose terms. The visitor is taken aback. 'Equal terms? From a mortal in a stone keep?' They smile — a real smile. 'I accept. This is more interesting than worship.'"
+    },
+    {
+      "id": "inf_auth_07",
+      "text": "Read aloud from the book the names of those who tried to take the keep by force.",
+      "subtext": "The book records more than visitors. It records those who came with ill intent. None succeeded.",
+      "glyph": "📖",
+      "trait": "authority",
+      "outcome": "You read the names. The list is longer than the visitor expected. When you finish, the silence is heavy. 'I see,' they say quietly. 'This is not a place that can be taken. Only given.' They enter peacefully."
+    }
+  ],
+  "wisdom": [
+    {
+      "id": "inf_wis_01",
+      "text": "Ask the visitor what they were before they were a god.",
+      "subtext": "All things have an origin. Even divinity. What were you before the worship began?",
+      "glyph": "🦉",
+      "trait": "wisdom",
+      "outcome": "The visitor is silent for a long moment. No one has asked them this. No one ever asks. 'I was... afraid,' they say finally. 'I was afraid of the dark. So I became something the dark would fear.' The fire listens."
+    },
+    {
+      "id": "inf_wis_02",
+      "text": "Ask what question the visitor hoped you would not ask.",
+      "subtext": "Every visitor brings secrets. The truest conversations happen when the secrets are named.",
+      "glyph": "🔍",
+      "trait": "wisdom",
+      "outcome": "They freeze. You have found the crack — the thing they carried here hoping no one would notice. 'I...' they start, then stop. When they speak again, their voice is different. Quieter. Truer. 'I came here to be forgotten. Just for one night.'"
+    },
+    {
+      "id": "inf_wis_03",
+      "text": "Consult the book for wisdom from a previous Keeper about this kind of visitor.",
+      "subtext": "The book holds eight hundred years of encounters. Someone has faced this before.",
+      "glyph": "📚",
+      "trait": "wisdom",
+      "outcome": "You find the entry — written in a hand that has been dust for centuries. The advice is simple: 'Do not flinch. They are testing you. But also — offer them tea. They are tired. They will not admit it.' You offer tea. The visitor weeps."
+    },
+    {
+      "id": "inf_wis_04",
+      "text": "Observe the visitor in silence before speaking. Let them reveal themselves.",
+      "subtext": "Words can obscure. Silence reveals. Watch how they stand. How they breathe. What they look at first.",
+      "glyph": "👁️",
+      "trait": "wisdom",
+      "outcome": "You wait. The visitor shifts. They look at the fire first — then the book — then the door. They are measuring escape routes. They are afraid of something. You do not mention it. But you know now. And they know you know."
+    },
+    {
+      "id": "inf_wis_05",
+      "text": "Ask the visitor what they know about the fire that must not go out.",
+      "subtext": "Everyone knows the fire burns. Few know why. Do you?",
+      "glyph": "🔥",
+      "trait": "wisdom",
+      "outcome": "The visitor stares at the flames. 'I... I was there when it was lit,' they whisper. 'I did not think anyone still tended it.' They reach toward the fire — not to touch it, but to feel its warmth. 'Thank you,' they say. 'For keeping it.'"
+    },
+    {
+      "id": "inf_wis_06",
+      "text": "Share a story from the book in exchange for one of the visitor's own.",
+      "subtext": "The keep runs on stories as much as fire. A story for a story is the oldest trade.",
+      "glyph": "🕯️",
+      "trait": "wisdom",
+      "outcome": "You tell them about the Stranger who came during the Long Frost, who stayed for three nights and left a feather that still glows in the crypt. The visitor listens. Then they tell you about the mortal they loved, three thousand years ago. You write it in the book."
+    },
+    {
+      "id": "inf_wis_07",
+      "text": "Ask the visitor if they have ever tended a fire that must not go out.",
+      "subtext": "Everyone has something they must keep burning. Even gods. What is yours?",
+      "glyph": "💭",
+      "trait": "wisdom",
+      "outcome": "They look at you with something that might be recognition. 'Yes,' they say. 'A long time ago. I failed. The fire went out. I have been looking for another one ever since.' They sit by your hearth. 'May I stay? Just for tonight?'"
+    }
+  ],
+  "courage": [
+    {
+      "id": "inf_cou_01",
+      "text": "Stand between the visitor and the fire. Make it clear: the flame is not theirs to touch.",
+      "subtext": "Some visitors want to take the fire. You must be willing to stand in their way.",
+      "glyph": "🛡️",
+      "trait": "courage",
+      "outcome": "You step between the god and the hearth. Your heart pounds. Your hands shake. But you do not move. The visitor looks at you — really looks — and nods slowly. 'You would die for this fire.' It is not a question. 'Good. That is what it requires.'"
+    },
+    {
+      "id": "inf_cou_02",
+      "text": "Admit to the visitor that you are afraid — and that you will keep tending the fire anyway.",
+      "subtext": "Courage is not the absence of fear. It is the fire you feed despite the fear.",
+      "glyph": "💪",
+      "trait": "courage",
+      "outcome": "The confession hangs in the air. The visitor tilts their head. 'You are afraid? And you admit it? And you stay?' They laugh — not mocking, but wondering. 'I have known warriors who could not do what you just did, Keeper.'"
+    },
+    {
+      "id": "inf_cou_03",
+      "text": "Go out into the storm and meet the visitor at the gate rather than waiting inside.",
+      "subtext": "Sometimes the bravest thing is to meet the unknown before it reaches your door.",
+      "glyph": "🌧️",
+      "trait": "courage",
+      "outcome": "You walk into the rain. The visitor is surprised — they expected to find you huddled by the fire. Instead, you stand in the storm, soaked and shivering, and offer your hand. 'Welcome to Glimthaven,' you say. They take your hand. It is warm."
+    },
+    {
+      "id": "inf_cou_04",
+      "text": "Tell the visitor a truth about yourself that you have never told anyone.",
+      "subtext": "Vulnerability is a weapon. It disarms even gods. What truth have you been carrying?",
+      "glyph": "🖤",
+      "trait": "courage",
+      "outcome": "You speak the words you have held for years — about the previous Keeper, about the night you almost let the fire die, about the fear that you are not worthy. The visitor listens. When you finish, they say: 'I have never heard a mortal speak so truly. I will remember this.'"
+    },
+    {
+      "id": "inf_cou_05",
+      "text": "Refuse a demand from the visitor, even knowing what it might cost.",
+      "subtext": "The Keeper does not bow. Not to kings. Not to gods. Not to anything that walks through the gate.",
+      "glyph": "✋",
+      "trait": "courage",
+      "outcome": "You say no. The word echoes in the stone hall. The visitor's expression hardens. The fire dims. For a terrible moment, you think they will strike you down. Then — slowly — they nod. 'I have not been refused in a thousand years. It is... refreshing.'"
+    },
+    {
+      "id": "inf_cou_06",
+      "text": "Walk with the visitor to the crypt and show them the names of the dead.",
+      "subtext": "The crypt holds every Keeper who came before. Are you willing to face them?",
+      "glyph": "💀",
+      "trait": "courage",
+      "outcome": "You lead them down the stone steps. The Lord of Bones nods as you pass. At the wall of names, you stop. 'These are the ones who kept the fire before me,' you say. 'I will join them someday. But not tonight.' The visitor touches the oldest name. 'I knew her,' they whisper."
+    },
+    {
+      "id": "inf_cou_07",
+      "text": "Challenge the visitor to prove they are worthy of the fire's warmth.",
+      "subtext": "The fire does not warm the unworthy. You are its guardian. You decide who receives its blessing.",
+      "glyph": "⚔️",
+      "trait": "courage",
+      "outcome": "The challenge hangs in the air. The visitor stares at you. Then they do something unexpected — they kneel. Not in worship, but in acknowledgment. 'I have been tested by mortals before,' they say. 'But never by one who had nothing to gain. I accept your judgment.'"
+    }
+  ],
+  "cunning": [
+    {
+      "id": "inf_cun_01",
+      "text": "Offer the visitor something small in exchange for something large — and let them think it was their idea.",
+      "subtext": "The best trades are the ones where the other party believes they won.",
+      "glyph": "🎭",
+      "trait": "cunning",
+      "outcome": "You offer a cup of water from the well. 'It is only water,' you say. The visitor tastes it and their eyes widen. 'This is from the spring beneath the keep. I have sought this for centuries.' They offer you a boon. You accept. The water cost you nothing."
+    },
+    {
+      "id": "inf_cun_02",
+      "text": "Tell the visitor a secret about another god who visited recently — and watch what happens.",
+      "subtext": "The gods do not always talk to each other. Information is currency. Spend it wisely.",
+      "glyph": "🗝️",
+      "trait": "cunning",
+      "outcome": "You mention, casually, that another god passed through last week and left something behind. The visitor leans forward. 'What did they leave?' You smile. You do not answer. The visitor offers you three favors for the information. You accept one."
+    },
+    {
+      "id": "inf_cun_03",
+      "text": "Ask the visitor to solve a riddle before they may sit by the fire.",
+      "subtext": "The old laws allow the Keeper to test visitors. A riddle reveals more than answers ever could.",
+      "glyph": "🧩",
+      "trait": "cunning",
+      "outcome": "You pose the riddle — one the first Keeper wrote in the margins of the book. The visitor thinks. And thinks. And finally laughs. 'I do not know the answer. In three thousand years, I have never not known an answer. This is... wonderful.' They sit by the fire, still thinking."
+    },
+    {
+      "id": "inf_cun_04",
+      "text": "Slip a question into casual conversation that reveals the visitor's true purpose.",
+      "subtext": "Gods are not used to being questioned. They often answer before they realize what they've revealed.",
+      "glyph": "🪝",
+      "trait": "cunning",
+      "outcome": "You ask, as if making conversation, why they really came to Glimthaven. They answer before they can stop themselves: 'I am running from something.' They freeze. You do not react. You add a log to the fire. 'We are all running from something,' you say. 'Stay as long as you need.'"
+    },
+    {
+      "id": "inf_cun_05",
+      "text": "Offer the visitor a bargain: their name for the book, in exchange for a night by the fire.",
+      "subtext": "Names have power. The book collects names. What is a god's name worth?",
+      "glyph": "📝",
+      "trait": "cunning",
+      "outcome": "The visitor hesitates. A name, freely given, is a dangerous thing. But the fire is warm and the night is cold and they are so very tired. 'One name,' they say. 'One of my names. Not all of them.' You open the book. 'One is enough.'"
+    },
+    {
+      "id": "inf_cun_06",
+      "text": "Pretend to be weaker than you are. Let the visitor underestimate you.",
+      "subtext": "A Keeper who seems harmless learns more than one who seems powerful. Play the fool.",
+      "glyph": "🃏",
+      "trait": "cunning",
+      "outcome": "You stammer. You shuffle. You let them think you are just a simple mortal, overwhelmed by their presence. They speak freely — too freely. By the time they realize you have been cataloging every word, every weakness, every secret, it is too late. The book already has them."
+    },
+    {
+      "id": "inf_cun_07",
+      "text": "Leave a significant pause before answering any question. Let silence do the work.",
+      "subtext": "Silence is a tool. Gods are not used to waiting. What do they reveal in the gap?",
+      "glyph": "⏳",
+      "trait": "cunning",
+      "outcome": "You count to ten before answering. In that silence, the visitor shifts. They look at the fire. They look at the door. They almost speak — twice. By the time you answer, they have revealed more than their question ever could. You file it away. The book will remember."
+    }
+  ],
+  "devotion": [
+    {
+      "id": "inf_dev_01",
+      "text": "Offer the visitor a place by the fire without asking anything in return.",
+      "subtext": "Hospitality is the oldest worship. The fire warms all who enter, regardless of worth.",
+      "glyph": "🔥",
+      "trait": "devotion",
+      "outcome": "You gesture to the hearth. The visitor hesitates — they expected a test, a challenge, a price. 'Just... sit?' You nod. They sit. The fire crackles. For the first time in centuries, a god is simply warm. They do not speak for a long time. When they do, they say: 'No one has ever just let me sit before.'"
+    },
+    {
+      "id": "inf_dev_02",
+      "text": "Add the visitor's name to the book, even if they do not ask to be remembered.",
+      "subtext": "The book exists to record. Everyone who passes through deserves to be remembered.",
+      "glyph": "📖",
+      "trait": "devotion",
+      "outcome": "You write their name carefully, in your best hand. They watch. 'Why?' they ask. 'I did not ask to be recorded.' You look up. 'That is why. The ones who do not ask are the ones most worth remembering.' They turn away, but not before you see their eyes glisten."
+    },
+    {
+      "id": "inf_dev_03",
+      "text": "Give the visitor something precious to you — not because they asked, but because they need it.",
+      "subtext": "The Keeper's role is to give. What do you have that a god might need?",
+      "glyph": "🎁",
+      "trait": "devotion",
+      "outcome": "You press a small stone into their hand — a pebble from the hearth, worn smooth by centuries of fire. 'Take it,' you say. 'It is nothing. It is everything. It is yours.' They close their fingers around it. 'I will carry this,' they say. 'I will carry this forever.'"
+    },
+    {
+      "id": "inf_dev_04",
+      "text": "Pray — not to the visitor, but with them, for something they have lost.",
+      "subtext": "Even gods grieve. Prayer shared is grief divided. What do they mourn?",
+      "glyph": "🙏",
+      "trait": "devotion",
+      "outcome": "You do not pray to them. You pray beside them — for the mortal they loved and lost, for the fire they failed to keep, for the fear they carry. When you finish, the visitor is silent. Then: 'No one has ever prayed for me before. Only to me.' They take your hand."
+    },
+    {
+      "id": "inf_dev_05",
+      "text": "Tend the visitor's wounds — visible or invisible — without comment.",
+      "subtext": "Gods arrive wounded. Not in body. In older places. The fire heals. So does care.",
+      "glyph": "🩹",
+      "trait": "devotion",
+      "outcome": "You do not ask what hurt them. You simply bring warm water, clean cloth, a cup of broth. You tend them as you would any traveler caught in the storm. They let you. A god lets a mortal tend their wounds. When you finish, they say: 'You are the first person to touch me gently in a thousand years.'"
+    },
+    {
+      "id": "inf_dev_06",
+      "text": "Make a vow to the visitor — something you will do in their name after they leave.",
+      "subtext": "Vows are the Keeper's currency. What will you promise to a passing god?",
+      "glyph": "💍",
+      "trait": "devotion",
+      "outcome": "You vow to carve their name on a stone in the crypt, so that even after you are gone, someone will remember they passed through. 'No one has ever vowed anything to me,' they say. 'No one. In all my years.' They touch your shoulder. 'I will not forget this. I will not forget you.'"
+    },
+    {
+      "id": "inf_dev_07",
+      "text": "Let the fire speak for you. Sometimes the flame knows what words cannot say.",
+      "subtext": "The fire has burned for eight hundred years. It has seen more than any Keeper. Let it welcome the visitor.",
+      "glyph": "🕯️",
+      "trait": "devotion",
+      "outcome": "You step aside and let the visitor stand before the hearth alone. The fire rises — not threatening, but greeting. It knows them. It has known them since before the keep was built. The visitor weeps. 'It remembers me,' they whisper. 'After all this time. It remembers.'"
+    }
+  ]
+}
