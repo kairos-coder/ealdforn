@@ -1,0 +1,38 @@
+[
+  {
+    "id": "wisdom_d_001",
+    "text": "Answer Athena's riddle about the nature of rule",
+    "glyph": "🦉",
+    "trait": "wisdom",
+    "tones": ["original", "silver", "green"],
+    "outcome": "She asks: 'What is the difference between a king and a tyrant?' You think carefully before answering. 'A king serves. A tyrant is served.' The owl on her shoulder hoots softly. Athena nods. 'Correct. You have more of your mother in you than your father. That is a gift.'",
+    "weight": 1.0
+  },
+  {
+    "id": "wisdom_d_002",
+    "text": "Ask Athena to teach you statecraft",
+    "glyph": "📜",
+    "trait": "authority",
+    "tones": ["silver", "original"],
+    "outcome": "She unrolls a map of the Storm Coast — every house, every alliance, every debt, every grudge. 'Study this. Your enemies already have.' She spends an hour walking you through the web of power that surrounds your keep. You emerge with a strategist's mind.",
+    "weight": 0.9
+  },
+  {
+    "id": "wisdom_d_003",
+    "text": "Request Athena reveal a secret about your father's court",
+    "glyph": "👁️",
+    "trait": "cunning",
+    "tones": ["silver"],
+    "outcome": "'The chamberlain,' she says. 'He writes to your father every week — not as a spy, but as a judge. The king wants to know if you are worthy. The chamberlain's last letter said you were.' She pauses. 'He has not sent it yet. He is waiting to see what you do next.'",
+    "weight": 0.85
+  },
+  {
+    "id": "wisdom_d_004",
+    "text": "Meditate with Athena on the strategy of patience",
+    "glyph": "🧘",
+    "trait": "devotion",
+    "tones": ["green"],
+    "outcome": "She sits with you in silence as the moon rises. The owl watches. The keep settles. After an hour, she speaks: 'You have been fighting every battle as if it were your last. Some battles are won by waiting. By letting your enemy make the first mistake. Learn the difference.' You do.",
+    "weight": 0.8
+  }
+]
