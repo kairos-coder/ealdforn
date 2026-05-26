@@ -1,258 +1,290 @@
-{
-  "_comment": "Choice cards for tone: ghost. Each card belongs to a trait, filtered by god domain. The Warden is a keeper of the dead, a witness, a threshold guardian. Choices reflect that weight.",
-
-  "authority": [
-    {
-      "id": "ghost_auth_01",
-      "tone": "ghost",
-      "domain": "authority",
-      "god": "zeus",
-      "text": "Name yourself Warden-Sovereign and read the compact aloud.",
-      "subtext": "The words were sealed for a reason. Unsealing them is a kind of crowning.",
-      "trait": "authority",
-      "weight": 2
-    },
-    {
-      "id": "ghost_auth_02",
-      "tone": "ghost",
-      "domain": "order",
-      "god": "hera",
-      "text": "Insist the compact remains valid even without living witnesses.",
-      "subtext": "A law is not a law only while someone watches. You will hold it regardless.",
-      "trait": "authority",
-      "weight": 2
-    },
-    {
-      "id": "ghost_auth_03",
-      "tone": "ghost",
-      "domain": "war",
-      "god": "ares",
-      "text": "Bar the hall door and stand before it. This place is not surrendered.",
-      "subtext": "You do not fight the god. You simply refuse to move.",
-      "trait": "authority",
-      "weight": 2
-    },
-    {
-      "id": "ghost_auth_04",
-      "tone": "ghost",
-      "domain": "forge",
-      "god": "hephaestus",
-      "text": "Show the god the lock on the chest. Tell it: this is not yours to open.",
-      "subtext": "The craftsman understands ownership. A made thing belongs to its maker's intent.",
-      "trait": "authority",
-      "weight": 1
-    }
-  ],
-
-  "wisdom": [
-    {
-      "id": "ghost_wis_01",
-      "tone": "ghost",
-      "domain": "wisdom",
-      "god": "athena",
-      "text": "Ask the god what the names meant before the war renamed them.",
-      "subtext": "The dead had other names once. Knowing them might change what you owe.",
-      "trait": "wisdom",
-      "weight": 2
-    },
-    {
-      "id": "ghost_wis_02",
-      "tone": "ghost",
-      "domain": "light",
-      "god": "apollo",
-      "text": "Ask why the torch burns that color. Listen to the whole answer.",
-      "subtext": "You have been watching this flame for seven winters. Tonight it speaks. Pay attention.",
-      "trait": "wisdom",
-      "weight": 2
-    },
-    {
-      "id": "ghost_wis_03",
-      "tone": "ghost",
-      "domain": "underworld",
-      "god": "persephone",
-      "text": "Ask the goddess what the dead in this keep are still waiting for.",
-      "subtext": "She moves between worlds. She knows what the dead cannot say for themselves.",
-      "trait": "wisdom",
-      "weight": 2
-    },
-    {
-      "id": "ghost_wis_04",
-      "tone": "ghost",
-      "domain": "harvest",
-      "god": "demeter",
-      "text": "Ask what this keep was before it was a fortress. Before the first stone was cut.",
-      "subtext": "The land remembers what the builders forgot. There was something here before the war.",
-      "trait": "wisdom",
-      "weight": 1
-    },
-    {
-      "id": "ghost_wis_05",
-      "tone": "ghost",
-      "domain": "depths",
-      "god": "poseidon",
-      "text": "Ask what the sea has taken from this cliff that you were supposed to keep.",
-      "subtext": "You know the answer. You need the god to confirm it before you can act.",
-      "trait": "wisdom",
-      "weight": 1
-    }
-  ],
-
-  "courage": [
-    {
-      "id": "ghost_cou_01",
-      "tone": "ghost",
-      "domain": "war",
-      "god": "ares",
-      "text": "Tell the god plainly: I am afraid of you, and I am staying anyway.",
-      "subtext": "There is no point pretending. The god of war can smell pretense.",
-      "trait": "courage",
-      "weight": 2
-    },
-    {
-      "id": "ghost_cou_02",
-      "tone": "ghost",
-      "domain": "underworld",
-      "god": "persephone",
-      "text": "Open the chest in front of the goddess and read every name aloud.",
-      "subtext": "You were told to guard the names. You were not told to hide them from the dead's own queen.",
-      "trait": "courage",
-      "weight": 2
-    },
-    {
-      "id": "ghost_cou_03",
-      "tone": "ghost",
-      "domain": "hunt",
-      "god": "artemis",
-      "text": "Go to the battlements in the storm and call the goddess by name. Let her come to you.",
-      "subtext": "You stop waiting to be found. You do the finding.",
-      "trait": "courage",
-      "weight": 2
-    },
-    {
-      "id": "ghost_cou_04",
-      "tone": "ghost",
-      "domain": "depths",
-      "god": "poseidon",
-      "text": "Stand at the cliff edge while the god speaks. Do not step back.",
-      "subtext": "The sea god tests with height. You answer with stillness.",
-      "trait": "courage",
-      "weight": 1
-    },
-    {
-      "id": "ghost_cou_05",
-      "tone": "ghost",
-      "domain": "authority",
-      "god": "zeus",
-      "text": "Look the Thunderer in the eye and say: I have already decided.",
-      "subtext": "A decision made in private, held through divine pressure, is the most costly kind of courage.",
-      "trait": "courage",
-      "weight": 1
-    }
-  ],
-
-  "cunning": [
-    {
-      "id": "ghost_cun_01",
-      "tone": "ghost",
-      "domain": "messengers",
-      "god": "hermes",
-      "text": "Give the god the names of the horses. Say nothing else.",
-      "subtext": "Hermes trades in names. He did not specify whose names. Horses remember better anyway.",
-      "trait": "cunning",
-      "weight": 2
-    },
-    {
-      "id": "ghost_cun_02",
-      "tone": "ghost",
-      "domain": "beauty",
-      "god": "aphrodite",
-      "text": "Tell the goddess the keep is beautiful, especially in the storm. Watch her pause.",
-      "subtext": "Aphrodite is never told she has overlooked something lovely. The delay is yours to use.",
-      "trait": "cunning",
-      "weight": 2
-    },
-    {
-      "id": "ghost_cun_03",
-      "tone": "ghost",
-      "domain": "wisdom",
-      "god": "athena",
-      "text": "Ask Athena what the god who visited last night wanted. Frame it as curiosity.",
-      "subtext": "The gods talk among themselves. You are gathering intelligence.",
-      "trait": "cunning",
-      "weight": 2
-    },
-    {
-      "id": "ghost_cun_04",
-      "tone": "ghost",
-      "domain": "authority",
-      "god": "zeus",
-      "text": "Offer the Thunderer something he didn't ask for. Let him believe it was his idea to want it.",
-      "subtext": "Kings are easy to manage when they feel magnanimous. Gods are kings.",
-      "trait": "cunning",
-      "weight": 1
-    },
-    {
-      "id": "ghost_cun_05",
-      "tone": "ghost",
-      "domain": "forge",
-      "god": "hephaestus",
-      "text": "Ask the craftsman to repair the lock on the chest. While he works, move the contents.",
-      "subtext": "Hephaestus is absorbed by the problem in front of him. That is his gift and your opportunity.",
-      "trait": "cunning",
-      "weight": 1
-    }
-  ],
-
-  "devotion": [
-    {
-      "id": "ghost_dev_01",
-      "tone": "ghost",
-      "domain": "underworld",
-      "god": "persephone",
-      "text": "Give the goddess every name freely. They belong to her people, not to your compact.",
-      "subtext": "The dead are hers. You were only holding them until someone with the right came to collect.",
-      "trait": "devotion",
-      "weight": 2
-    },
-    {
-      "id": "ghost_dev_02",
-      "tone": "ghost",
-      "domain": "harvest",
-      "god": "demeter",
-      "text": "Carry the sealed chest to the cliff edge and release it to the storm.",
-      "subtext": "What the sea made, the sea can keep. You are done being the one who holds it.",
-      "trait": "devotion",
-      "weight": 2
-    },
-    {
-      "id": "ghost_dev_03",
-      "tone": "ghost",
-      "domain": "light",
-      "god": "apollo",
-      "text": "Speak the names into the strange-colored flame and watch them go.",
-      "subtext": "Light carries. The names will reach whoever needs to hear them.",
-      "trait": "devotion",
-      "weight": 2
-    },
-    {
-      "id": "ghost_dev_04",
-      "tone": "ghost",
-      "domain": "order",
-      "god": "hera",
-      "text": "Acknowledge the compact is dissolved. The signatories are dead. The terms died with them.",
-      "subtext": "Hera understands that oaths outlive their makers only as long as someone chooses to honor them. You choose otherwise.",
-      "trait": "devotion",
-      "weight": 1
-    },
-    {
-      "id": "ghost_dev_05",
-      "tone": "ghost",
-      "domain": "hunt",
-      "god": "artemis",
-      "text": "Ask the goddess to carry word to the dead that they have been witnessed. Let the hunt be finished.",
-      "subtext": "Some things pursued for seven winters can be set down, if you can find the right messenger.",
-      "trait": "devotion",
-      "weight": 1
-    }
-  ]
-}
+[
+  {
+    "id": "ghost_auth_01",
+    "tones": ["ghost"],
+    "domain": "authority",
+    "god": "zeus",
+    "text": "Name yourself Warden-Sovereign and read the compact aloud.",
+    "subtext": "The words were sealed for a reason. Unsealing them is a kind of crowning.",
+    "glyph": "⚖",
+    "trait": "authority",
+    "outcome": "The god of authority watches you speak the old words into the storm-salt air. When you finish, something shifts — not in the keep, but in you. The title you named yourself has weight now. You can feel it pressing on your shoulders like a hand.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_auth_02",
+    "tones": ["ghost"],
+    "domain": "order",
+    "god": "hera",
+    "text": "Insist the compact remains valid even without living witnesses.",
+    "subtext": "A law is not a law only while someone watches. You will hold it regardless.",
+    "glyph": "⚖",
+    "trait": "authority",
+    "outcome": "The god of order goes still. You have said something that surprises a divine being — that witness is not required for obligation. The compact holds. You can feel it hold. Like a joint locking into place.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_auth_03",
+    "tones": ["ghost"],
+    "domain": "war",
+    "god": "ares",
+    "text": "Bar the hall door and stand before it. This place is not surrendered.",
+    "subtext": "You do not fight the god. You simply refuse to move.",
+    "glyph": "⚖",
+    "trait": "authority",
+    "outcome": "The god of war does not push past you. This is the thing soldiers never learn until they're older: a held position is its own kind of victory. You stood. The door stayed shut. That is everything.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_auth_04",
+    "tones": ["ghost"],
+    "domain": "forge",
+    "god": "hephaestus",
+    "text": "Show the god the lock on the chest. Tell it: this is not yours to open.",
+    "subtext": "The craftsman understands ownership. A made thing belongs to its maker's intent.",
+    "glyph": "⚖",
+    "trait": "authority",
+    "outcome": "Hephaestus looks at the lock for a long time. Then he nods — a craftsman acknowledging another maker's claim. He does not touch it. He leaves you with a look that might be respect.",
+    "weight": 1
+  },
+  {
+    "id": "ghost_wis_01",
+    "tones": ["ghost"],
+    "domain": "wisdom",
+    "god": "athena",
+    "text": "Ask the god what the names meant before the war renamed them.",
+    "subtext": "The dead had other names once. Knowing them might change what you owe.",
+    "glyph": "🜁",
+    "trait": "wisdom",
+    "outcome": "Athena tells you. The names on the stones are war-names — titles claimed in battle and carried to the grave. The true names, she says, were softer. Domestic. She recites three of them and you find yourself weeping without knowing why.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_wis_02",
+    "tones": ["ghost"],
+    "domain": "light",
+    "god": "apollo",
+    "text": "Ask why the torch burns that color. Listen to the whole answer.",
+    "subtext": "You have been watching this flame for seven winters. Tonight it speaks. Pay attention.",
+    "glyph": "🜁",
+    "trait": "wisdom",
+    "outcome": "Apollo tells you that fire changes color when it burns something that was never meant to be consumed. The torch is feeding on the oath-smoke still trapped in these stones from the original compact. You understand now what the keep is made of: not stone, but promise.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_wis_03",
+    "tones": ["ghost"],
+    "domain": "underworld",
+    "god": "persephone",
+    "text": "Ask the goddess what the dead in this keep are still waiting for.",
+    "subtext": "She moves between worlds. She knows what the dead cannot say for themselves.",
+    "glyph": "🜁",
+    "trait": "wisdom",
+    "outcome": "Persephone is quiet for a moment. Then: they are waiting to be wrong. They believed certain things when they died — about who would come back, who would remember, what the keep would become. They need someone to tell them they were right, or let them know they weren't.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_wis_04",
+    "tones": ["ghost"],
+    "domain": "harvest",
+    "god": "demeter",
+    "text": "Ask what this keep was before it was a fortress. Before the first stone was cut.",
+    "subtext": "The land remembers what the builders forgot. There was something here before the war.",
+    "glyph": "🜁",
+    "trait": "wisdom",
+    "outcome": "Demeter kneels and presses her palm to the floor. A threshold, she says. Not a building — a crossing-point. People have been coming here to make decisions at the edge of the sea since before any of your names for things existed. The stones were laid around the threshold, not the other way.",
+    "weight": 1
+  },
+  {
+    "id": "ghost_wis_05",
+    "tones": ["ghost"],
+    "domain": "depths",
+    "god": "poseidon",
+    "text": "Ask what the sea has taken from this cliff that you were supposed to keep.",
+    "subtext": "You know the answer. You need the god to confirm it before you can act.",
+    "glyph": "🜁",
+    "trait": "wisdom",
+    "outcome": "Poseidon looks at you with something close to sympathy. One name, he says. A person who fell in the second winter. Not in battle. Not dramatically. Just fell. You were supposed to be watching. You were watching. You watched, and still could not stop it. He confirms this without judgment. The knowing is enough.",
+    "weight": 1
+  },
+  {
+    "id": "ghost_cou_01",
+    "tones": ["ghost"],
+    "domain": "war",
+    "god": "ares",
+    "text": "Tell the god plainly: I am afraid of you, and I am staying anyway.",
+    "subtext": "There is no point pretending. The god of war can smell pretense.",
+    "glyph": "⚔",
+    "trait": "courage",
+    "outcome": "Ares stops. Of all the things you could have said, you chose the only one he does not hear often. He sits down — a god, sitting on your floor — and looks at you with something that takes a moment to recognize as respect. 'That,' he says, 'is what I came to find out.'",
+    "weight": 2
+  },
+  {
+    "id": "ghost_cou_02",
+    "tones": ["ghost"],
+    "domain": "underworld",
+    "god": "persephone",
+    "text": "Open the chest in front of the goddess and read every name aloud.",
+    "subtext": "You were told to guard the names. You were not told to hide them from the dead's own queen.",
+    "glyph": "⚔",
+    "trait": "courage",
+    "outcome": "It takes longer than you expected. Some names you have trouble with — your voice catches on them. Persephone does not hurry you. When you finish, she closes her eyes. Something moves in the air of the hall, like a long-held breath releasing.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_cou_03",
+    "tones": ["ghost"],
+    "domain": "hunt",
+    "god": "artemis",
+    "text": "Go to the battlements in the storm and call the goddess by name. Let her come to you.",
+    "subtext": "You stop waiting to be found. You do the finding.",
+    "glyph": "⚔",
+    "trait": "courage",
+    "outcome": "The rain soaks through your clothes in seconds. You call anyway. Artemis arrives from the direction of the sea, which is not where you expected, moving through the storm as though it has agreed to part for her. 'You called,' she says. 'Most mortals wait to be approached.' Her tone makes this sound like a failing she finds interesting.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_cou_04",
+    "tones": ["ghost"],
+    "domain": "depths",
+    "god": "poseidon",
+    "text": "Stand at the cliff edge while the god speaks. Do not step back.",
+    "subtext": "The sea god tests with height. You answer with stillness.",
+    "glyph": "⚔",
+    "trait": "courage",
+    "outcome": "The wind off the sea is strong enough to lean into. You lean into it. Poseidon finishes what he was saying and then watches you for a moment, this small figure at the edge of his domain, not flinching. 'Good feet,' he says finally. It is, you understand, a compliment of the highest order.",
+    "weight": 1
+  },
+  {
+    "id": "ghost_cou_05",
+    "tones": ["ghost"],
+    "domain": "authority",
+    "god": "zeus",
+    "text": "Look the Thunderer in the eye and say: I have already decided.",
+    "subtext": "A decision made in private, held through divine pressure, is the most costly kind of courage.",
+    "glyph": "⚔",
+    "trait": "courage",
+    "outcome": "Zeus is not accustomed to sentences that end before he has had a chance to intervene. He stares at you. Lightning suggests itself at the edges of the room — a reflex, not an intention. Then it fades. 'When?' he asks. You name the night. He calculates. 'Before I arrived,' he says. 'Yes,' you say.",
+    "weight": 1
+  },
+  {
+    "id": "ghost_cun_01",
+    "tones": ["ghost"],
+    "domain": "messengers",
+    "god": "hermes",
+    "text": "Give the god the names of the horses. Say nothing else.",
+    "subtext": "Hermes trades in names. He did not specify whose names. Horses remember better anyway.",
+    "glyph": "🜃",
+    "trait": "cunning",
+    "outcome": "Hermes accepts the list with the particular brightness of someone who has just been outwitted and found it delightful. He's halfway out the door before he realizes what you did. He pauses. Looks back. Gives you a nod that contains about seven different meanings. Leaves.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_cun_02",
+    "tones": ["ghost"],
+    "domain": "beauty",
+    "god": "aphrodite",
+    "text": "Tell the goddess the keep is beautiful, especially in the storm. Watch her pause.",
+    "subtext": "Aphrodite is never told she has overlooked something lovely. The delay is yours to use.",
+    "glyph": "🜃",
+    "trait": "cunning",
+    "outcome": "She stops. Looks at the rain-black walls with new attention. The torchlight on wet stone. The gray sea through the arrow-slit windows. 'Hm,' she says, which from Aphrodite is a significant concession. While she is distracted by beauty she had missed, you quietly move three things you didn't want her to notice.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_cun_03",
+    "tones": ["ghost"],
+    "domain": "wisdom",
+    "god": "athena",
+    "text": "Ask Athena what the god who visited last night wanted. Frame it as curiosity.",
+    "subtext": "The gods talk among themselves. You are gathering intelligence.",
+    "glyph": "🜃",
+    "trait": "cunning",
+    "outcome": "Athena is too smart not to know what you're doing. She tells you anyway, because she respects the question. Last night's god wanted the seal. Not the compact — just the seal. The wax and impression. This is useful information that changes your understanding of what is actually at stake here.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_cun_04",
+    "tones": ["ghost"],
+    "domain": "authority",
+    "god": "zeus",
+    "text": "Offer the Thunderer something he didn't ask for. Let him believe it was his idea to want it.",
+    "subtext": "Kings are easy to manage when they feel magnanimous. Gods are kings.",
+    "glyph": "🜃",
+    "trait": "cunning",
+    "outcome": "Zeus departs with the eastern tower's naming rights — something you offered as though it were precious, something he accepted as though he'd wanted it all along. You have given away a name that was already half-forgotten, and in return the Thunderer now feels favorably disposed toward you, which is worth considerably more.",
+    "weight": 1
+  },
+  {
+    "id": "ghost_cun_05",
+    "tones": ["ghost"],
+    "domain": "forge",
+    "god": "hephaestus",
+    "text": "Ask the craftsman to repair the lock on the chest. While he works, move the contents.",
+    "subtext": "Hephaestus is absorbed by the problem in front of him. That is his gift and your opportunity.",
+    "glyph": "🜃",
+    "trait": "cunning",
+    "outcome": "It works perfectly. He is completely absorbed. You move what matters to a location that cannot be found by divine attention because it has no name and belongs to no category. When Hephaestus finishes and hands you the repaired lock, he is genuinely pleased. You are genuinely grateful. The contents are genuinely safe.",
+    "weight": 1
+  },
+  {
+    "id": "ghost_dev_01",
+    "tones": ["ghost"],
+    "domain": "underworld",
+    "god": "persephone",
+    "text": "Give the goddess every name freely. They belong to her people, not to your compact.",
+    "subtext": "The dead are hers. You were only holding them until someone with the right came to collect.",
+    "glyph": "✦",
+    "trait": "devotion",
+    "outcome": "Persephone receives the names with both hands, which is how she receives things that matter. She will carry them below, she says. The dead will know they were remembered. They will know by whom. Your name, she says, will be spoken in the underworld as a kind of blessing for a very long time.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_dev_02",
+    "tones": ["ghost"],
+    "domain": "harvest",
+    "god": "demeter",
+    "text": "Carry the sealed chest to the cliff edge and release it to the storm.",
+    "subtext": "What the sea made, the sea can keep. You are done being the one who holds it.",
+    "glyph": "✦",
+    "trait": "devotion",
+    "outcome": "Demeter watches you do it. She does not stop you. When the chest hits the water and the storm pulls it under, something in the air changes — a pressure you had grown so accustomed to that you stopped noticing it. It is gone now. You feel lighter than you have in seven winters.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_dev_03",
+    "tones": ["ghost"],
+    "domain": "light",
+    "god": "apollo",
+    "text": "Speak the names into the strange-colored flame and watch them go.",
+    "subtext": "Light carries. The names will reach whoever needs to hear them.",
+    "glyph": "✦",
+    "trait": "devotion",
+    "outcome": "Each name changes the color of the flame as it passes through. By the time you reach the last one your face is wet and the torch burns clean white, the color that fire is when it has finished its work. Apollo says nothing. He simply watches the light, and nods.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_dev_04",
+    "tones": ["ghost"],
+    "domain": "order",
+    "god": "hera",
+    "text": "Acknowledge the compact is dissolved. The signatories are dead. The terms died with them.",
+    "subtext": "Hera understands that oaths outlive their makers only as long as someone chooses to honor them. You choose otherwise.",
+    "glyph": "✦",
+    "trait": "devotion",
+    "outcome": "Hera is not pleased. But she accepts it. An oath acknowledged-and-dissolved is cleaner than an oath abandoned, and she is the goddess of order — she understands the difference. The compact releases with a sound like a door closing softly in a distant room.",
+    "weight": 1
+  },
+  {
+    "id": "ghost_dev_05",
+    "tones": ["ghost"],
+    "domain": "hunt",
+    "god": "artemis",
+    "text": "Ask the goddess to carry word to the dead that they have been witnessed. Let the hunt be finished.",
+    "subtext": "Some things pursued for seven winters can be set down, if you can find the right messenger.",
+    "glyph": "✦",
+    "trait": "devotion",
+    "outcome": "Artemis is a hunter. She understands the completion of a chase. She takes your message without ceremony — this is her gift, to make sacred things feel practical — and she goes. You stand in the empty hall and realize the seven winters were the hunt, and you were not the prey. You were the hound.",
+    "weight": 1
+  }
+]
