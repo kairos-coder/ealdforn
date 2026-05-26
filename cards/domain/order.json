@@ -1,0 +1,38 @@
+[
+  {
+    "id": "order_001",
+    "text": "Ask Hera to bless your household with divine order",
+    "glyph": "🏠",
+    "trait": "devotion",
+    "tones": ["original", "silver", "green"],
+    "outcome": "She walks through your halls, touching each doorframe. The keep feels... warmer. Safer. The servants stand straighter. The torches burn brighter. 'A blessed house stands longer than a strong one. Remember this.'",
+    "weight": 1.0
+  },
+  {
+    "id": "order_002",
+    "text": "Request Hera arrange a marriage alliance to strengthen your claim",
+    "glyph": "💍",
+    "trait": "authority",
+    "tones": ["silver", "original"],
+    "outcome": "She produces a scroll — three names, three houses, each one a thread in a web that could catch a throne. 'Choose by sunset. A queen does not wait, and neither should a lord who wishes to become one.'",
+    "weight": 0.9
+  },
+  {
+    "id": "order_003",
+    "text": "Ask Hera to reveal who in your court is unfaithful",
+    "glyph": "👁️",
+    "trait": "wisdom",
+    "tones": ["silver", "original"],
+    "outcome": "Her expression hardens. 'The steward's wife. She writes love letters to the castellan. He has not answered — yet. But he will. Infidelity is a crack, and cracks spread.' She looks at you meaningfully. 'In walls. And in kingdoms.'",
+    "weight": 0.85
+  },
+  {
+    "id": "order_004",
+    "text": "Vow to uphold the sacred bonds of marriage and oath in your rule",
+    "glyph": "📜",
+    "trait": "devotion",
+    "tones": ["green", "silver"],
+    "outcome": "You speak the old vows — not the ones they say in churches, but older ones, the kind that bind blood to blood and house to house. Hera listens. When you finish, she nods slowly. 'You understand. Most lords never do.'",
+    "weight": 0.8
+  }
+]
