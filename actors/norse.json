@@ -1,0 +1,182 @@
+{
+  "Odin": {
+    "name": "Odin",
+    "glyph": "🐺",
+    "domain": "wisdom",
+    "aspect": "all-father",
+    "color": "#8090c0",
+    "image": "odin.jpg",
+    "entrance": "appears as an old man in a cloak, one eye gleaming, two ravens on his shoulders",
+    "return_entrance": [
+      "returns as a wanderer at the gate, leaning on a staff that was not a staff before",
+      "appears again, this time with a single raven — the other is elsewhere, watching something you cannot see"
+    ],
+    "scenes": {
+      "arrival": [
+        "hangs from the World Tree for nine nights, then steps down and walks toward you",
+        "sits by the fire without asking, his one eye reflecting flames that are not there",
+        "speaks in riddles that feel like memories you haven't had yet"
+      ]
+    }
+  },
+  "Frigg": {
+    "name": "Frigg",
+    "glyph": "🕊️",
+    "domain": "order",
+    "aspect": "queen-of-asgard",
+    "color": "#d0c0e0",
+    "image": "frigg.jpg",
+    "entrance": "arrives in silence, mistletoe in her hair, knowing everything and saying nothing",
+    "scenes": {
+      "arrival": [
+        "weaves at a loom that was not there a moment ago, the threads shimmering with futures",
+        "stands at the window watching the sea, having foreseen this conversation since before the keep was built",
+        "touches the stones of the hall and nods — she asked them to protect you, long ago"
+      ]
+    }
+  },
+  "Thor": {
+    "name": "Thor",
+    "glyph": "⚡",
+    "domain": "war",
+    "aspect": "thunderer",
+    "color": "#f0a040",
+    "image": "thor.jpg",
+    "entrance": "arrives in a chariot of goats, hammer crackling, the storm following him like a loyal dog",
+    "scenes": {
+      "arrival": [
+        "crashes through the roof — literally — and laughs at the damage",
+        "strides in from the rain, dripping, grinning, demanding mead",
+        "sets Mjolnir on the table. The table groans. He doesn't notice."
+      ]
+    }
+  },
+  "Loki": {
+    "name": "Loki",
+    "glyph": "🦊",
+    "domain": "messengers",
+    "aspect": "trickster",
+    "color": "#c060c0",
+    "image": "loki.jpg",
+    "entrance": "is already in the room when you turn around, eating your bread, wearing your face wrong",
+    "scenes": {
+      "arrival": [
+        "appears as a fly, then a fish, then a horse, then himself — laughing at your confusion",
+        "tells you three lies and one truth. You will spend the rest of the night deciding which is which.",
+        "offers you a gift wrapped in shadow. It is exactly what you need. It is exactly what will destroy you."
+      ]
+    }
+  },
+  "Freyja": {
+    "name": "Freyja",
+    "glyph": "🐈",
+    "domain": "beauty",
+    "aspect": "vanadis",
+    "color": "#e06090",
+    "image": "freyja.jpg",
+    "entrance": "arrives in a chariot drawn by cats, her falcon cloak shimmering with unshed tears and unspent desire",
+    "scenes": {
+      "arrival": [
+        "walks through the hall and the torches burn brighter, the stones grow warmer, the dead in the walls stir",
+        "offers you a feather from her cloak. It will take you anywhere. It will cost you something you love.",
+        "sits beside you and says nothing. Her presence is enough. It is always enough."
+      ]
+    }
+  },
+  "Heimdall": {
+    "name": "Heimdall",
+    "glyph": "📯",
+    "domain": "authority",
+    "aspect": "watcher",
+    "color": "#c9a84c",
+    "image": "heimdall.jpg",
+    "entrance": "stands at the gate, having walked here from Bifrost, his eyes reflecting every color at once",
+    "scenes": {
+      "arrival": [
+        "blows the Gjallarhorn — once, soft. The note hangs in the air for minutes. 'A warning,' he says. 'Or a greeting. You decide.'",
+        "looks at you and sees everything you have done in this keep. He nods slowly. 'You have been witnessed.'",
+        "stands guard at your door without being asked. Nothing will enter while he stands there."
+      ]
+    }
+  },
+  "Hel": {
+    "name": "Hel",
+    "glyph": "💀",
+    "domain": "underworld",
+    "aspect": "half-dead",
+    "color": "#a08090",
+    "image": "hel.jpg",
+    "entrance": "rises through the floor, half beautiful, half bone, her voice the sound of graves opening",
+    "scenes": {
+      "arrival": [
+        "stands in the center of the hall, one side of her face smiling, the other not",
+        "offers you a seat at her table. 'It is not as far as you think. None of you are as far as you think.'",
+        "touches the names carved in the stone. 'I know these ones. They are well. They asked about you.'"
+      ]
+    }
+  },
+  "Baldr": {
+    "name": "Baldr",
+    "glyph": "✨",
+    "domain": "light",
+    "aspect": "beloved",
+    "color": "#f0d878",
+    "image": "baldr.jpg",
+    "entrance": "arrives with light that does not cast shadows, his beauty almost unbearable, his kindness more so",
+    "scenes": {
+      "arrival": [
+        "steps through the door and everything that was broken in the room is whole again",
+        "smiles at you. You believe, for the first time in years, that things might be alright.",
+        "touches the chest where the names are kept. 'They are not forgotten,' he says. 'That is all anyone wants. To not be forgotten.'"
+      ]
+    }
+  },
+  "Tyr": {
+    "name": "Tyr",
+    "glyph": "🤝",
+    "domain": "courage",
+    "aspect": "one-handed",
+    "color": "#c04040",
+    "image": "tyr.jpg",
+    "entrance": "arrives with one hand empty, the other missing, his word still good after all these centuries",
+    "scenes": {
+      "arrival": [
+        "offers you his remaining hand. 'An oath,' he says. 'I keep those.'",
+        "looks at the compact and nods. 'I know what it costs to put your hand in the wolf's mouth. You did well.'",
+        "stands beside you facing whatever comes. He does not speak. He does not need to."
+      ]
+    }
+  },
+  "Skadi": {
+    "name": "Skadi",
+    "glyph": "🏔️",
+    "domain": "hunt",
+    "aspect": "frost-giant",
+    "color": "#a0c0d0",
+    "image": "skadi.jpg",
+    "entrance": "arrives on skis made of frozen moonlight, bow in hand, the temperature dropping as she enters",
+    "scenes": {
+      "arrival": [
+        "stands in the hall and frost spreads from her feet across the stones. 'I like this place,' she says. 'It is cold. Cold is honest.'",
+        "offers you a bow made of yew and winter. 'Hunt with me. The prey is worthy.'",
+        "looks at the sea cliffs and smiles. 'My father would have loved this place. He was a giant. Everything was smaller than him.'"
+      ]
+    }
+  },
+  "Bragi": {
+    "name": "Bragi",
+    "glyph": "🎵",
+    "domain": "forge",
+    "aspect": "skald",
+    "color": "#e89040",
+    "image": "bragi.jpg",
+    "entrance": "arrives with a harp and a voice that makes the stones weep, runes carved on his tongue",
+    "scenes": {
+      "arrival": [
+        "sits by the fire and begins to play. The song is about you. You have never heard it before. It is true.",
+        "offers to compose a saga of your six visitations. 'It will be sung for a thousand years. Or forgotten by morning. Either is a gift.'",
+        "listens to your story before he tells his own. 'A skald who does not listen is no skald at all.'"
+      ]
+    }
+  }
+}
