@@ -1,0 +1,19 @@
+{
+  "name": "The Green Forest",
+  "description": "An ancient woodland that has outlasted every kingdom that tried to claim it. The trees are older than the gods. The stones remember the first pact. Somewhere in the heart of the forest, the Green Chapel waits — where the old game is played with holly and axe.",
+  "atmosphere": "green-forest.jpg",
+  "weather": [
+    "Mist hangs between the ancient oaks like breath. The forest is never truly silent — something is always watching.",
+    "Rain drips from every leaf. The forest floor is soft with moss and decay. Life feeds on death here. It always has.",
+    "Moonlight filters through the canopy in silver shafts. The holly berries glow red as blood. The old woman says this is a good night for pacts.",
+    "Snow silences the forest. Every footstep is muffled. The Green Chapel is easier to find in winter — the holly is the only green thing for miles."
+  ],
+  "worldBeats": [
+    "The old woman by the well — the Sea-Witch who raised you — appears in your chambers without knocking. She never knocks. 'The forest is stirring,' she says. 'The old pacts are fraying. You must renew them, or the land will forget you.' She hands you a sprig of holly. It is still warm.",
+    "You find a ring of standing stones deep in the woods — older than the keep, older than your father's line. At the center, a flat stone stained dark. This is where the beheading game was played, long ago. The axe mark is still visible. The stone is cold. It is waiting.",
+    "A white stag appears at the edge of the forest. It looks at you with eyes that are not an animal's eyes. It bows its head — once — and vanishes into the mist. The old woman says this is an omen. Of what, she will not say.",
+    "The holly crown the old woman gave you is still green, months after it was cut. It should have withered. It should have died. But it is still green. You wear it when you walk the forest boundary. The trees bend toward you. The old pacts remember your name.",
+    "Something is digging at the roots of the oldest oak. Not an animal. Something patient. Something that has been digging for centuries. The Sea-Witch says it is almost finished. She will not say what it is digging for.",
+    "The Green Chapel appears tonight. You can feel it — a pull in your chest, like a hook through your ribs. The axe is waiting. The holly is waiting. The old game never ended. It just paused. You are being called to take your turn."
+  ]
+}
