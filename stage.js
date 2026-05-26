@@ -1,9 +1,9 @@
 // ============================================
-// EALDFORN STAGE v2.0 — The Player
+// EALDFORN STAGE v2.1 — The Player
 // ============================================
 // Reads script, set, cast, and choice cards.
-// Dynamically pulls choices from card database
-// based on god domain + screenplay tone.
+// Uses local images from images/ folder.
+// Falls back to Pollinations for missing images.
 // ============================================
 
 var EaldfornStage = (function() {
@@ -36,7 +36,7 @@ var EaldfornStage = (function() {
     var setId = params.get('set') || 'storm-coast';
     var castIds = params.get('cast') || 'olympians';
 
-    console.log('🎭 Ealdforn Stage v2.0 — Raising the curtain...');
+    console.log('🎭 Ealdforn Stage v2.1 — Raising the curtain...');
     console.log('   Script:', scriptId);
     console.log('   Set:', setId);
     console.log('   Cast:', castIds);
@@ -66,9 +66,13 @@ var EaldfornStage = (function() {
       set = { 
         name: 'Unknown Stage', 
         weather: ['The air is still.'], 
-        worldBeats: ['The world waits.'] 
+        worldBeats: ['The world waits.'],
+        atmosphere: 'storm-coast.jpg'
       };
     }
+
+    // Apply set background
+    applySetBackground();
 
     // Load cast members
     var castList = castIds.split(',');
@@ -89,18 +93,46 @@ var EaldfornStage = (function() {
     }
     console.log('   Total cast members:', totalActors);
 
-    // Initialize traits from script
+    // Initialize traits
     if (script.player && script.player.traits) {
       state.traits = JSON.parse(JSON.stringify(script.player.traits));
     } else {
       state.traits = { authority: 0, wisdom: 0, courage: 0, cunning: 0, devotion: 0 };
     }
 
-    // Preload choice cards for faster first turn
+    // Preload choice cards
     await preloadChoiceCards();
 
     renderPrologue();
     return true;
+  }
+
+  // ════════════════════════════════════
+  // IMAGE LAYER
+  // ════════════════════════════════════
+  function applySetBackground() {
+    var stageMain = document.querySelector('.stage-main');
+    if (!stageMain) return;
+
+    var bgImage = set.atmosphere || 'storm-coast.jpg';
+    stageMain.style.backgroundImage = 'url(images/sets/' + bgImage + ')';
+    stageMain.style.backgroundSize = 'cover';
+    stageMain.style.backgroundPosition = 'center';
+    stageMain.style.backgroundAttachment = 'fixed';
+  }
+
+  function getActorImage(actor) {
+    // Use local image if available
+    if (actor.image) {
+      return 'images/actors/' + actor.image;
+    }
+    // Fallback: generate via Pollinations
+    console.log('   ⚡ No local image for ' + actor.name + ' — using Pollinations fallback');
+    var prompt = 'dark fantasy, ' + (actor.aspect || 'mythic') + ' god ' + (actor.name || '') + 
+      ', ' + (actor.domain || '') + ', mythic atmosphere, cinematic lighting, oil painting style, portrait, 4k';
+    var seed = Math.floor(Math.random() * 99999);
+    return 'https://image.pollinations.ai/prompt/' + encodeURIComponent(prompt) + 
+      '?width=1024&height=768&seed=' + seed + '&nologo=true';
   }
 
   // ════════════════════════════════════
@@ -186,7 +218,6 @@ var EaldfornStage = (function() {
     var selected = [];
     var traitsUsed = {};
 
-    // First pass: pick one of each trait if available
     for (var t = 0; t < shuffled.length && selected.length < 3; t++) {
       var card = shuffled[t];
       if (!traitsUsed[card.trait]) {
@@ -195,7 +226,6 @@ var EaldfornStage = (function() {
       }
     }
 
-    // Second pass: fill remaining slots
     for (var f = 0; f < shuffled.length && selected.length < 3; f++) {
       var fillCard = shuffled[f];
       if (selected.filter(function(s) { return s.id === fillCard.id; }).length === 0) {
@@ -278,7 +308,7 @@ var EaldfornStage = (function() {
         'You think you know your situation. You do not. Let me show you what you are missing.'
       ],
       light: [
-        'The sun still rises on Glimthaven Keep. That is my doing. Do you know why?',
+        'The sun still rises on this place. That is my doing. Do you know why?',
         'I see a shadow on you — old, cold, not yours. Do you want me to illuminate it?',
         'Prophecy is not prediction. It is pattern. And you, bastard, are part of a very old pattern.'
       ],
@@ -315,18 +345,6 @@ var EaldfornStage = (function() {
     };
     var pool = greetings[actor.domain] || ['I am here. Choose wisely, for these moments echo in eternity.'];
     return pool[Math.floor(Math.random() * pool.length)];
-  }
-
-  // ════════════════════════════════════
-  // IMAGE GENERATION
-  // ════════════════════════════════════
-  function generateImage(actor, scene, location) {
-    var prompt = 'dark fantasy, ' + (actor.aspect || 'mythic') + ' god ' + (actor.name || '') + 
-      ', ' + scene + ', ' + location + 
-      ', mythic atmosphere, cinematic lighting, oil painting style, medieval, 4k';
-    var seed = Math.floor(Math.random() * 99999);
-    return 'https://image.pollinations.ai/prompt/' + encodeURIComponent(prompt) + 
-      '?width=1024&height=768&seed=' + seed + '&nologo=true';
   }
 
   // ════════════════════════════════════
@@ -390,10 +408,9 @@ var EaldfornStage = (function() {
       arrival = 'appears before you, unmistakably divine.';
     }
 
-    // Generate image
-    var imageUrl = generateImage(actor, arrival, set.name);
+    // Get actor image (local or Pollinations fallback)
+    var imageUrl = getActorImage(actor);
 
-    // Show loading state
     container.innerHTML = 
       '<div class="scene-image">' +
         '<img src="' + imageUrl + '" alt="' + actor.name + ' appears" onerror="this.parentElement.innerHTML=\'<div class=img-placeholder>The mists part as ' + actor.name + ' arrives...</div>\'">' +
@@ -416,8 +433,6 @@ var EaldfornStage = (function() {
       '</div>';
 
     updateHeader();
-
-    // Preload choices
     state._pendingChoices = await getActorChoices(actor);
   }
 
@@ -428,7 +443,7 @@ var EaldfornStage = (function() {
     var choices = state._pendingChoices || [];
     var actor = state.currentActor;
 
-    if (choices.length === 0) {
+    if (choices.length === 0 && actor) {
       choices = await getActorChoices(actor);
     }
 
@@ -436,7 +451,7 @@ var EaldfornStage = (function() {
       return '<button class="stage-choice" onclick="EaldfornStage.makeChoice(\'' + 
         (c.trait || 'unknown') + '\', \'' + 
         escapeHTML(c.outcome || 'The god acknowledges your choice.') + '\', \'' +
-        (actor.name || '') + '\', \'' + (actor.glyph || '') + '\')">' +
+        (actor ? actor.name || '' : '') + '\', \'' + (actor ? actor.glyph || '' : '') + '\')">' +
         '<span class="choice-glyph">' + (c.glyph || '◈') + '</span>' +
         '<span class="choice-text">' + (c.text || 'Act') + '</span>' +
         '<span class="choice-hint">+' + (c.trait || '?') + '</span></button>';
@@ -457,7 +472,6 @@ var EaldfornStage = (function() {
       outcome: outcome
     });
 
-    // Render outcome
     var container = document.getElementById('stageContainer');
     container.innerHTML = 
       '<div class="scene-outcome">' +
@@ -474,7 +488,6 @@ var EaldfornStage = (function() {
       '</div>';
 
     document.getElementById('choicesContainer').innerHTML = '';
-
     updateChronicle();
 
     if (state.scene >= state.maxScenes) {
@@ -583,7 +596,6 @@ var EaldfornStage = (function() {
 
 })();
 
-// Auto-init when the page loads
 document.addEventListener('DOMContentLoaded', function() {
   EaldfornStage.init();
 });
