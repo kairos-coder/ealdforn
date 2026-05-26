@@ -1,0 +1,38 @@
+[
+  {
+    "id": "auth_d_001",
+    "text": "Swear fealty to Zeus and demand his recognition of your bloodright",
+    "glyph": "⚡",
+    "trait": "authority",
+    "tones": ["original", "iron", "silver"],
+    "outcome": "You bend the knee — not in submission, but in covenant. 'Rise,' Zeus thunders. 'Lord of Helm-hallen. Olympus recognizes you.' The words shake the stones. The garrison hears. The village hears. Your father will hear. The King of Gods has named you lord.",
+    "weight": 1.0
+  },
+  {
+    "id": "auth_d_002",
+    "text": "Question Zeus about the justice of your bastard birth",
+    "glyph": "⚖️",
+    "trait": "wisdom",
+    "tones": ["silver", "green", "original"],
+    "outcome": "The thunder quiets. Zeus regards you with something unexpected — not anger, but weariness. 'Justice? I have seen mortal kings burn cities over questions of birth. Your father is a fool. But you — you are asking the right question. That is rarer than a legitimate heir.'",
+    "weight": 0.9
+  },
+  {
+    "id": "auth_d_003",
+    "text": "Challenge Zeus to prove his rule is just",
+    "glyph": "🗡️",
+    "trait": "courage",
+    "tones": ["iron"],
+    "outcome": "The hall goes silent. The garrison holds its breath. Zeus stares at you for a long, terrible moment. Then he laughs — thunder that shakes the rafters. 'NO ONE has asked me that in three hundred years. You have iron in your spine, bastard. I will remember you.'",
+    "weight": 0.75
+  },
+  {
+    "id": "auth_d_004",
+    "text": "Ask Zeus to bless your rule with the authority of Olympus",
+    "glyph": "👑",
+    "trait": "devotion",
+    "tones": ["green", "original"],
+    "outcome": "He places a hand on your shoulder. Lightning courses through you — not painful, but awakening. 'You have the blessing of Olympus. Not because of your blood, but because of your questions. A king who questions is a king who learns. Go. Rule. Prove me right.'",
+    "weight": 0.85
+  }
+]
