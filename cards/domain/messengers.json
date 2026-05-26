@@ -1,0 +1,38 @@
+[
+  {
+    "id": "mess_001",
+    "text": "Send Hermes with a message to another god",
+    "glyph": "✉️",
+    "trait": "cunning",
+    "tones": ["silver", "original", "green"],
+    "outcome": "He grins. 'Which god?' You name one. He vanishes — and returns in three heartbeats with a reply. 'They said yes. Whatever you asked — they said yes.' He winks. 'I may have improved your wording slightly. You're welcome.'",
+    "weight": 1.0
+  },
+  {
+    "id": "mess_002",
+    "text": "Race Hermes across the keep walls",
+    "glyph": "🏃",
+    "trait": "courage",
+    "tones": ["iron", "original"],
+    "outcome": "You run. He lets you almost win — you know he lets you — but for one moment, your fingers brush the finish line before his. He laughs, delighted. 'Fast for a mortal! Here.' He hands you a feather. 'Break this when you need me. I'll come. Once.'",
+    "weight": 0.9
+  },
+  {
+    "id": "mess_003",
+    "text": "Ask Hermes what secret he knows about you",
+    "glyph": "🪽",
+    "trait": "wisdom",
+    "tones": ["silver", "green"],
+    "outcome": "He leans close, breath smelling of ozone and mischief. 'Your mother is not dead. She is in the underworld. Persephone knows exactly where. I was not supposed to tell you this — which is exactly why I am telling you.' He grins. 'You owe me.'",
+    "weight": 0.85
+  },
+  {
+    "id": "mess_004",
+    "text": "Hire Hermes to spy on your half-brother's court",
+    "glyph": "🕵️",
+    "trait": "cunning",
+    "tones": ["silver"],
+    "outcome": "He names a price — not gold, but a story. 'Tell me something true about yourself that you have never told anyone.' You do. He listens without grinning for once. 'Payment accepted.' He vanishes. Three days later, a scroll appears on your desk. Your half-brother's plans. Every one.",
+    "weight": 0.8
+  }
+]
