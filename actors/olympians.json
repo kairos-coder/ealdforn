@@ -1,6 +1,7 @@
 {
   "Zeus": {
     "glyph": "⚡", "domain": "authority", "aspect": "king", "color": "#f0c040",
+    "image": "zeus.jpg",
     "entrance": "arrives in a thunderclap, the torches guttering in his presence",
     "scenes": {
       "arrival": [
@@ -12,6 +13,7 @@
   },
   "Hera": {
     "glyph": "👑", "domain": "order", "aspect": "queen", "color": "#c0a0d0",
+    "image": "hera.jpg",
     "entrance": "arrives in a procession of peacocks, surveying the disorder of your household",
     "scenes": {
       "arrival": [
@@ -23,6 +25,7 @@
   },
   "Poseidon": {
     "glyph": "🌊", "domain": "depths", "aspect": "tide", "color": "#4060a0",
+    "image": "poseidon.jpg",
     "entrance": "rises from the sea cliffs below the keep, water streaming from his beard",
     "scenes": {
       "arrival": [
@@ -34,6 +37,7 @@
   },
   "Demeter": {
     "glyph": "🌿", "domain": "harvest", "aspect": "growth", "color": "#6b9e5a",
+    "image": "demeter.jpg",
     "entrance": "walks through your barren fields, and where she steps, green shoots rise",
     "scenes": {
       "arrival": [
@@ -45,6 +49,7 @@
   },
   "Athena": {
     "glyph": "🦉", "domain": "wisdom", "aspect": "strategy", "color": "#8090c0",
+    "image": "athena.jpg",
     "entrance": "appears as an owl on your windowsill, then steps into the room as a woman armored in thought",
     "scenes": {
       "arrival": [
@@ -56,6 +61,7 @@
   },
   "Apollo": {
     "glyph": "☀️", "domain": "light", "aspect": "synthesis", "color": "#f0a040",
+    "image": "apollo.jpg",
     "entrance": "arrives at dawn, golden light spilling over the walls, and sings a prophecy",
     "scenes": {
       "arrival": [
@@ -67,6 +73,7 @@
   },
   "Artemis": {
     "glyph": "🏹", "domain": "hunt", "aspect": "pursuit", "color": "#7eb8a0",
+    "image": "artemis.jpg",
     "entrance": "appears at the edge of the forest, silver bow in hand, tracking something in the dark",
     "scenes": {
       "arrival": [
@@ -78,6 +85,7 @@
   },
   "Hephaestus": {
     "glyph": "🔨", "domain": "forge", "aspect": "craft", "color": "#e89040",
+    "image": "hephaestus.jpg",
     "entrance": "sets up his anvil in your courtyard without asking, the fire already burning",
     "scenes": {
       "arrival": [
@@ -89,6 +97,7 @@
   },
   "Aphrodite": {
     "glyph": "💋", "domain": "beauty", "aspect": "desire", "color": "#e06090",
+    "image": "aphrodite.jpg",
     "entrance": "appears in your mirror, more beautiful than anything you've seen, and asks if you feel worthy",
     "scenes": {
       "arrival": [
@@ -100,6 +109,7 @@
   },
   "Ares": {
     "glyph": "⚔️", "domain": "war", "aspect": "fury", "color": "#c04040",
+    "image": "ares.jpg",
     "entrance": "arrives in full battle armor, bloodied from some unseen conflict, and demands your swords",
     "scenes": {
       "arrival": [
@@ -111,6 +121,7 @@
   },
   "Hermes": {
     "glyph": "🪽", "domain": "messengers", "aspect": "speed", "color": "#c060c0",
+    "image": "hermes.jpg",
     "entrance": "appears suddenly behind you, out of breath, carrying a sealed scroll from Olympus",
     "scenes": {
       "arrival": [
@@ -122,6 +133,7 @@
   },
   "Persephone": {
     "glyph": "🖤", "domain": "underworld", "aspect": "return", "color": "#a08090",
+    "image": "persephone.jpg",
     "entrance": "rises from a crack in the keep's foundation, smelling of pomegranate and grave soil",
     "scenes": {
       "arrival": [
