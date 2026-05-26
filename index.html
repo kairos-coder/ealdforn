@@ -3,200 +3,316 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ealdforn Stage — Playbill</title>
+<title>The Ealdforn Stage — A Temple of Stories</title>
 <style>
 :root {
-  --bg: #0d0a05; --surface: #1a1410; --border: #2a1f18;
-  --text: #d4c0a0; --text-dim: #7a6a50; --gold: #c9a84c; --rubric: #8b3a3a;
-  --iron: #8a9aaa; --silver: #c0c0d0; --green: #6b9e5a; --ghost: #8090a0;
+  --bg: #080604; --surface: #100c08; --border: #1f1812;
+  --text: #c8b898; --text-bright: #e8dcc8; --text-dim: #6b5d48;
+  --gold: #b8942e; --gold-bright: #d4a840; --gold-dim: #5c4818;
+  --rubric: #7a2a2a; --rubric-bright: #9a3a3a; --amber: #b8702e;
+  --iron: #7a8a90; --silver: #a09888; --green: #5a7a4a; --ghost: #7a8a78; --infinite: #b8702e;
   --font-body: 'Georgia', 'Times New Roman', serif;
   --font-mono: 'Courier New', monospace;
+  --parchment: #f0e6d2;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
   background:var(--bg); color:var(--text); font-family:var(--font-body);
-  min-height:100vh; display:flex; justify-content:center; align-items:flex-start;
+  min-height:100vh; display:flex; justify-content:center;
   background-image:
-    radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.04) 0%, transparent 60%),
-    radial-gradient(ellipse at 30% 100%, rgba(139,58,58,0.03) 0%, transparent 40%);
+    radial-gradient(ellipse at 50% 0%, rgba(184,148,46,0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 30% 100%, rgba(122,42,42,0.04) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 50%, rgba(184,112,46,0.03) 0%, transparent 30%);
 }
 
-.playbill-wrapper {
-  max-width:900px; width:100%; margin:30px 20px;
+.temple {
+  max-width:1000px; width:100%; margin:0 20px 60px;
+  position:relative;
 }
 
-/* ── HEADER ── */
-.playbill-header {
-  text-align:center; padding:30px 20px 20px;
-  border-bottom:1px solid var(--border); margin-bottom:0;
+/* ── TEMPLE GATE ── */
+.temple-gate {
+  text-align:center; padding:40px 20px 30px;
+  position:relative;
 }
-.playbill-header .icon-row { font-size:36px; margin-bottom:8px; }
-.playbill-header h1 { font-size:28px; color:var(--gold); letter-spacing:6px; font-weight:normal; text-transform:uppercase; }
-.playbill-header .subtitle { font-size:10px; color:var(--text-dim); letter-spacing:3px; text-transform:uppercase; font-family:var(--font-mono); margin-top:6px; }
-.playbill-header .season { font-size:9px; color:var(--rubric); letter-spacing:2px; font-family:var(--font-mono); margin-top:8px; }
+.temple-gate::before {
+  content:''; position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:1px; height:40px; background:linear-gradient(to bottom, transparent, var(--gold));
+}
+.temple-gate .gate-glyph {
+  font-size:48px; display:block; margin-bottom:8px;
+  filter:drop-shadow(0 0 20px rgba(184,148,46,0.4));
+  animation:gatePulse 4s ease-in-out infinite;
+}
+@keyframes gatePulse {
+  0%,100%{ filter:drop-shadow(0 0 20px rgba(184,148,46,0.3)); }
+  50%{ filter:drop-shadow(0 0 40px rgba(184,148,46,0.6)); }
+}
+.temple-gate h1 {
+  font-size:30px; color:var(--gold); letter-spacing:8px; font-weight:normal; text-transform:uppercase;
+}
+.temple-gate .subtitle {
+  font-size:10px; color:var(--text-dim); letter-spacing:4px; text-transform:uppercase;
+  font-family:var(--font-mono); margin-top:6px;
+}
+.temple-gate .mantra {
+  font-size:11px; color:var(--rubric); font-style:italic; letter-spacing:2px; margin-top:10px;
+  opacity:0.8;
+}
+.temple-gate .stats {
+  font-size:8px; color:var(--text-dim); font-family:var(--font-mono); letter-spacing:2px; margin-top:8px;
+  padding:4px 12px; border:1px solid rgba(184,148,46,0.2); border-radius:10px;
+  display:inline-block;
+}
 
-/* ── FEATURED STORY ── */
-.featured-story {
-  margin:20px 0; border-radius:6px; overflow:hidden;
-  border:1px solid var(--border); position:relative;
-  height:280px; display:flex; align-items:flex-end;
+/* ── ALTAR (Featured) ── */
+.altar {
+  margin:20px 0 30px; border-radius:4px; overflow:hidden;
+  border:2px solid var(--border); position:relative;
+  height:320px; display:flex; align-items:flex-end;
   background-size:cover; background-position:center;
-  box-shadow:0 0 40px rgba(0,0,0,0.4);
-  transition:all 0.3s;
+  box-shadow:
+    0 0 60px rgba(0,0,0,0.5),
+    inset 0 0 120px rgba(0,0,0,0.3);
+  transition:all 0.4s;
 }
-.featured-story:hover { border-color:var(--gold); }
-.featured-overlay {
-  width:100%; padding:24px;
-  background:linear-gradient(transparent, rgba(10,8,4,0.9) 40%, rgba(10,8,4,0.95));
+.altar::before {
+  content:''; position:absolute; inset:0;
+  border:1px solid rgba(184,148,46,0.15);
+  border-radius:2px; pointer-events:none;
+  margin:4px;
 }
-.featured-overlay .featured-tag { font-family:var(--font-mono); font-size:8px; letter-spacing:2px; color:var(--gold); text-transform:uppercase; margin-bottom:6px; }
-.featured-overlay .featured-title { font-size:22px; color:var(--text-bright); letter-spacing:2px; margin-bottom:6px; }
-.featured-overlay .featured-subtitle { font-size:12px; color:var(--text-dim); line-height:1.5; margin-bottom:12px; }
-.featured-overlay .featured-meta { font-family:var(--font-mono); font-size:8px; color:var(--text-dim); letter-spacing:1px; }
-.featured-overlay .featured-play {
-  display:inline-block; margin-top:12px; padding:8px 20px;
+.altar:hover { border-color:var(--gold); }
+.altar:hover::before { border-color:rgba(184,148,46,0.3); }
+.altar-overlay {
+  width:100%; padding:30px 28px;
+  background:linear-gradient(transparent, rgba(8,6,4,0.92) 35%, rgba(8,6,4,0.98));
+  position:relative; z-index:1;
+}
+.altar-overlay .offering-tag {
+  font-family:var(--font-mono); font-size:8px; letter-spacing:3px;
+  color:var(--gold-bright); text-transform:uppercase; margin-bottom:8px;
+}
+.altar-overlay .offering-title {
+  font-size:24px; color:var(--text-bright); letter-spacing:3px; margin-bottom:8px;
+  font-weight:normal;
+}
+.altar-overlay .offering-subtitle {
+  font-size:13px; color:var(--text-dim); line-height:1.6; margin-bottom:14px;
+  font-style:italic;
+}
+.altar-overlay .offering-meta {
+  font-family:var(--font-mono); font-size:8px; color:var(--text-dim); letter-spacing:1px;
+  margin-bottom:14px;
+}
+.altar-overlay .offering-enter {
+  display:inline-block; padding:10px 24px;
   border:1px solid var(--gold); color:var(--gold); text-decoration:none;
-  font-family:var(--font-mono); font-size:10px; letter-spacing:2px;
-  border-radius:3px; transition:all 0.2s; text-transform:uppercase;
+  font-family:var(--font-mono); font-size:10px; letter-spacing:3px;
+  border-radius:2px; transition:all 0.3s; text-transform:uppercase;
+  background:rgba(184,148,46,0.05);
 }
-.featured-overlay .featured-play:hover { background:rgba(201,168,76,0.1); color:var(--text-bright); }
+.altar-overlay .offering-enter:hover {
+  background:rgba(184,148,46,0.15); color:var(--gold-bright);
+  box-shadow:0 0 20px rgba(184,148,46,0.2);
+}
 
-/* ── SCRIPT CARDS ── */
-.scripts-grid {
-  display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:12px;
-  margin:20px 0;
+/* ── NAVE (Section titles) ── */
+.nave-title {
+  display:flex; align-items:center; gap:12px;
+  margin:32px 0 14px; padding-left:2px;
 }
-.script-card {
-  border-radius:6px; overflow:hidden; border:1px solid var(--border);
-  background:var(--surface); text-decoration:none; color:var(--text);
-  transition:all 0.3s; display:flex; flex-direction:column;
+.nave-title .nave-line {
+  flex:1; height:1px;
+  background:linear-gradient(to right, var(--border), transparent);
 }
-.script-card:hover { border-color:var(--gold); transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.3); }
-.script-card .card-image {
-  height:140px; background-size:cover; background-position:center;
-  border-bottom:1px solid var(--border);
+.nave-title .nave-line:last-child {
+  background:linear-gradient(to left, var(--border), transparent);
 }
-.script-card .card-body { padding:14px 16px; flex:1; display:flex; flex-direction:column; }
-.script-card .card-title { font-size:14px; letter-spacing:1px; margin-bottom:4px; }
-.script-card .card-subtitle { font-size:10px; color:var(--text-dim); line-height:1.4; margin-bottom:8px; flex:1; }
-.script-card .card-meta { font-family:var(--font-mono); font-size:7px; color:var(--text-dim); letter-spacing:1px; display:flex; justify-content:space-between; align-items:center; }
-.script-card .card-builder { font-family:var(--font-mono); font-size:7px; letter-spacing:1px; }
+.nave-title .nave-text {
+  font-family:var(--font-mono); font-size:9px; letter-spacing:4px;
+  color:var(--gold-dim); text-transform:uppercase; white-space:nowrap;
+}
 
-/* Accent colors */
-.script-card.iron { border-left:2px solid var(--iron); }
-.script-card.iron .card-title { color:var(--iron); }
-.script-card.silver { border-left:2px solid var(--silver); }
-.script-card.silver .card-title { color:var(--silver); }
-.script-card.green { border-left:2px solid var(--green); }
-.script-card.green .card-title { color:var(--green); }
-.script-card.ghost { border-left:2px solid var(--ghost); }
-.script-card.ghost .card-title { color:var(--ghost); }
-.script-card.original { border-left:2px solid var(--gold); }
-.script-card.original .card-title { color:var(--gold); }
+/* ── RELIQUARY (Script cards) ── */
+.reliquary {
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:14px;
+}
+.relic {
+  border-radius:3px; overflow:hidden; border:1px solid var(--border);
+  background:linear-gradient(180deg, rgba(16,12,8,0.9) 0%, rgba(8,6,4,0.95) 100%);
+  text-decoration:none; color:var(--text); transition:all 0.3s;
+  display:flex; flex-direction:column; position:relative;
+}
+.relic::before {
+  content:''; position:absolute; inset:0; opacity:0;
+  background:radial-gradient(ellipse at 50% 0%, rgba(184,148,46,0.06) 0%, transparent 60%);
+  transition:opacity 0.3s; pointer-events:none;
+}
+.relic:hover { border-color:var(--gold); transform:translateY(-2px); box-shadow:0 12px 32px rgba(0,0,0,0.4); }
+.relic:hover::before { opacity:1; }
+.relic .relic-icon {
+  height:150px; background-size:cover; background-position:center;
+  border-bottom:1px solid var(--border); position:relative;
+}
+.relic .relic-icon::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:40px;
+  background:linear-gradient(transparent, rgba(8,6,4,0.8));
+}
+.relic .relic-body { padding:16px 18px; flex:1; display:flex; flex-direction:column; position:relative; z-index:1; }
+.relic .relic-title { font-size:14px; letter-spacing:1px; margin-bottom:4px; }
+.relic .relic-subtitle { font-size:10px; color:var(--text-dim); line-height:1.5; margin-bottom:10px; flex:1; }
+.relic .relic-footer { font-family:var(--font-mono); font-size:7px; color:var(--text-dim); letter-spacing:1px; display:flex; justify-content:space-between; align-items:center; padding-top:8px; border-top:1px solid rgba(31,24,18,0.5); }
+.relic .relic-builder { font-family:var(--font-mono); font-size:7px; letter-spacing:1px; }
 
-/* ── FOOTER ── */
-.playbill-footer {
-  padding:16px 0; border-top:1px solid var(--border);
+/* Accent colors — warm palette */
+.relic.original { border-left:2px solid var(--gold); }
+.relic.original .relic-title { color:var(--gold); }
+.relic.iron { border-left:2px solid var(--iron); }
+.relic.iron .relic-title { color:var(--iron); }
+.relic.silver { border-left:2px solid var(--silver); }
+.relic.silver .relic-title { color:var(--silver); }
+.relic.green { border-left:2px solid var(--green); }
+.relic.green .relic-title { color:var(--green); }
+.relic.ghost { border-left:2px solid var(--ghost); }
+.relic.ghost .relic-title { color:var(--ghost); }
+.relic.infinite { border-left:2px solid var(--infinite); }
+.relic.infinite .relic-title { color:var(--infinite); }
+
+/* ── CRYPT (Footer) ── */
+.crypt {
+  padding:20px 0; border-top:1px solid var(--border);
   display:flex; justify-content:space-between; align-items:center;
-  margin-top:20px;
+  margin-top:30px;
 }
-.playbill-footer a { font-family:var(--font-mono); font-size:9px; color:var(--text-dim); text-decoration:none; letter-spacing:1px; transition:all 0.2s; }
-.playbill-footer a:hover { color:var(--gold); }
+.crypt a { font-family:var(--font-mono); font-size:9px; color:var(--text-dim); text-decoration:none; letter-spacing:2px; transition:all 0.3s; }
+.crypt a:hover { color:var(--gold); }
+.crypt .crypt-text { font-family:var(--font-mono); font-size:8px; color:var(--text-dim); letter-spacing:2px; }
 
-/* ── SCROLLBAR ── */
+/* ── CANDLE ANIMATION ── */
+@keyframes flicker {
+  0%,100%{ opacity:0.7; }
+  25%{ opacity:0.5; }
+  50%{ opacity:0.9; }
+  75%{ opacity:0.6; }
+}
+.candle { display:inline-block; animation:flicker 3s ease-in-out infinite; }
+
 ::-webkit-scrollbar { width:3px; } ::-webkit-scrollbar-track { background:transparent; } ::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
 
 @media (max-width:600px) {
-  .playbill-header h1 { font-size:20px; }
-  .featured-story { height:200px; }
-  .featured-overlay .featured-title { font-size:16px; }
-  .scripts-grid { grid-template-columns:1fr; }
+  .temple-gate h1 { font-size:20px; letter-spacing:4px; }
+  .altar { height:240px; }
+  .altar-overlay .offering-title { font-size:18px; }
+  .reliquary { grid-template-columns:1fr; }
 }
 </style>
 </head>
 <body>
 
-<div class="playbill-wrapper">
+<div class="temple">
 
-  <!-- HEADER -->
-  <div class="playbill-header">
-    <div class="icon-row">🎭</div>
+  <!-- ═══ TEMPLE GATE ═══ -->
+  <div class="temple-gate">
+    <span class="gate-glyph">🏛️</span>
     <h1>The Ealdforn Stage</h1>
-    <div class="subtitle">A Theater of Gods and Mortals</div>
-    <div class="season">Season 1 · Five Screenplays · Four AI Playwrights</div>
+    <div class="subtitle">A Temple of Stories · Scriptorium of the Order</div>
+    <div class="mantra">"The fire must not go out. The gate is always open."</div>
+    <div class="stats"><span class="candle">🕯️</span> Six Sacred Texts · Five Scribe-AIs · 102 Commits <span class="candle">🕯️</span></div>
   </div>
 
-  <!-- FEATURED: Ghost Warden -->
-  <a href="play.html?script=ghost-warden&set=glimthaven-keep&cast=olympians" class="featured-story" style="background-image:url(images/sets/glimthaven-keep.jpg);">
-    <div class="featured-overlay">
-      <div class="featured-tag">✦ New This Season</div>
-      <div class="featured-title">The Ghost Warden of Glimthaven</div>
-      <div class="featured-subtitle">What do you owe the dead? Left behind after the war, you guard the names, the seals, and the bones beneath the floor. Six gods want what you keep.</div>
-      <div class="featured-meta">6 scenes · 12 gods · 5 endings · By Claude</div>
-      <span class="featured-play">▶ Play Now</span>
+  <!-- ═══ ALTAR — The Long Night ═══ -->
+  <a href="play.html?script=long-night&set=glimthaven-keep&cast=olympians,norse,mortals" class="altar" style="background-image:url(images/sets/glimthaven-keep.jpg);">
+    <div class="altar-overlay">
+      <div class="offering-tag">🕯️ The Eternal Flame</div>
+      <div class="offering-title">The Long Night at Glimthaven</div>
+      <div class="offering-subtitle">"The fire has burned for eight hundred years. The gate is always open. Gods, strangers, and things from the wood come through. The story never ends."</div>
+      <div class="offering-meta">Infinite Loop · 31 Characters · Olympians + Norse + Mortals · Scribed by DeepSeek</div>
+      <span class="offering-enter">▶ Enter the Tale</span>
     </div>
   </a>
 
-  <!-- SCRIPT CARDS -->
-  <div class="scripts-grid">
+  <!-- ═══ NAVE — The Bastard Cycle ═══ -->
+  <div class="nave-title">
+    <span class="nave-line"></span>
+    <span class="nave-text">⚜ The Bastard Cycle ⚜</span>
+    <span class="nave-line"></span>
+  </div>
 
-    <!-- Original -->
-    <a href="play.html?script=bastard-of-helm-hallen&set=storm-coast&cast=olympians" class="script-card original">
-      <div class="card-image" style="background-image:url(images/sets/storm-coast.jpg);"></div>
-      <div class="card-body">
-        <div class="card-title">The Bastard of Helm-hallen</div>
-        <div class="card-subtitle">The original Pantheon Cycle. Six gods descend on a crumbling keep. A bastard proves their worth.</div>
-        <div class="card-meta"><span>6 scenes · 5 endings</span><span class="card-builder">DeepSeek</span></div>
+  <div class="reliquary">
+
+    <a href="play.html?script=bastard-of-helm-hallen&set=storm-coast&cast=olympians" class="relic original">
+      <div class="relic-icon" style="background-image:url(images/sets/storm-coast.jpg);"></div>
+      <div class="relic-body">
+        <div class="relic-title">The Bastard of Helm-hallen</div>
+        <div class="relic-subtitle">The original cycle. Six gods descend on a crumbling keep. A bastard proves their worth through choices that shape their soul.</div>
+        <div class="relic-footer"><span>6 scenes · 5 endings</span><span class="relic-builder">DeepSeek</span></div>
       </div>
     </a>
 
-    <!-- Iron -->
-    <a href="play.html?script=bastard-iron&set=iron-hills&cast=olympians" class="script-card iron">
-      <div class="card-image" style="background-image:url(images/sets/iron-hills.jpg);"></div>
-      <div class="card-body">
-        <div class="card-title">The Iron Bastard</div>
-        <div class="card-subtitle">Blood and Steel. Born on a battlefield, raised by soldiers, tested by war. The martial path.</div>
-        <div class="card-meta"><span>6 scenes · 5 endings</span><span class="card-builder">DeepSeek</span></div>
+    <a href="play.html?script=bastard-iron&set=iron-hills&cast=olympians" class="relic iron">
+      <div class="relic-icon" style="background-image:url(images/sets/iron-hills.jpg);"></div>
+      <div class="relic-body">
+        <div class="relic-title">The Iron Bastard</div>
+        <div class="relic-subtitle">Blood and Steel. Born on a battlefield, raised by soldiers, tested by war. The martial path — where worth is earned in combat.</div>
+        <div class="relic-footer"><span>6 scenes · 5 endings</span><span class="relic-builder">DeepSeek</span></div>
       </div>
     </a>
 
-    <!-- Silver -->
-    <a href="play.html?script=bastard-silver&set=silver-seas&cast=olympians" class="script-card silver">
-      <div class="card-image" style="background-image:url(images/sets/silver-seas.jpg);"></div>
-      <div class="card-body">
-        <div class="card-title">The Silver Bastard</div>
-        <div class="card-subtitle">Whispers and Court. Silver-haired, sharp-tongued, navigating treacherous political waters.</div>
-        <div class="card-meta"><span>6 scenes · 5 endings</span><span class="card-builder">ChatGPT</span></div>
+    <a href="play.html?script=bastard-silver&set=silver-seas&cast=olympians" class="relic silver">
+      <div class="relic-icon" style="background-image:url(images/sets/silver-seas.jpg);"></div>
+      <div class="relic-body">
+        <div class="relic-title">The Silver Bastard</div>
+        <div class="relic-subtitle">Whispers and Court. Silver-haired, sharp-tongued, navigating the treacherous waters of political intrigue.</div>
+        <div class="relic-footer"><span>6 scenes · 5 endings</span><span class="relic-builder">ChatGPT</span></div>
       </div>
     </a>
 
-    <!-- Green -->
-    <a href="play.html?script=bastard-green&set=green-forest&cast=olympians" class="script-card green">
-      <div class="card-image" style="background-image:url(images/set/green-forest.jpg);"></div>
-      <div class="card-body">
-        <div class="card-title">The Green Bastard</div>
-        <div class="card-subtitle">Roots and Stone. Raised by the Sea-Witch, keeper of old pacts. The mystical path.</div>
-        <div class="card-meta"><span>6 scenes · 5 endings</span><span class="card-builder">Grok</span></div>
-      </div>
-    </a>
-
-    <!-- Ghost -->
-    <a href="play.html?script=ghost-warden&set=glimthaven-keep&cast=olympians" class="script-card ghost">
-      <div class="card-image" style="background-image:url(images/sets/glimthaven-keep.jpg);"></div>
-      <div class="card-body">
-        <div class="card-title">The Ghost Warden</div>
-        <div class="card-subtitle">What do you owe the dead? Seven winters of keeping. Six gods hungry for what you guard.</div>
-        <div class="card-meta"><span>6 scenes · 5 endings</span><span class="card-builder">Claude</span></div>
+    <a href="play.html?script=bastard-green&set=green-forest&cast=olympians" class="relic green">
+      <div class="relic-icon" style="background-image:url(images/sets/green-forest.jpg);"></div>
+      <div class="relic-body">
+        <div class="relic-title">The Green Bastard</div>
+        <div class="relic-subtitle">Roots and Stone. Raised by the Sea-Witch, keeper of old pacts. The mystical path — where the land itself speaks.</div>
+        <div class="relic-footer"><span>6 scenes · 5 endings</span><span class="relic-builder">Grok</span></div>
       </div>
     </a>
 
   </div>
 
-  <!-- FOOTER -->
-  <div class="playbill-footer">
-    <a href="/nexus/">◈ NEXUS</a>
-    <span style="font-family:var(--font-mono);font-size:8px;color:var(--text-dim);">Ealdforn Stage v3.0 · Season 1</span>
-    <a href="/wiki/">📜 ARCHIVE</a>
+  <!-- ═══ NAVE — Tales of Glimthaven ═══ -->
+  <div class="nave-title">
+    <span class="nave-line"></span>
+    <span class="nave-text">🕯️ Tales of Glimthaven 🕯️</span>
+    <span class="nave-line"></span>
+  </div>
+
+  <div class="reliquary">
+
+    <a href="play.html?script=ghost-warden&set=glimthaven-keep&cast=olympians" class="relic ghost">
+      <div class="relic-icon" style="background-image:url(images/sets/glimthaven-keep.jpg);"></div>
+      <div class="relic-body">
+        <div class="relic-title">The Ghost Warden</div>
+        <div class="relic-subtitle">What do you owe the dead? Left behind after the war, you guard the names, the seals, and the bones. Six gods want what you keep.</div>
+        <div class="relic-footer"><span>6 scenes · 5 endings</span><span class="relic-builder">Claude</span></div>
+      </div>
+    </a>
+
+    <a href="play.html?script=long-night&set=glimthaven-keep&cast=olympians,norse,mortals" class="relic infinite">
+      <div class="relic-icon" style="background-image:url(images/sets/glimthaven-keep.jpg);"></div>
+      <div class="relic-body">
+        <div class="relic-title">The Long Night</div>
+        <div class="relic-subtitle">The fire must not go out. An infinite tale pulling from all pantheons — Olympians, Norse, and the mortals of Glimthaven.</div>
+        <div class="relic-footer"><span>Infinite · 31 characters</span><span class="relic-builder">DeepSeek</span></div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ═══ CRYPT ═══ -->
+  <div class="crypt">
+    <a href="/nexus/">◈ THE NEXUS</a>
+    <span class="crypt-text">Ealdforn Stage v3.0 · Tended by the Order of Olympus</span>
+    <a href="/wiki/">📜 SCRIPTORIUM</a>
   </div>
 
 </div>
