@@ -1,0 +1,46 @@
+[
+  {
+    "id": "ghost_auth_01",
+    "tones": ["ghost"],
+    "domain": "authority",
+    "text": "Name yourself Warden-Sovereign and read the compact aloud.",
+    "subtext": "The words were sealed for a reason. Unsealing them is a kind of crowning.",
+    "glyph": "⚖",
+    "trait": "authority",
+    "outcome": "The god of authority watches you speak the old words into the storm-salt air. When you finish, something shifts — not in the keep, but in you. The title you named yourself has weight now. You can feel it pressing on your shoulders like a hand.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_auth_02",
+    "tones": ["ghost"],
+    "domain": "order",
+    "text": "Insist the compact remains valid even without living witnesses.",
+    "subtext": "A law is not a law only while someone watches. You will hold it regardless.",
+    "glyph": "⚖",
+    "trait": "authority",
+    "outcome": "The god of order goes still. You have said something that surprises a divine being — that witness is not required for obligation. The compact holds. You can feel it hold. Like a joint locking into place.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_auth_03",
+    "tones": ["ghost"],
+    "domain": "war",
+    "text": "Bar the hall door and stand before it. This place is not surrendered.",
+    "subtext": "You do not fight the god. You simply refuse to move.",
+    "glyph": "⚖",
+    "trait": "authority",
+    "outcome": "The god of war does not push past you. This is the thing soldiers never learn until they're older: a held position is its own kind of victory. You stood. The door stayed shut. That is everything.",
+    "weight": 2
+  },
+  {
+    "id": "ghost_auth_04",
+    "tones": ["ghost"],
+    "domain": "forge",
+    "text": "Show the god the lock on the chest. Tell it: this is not yours to open.",
+    "subtext": "The craftsman understands ownership. A made thing belongs to its maker's intent.",
+    "glyph": "⚖",
+    "trait": "authority",
+    "outcome": "Hephaestus looks at the lock for a long time. Then he nods — a craftsman acknowledging another maker's claim. He does not touch it. He leaves you with a look that might be respect.",
+    "weight": 1
+  }
+]
