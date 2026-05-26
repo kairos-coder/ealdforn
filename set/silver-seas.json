@@ -1,0 +1,19 @@
+{
+  "name": "The Silver Seas Palace",
+  "description": "A marble palace perched above a silver bay, where the sea reflects moonlight like a thousand mirrors. The halls are elegant and cold. Every whisper echoes. Every smile hides a blade. This is where the court plays its games.",
+  "atmosphere": "silver-seas.jpg",
+  "weather": [
+    "Moonlight on still water. The bay is silver glass. Beautiful and treacherous — like everything else in this palace.",
+    "Fog rolls in from the sea, muffling footsteps. You cannot tell who is approaching until they are already upon you.",
+    "A storm churns the bay into white foam. The waves crash against the marble foundations. Inside, the court plays on, pretending not to hear.",
+    "Dawn breaks clear and cold. The sea is calm. A ship is visible on the horizon — someone is coming. Someone important."
+  ],
+  "worldBeats": [
+    "A sealed letter arrives from your father's court. The seal is unfamiliar — not the royal stag, but a silver serpent. Someone is watching you. Someone with power. You break the seal and read. The words are polite. The threat is unmistakable.",
+    "The chamberlain requests a private audience. He has served three lords of this palace. He knows where all the bodies are buried — some literally. He offers you information. His price is protection. Do you trust him? Does it matter?",
+    "A masquerade is announced. The neighboring lords will attend in masks and silks. Beneath the finery, alliances will shift. Deals will be struck. Someone will leave the ballroom richer. Someone will not leave at all.",
+    "Your half-brother's envoy arrives unannounced. He is handsome, charming, and absolutely loyal to your enemy. He offers an olive branch. You know it is poisoned. The question is: do you accept it publicly and prepare the antidote in private?",
+    "A ship burns in the bay. No one claims responsibility. No one saw anything. The court whispers that it was a warning. The question is: a warning to whom?",
+    "The moon is full and silver on the water. The palace is quiet. Too quiet. You walk the halls and find every door open. Every single door. Something is waiting for you in the ballroom."
+  ]
+}
