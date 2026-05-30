@@ -34,15 +34,13 @@
       overflow-x: hidden;
     }
 
-    /* ── BACKGROUND ── */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(ellipse 60% 40% at 20% 50%, rgba(123,63,160,0.08) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 60% at 80% 50%, rgba(42,122,74,0.07) 0%, transparent 70%),
-        radial-gradient(ellipse 30% 30% at 50% 10%, rgba(123,63,160,0.05) 0%, transparent 60%);
+        radial-gradient(ellipse 60% 40% at 20% 50%, rgba(123,63,160,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 80% 50%, rgba(42,122,74,0.05) 0%, transparent 70%);
       pointer-events: none;
       z-index: 0;
     }
@@ -52,38 +50,38 @@
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(rgba(123,63,160,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(42,122,74,0.025) 1px, transparent 1px);
+        linear-gradient(rgba(123,63,160,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(42,122,74,0.02) 1px, transparent 1px);
       background-size: 48px 48px;
       pointer-events: none;
       z-index: 0;
     }
 
-    /* ── LAYOUT ── */
     .shell {
       position: relative;
       z-index: 5;
       min-height: 100vh;
-      display: grid;
-      grid-template-rows: auto 1fr auto;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 1.5rem;
     }
 
     /* ── HEADER ── */
     header {
-      padding: 1.5rem 0 1rem;
+      padding: 1rem 1.5rem;
       display: flex;
       align-items: baseline;
       justify-content: space-between;
       border-bottom: 1px solid var(--border-p);
+      background: var(--void);
+      position: sticky;
+      top: 0;
+      z-index: 50;
     }
 
     .show-title {
       font-family: 'Cinzel', serif;
       font-weight: 900;
-      font-size: 1.1rem;
+      font-size: 1rem;
       letter-spacing: 0.25em;
       color: var(--purple-bright);
       text-transform: uppercase;
@@ -91,7 +89,7 @@
 
     .show-sub {
       font-family: 'Share Tech Mono', monospace;
-      font-size: 0.5rem;
+      font-size: 0.48rem;
       color: var(--text-dim);
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -106,14 +104,253 @@
       padding: 3px 8px;
     }
 
+    .live-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green-bright);
+      margin-right: 6px;
+      animation: blink 1.2s ease-in-out infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 380px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+      background: var(--void);
+    }
+
+    .hero-image {
+      position: relative;
+      overflow: hidden;
+      min-height: 380px;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.5) saturate(0.9);
+      transition: filter 0.5s ease, transform 0.5s ease;
+    }
+
+    .hero-image:hover img {
+      filter: brightness(0.7) saturate(1.1);
+      transform: scale(1.03);
+    }
+
+    /* ── OVERLAYS ON HERO ── */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .hero-overlay.left   { left: 0; right: 66.66%; }
+    .hero-overlay.center { left: 33.33%; right: 33.33%; }
+    .hero-overlay.right  { left: 66.66%; right: 0; }
+
+    /* Countdown on left hero image */
+    .countdown-display {
+      font-family: 'Cinzel', serif;
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      line-height: 1;
+      text-shadow: 0 0 40px rgba(0,0,0,0.8);
+    }
+
+    .countdown-display .hrs  { color: var(--purple-bright); }
+    .countdown-display .sep  { color: var(--text-dim); margin: 0 0.05em; }
+    .countdown-display .mins { color: var(--green-bright); }
+    .countdown-display .secs { color: var(--text-dim); font-size: 1.6rem; vertical-align: middle; }
+
+    .countdown-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+    }
+
+    .countdown-target {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.45rem;
+      color: var(--gold-dim);
+      letter-spacing: 0.15em;
+      margin-top: 0.3rem;
+    }
+
+    .phase-indicator {
+      margin-top: 0.75rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.5rem;
+      padding: 3px 10px;
+      border: 1px solid var(--border-p);
+      color: var(--purple-bright);
+      letter-spacing: 0.2em;
+      text-shadow: 0 0 20px rgba(0,0,0,0.8);
+    }
+
+    /* Challenge on center + right hero images */
+    .challenge-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      line-height: 1.2;
+      text-align: center;
+      text-shadow: 0 0 40px rgba(0,0,0,0.8);
+    }
+
+    .challenge-name .purple-word { color: var(--purple-bright); }
+    .challenge-name .green-word  { color: var(--green-bright); }
+    .challenge-name .amp         { color: var(--text-dim); }
+
+    .challenge-desc {
+      font-size: 0.8rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.5;
+      text-align: center;
+      margin-top: 0.5rem;
+      text-shadow: 0 0 30px rgba(0,0,0,0.9);
+    }
+
+    .challenge-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      justify-content: center;
+      margin-top: 0.75rem;
+    }
+
+    .challenge-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.45rem;
+      padding: 2px 7px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-shadow: 0 0 15px rgba(0,0,0,0.7);
+    }
+
+    .challenge-tag.p { border: 1px solid var(--purple-dim); color: var(--purple-bright); }
+    .challenge-tag.g { border: 1px solid var(--green-dim);  color: var(--green-bright); }
+
+    /* ── NARRATION BAR ── */
+    .narration-bar {
+      background: var(--void-raised);
+      border: 1px solid var(--purple-dim);
+      border-left: 3px solid var(--purple-bright);
+      padding: 0.6rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .narration-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.45rem;
+      color: var(--purple-bright);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .narration-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.4;
+      flex: 1;
+      transition: opacity 0.4s ease;
+    }
+
+    /* ── GALLERY STRIP ── */
+    .gallery-strip {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      gap: 2px;
+      background: var(--void);
+      border-bottom: 1px solid var(--border-p);
+    }
+
+    @media (max-width: 900px) {
+      .gallery-strip { grid-template-columns: repeat(5, 1fr); }
+    }
+    @media (max-width: 500px) {
+      .gallery-strip { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .gallery-strip-item {
+      aspect-ratio: 1;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .gallery-strip-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.6) saturate(0.8);
+      transition: filter 0.3s ease, transform 0.3s ease;
+    }
+
+    .gallery-strip-item:hover img {
+      filter: brightness(0.9) saturate(1.1);
+      transform: scale(1.08);
+    }
+
+    .gallery-strip-item .strip-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0.3rem 0.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.55rem;
+      font-style: italic;
+      color: var(--text);
+      background: linear-gradient(to top, rgba(6,4,8,0.9), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-strip-item:hover .strip-label { opacity: 1; }
+
     /* ── MAIN GRID ── */
     .main {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto;
       gap: 1px;
       background: var(--border-p);
-      margin: 1.5rem 0;
+      padding: 0 1.5rem;
+    }
+
+    @media (max-width: 700px) {
+      .main { grid-template-columns: 1fr; }
     }
 
     .panel {
@@ -130,139 +367,8 @@
       margin-bottom: 1rem;
     }
 
-    /* ── COUNTDOWN ── */
-    .countdown-panel {
-      grid-column: 1;
-      grid-row: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 220px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .countdown-panel::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(123,63,160,0.06) 0%, transparent 70%);
-    }
-
-    .countdown-display {
-      font-family: 'Cinzel', serif;
-      font-size: 3.5rem;
-      font-weight: 900;
-      letter-spacing: 0.05em;
-      line-height: 1;
-      position: relative;
-      z-index: 2;
-    }
-
-    .countdown-display .hrs  { color: var(--purple-bright); }
-    .countdown-display .sep  { color: var(--text-dim); margin: 0 0.1em; }
-    .countdown-display .mins { color: var(--green-bright); }
-    .countdown-display .secs { color: var(--text-dim); font-size: 2rem; vertical-align: middle; }
-
-    .countdown-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.5rem;
-      letter-spacing: 0.3em;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      margin-top: 0.75rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .countdown-target {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.48rem;
-      color: var(--gold-dim);
-      letter-spacing: 0.15em;
-      margin-top: 0.4rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .phase-indicator {
-      margin-top: 1rem;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.5rem;
-      padding: 3px 10px;
-      border: 1px solid var(--border-p);
-      color: var(--purple-bright);
-      letter-spacing: 0.2em;
-      position: relative;
-      z-index: 2;
-      animation: pulse-border 3s ease-in-out infinite;
-    }
-
-    @keyframes pulse-border {
-      0%, 100% { border-color: var(--border-p); }
-      50% { border-color: var(--purple); }
-    }
-
-    /* ── CHALLENGE ── */
-    .challenge-panel {
-      grid-column: 2;
-      grid-row: 1;
-      border-left: 1px solid var(--border-g);
-    }
-
-    .challenge-name {
-      font-family: 'Cinzel', serif;
-      font-size: 1.4rem;
-      font-weight: 600;
-      line-height: 1.2;
-      margin-bottom: 0.75rem;
-    }
-
-    .challenge-name .purple-word { color: var(--purple-bright); }
-    .challenge-name .green-word  { color: var(--green-bright); }
-    .challenge-name .amp         { color: var(--text-dim); }
-
-    .challenge-desc {
-      font-size: 0.85rem;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--text-dim);
-      line-height: 1.6;
-      margin-bottom: 1rem;
-      border-left: 2px solid var(--purple-dim);
-      padding-left: 0.75rem;
-    }
-
-    .challenge-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-
-    .challenge-tag {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.45rem;
-      padding: 2px 7px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .challenge-tag.p { border: 1px solid var(--purple-dim); color: var(--purple-bright); }
-    .challenge-tag.g { border: 1px solid var(--green-dim);  color: var(--green-bright); }
-
-    /* ── SVO TRIPLETS ── */
-    .svo-panel {
-      grid-column: 1;
-      grid-row: 2;
-      border-top: 1px solid var(--border-p);
-    }
-
-    .svo-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
+    /* SVO */
+    .svo-list { display: flex; flex-direction: column; gap: 0.5rem; }
 
     .svo-item {
       display: grid;
@@ -292,19 +398,8 @@
       margin-bottom: 0.5rem;
     }
 
-    /* ── SHOW STRUCTURE ── */
-    .structure-panel {
-      grid-column: 2;
-      grid-row: 2;
-      border-top: 1px solid var(--border-p);
-      border-left: 1px solid var(--border-g);
-    }
-
-    .timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
+    /* Timeline */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
 
     .timeline-item {
       display: flex;
@@ -369,153 +464,7 @@
       text-align: center;
     }
 
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border-p);
-      padding: 0.75rem 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-left {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.45rem;
-      color: var(--text-dim);
-      letter-spacing: 0.15em;
-    }
-
-    .footer-right {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.75rem;
-      font-style: italic;
-      color: var(--text-dim);
-    }
-
-    .live-dot {
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--green-bright);
-      margin-right: 6px;
-      animation: blink 1.2s ease-in-out infinite;
-      vertical-align: middle;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.2; }
-    }
-
-    /* ── KITTEN NARRATION BAR ── */
-    .narration-bar {
-      background: var(--void-raised);
-      border: 1px solid var(--purple-dim);
-      border-left: 3px solid var(--purple-bright);
-      padding: 0.6rem 1rem;
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .narration-tag {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.45rem;
-      color: var(--purple-bright);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .narration-text {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.95rem;
-      font-style: italic;
-      color: var(--text);
-      line-height: 1.4;
-      flex: 1;
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 700px) {
-      .main { grid-template-columns: 1fr; }
-      .challenge-panel, .structure-panel { border-left: none; border-top: 1px solid var(--border-p); }
-      .countdown-display { font-size: 2.5rem; }
-    }
-
-    /* ── STAGGER REVEAL ── */
-    .shell > * { animation: fadeUp 0.6s ease both; }
-    header      { animation-delay: 0.1s; }
-    .narration-bar { animation-delay: 0.2s; }
-    .main       { animation-delay: 0.3s; }
-    footer      { animation-delay: 0.5s; }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── LIVE GALLERY ── */
-    .gallery-section {
-      margin: 0;
-      border-top: 1px solid var(--border-p);
-      padding: 1.5rem;
-      background: var(--void-surface);
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 3px;
-      margin-top: 1rem;
-    }
-
-    .gallery-item {
-      position: relative;
-      aspect-ratio: 1;
-      overflow: hidden;
-      cursor: pointer;
-      background: var(--void-raised);
-    }
-
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.4s ease, filter 0.4s ease;
-      filter: saturate(0.85);
-    }
-
-    .gallery-item:hover img {
-      transform: scale(1.05);
-      filter: saturate(1.2);
-    }
-
-    .gallery-item .overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(6,4,8,0.85) 0%, transparent 50%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      display: flex;
-      align-items: flex-end;
-      padding: 0.6rem;
-    }
-
-    .gallery-item:hover .overlay { opacity: 1; }
-
-    .gallery-item .overlay-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.75rem;
-      font-style: italic;
-      color: var(--text);
-      line-height: 1.3;
-    }
-
-    /* Lightbox */
+    /* ── LIGHTBOX ── */
     .lightbox {
       display: none;
       position: fixed;
@@ -559,6 +508,43 @@
     }
 
     .lightbox-close:hover { color: var(--purple-bright); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border-p);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-left {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.45rem;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+    }
+
+    .footer-right {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.75rem;
+      font-style: italic;
+      color: var(--text-dim);
+    }
+
+    /* ── ANIMATIONS ── */
+    .shell > * { animation: fadeUp 0.6s ease both; }
+    header      { animation-delay: 0.1s; }
+    .hero       { animation-delay: 0.15s; }
+    .narration-bar { animation-delay: 0.2s; }
+    .gallery-strip { animation-delay: 0.25s; }
+    .main       { animation-delay: 0.3s; }
+    footer      { animation-delay: 0.5s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
@@ -572,6 +558,53 @@
     <div class="channel-tag"><span class="live-dot"></span>@ealdforn</div>
   </header>
 
+  <!-- ═══════════ HERO — 3 best images as backdrop ═══════════ -->
+  <div class="hero">
+    <!-- Left: Countdown -->
+    <div class="hero-image">
+      <img src="images/live/purple-goddess.jpg" alt="The goddess of the violet threshold" />
+      <div class="hero-overlay left">
+        <div class="countdown-display">
+          <span class="hrs"  id="cdHrs">00</span><span class="sep">:</span><span class="mins" id="cdMins">00</span><span class="sep">:</span><span class="secs" id="cdSecs">00</span>
+        </div>
+        <div class="countdown-label">Until NightCafe Reset</div>
+        <div class="countdown-target">Daily Challenge · 8:00 PM EST</div>
+        <div class="phase-indicator" id="phaseIndicator">PRE-SHOW</div>
+      </div>
+    </div>
+
+    <!-- Center: Challenge Name -->
+    <div class="hero-image">
+      <img src="images/live/gnp_aurora.jpg" alt="Exile weaves the last aurora" />
+      <div class="hero-overlay center">
+        <div class="challenge-name">
+          <span class="purple-word">Purple</span>
+          <span class="amp"> &amp; </span>
+          <span class="green-word">Green</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Challenge Description -->
+    <div class="hero-image">
+      <img src="images/live/gnp_tree.jpg" alt="Titan inherits the poison garden" />
+      <div class="hero-overlay right">
+        <div class="challenge-desc">
+          Magical, eerie, tropical, alien, vintage, electric — the palette leads. Build your creation around purple and green as dominant colors.
+        </div>
+        <div class="challenge-tags">
+          <span class="challenge-tag p">Magical</span>
+          <span class="challenge-tag g">Eerie</span>
+          <span class="challenge-tag p">Alien</span>
+          <span class="challenge-tag g">Tropical</span>
+          <span class="challenge-tag p">Electric</span>
+          <span class="challenge-tag g">Vintage</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ NARRATION BAR ═══════════ -->
   <div class="narration-bar">
     <div class="narration-tag">⟡ Kitten</div>
     <div class="narration-text" id="narrationText">
@@ -579,51 +612,17 @@
     </div>
   </div>
 
+  <!-- ═══════════ GALLERY STRIP — all 9 images ═══════════ -->
+  <div class="gallery-strip" id="galleryStrip"></div>
+
+  <!-- ═══════════ MAIN GRID ═══════════ -->
   <div class="main">
-
-    <!-- COUNTDOWN -->
-    <div class="panel countdown-panel">
-      <div class="panel-label">⏳ Until the Reset</div>
-      <div class="countdown-display">
-        <span class="hrs"  id="cdHrs">00</span><span class="sep">:</span><span class="mins" id="cdMins">00</span><span class="sep">:</span><span class="secs" id="cdSecs">00</span>
-      </div>
-      <div class="countdown-label">Until NightCafe Reset</div>
-      <div class="countdown-target">Daily Challenge · 8:00 PM EST</div>
-      <div class="phase-indicator" id="phaseIndicator">PRE-SHOW</div>
-    </div>
-
-    <!-- CHALLENGE -->
-    <div class="panel challenge-panel">
-      <div class="panel-label">🎯 Daily Challenge #1325</div>
-      <div class="challenge-name">
-        <span class="purple-word">Purple</span>
-        <span class="amp"> &amp; </span>
-        <span class="green-word">Green</span>
-      </div>
-      <div class="challenge-desc">
-        Magical, eerie, tropical, alien, vintage, electric — the palette leads. Build your creation around purple and green as dominant colors and see where the collision takes you.
-      </div>
-      <div class="challenge-tags">
-        <span class="challenge-tag p">Magical</span>
-        <span class="challenge-tag g">Eerie</span>
-        <span class="challenge-tag p">Alien</span>
-        <span class="challenge-tag g">Tropical</span>
-        <span class="challenge-tag p">Electric</span>
-        <span class="challenge-tag g">Vintage</span>
-        <span class="challenge-tag p">PRO Allowed</span>
-      </div>
-    </div>
-
-    <!-- SVO TRIPLETS -->
     <div class="panel svo-panel">
       <div class="panel-label">⚗️ Tonight's SVO Triplets</div>
       <div class="svo-active-label" id="svoActiveLabel">Click a triplet to select it</div>
-      <div class="svo-list" id="svoList">
-        <!-- rendered by JS -->
-      </div>
+      <div class="svo-list" id="svoList"></div>
     </div>
 
-    <!-- SHOW STRUCTURE -->
     <div class="panel structure-panel">
       <div class="panel-label">📜 Show Structure</div>
       <div class="timeline">
@@ -670,17 +669,9 @@
         </div>
       </div>
     </div>
-
   </div>
 
-
-  <!-- LIVE GALLERY -->
-  <div class="gallery-section">
-    <div class="panel-label">🖼️ Ealdforn #4 · Tonight's Forge — Purple &amp; Green</div>
-    <div class="gallery-grid" id="galleryGrid"></div>
-  </div>
-
-  <!-- LIGHTBOX -->
+  <!-- ═══════════ LIGHTBOX ═══════════ -->
   <div class="lightbox" id="lightbox" onclick="closeLightbox()">
     <div class="lightbox-close" onclick="closeLightbox()">✕ CLOSE</div>
     <img id="lightboxImg" src="" alt="" />
@@ -695,7 +686,49 @@
 </div>
 
 <script>
-  // ── SVO TRIPLETS ─────────────────────────────────────────────
+  // ── IMAGES ─────────────────────────────────────────────────────
+  const IMAGES = [
+    { file: 'purple-goddess.jpg',  label: 'The goddess of the violet threshold' },
+    { file: 'gnp_aurora.jpg',      label: 'Exile weaves the last aurora' },
+    { file: 'gnp_tree.jpg',        label: 'Titan inherits the poison garden' },
+    { file: 'gnp_cathedral.jpg',   label: 'Spore consumes the iron cathedral' },
+    { file: 'gnp_cathedral2.jpg',  label: 'Spore consumes the iron cathedral II' },
+    { file: 'gnp_galaxy.jpg',      label: 'Oracle drinks the violet signal' },
+    { file: 'gnp_spores.jpg',      label: 'Root system crowns the emerald void' },
+    { file: 'gnp_tree2.jpg',       label: 'Titan inherits the poison garden II' },
+    { file: 'gnp_wanderer.jpg',    label: 'Exile weaves the last aurora II' },
+  ];
+
+  const BASE = 'images/live/';
+
+  // ── GALLERY STRIP ──────────────────────────────────────────────
+  function buildGallery() {
+    const strip = document.getElementById('galleryStrip');
+    strip.innerHTML = IMAGES.map((img, i) => `
+      <div class="gallery-strip-item" onclick="openLightbox(${i})">
+        <img src="${BASE}${img.file}" alt="${img.label}" loading="lazy" />
+        <div class="strip-label">${img.label}</div>
+      </div>`).join('');
+  }
+
+  window.openLightbox = function(i) {
+    const img = IMAGES[i];
+    document.getElementById('lightboxImg').src = BASE + img.file;
+    document.getElementById('lightboxCaption').textContent = img.label;
+    document.getElementById('lightbox').classList.add('open');
+  };
+
+  window.closeLightbox = function() {
+    document.getElementById('lightbox').classList.remove('open');
+  };
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  buildGallery();
+
+  // ── SVO TRIPLETS ───────────────────────────────────────────────
   const TRIPLETS = [
     { subject: 'Titan',       verb: 'inherits',  object: 'the poison garden' },
     { subject: 'Oracle',      verb: 'drinks',    object: 'the violet signal' },
@@ -728,11 +761,11 @@
 
   renderSVO();
 
-  // ── COUNTDOWN ────────────────────────────────────────────────
+  // ── COUNTDOWN ──────────────────────────────────────────────────
   function getNextReset() {
     const now   = new Date();
     const reset = new Date();
-    reset.setHours(20, 0, 0, 0); // 8pm local time
+    reset.setHours(20, 0, 0, 0);
     if (now >= reset) reset.setDate(reset.getDate() + 1);
     return reset.getTime();
   }
@@ -757,7 +790,6 @@
     document.getElementById('cdMins').textContent = String(m).padStart(2, '0');
     document.getElementById('cdSecs').textContent = String(s).padStart(2, '0');
 
-    // Phase
     const phase = document.getElementById('phaseIndicator');
     if (h >= 1) phase.textContent = 'PRE-SHOW';
     else if (m >= 30) phase.textContent = 'SHOW SOON';
@@ -768,7 +800,7 @@
   updateCountdown();
   setInterval(updateCountdown, 1000);
 
-  // ── NARRATION ROTATION ───────────────────────────────────────
+  // ── NARRATION ROTATION ─────────────────────────────────────────
   const NARRATIONS = [
     "The fire holds. Tonight the forge is violet and green — the colors of poison and growth, of dusk and the thing that survives it. The Accountant marks the hour. We begin.",
     "Purple is the color of the thing that came before kings. Green is the color of the thing that outlasts them. Tonight we work in both.",
@@ -787,51 +819,6 @@
       el.style.opacity = '1';
     }, 400);
   }, 12000);
-
-  document.getElementById('narrationText').style.transition = 'opacity 0.4s ease';
-  // ── GALLERY ──────────────────────────────────────────────────
-  const IMAGES = [
-    { file: 'gnp_aurora.jpg',      label: 'Exile weaves the last aurora' },
-    { file: 'gnp_cathedral.jpg',   label: 'Spore consumes the iron cathedral' },
-    { file: 'gnp_cathedral2.jpg',  label: 'Spore consumes the iron cathedral II' },
-    { file: 'gnp_galaxy.jpg',      label: 'Oracle drinks the violet signal' },
-    { file: 'gnp_spores.jpg',      label: 'Root system crowns the emerald void' },
-    { file: 'gnp_tree.jpg',        label: 'Titan inherits the poison garden' },
-    { file: 'gnp_tree2.jpg',       label: 'Titan inherits the poison garden II' },
-    { file: 'gnp_wanderer.jpg',    label: 'Exile weaves the last aurora II' },
-    { file: 'purple-goddess.jpg',  label: 'The goddess of the violet threshold' },
-  ];
-
-  const BASE = 'images/live/';
-
-  function buildGallery() {
-    const grid = document.getElementById('galleryGrid');
-    grid.innerHTML = IMAGES.map((img, i) => `
-      <div class="gallery-item" onclick="openLightbox(${i})">
-        <img src="${BASE}${img.file}" alt="${img.label}" loading="lazy" />
-        <div class="overlay">
-          <div class="overlay-label">${img.label}</div>
-        </div>
-      </div>`).join('');
-  }
-
-  window.openLightbox = function(i) {
-    const img = IMAGES[i];
-    document.getElementById('lightboxImg').src = BASE + img.file;
-    document.getElementById('lightboxCaption').textContent = img.label;
-    document.getElementById('lightbox').classList.add('open');
-  };
-
-  window.closeLightbox = function() {
-    document.getElementById('lightbox').classList.remove('open');
-  };
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeLightbox();
-  });
-
-  buildGallery();
-
 </script>
 </body>
 </html>
