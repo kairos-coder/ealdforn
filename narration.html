@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kitten TTS · Live Narration Console</title>
+  <style>
+    :root {
+      --void: #060408;
+      --void-surface: #0e0a12;
+      --void-raised: #16101e;
+      --purple: #7b3fa0;
+      --purple-bright: #b06fd4;
+      --purple-dim: #3a1a52;
+      --green: #2a7a4a;
+      --green-bright: #4abf7a;
+      --green-dim: #123022;
+      --gold: #c9a85c;
+      --text: #d0c0e0;
+      --text-dim: #6a5a7a;
+      --border: rgba(123,63,160,0.25);
+      --red: #c85050;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background: var(--void);
+      color: var(--text);
+      font-family: 'Courier New', monospace;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+
+    h1 {
+      font-size: 0.85rem;
+      color: var(--purple-bright);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.25rem;
+    }
+    .subtitle {
+      font-size: 0.55rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+    }
+
+    .console-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      height: calc(100vh - 160px);
+    }
+
+    .panel {
+      background: var(--void-surface);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-label {
+      font-size: 0.5rem;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── QUICK FIRE ── */
+    .quick-fire-input {
+      width: 100%;
+      background: var(--void);
+      border: 1px solid var(--purple-dim);
+      color: var(--purple-bright);
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      padding: 0.6rem 0.75rem;
+      outline: none;
+      margin-bottom: 0.5rem;
+    }
+    .quick-fire-input:focus { border-color: var(--purple); }
+    .quick-fire-input::placeholder { color: var(--text-dim); }
+
+    .quick-fire-btn {
+      width: 100%;
+      background: rgba(123,63,160,0.15);
+      border: 1px solid var(--purple-dim);
+      color: var(--purple-bright);
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quick-fire-btn:hover {
+      background: rgba(123,63,160,0.25);
+      border-color: var(--purple);
+    }
+
+    .quick-fire-hint {
+      font-size: 0.5rem;
+      color: var(--text-dim);
+      margin-top: 0.4rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── QUEUE ── */
+    .queue-list {
+      flex: 1;
+      overflow-y: auto;
+      font-size: 0.6rem;
+      line-height: 1.5;
+    }
+
+    .queue-item {
+      padding: 0.4rem 0.6rem;
+      margin-bottom: 0.25rem;
+      background: var(--void);
+      border-left: 2px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.2s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .queue-item:hover { border-left-color: var(--purple); }
+    .queue-item.played { opacity: 0.35; border-left-color: var(--green-dim); text-decoration: line-through; text-decoration-color: var(--green-dim); }
+    .queue-item.now-playing { border-left-color: var(--green-bright); background: var(--void-raised); }
+
+    .queue-text { flex: 1; color: var(--text); }
+    .queue-item.played .queue-text { color: var(--text-dim); }
+    .queue-item.now-playing .queue-text { color: var(--green-bright); }
+
+    .queue-actions { display: flex; gap: 0.3rem; flex-shrink: 0; }
+    .queue-btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-family: 'Courier New', monospace;
+      font-size: 0.5rem;
+      padding: 2px 6px;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+    }
+    .queue-btn:hover { color: var(--text); border-color: var(--purple-dim); }
+    .queue-btn.play { color: var(--green-bright); border-color: var(--green-dim); }
+    .queue-btn.play:hover { background: rgba(74,191,122,0.1); }
+
+    /* ── SCRIPT BANK ── */
+    .script-bank {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .script-item {
+      padding: 0.5rem 0.6rem;
+      background: var(--void);
+      border-left: 2px solid var(--purple-dim);
+      cursor: pointer;
+      transition: border-color 0.2s;
+      font-size: 0.6rem;
+      line-height: 1.4;
+    }
+    .script-item:hover { border-left-color: var(--purple-bright); background: var(--void-raised); }
+
+    .script-label {
+      font-size: 0.45rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.2rem;
+    }
+
+    .script-text {
+      color: var(--text);
+      font-style: italic;
+    }
+
+    /* ── STATUS BAR ── */
+    .status-bar {
+      margin-top: 1rem;
+      padding: 0.5rem 0.75rem;
+      background: var(--void-surface);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.55rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green-bright);
+      animation: blink 1.2s ease-in-out infinite;
+    }
+    .status-dot.idle { background: var(--text-dim); animation: none; }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    .status-text { color: var(--text-dim); letter-spacing: 0.08em; }
+    .status-count { color: var(--purple-bright); margin-left: auto; }
+
+    /* ── HISTORY ── */
+    .history-list {
+      font-size: 0.5rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+      max-height: 120px;
+      overflow-y: auto;
+      margin-top: 0.5rem;
+    }
+    .history-item {
+      padding: 0.2rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.02);
+    }
+    .history-time { color: var(--text-dim); margin-right: 0.5rem; }
+    .history-text { color: var(--text-dim); font-style: italic; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .console-layout { grid-template-columns: 1fr; height: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🪄 Kitten TTS · Live Narration Console</h1>
+  <p class="subtitle">Hidden dashboard — type scripts live. Kitten reads on stream.</p>
+
+  <div class="console-layout">
+
+    <!-- LEFT: QUICK FIRE + QUEUE -->
+    <div class="panel">
+      <div class="panel-label">⚡ Quick Fire — Type & Speak</div>
+      <input class="quick-fire-input" id="quickFireInput" type="text" placeholder="The oracle drinks the violet signal..." />
+      <button class="quick-fire-btn" onclick="quickFire()">⟡ Speak Now</button>
+      <div class="quick-fire-hint">Press Enter to fire. Line appears on stream narration bar.</div>
+
+      <div class="panel-label" style="margin-top:1.5rem;">📋 Narration Queue</div>
+      <div class="queue-list" id="queueList">
+        <div style="color:var(--text-dim);padding:1rem;text-align:center;font-size:0.55rem;">Queue is empty. Type a line above or click a script from the bank.</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: SCRIPT BANK + HISTORY -->
+    <div class="panel">
+      <div class="panel-label">📜 Script Bank — Click to Queue</div>
+      <div class="script-bank" id="scriptBank"></div>
+
+      <div class="panel-label" style="margin-top:1rem;">🕰️ Narration History</div>
+      <div class="history-list" id="historyList">
+        <div style="color:var(--text-dim);padding:0.5rem;font-size:0.5rem;">No narrations yet.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <div class="status-dot" id="statusDot"></div>
+    <div class="status-text" id="statusText">Ready. Awaiting narration.</div>
+    <div class="status-count">Queue: <span id="queueCount">0</span> · Played: <span id="playedCount">0</span></div>
+  </div>
+
+<script>
+  // ═══════════════════════════════════════════
+  // KITTEN TTS NARRATION CONSOLE
+  // ═══════════════════════════════════════════
+
+  const STATE = {
+    queue: [],
+    history: [],
+    nowPlaying: null,
+    playedCount: 0
+  };
+
+  // ── SCRIPT BANK ──────────────────────────────────────────────────
+  const SCRIPT_BANK = [
+    { label: 'Show Open', text: 'The fire holds. Tonight the forge is violet and green — the colors of poison and growth, of dusk and the thing that survives it. The Accountant marks the hour. We begin.' },
+    { label: 'Purple & Green', text: 'Purple is the color of the thing that came before kings. Green is the color of the thing that outlasts them. Tonight we work in both.' },
+    { label: 'The Builder', text: 'The gate is always open. The challenge is always waiting. The builder does not speak — the work speaks.' },
+    { label: 'Reset Approaching', text: 'Kronos marks the interval. The reset approaches. What we make before the clock turns is ours forever.' },
+    { label: 'Forge Ready', text: 'The oracle drinks the violet signal. The root system crowns the emerald void. The forge is ready.' },
+    { label: 'Gallery Ascends', text: 'The images have been generated. The gallery ascends to the repository. What was made in the dark is now visible to all.' },
+    { label: 'New Challenge', text: 'The clock has reset. A new challenge emerges from the void. The forge never cools. The builder never rests.' },
+    { label: 'SVO Invocation', text: 'The SVO triplets guide the generation. Subject meets verb meets object. Meaning crystallizes from the collision.' },
+    { label: 'Kitten Closes', text: 'The fire holds. The gallery is full. Tomorrow the forge opens again with a new palette and a new challenge. Until then — the gate remains open.' },
+    { label: 'Mythic Aside', text: 'In the age before the mountains, when the first stirring became the first Titan, the forge was already burning. We do not invent. We remember what the fire knew.' },
+  ];
+
+  function buildScriptBank() {
+    const bank = document.getElementById('scriptBank');
+    bank.innerHTML = SCRIPT_BANK.map((s, i) => `
+      <div class="script-item" onclick="queueScript(${i})">
+        <div class="script-label">${s.label}</div>
+        <div class="script-text">${s.text}</div>
+      </div>`).join('');
+  }
+
+  window.queueScript = function(i) {
+    const s = SCRIPT_BANK[i];
+    STATE.queue.push(s.text);
+    renderQueue();
+    updateStatus('Script queued: ' + s.label);
+  };
+
+  // ── QUICK FIRE ───────────────────────────────────────────────────
+  window.quickFire = function() {
+    const input = document.getElementById('quickFireInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    // Speak it immediately
+    speakLine(text);
+
+    // Add to history
+    STATE.history.unshift({ time: new Date().toLocaleTimeString(), text });
+    STATE.playedCount++;
+    renderHistory();
+    updateStatus('Quick fire: spoken');
+    input.value = '';
+    input.focus();
+  };
+
+  // Enter key on quick fire input
+  document.getElementById('quickFireInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      quickFire();
+    }
+  });
+
+  // ── QUEUE MANAGEMENT ────────────────────────────────────────────
+  function renderQueue() {
+    const list = document.getElementById('queueList');
+    if (STATE.queue.length === 0) {
+      list.innerHTML = '<div style="color:var(--text-dim);padding:1rem;text-align:center;font-size:0.55rem;">Queue is empty.</div>';
+    } else {
+      list.innerHTML = STATE.queue.map((text, i) => `
+        <div class="queue-item">
+          <div class="queue-text">${text}</div>
+          <div class="queue-actions">
+            <button class="queue-btn play" onclick="playFromQueue(${i})">▶</button>
+            <button class="queue-btn" onclick="removeFromQueue(${i})">✕</button>
+          </div>
+        </div>`).join('');
+    }
+    document.getElementById('queueCount').textContent = STATE.queue.length;
+    document.getElementById('playedCount').textContent = STATE.playedCount;
+  }
+
+  window.playFromQueue = function(i) {
+    if (i >= STATE.queue.length) return;
+    const text = STATE.queue.splice(i, 1)[0];
+    speakLine(text);
+    STATE.history.unshift({ time: new Date().toLocaleTimeString(), text });
+    STATE.playedCount++;
+    renderQueue();
+    renderHistory();
+    updateStatus('Queue item spoken');
+  };
+
+  window.removeFromQueue = function(i) {
+    STATE.queue.splice(i, 1);
+    renderQueue();
+    updateStatus('Queue item removed');
+  };
+
+  // ── SPEAK ────────────────────────────────────────────────────────
+  function speakLine(text) {
+    // Update the status
+    STATE.nowPlaying = text;
+    updateStatus('Speaking: ' + text.substring(0, 60) + '...');
+    document.getElementById('statusDot').classList.remove('idle');
+
+    // Try Web Speech API (works in Chrome)
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel(); // Stop any current speech
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.rate = 0.82;
+      utter.pitch = 1.05;
+      utter.volume = 1.0;
+
+      // Try to find a good voice
+      const voices = window.speechSynthesis.getVoices();
+      const preferred = voices.find(v => v.name.includes('Samantha') || v.name.includes('Karen') || v.name.includes('Female') || v.name.includes('Moira'));
+      if (preferred) utter.voice = preferred;
+
+      utter.onend = () => {
+        STATE.nowPlaying = null;
+        document.getElementById('statusDot').classList.add('idle');
+        updateStatus('Ready.');
+      };
+
+      utter.onerror = () => {
+        STATE.nowPlaying = null;
+        document.getElementById('statusDot').classList.add('idle');
+        updateStatus('Speech error — check browser TTS');
+      };
+
+      window.speechSynthesis.speak(utter);
+    } else {
+      // Fallback: just log it
+      console.log('[Kitten TTS]', text);
+      setTimeout(() => {
+        STATE.nowPlaying = null;
+        document.getElementById('statusDot').classList.add('idle');
+        updateStatus('Ready. (TTS not available — text logged to console)');
+      }, 2000);
+    }
+
+    // ALSO: try to push to the show.html narration bar if it's open in another tab
+    // Uses BroadcastChannel API for cross-tab communication
+    if (window.BroadcastChannel) {
+      try {
+        const channel = new BroadcastChannel('ealdforn_narration');
+        channel.postMessage({ text, timestamp: Date.now() });
+      } catch(e) {}
+    }
+  }
+
+  // ── RENDER HISTORY ──────────────────────────────────────────────
+  function renderHistory() {
+    const list = document.getElementById('historyList');
+    if (STATE.history.length === 0) {
+      list.innerHTML = '<div style="color:var(--text-dim);padding:0.5rem;font-size:0.5rem;">No narrations yet.</div>';
+    } else {
+      list.innerHTML = STATE.history.slice(0, 30).map(h => `
+        <div class="history-item">
+          <span class="history-time">${h.time}</span>
+          <span class="history-text">${h.text}</span>
+        </div>`).join('');
+    }
+  }
+
+  // ── STATUS ───────────────────────────────────────────────────────
+  function updateStatus(msg) {
+    document.getElementById('statusText').textContent = msg;
+  }
+
+  // ── VOICES LOAD ──────────────────────────────────────────────────
+  if (window.speechSynthesis) {
+    window.speechSynthesis.onvoiceschanged = () => {
+      console.log('[Kitten TTS] Voices loaded:', window.speechSynthesis.getVoices().length);
+    };
+  }
+
+  // ── BOOT ─────────────────────────────────────────────────────────
+  buildScriptBank();
+  renderQueue();
+  updateStatus('Ready. Awaiting narration.');
+  console.log('🪄 Kitten TTS Console ready.');
+  console.log('  - Type in Quick Fire and press Enter to speak live');
+  console.log('  - Click scripts from the bank to queue them');
+  console.log('  - Queue items can be played or removed');
+  console.log('  - BroadcastChannel sends narration to show.html if open');
+</script>
+</body>
+</html>
