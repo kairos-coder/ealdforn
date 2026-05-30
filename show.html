@@ -456,6 +456,109 @@
       from { opacity: 0; transform: translateY(12px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+
+    /* ── LIVE GALLERY ── */
+    .gallery-section {
+      margin: 0;
+      border-top: 1px solid var(--border-p);
+      padding: 1.5rem;
+      background: var(--void-surface);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 3px;
+      margin-top: 1rem;
+    }
+
+    .gallery-item {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--void-raised);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease, filter 0.4s ease;
+      filter: saturate(0.85);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+      filter: saturate(1.2);
+    }
+
+    .gallery-item .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(6,4,8,0.85) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      display: flex;
+      align-items: flex-end;
+      padding: 0.6rem;
+    }
+
+    .gallery-item:hover .overlay { opacity: 1; }
+
+    .gallery-item .overlay-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.75rem;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(6,4,8,0.95);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox img {
+      max-width: 85vw;
+      max-height: 80vh;
+      object-fit: contain;
+      border: 1px solid var(--purple-dim);
+    }
+
+    .lightbox-caption {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      letter-spacing: 0.2em;
+      border: 1px solid var(--border-p);
+      padding: 4px 10px;
+    }
+
+    .lightbox-close:hover { color: var(--purple-bright); }
   </style>
 </head>
 <body>
@@ -570,6 +673,20 @@
 
   </div>
 
+
+  <!-- LIVE GALLERY -->
+  <div class="gallery-section">
+    <div class="panel-label">🖼️ Ealdforn #4 · Tonight's Forge — Purple &amp; Green</div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <div class="lightbox-close" onclick="closeLightbox()">✕ CLOSE</div>
+    <img id="lightboxImg" src="" alt="" />
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+
   <footer>
     <div class="footer-left">kairos-coder.github.io/ealdforn · show.html</div>
     <div class="footer-right">The fire must not go out. The gate is always open.</div>
@@ -672,6 +789,49 @@
   }, 12000);
 
   document.getElementById('narrationText').style.transition = 'opacity 0.4s ease';
+  // ── GALLERY ──────────────────────────────────────────────────
+  const IMAGES = [
+    { file: 'gnp_aurora.jpg',      label: 'Exile weaves the last aurora' },
+    { file: 'gnp_cathedral.jpg',   label: 'Spore consumes the iron cathedral' },
+    { file: 'gnp_cathedral2.jpg',  label: 'Spore consumes the iron cathedral II' },
+    { file: 'gnp_galaxy.jpg',      label: 'Oracle drinks the violet signal' },
+    { file: 'gnp_spores.jpg',      label: 'Root system crowns the emerald void' },
+    { file: 'gnp_tree.jpg',        label: 'Titan inherits the poison garden' },
+    { file: 'gnp_tree2.jpg',       label: 'Titan inherits the poison garden II' },
+    { file: 'gnp_wanderer.jpg',    label: 'Exile weaves the last aurora II' },
+    { file: 'purple-goddess.jpg',  label: 'The goddess of the violet threshold' },
+  ];
+
+  const BASE = 'images/live/';
+
+  function buildGallery() {
+    const grid = document.getElementById('galleryGrid');
+    grid.innerHTML = IMAGES.map((img, i) => `
+      <div class="gallery-item" onclick="openLightbox(${i})">
+        <img src="${BASE}${img.file}" alt="${img.label}" loading="lazy" />
+        <div class="overlay">
+          <div class="overlay-label">${img.label}</div>
+        </div>
+      </div>`).join('');
+  }
+
+  window.openLightbox = function(i) {
+    const img = IMAGES[i];
+    document.getElementById('lightboxImg').src = BASE + img.file;
+    document.getElementById('lightboxCaption').textContent = img.label;
+    document.getElementById('lightbox').classList.add('open');
+  };
+
+  window.closeLightbox = function() {
+    document.getElementById('lightbox').classList.remove('open');
+  };
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  buildGallery();
+
 </script>
 </body>
 </html>
