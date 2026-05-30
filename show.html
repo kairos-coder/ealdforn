@@ -613,26 +613,11 @@
 
   // ── COUNTDOWN ────────────────────────────────────────────────
   function getNextReset() {
-    const now    = new Date();
-    const target = new Date();
-    // 8pm EST = UTC-5, so 01:00 UTC next day if past 8pm EST
-    // Use America/New_York via offset calculation
-    const estOffset = -5 * 60; // EST base; JS handles DST via toLocaleString tricks
-    // Simpler: build target as local 8pm in EST
-    // We'll use a UTC-based approach: 8pm EST = 00:00 UTC (roughly, ignoring DST)
-    // Better: calculate relative to current EST time
-    const utcMs      = now.getTime() + now.getTimezoneOffset() * 60000;
-    const estMs      = utcMs + (estOffset * 60000);
-    const estNow     = new Date(estMs);
-
-    const reset = new Date(estMs);
-    reset.setHours(20, 0, 0, 0); // 8pm
-    if (estNow.getHours() >= 20) {
-      reset.setDate(reset.getDate() + 1);
-    }
-    // Convert back to local time for diff
-    const resetUTC = reset.getTime() - (estOffset * 60000);
-    return resetUTC;
+    const now   = new Date();
+    const reset = new Date();
+    reset.setHours(20, 0, 0, 0); // 8pm local time
+    if (now >= reset) reset.setDate(reset.getDate() + 1);
+    return reset.getTime();
   }
 
   function updateCountdown() {
