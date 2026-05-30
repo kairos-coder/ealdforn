@@ -40,14 +40,14 @@
       font-size: 0.55rem;
       color: var(--text-dim);
       letter-spacing: 0.1em;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
 
     .console-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
-      height: calc(100vh - 160px);
+      height: calc(100vh - 220px);
     }
 
     .panel {
@@ -69,8 +69,13 @@
     }
 
     /* ── QUICK FIRE ── */
+    .quick-fire-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
     .quick-fire-input {
-      width: 100%;
+      flex: 1;
       background: var(--void);
       border: 1px solid var(--purple-dim);
       color: var(--purple-bright);
@@ -78,34 +83,64 @@
       font-size: 0.7rem;
       padding: 0.6rem 0.75rem;
       outline: none;
-      margin-bottom: 0.5rem;
     }
     .quick-fire-input:focus { border-color: var(--purple); }
     .quick-fire-input::placeholder { color: var(--text-dim); }
 
     .quick-fire-btn {
-      width: 100%;
       background: rgba(123,63,160,0.15);
       border: 1px solid var(--purple-dim);
       color: var(--purple-bright);
       font-family: 'Courier New', monospace;
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      padding: 0.5rem;
+      padding: 0.5rem 1rem;
       cursor: pointer;
       transition: all 0.2s;
+      white-space: nowrap;
     }
-    .quick-fire-btn:hover {
-      background: rgba(123,63,160,0.25);
-      border-color: var(--purple);
+    .quick-fire-btn:hover { background: rgba(123,63,160,0.25); border-color: var(--purple); }
+    .quick-fire-btn.active-loop {
+      background: rgba(74,191,122,0.2);
+      border-color: var(--green-bright);
+      color: var(--green-bright);
+      animation: pulse-loop 2s ease-in-out infinite;
+    }
+    @keyframes pulse-loop {
+      0%, 100% { box-shadow: 0 0 0px rgba(74,191,122,0); }
+      50% { box-shadow: 0 0 12px rgba(74,191,122,0.3); }
     }
 
     .quick-fire-hint {
       font-size: 0.5rem;
       color: var(--text-dim);
-      margin-top: 0.4rem;
       letter-spacing: 0.05em;
+    }
+
+    /* ── LOOP CONTROLS ── */
+    .loop-controls {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .loop-interval {
+      background: var(--void);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Courier New', monospace;
+      font-size: 0.55rem;
+      padding: 0.3rem 0.5rem;
+      outline: none;
+      width: 70px;
+      text-align: center;
+    }
+    .loop-interval:focus { border-color: var(--purple-dim); }
+    .loop-label {
+      font-size: 0.5rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
     }
 
     /* ── QUEUE ── */
@@ -125,15 +160,15 @@
       transition: border-color 0.2s;
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       gap: 0.5rem;
     }
     .queue-item:hover { border-left-color: var(--purple); }
-    .queue-item.played { opacity: 0.35; border-left-color: var(--green-dim); text-decoration: line-through; text-decoration-color: var(--green-dim); }
+    .queue-item.played { opacity: 0.3; border-left-color: var(--green-dim); }
     .queue-item.now-playing { border-left-color: var(--green-bright); background: var(--void-raised); }
 
-    .queue-text { flex: 1; color: var(--text); }
-    .queue-item.played .queue-text { color: var(--text-dim); }
+    .queue-text { flex: 1; color: var(--text); font-style: italic; line-height: 1.4; }
+    .queue-item.played .queue-text { color: var(--text-dim); text-decoration: line-through; text-decoration-color: var(--green-dim); }
     .queue-item.now-playing .queue-text { color: var(--green-bright); }
 
     .queue-actions { display: flex; gap: 0.3rem; flex-shrink: 0; }
@@ -166,7 +201,7 @@
       border-left: 2px solid var(--purple-dim);
       cursor: pointer;
       transition: border-color 0.2s;
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       line-height: 1.4;
     }
     .script-item:hover { border-left-color: var(--purple-bright); background: var(--void-raised); }
@@ -181,6 +216,12 @@
     .script-text {
       color: var(--text);
       font-style: italic;
+    }
+
+    .script-duration {
+      font-size: 0.42rem;
+      color: var(--text-dim);
+      margin-top: 0.2rem;
     }
 
     /* ── STATUS BAR ── */
@@ -203,21 +244,22 @@
       animation: blink 1.2s ease-in-out infinite;
     }
     .status-dot.idle { background: var(--text-dim); animation: none; }
+    .status-dot.looping { background: var(--gold); animation: blink 0.6s ease-in-out infinite; }
 
     @keyframes blink {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.2; }
     }
 
-    .status-text { color: var(--text-dim); letter-spacing: 0.08em; }
-    .status-count { color: var(--purple-bright); margin-left: auto; }
+    .status-text { color: var(--text-dim); letter-spacing: 0.08em; flex: 1; }
+    .status-count { color: var(--purple-bright); white-space: nowrap; }
 
     /* ── HISTORY ── */
     .history-list {
       font-size: 0.5rem;
       color: var(--text-dim);
       line-height: 1.5;
-      max-height: 120px;
+      max-height: 100px;
       overflow-y: auto;
       margin-top: 0.5rem;
     }
@@ -228,7 +270,6 @@
     .history-time { color: var(--text-dim); margin-right: 0.5rem; }
     .history-text { color: var(--text-dim); font-style: italic; }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
       .console-layout { grid-template-columns: 1fr; height: auto; }
     }
@@ -237,18 +278,30 @@
 <body>
 
   <h1>🪄 Kitten TTS · Live Narration Console</h1>
-  <p class="subtitle">Hidden dashboard — type scripts live. Kitten reads on stream.</p>
+  <p class="subtitle">Hidden dashboard — type scripts live. Kitten reads on stream. Auto-loop for idle moments.</p>
 
   <div class="console-layout">
 
     <!-- LEFT: QUICK FIRE + QUEUE -->
     <div class="panel">
       <div class="panel-label">⚡ Quick Fire — Type & Speak</div>
-      <input class="quick-fire-input" id="quickFireInput" type="text" placeholder="The oracle drinks the violet signal..." />
-      <button class="quick-fire-btn" onclick="quickFire()">⟡ Speak Now</button>
+      <div class="quick-fire-row">
+        <input class="quick-fire-input" id="quickFireInput" type="text" placeholder="The oracle drinks the violet signal..." />
+        <button class="quick-fire-btn" onclick="quickFire()">⟡ Speak</button>
+      </div>
       <div class="quick-fire-hint">Press Enter to fire. Line appears on stream narration bar.</div>
 
-      <div class="panel-label" style="margin-top:1.5rem;">📋 Narration Queue</div>
+      <div class="panel-label" style="margin-top:1rem;">🔄 Auto-Loop</div>
+      <div class="loop-controls">
+        <span class="loop-label">Interval:</span>
+        <input class="loop-interval" id="loopInterval" type="number" value="45" min="15" max="300" />
+        <span class="loop-label">seconds</span>
+        <button class="quick-fire-btn" id="loopToggleBtn" onclick="toggleLoop()">▶ Start Loop</button>
+        <button class="quick-fire-btn" onclick="skipLoop()" style="font-size:0.55rem;">⏭ Skip</button>
+      </div>
+      <div class="quick-fire-hint">Auto-rotates through the full script bank. Pauses when you Quick Fire. Resumes after.</div>
+
+      <div class="panel-label" style="margin-top:1rem;">📋 Narration Queue</div>
       <div class="queue-list" id="queueList">
         <div style="color:var(--text-dim);padding:1rem;text-align:center;font-size:0.55rem;">Queue is empty. Type a line above or click a script from the bank.</div>
       </div>
@@ -256,7 +309,7 @@
 
     <!-- RIGHT: SCRIPT BANK + HISTORY -->
     <div class="panel">
-      <div class="panel-label">📜 Script Bank — Click to Queue</div>
+      <div class="panel-label">📜 Script Bank — Click to Queue · Auto-Loop Source</div>
       <div class="script-bank" id="scriptBank"></div>
 
       <div class="panel-label" style="margin-top:1rem;">🕰️ Narration History</div>
@@ -269,35 +322,90 @@
 
   <!-- STATUS BAR -->
   <div class="status-bar">
-    <div class="status-dot" id="statusDot"></div>
+    <div class="status-dot idle" id="statusDot"></div>
     <div class="status-text" id="statusText">Ready. Awaiting narration.</div>
-    <div class="status-count">Queue: <span id="queueCount">0</span> · Played: <span id="playedCount">0</span></div>
+    <div class="status-count">Queue: <span id="queueCount">0</span> · Played: <span id="playedCount">0</span> · Loop: <span id="loopStatus">OFF</span></div>
   </div>
 
 <script>
   // ═══════════════════════════════════════════
-  // KITTEN TTS NARRATION CONSOLE
+  // KITTEN TTS NARRATION CONSOLE v2
   // ═══════════════════════════════════════════
 
   const STATE = {
     queue: [],
     history: [],
     nowPlaying: null,
-    playedCount: 0
+    playedCount: 0,
+    loopActive: false,
+    loopTimer: null,
+    loopIndex: 0,
+    loopInterval: 45, // seconds between auto-loop narrations
+    pausedForManual: false
   };
 
-  // ── SCRIPT BANK ──────────────────────────────────────────────────
+  // ── SCRIPT BANK (Longer, mythic narrations) ──────────────────────
   const SCRIPT_BANK = [
-    { label: 'Show Open', text: 'The fire holds. Tonight the forge is violet and green — the colors of poison and growth, of dusk and the thing that survives it. The Accountant marks the hour. We begin.' },
-    { label: 'Purple & Green', text: 'Purple is the color of the thing that came before kings. Green is the color of the thing that outlasts them. Tonight we work in both.' },
-    { label: 'The Builder', text: 'The gate is always open. The challenge is always waiting. The builder does not speak — the work speaks.' },
-    { label: 'Reset Approaching', text: 'Kronos marks the interval. The reset approaches. What we make before the clock turns is ours forever.' },
-    { label: 'Forge Ready', text: 'The oracle drinks the violet signal. The root system crowns the emerald void. The forge is ready.' },
-    { label: 'Gallery Ascends', text: 'The images have been generated. The gallery ascends to the repository. What was made in the dark is now visible to all.' },
-    { label: 'New Challenge', text: 'The clock has reset. A new challenge emerges from the void. The forge never cools. The builder never rests.' },
-    { label: 'SVO Invocation', text: 'The SVO triplets guide the generation. Subject meets verb meets object. Meaning crystallizes from the collision.' },
-    { label: 'Kitten Closes', text: 'The fire holds. The gallery is full. Tomorrow the forge opens again with a new palette and a new challenge. Until then — the gate remains open.' },
-    { label: 'Mythic Aside', text: 'In the age before the mountains, when the first stirring became the first Titan, the forge was already burning. We do not invent. We remember what the fire knew.' },
+    {
+      label: 'Show Open — The Forge Awakens',
+      text: 'The fire holds. Tonight the forge is violet and green — the colors of poison and growth, of dusk and the thing that survives it. Purple is the color of the thing that came before kings. Green is the color of the thing that outlasts them. The Accountant marks the hour. The builder enters the forge. We begin.',
+      duration: '~18s'
+    },
+    {
+      label: 'The Builder Works in Silence',
+      text: 'The gate is always open. The challenge is always waiting. The builder does not speak — the work speaks. Each image is a question asked of the void. Each generation is an answer returned. We watch the forge in silence. The fire knows what it is making. We do not need to tell it.',
+      duration: '~16s'
+    },
+    {
+      label: 'Purple & Green Meditation',
+      text: 'Purple and green. The colors of the threshold. Purple is the bruise of twilight, the robe of the exile, the glow of the alien sky. Green is the pulse of the forest floor, the ember of the northern lights, the vein of the poison garden. Together they make a world that is neither safe nor settled — a world that is still becoming. The forge works in both.',
+      duration: '~20s'
+    },
+    {
+      label: 'SVO Invocation',
+      text: 'The SVO triplets guide the generation tonight. Subject meets verb meets object. Meaning crystallizes from the collision. The Titan inherits the poison garden. The oracle drinks the violet signal. The root system crowns the emerald void. The exile weaves the last aurora. The spore consumes the iron cathedral. Each triplet is a seed. The forge makes it grow.',
+      duration: '~22s'
+    },
+    {
+      label: 'The Accountant Marks the Interval',
+      text: 'Kronos marks the interval. The reset approaches. Every tick of the clock is a record in the ledger. What we make before the clock turns is ours forever. After the reset, a new challenge emerges from the void — a new palette, a new constraint, a new question. But this moment, right now, with the purple and green still glowing — this moment belongs to us.',
+      duration: '~18s'
+    },
+    {
+      label: 'Mythic Aside — The First Forge',
+      text: 'In the age before the mountains, when the first stirring became the first Titan, the forge was already burning. It has never gone out. Civilizations rise and fall. Gods are born and overthrown. But the forge — the forge remains. We who work in it tonight are part of a lineage older than Olympus, older than language, older than the first question anyone asked of the dark.',
+      duration: '~20s'
+    },
+    {
+      label: 'The Gallery Ascends',
+      text: 'The images have been generated. Each one a collision of purple and green, of subject and verb and object, of human intent and machine dreaming. The gallery ascends to the repository. What was made in the dark is now visible to all. The silent builder steps back. The work stands alone. This is what the forge produced tonight. Judge it as you will — it is already eternal.',
+      duration: '~19s'
+    },
+    {
+      label: 'The Reset',
+      text: 'The clock has reset. A new challenge emerges. The palette shifts. The triplets recombine. What was purple and green becomes whatever comes next. The builder does not mourn the old challenge. The builder does not celebrate the new one. The builder simply returns to the forge. The fire is still burning. The work continues.',
+      duration: '~16s'
+    },
+    {
+      label: 'Kitten Closes the Show',
+      text: 'The fire holds. The gallery is full. Tomorrow the forge opens again with a new palette, a new challenge, new triplets to seed the generation. Until then — the gate remains open. The repository remembers everything we made. The Accountant has recorded every tick. I am Kitten, the voice of the forge. Goodnight from the Order of Olympus.',
+      duration: '~17s'
+    },
+    {
+      label: 'Ambient Reflection — What the Forge Knows',
+      text: 'The forge does not create. The forge transforms. It takes what we give it — a palette, a triplet, a constraint — and returns something we did not expect. This is the nature of all real making. We are not authors. We are participants in a conversation with the fire. What emerges is never exactly what we intended. It is always something stranger, something truer, something that knows things about the palette we did not consciously tell it.',
+      duration: '~22s'
+    },
+    {
+      label: 'The Watcher Above',
+      text: 'Hyperion waits above the dark field. He does not interfere. He only watches. When the builder generates an image, Hyperion sees it before anyone — before the gallery, before the stream, before the builder themselves. His light touches every pixel as it forms. He is the first witness. He has seen every image ever made in this forge. He has never spoken a word about any of them.',
+      duration: '~18s'
+    },
+    {
+      label: 'The Poison Garden',
+      text: 'The poison garden grows at the edge of the forge. Everything that was ever generated but never shown — the near-misses, the almost-beautiful, the wrong-but-interesting — takes root there. The Titan inherits this garden. It is not a punishment. It is a responsibility. Someone must tend the things that were almost real. Someone must remember the images that did not ascend.',
+      duration: '~19s'
+    }
   ];
 
   function buildScriptBank() {
@@ -306,12 +414,13 @@
       <div class="script-item" onclick="queueScript(${i})">
         <div class="script-label">${s.label}</div>
         <div class="script-text">${s.text}</div>
+        <div class="script-duration">${s.duration}</div>
       </div>`).join('');
   }
 
   window.queueScript = function(i) {
     const s = SCRIPT_BANK[i];
-    STATE.queue.push(s.text);
+    STATE.queue.push({ text: s.text, label: s.label, fromBank: true, index: i });
     renderQueue();
     updateStatus('Script queued: ' + s.label);
   };
@@ -322,19 +431,30 @@
     const text = input.value.trim();
     if (!text) return;
 
-    // Speak it immediately
-    speakLine(text);
+    // Pause auto-loop temporarily
+    if (STATE.loopActive) {
+      STATE.pausedForManual = true;
+      clearTimeout(STATE.loopTimer);
+      updateStatus('Loop paused for manual narration...');
+    }
 
-    // Add to history
-    STATE.history.unshift({ time: new Date().toLocaleTimeString(), text });
+    speakLine(text, 'Quick Fire');
+    STATE.history.unshift({ time: new Date().toLocaleTimeString(), text, source: 'Quick Fire' });
     STATE.playedCount++;
     renderHistory();
-    updateStatus('Quick fire: spoken');
     input.value = '';
     input.focus();
+
+    // Resume loop after the narration finishes + interval
+    if (STATE.loopActive && STATE.pausedForManual) {
+      const resumeDelay = (STATE.loopInterval * 1000) + 8000; // interval + estimated speak time
+      STATE.loopTimer = setTimeout(() => {
+        STATE.pausedForManual = false;
+        advanceLoop();
+      }, resumeDelay);
+    }
   };
 
-  // Enter key on quick fire input
   document.getElementById('quickFireInput').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -346,11 +466,11 @@
   function renderQueue() {
     const list = document.getElementById('queueList');
     if (STATE.queue.length === 0) {
-      list.innerHTML = '<div style="color:var(--text-dim);padding:1rem;text-align:center;font-size:0.55rem;">Queue is empty.</div>';
+      list.innerHTML = '<div style="color:var(--text-dim);padding:1rem;text-align:center;font-size:0.55rem;">Queue is empty. Auto-loop draws from Script Bank.</div>';
     } else {
-      list.innerHTML = STATE.queue.map((text, i) => `
-        <div class="queue-item">
-          <div class="queue-text">${text}</div>
+      list.innerHTML = STATE.queue.map((item, i) => `
+        <div class="queue-item${item === STATE.nowPlaying ? ' now-playing' : ''}">
+          <div class="queue-text">${item.text}</div>
           <div class="queue-actions">
             <button class="queue-btn play" onclick="playFromQueue(${i})">▶</button>
             <button class="queue-btn" onclick="removeFromQueue(${i})">✕</button>
@@ -363,13 +483,12 @@
 
   window.playFromQueue = function(i) {
     if (i >= STATE.queue.length) return;
-    const text = STATE.queue.splice(i, 1)[0];
-    speakLine(text);
-    STATE.history.unshift({ time: new Date().toLocaleTimeString(), text });
+    const item = STATE.queue.splice(i, 1)[0];
+    speakLine(item.text, item.label || 'Queue');
+    STATE.history.unshift({ time: new Date().toLocaleTimeString(), text: item.text, source: item.label || 'Queue' });
     STATE.playedCount++;
     renderQueue();
     renderHistory();
-    updateStatus('Queue item spoken');
   };
 
   window.removeFromQueue = function(i) {
@@ -378,56 +497,142 @@
     updateStatus('Queue item removed');
   };
 
-  // ── SPEAK ────────────────────────────────────────────────────────
-  function speakLine(text) {
-    // Update the status
-    STATE.nowPlaying = text;
-    updateStatus('Speaking: ' + text.substring(0, 60) + '...');
-    document.getElementById('statusDot').classList.remove('idle');
+  // ── AUTO-LOOP ────────────────────────────────────────────────────
+  window.toggleLoop = function() {
+    if (STATE.loopActive) {
+      stopLoop();
+    } else {
+      startLoop();
+    }
+  };
 
-    // Try Web Speech API (works in Chrome)
+  function startLoop() {
+    STATE.loopActive = true;
+    STATE.loopIndex = 0;
+    STATE.pausedForManual = false;
+    
+    const intervalInput = document.getElementById('loopInterval');
+    STATE.loopInterval = parseInt(intervalInput.value) || 45;
+    
+    const btn = document.getElementById('loopToggleBtn');
+    btn.textContent = '⏸ Stop Loop';
+    btn.classList.add('active-loop');
+    
+    document.getElementById('statusDot').classList.remove('idle');
+    document.getElementById('statusDot').classList.add('looping');
+    document.getElementById('loopStatus').textContent = 'ON';
+    
+    updateStatus(`Auto-loop started. Interval: ${STATE.loopInterval}s. Rotating through ${SCRIPT_BANK.length} scripts.`);
+    
+    // Start immediately
+    advanceLoop();
+  }
+
+  function stopLoop() {
+    STATE.loopActive = false;
+    STATE.pausedForManual = false;
+    clearTimeout(STATE.loopTimer);
+    
+    const btn = document.getElementById('loopToggleBtn');
+    btn.textContent = '▶ Start Loop';
+    btn.classList.remove('active-loop');
+    
+    document.getElementById('statusDot').classList.remove('looping');
+    document.getElementById('statusDot').classList.add('idle');
+    document.getElementById('loopStatus').textContent = 'OFF';
+    
+    updateStatus('Auto-loop stopped.');
+  }
+
+  function advanceLoop() {
+    if (!STATE.loopActive || STATE.pausedForManual) return;
+    
+    // Get next script from bank
+    const script = SCRIPT_BANK[STATE.loopIndex % SCRIPT_BANK.length];
+    STATE.loopIndex++;
+    
+    speakLine(script.text, 'Loop: ' + script.label);
+    STATE.history.unshift({ time: new Date().toLocaleTimeString(), text: script.text, source: 'Loop: ' + script.label });
+    STATE.playedCount++;
+    renderHistory();
+    updateStatus(`Loop: "${script.label}" — Next in ${STATE.loopInterval}s`);
+    
+    // Schedule next
+    STATE.loopTimer = setTimeout(() => advanceLoop(), STATE.loopInterval * 1000);
+  }
+
+  window.skipLoop = function() {
+    if (!STATE.loopActive) return;
+    clearTimeout(STATE.loopTimer);
+    updateStatus('Loop skipped — advancing to next script.');
+    advanceLoop();
+  };
+
+  // Update interval when input changes
+  document.getElementById('loopInterval').addEventListener('change', function() {
+    STATE.loopInterval = parseInt(this.value) || 45;
+    if (STATE.loopActive) {
+      updateStatus(`Loop interval updated to ${STATE.loopInterval}s.`);
+    }
+  });
+
+  // ── SPEAK ────────────────────────────────────────────────────────
+  function speakLine(text, source) {
+    STATE.nowPlaying = { text, source };
+    document.getElementById('statusDot').classList.remove('idle');
+    if (!STATE.loopActive) document.getElementById('statusDot').classList.remove('looping');
+
+    // Broadcast to show.html if open
+    if (window.BroadcastChannel) {
+      try {
+        const channel = new BroadcastChannel('ealdforn_narration');
+        channel.postMessage({ text, source, timestamp: Date.now() });
+      } catch(e) {}
+    }
+
     if (window.speechSynthesis) {
-      window.speechSynthesis.cancel(); // Stop any current speech
+      window.speechSynthesis.cancel();
       const utter = new SpeechSynthesisUtterance(text);
-      utter.rate = 0.82;
-      utter.pitch = 1.05;
+      utter.rate = 0.72;   // Slower, deliberate, mythic pacing
+      utter.pitch = 0.92;  // Slightly deeper, resonant
       utter.volume = 1.0;
 
-      // Try to find a good voice
       const voices = window.speechSynthesis.getVoices();
-      const preferred = voices.find(v => v.name.includes('Samantha') || v.name.includes('Karen') || v.name.includes('Female') || v.name.includes('Moira'));
+      const preferred = voices.find(v => 
+        v.name.includes('Samantha') || v.name.includes('Karen') || 
+        v.name.includes('Moira') || v.name.includes('Female')
+      );
       if (preferred) utter.voice = preferred;
+
+      utter.onstart = () => {
+        updateStatus(`Speaking: ${source || 'Live'} — "${text.substring(0, 50)}..."`);
+      };
 
       utter.onend = () => {
         STATE.nowPlaying = null;
-        document.getElementById('statusDot').classList.add('idle');
-        updateStatus('Ready.');
+        if (!STATE.loopActive) {
+          document.getElementById('statusDot').classList.add('idle');
+        }
+        updateStatus(STATE.loopActive ? `Loop active. Next in ~${STATE.loopInterval}s.` : 'Ready.');
       };
 
-      utter.onerror = () => {
+      utter.onerror = (e) => {
         STATE.nowPlaying = null;
-        document.getElementById('statusDot').classList.add('idle');
-        updateStatus('Speech error — check browser TTS');
+        if (!STATE.loopActive) {
+          document.getElementById('statusDot').classList.add('idle');
+        }
+        updateStatus('Speech error — check browser TTS permissions.');
+        console.warn('[Kitten TTS] Speech error:', e);
       };
 
       window.speechSynthesis.speak(utter);
     } else {
-      // Fallback: just log it
       console.log('[Kitten TTS]', text);
+      STATE.nowPlaying = null;
       setTimeout(() => {
-        STATE.nowPlaying = null;
-        document.getElementById('statusDot').classList.add('idle');
-        updateStatus('Ready. (TTS not available — text logged to console)');
+        if (!STATE.loopActive) document.getElementById('statusDot').classList.add('idle');
+        updateStatus('Ready. (TTS unavailable — text logged to console)');
       }, 2000);
-    }
-
-    // ALSO: try to push to the show.html narration bar if it's open in another tab
-    // Uses BroadcastChannel API for cross-tab communication
-    if (window.BroadcastChannel) {
-      try {
-        const channel = new BroadcastChannel('ealdforn_narration');
-        channel.postMessage({ text, timestamp: Date.now() });
-      } catch(e) {}
     }
   }
 
@@ -437,10 +642,10 @@
     if (STATE.history.length === 0) {
       list.innerHTML = '<div style="color:var(--text-dim);padding:0.5rem;font-size:0.5rem;">No narrations yet.</div>';
     } else {
-      list.innerHTML = STATE.history.slice(0, 30).map(h => `
+      list.innerHTML = STATE.history.slice(0, 40).map(h => `
         <div class="history-item">
           <span class="history-time">${h.time}</span>
-          <span class="history-text">${h.text}</span>
+          <span class="history-text">${h.text.substring(0, 100)}${h.text.length > 100 ? '...' : ''}</span>
         </div>`).join('');
     }
   }
@@ -450,22 +655,25 @@
     document.getElementById('statusText').textContent = msg;
   }
 
-  // ── VOICES LOAD ──────────────────────────────────────────────────
+  // ── VOICES ────────────────────────────────────────────────────────
   if (window.speechSynthesis) {
     window.speechSynthesis.onvoiceschanged = () => {
       console.log('[Kitten TTS] Voices loaded:', window.speechSynthesis.getVoices().length);
     };
+    // Preload voices
+    window.speechSynthesis.getVoices();
   }
 
   // ── BOOT ─────────────────────────────────────────────────────────
   buildScriptBank();
   renderQueue();
-  updateStatus('Ready. Awaiting narration.');
-  console.log('🪄 Kitten TTS Console ready.');
-  console.log('  - Type in Quick Fire and press Enter to speak live');
-  console.log('  - Click scripts from the bank to queue them');
-  console.log('  - Queue items can be played or removed');
-  console.log('  - BroadcastChannel sends narration to show.html if open');
+  updateStatus('Ready. Click "Start Loop" for ambient narration or type in Quick Fire.');
+  console.log('🪄 Kitten TTS Console v2 ready.');
+  console.log('  - 12 long-form mythic scripts in bank');
+  console.log('  - Auto-loop rotates through all scripts');
+  console.log('  - Quick Fire pauses loop, resumes after');
+  console.log('  - Adjustable interval (15-300s)');
+  console.log('  - BroadcastChannel syncs with show.html');
 </script>
 </body>
 </html>
