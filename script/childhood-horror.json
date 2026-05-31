@@ -1,0 +1,348 @@
+{
+  "title": "The Descent",
+  "subtitle": "A Childhood Dreamscape Horror",
+  "tone": "horror",
+  "requires": {
+    "set": "basement",
+    "cast": ["izanami", "olympians"]
+  },
+  "maxScenes": 8,
+  "voice": {
+    "rate": 0.75,
+    "pitch": 0.65,
+    "pause_between_sentences": 500
+  },
+  "player": {
+    "name": "The Dreamer",
+    "backstory": "You don't remember how you got here. The basement. The cage. The single bare bulb that won't stop flickering. You were at a party. Or a pool. Or a hospital. Or maybe you've always been here, waiting to wake up.",
+    "burden": "Something is wrong with your body. Something you can't see. But you can feel it draining.",
+    "location": "The Unfinished Basement",
+    "traits": {
+      "authority": 0,
+      "wisdom": 0,
+      "courage": 0,
+      "cunning": 0,
+      "devotion": 0,
+      "health": 100
+    }
+  },
+  "mortalCast": [],
+  "prologue": "You wake up. Dizzy. Your head pounds like someone drove a spike behind your eye. The floor is cold concrete against your cheek. Your hands are bound behind your back with something that feels like zip ties.\n\nThe room smells like damp earth and something else. Rust. Or old blood. A single bare bulb swings overhead, casting shadows that move wrong.\n\nIn the corner: a cage. Empty. The door hangs open.\n\nWhat happened last night?",
+  "scenes": [
+    {
+      "scene": 1,
+      "god": "none",
+      "image": "images/horror/pool-dreamshaper.jpg",
+      "narration": "Fragments surface. A party. Someone's basement. Your friends dared you to explore the old house on Maple Street. You laughed. You went inside. The door closed behind you. That's the last thing you remember.\n\nBut there's something else. A pool. You remember water. Blue tiles. The smell of chlorine. You were there before the basement. You were swimming. No — you were drowning. Someone pulled you out. You can't see their face.\n\nThe bulb flickers. The cage creaks. You're not alone down here.",
+      "choices": [
+        {
+          "text": "🔍 Check the cage",
+          "trait": "courage",
+          "nextScene": 2,
+          "healthDelta": -5
+        },
+        {
+          "text": "🚪 Look for stairs",
+          "trait": "cunning",
+          "nextScene": 3,
+          "healthDelta": 0
+        },
+        {
+          "text": "📞 Call out for help",
+          "trait": "devotion",
+          "nextScene": 4,
+          "healthDelta": -10
+        }
+      ]
+    },
+    {
+      "scene": 2,
+      "god": "none",
+      "image": "images/horror/pool-sd.jpg",
+      "narration": "You approach the cage. The door swings open. Inside: nothing. But the floor is wet. Wet footprints leading out. They're your size. Your shape.\n\nYou look at your feet. They're dry.\n\nThe bulb flickers. For a moment, the cage isn't empty. There's a figure inside. Sitting. Facing away. Shoulder-length dark hair. A white dress. Small. Child-sized.\n\nThen the light steadies. The figure is gone.\n\nThis is the same pool. But different. Wrong. The water isn't water. It's something else. Something that remembers you.",
+      "choices": [
+        {
+          "text": "🏥 Find the hospital",
+          "trait": "wisdom",
+          "nextScene": 4,
+          "healthDelta": 0
+        },
+        {
+          "text": "⬇️ Go to the stairs",
+          "trait": "authority",
+          "nextScene": 3,
+          "healthDelta": -5
+        },
+        {
+          "text": "💧 Touch the water",
+          "trait": "devotion",
+          "nextScene": 4,
+          "healthDelta": -15
+        }
+      ]
+    },
+    {
+      "scene": 3,
+      "god": "none",
+      "image": "images/horror/stairs.jpg",
+      "narration": "You find a staircase. It goes down. Further than it should. The light from above barely touches the bottom step.\n\nA cold draft rises from below. It smells like earth. Like the basement you woke up in. Like somewhere you've been before.\n\nSomething whispers. You can't make out the words.",
+      "choices": [
+        {
+          "text": "⬇️ Descend the stairs",
+          "trait": "courage",
+          "nextScene": 5,
+          "healthDelta": 0
+        },
+        {
+          "text": "🏥 Go back to the hospital",
+          "trait": "wisdom",
+          "nextScene": 4,
+          "healthDelta": 0
+        }
+      ]
+    },
+    {
+      "scene": 4,
+      "god": "none",
+      "image": "images/horror/hospital.jpg",
+      "narration": "The hospital hallway never ends. Door after door. Room after room. Gurneys with empty restraints. Charts written in a language you almost recognize.\n\nYou pass a room. The light is different. Warmer. You look inside.\n\nA bed. Your bed. From when you were seven. The night your grandmother died. You remember now. You were there. You saw something leave her body. Something that looked at you before it went.\n\nA nurse's voice: 'Time to go, sweetheart.'\n\nYou turn. No one is there.\n\nYour wrist burns. A bracelet tightens. You look down. Patient number. Date of birth. Blood type. Something is wrong with your body. Something you can't see. But you can feel it draining.",
+      "choices": [
+        {
+          "text": "⬇️ Find the stairs down",
+          "trait": "courage",
+          "nextScene": 5,
+          "healthDelta": 0
+        },
+        {
+          "text": "📞 Call for anyone",
+          "trait": "devotion",
+          "nextScene": 6,
+          "healthDelta": -10
+        },
+        {
+          "text": "🏃 Run toward the light",
+          "trait": "cunning",
+          "nextScene": 7,
+          "healthDelta": -5
+        }
+      ]
+    },
+    {
+      "scene": 5,
+      "god": "izanami",
+      "image": "images/horror/stairs.jpg",
+      "narration": "You descend. Step by step. The stairs creak under your weight. The walls feel closer than they should.\n\nAt the bottom, a figure. Small. Sitting with her back to you. Shoulder-length dark hair. A white dress. She doesn't move. She doesn't turn around.\n\nYour heart pounds. Is she another victim? Someone who got lost down here years ago? A child, alone in the dark?\n\n'Hello?' you whisper.\n\nNothing. No response. Just the silence and the stairs and that small back turned toward you.\n\nYou have to know. You have to see her face.",
+      "choices": [
+        {
+          "text": "🚶 Walk closer to the figure",
+          "trait": "courage",
+          "nextScene": 5.5,
+          "healthDelta": -5
+        },
+        {
+          "text": "📢 Call out again, louder",
+          "trait": "authority",
+          "nextScene": 5.5,
+          "healthDelta": -10
+        },
+        {
+          "text": "🏃 Try to run past her",
+          "trait": "cunning",
+          "nextScene": 5.5,
+          "healthDelta": -15
+        }
+      ]
+    },
+    {
+      "scene": 5.5,
+      "god": "izanami",
+      "image": "images/horror/izanami.jpg",
+      "narration": "You take a step closer. Then another. Your footsteps echo in the dark. The figure still doesn't move.\n\nYou're close enough to touch her now. Close enough to see that her dress isn't white — it's the color of old bone. Her hair isn't dark — it's the color of dried blood.\n\nYou reach out. Your hand trembles. You touch her shoulder —\n\nShe turns.\n\nIt's not a little girl.\n\nIt's not a child at all.\n\nHer face is ancient. Hollow. Beautiful in the way that a skull is beautiful. Her eyes are empty wells. Her smile has too many teeth.\n\n'I am Izanami,' she says. 'Goddess of creation and death. I gave birth to fire. Fire killed me. Now I wait for those who wander too deep.'\n\nShe tilts her head. Studies you like a thing she might keep.\n\n'You're not dead yet. But you came down here anyway. That takes courage. Or stupidity.'",
+      "choices": [
+        {
+          "text": "🤝 Take her hand",
+          "trait": "devotion",
+          "nextScene": 8,
+          "healthDelta": -20
+        },
+        {
+          "text": "🏃 Step back. Run.",
+          "trait": "cunning",
+          "nextScene": 6,
+          "healthDelta": 10
+        },
+        {
+          "text": "❓ Ask her why she's here",
+          "trait": "wisdom",
+          "nextScene": 5.6,
+          "healthDelta": 0
+        }
+      ]
+    },
+    {
+      "scene": 5.6,
+      "god": "izanami",
+      "image": "images/horror/izanami.jpg",
+      "narration": "'Why?' She laughs. It sounds like breaking glass.\n\n'I am here because I died giving birth to fire. Your fire. Every spark. Every flame. Every fever that ever burned through a child's body. They all come from me.\n\n'I am here because you've been walking toward me your whole life. Every nightmare. Every dark basement. Every time you woke up and couldn't move — that was me. Practicing.'\n\nShe steps closer. Her breath is cold.\n\n'I am here because you're almost ready to join me.'",
+      "choices": [
+        {
+          "text": "🤝 Take her hand",
+          "trait": "devotion",
+          "nextScene": 8,
+          "healthDelta": -15
+        },
+        {
+          "text": "🏃 Run. Now.",
+          "trait": "courage",
+          "nextScene": 6,
+          "healthDelta": 5
+        }
+      ]
+    },
+    {
+      "scene": 6,
+      "god": "none",
+      "image": "images/horror/playground.jpg",
+      "narration": "You burst through a door. Outside. But wrong outside. The sky is the color of a bruise. No stars. No moon. Just darkness.\n\nA playground. Abandoned. Swings moving in different directions. No wind. The merry-go-round spins slowly. One seesaw is down. Something heavy is sitting on it. Nothing is there.\n\nA child's laugh. From the jungle gym. You look. No one.\n\nThe swings stop. All at once.\n\nA whisper: 'Play with us.'",
+      "choices": [
+        {
+          "text": "🎠 Go to the swings",
+          "trait": "courage",
+          "nextScene": 7,
+          "healthDelta": -10
+        },
+        {
+          "text": "🧗 Climb the jungle gym",
+          "trait": "cunning",
+          "nextScene": 9,
+          "healthDelta": 0
+        },
+        {
+          "text": "🏃 Run toward the road",
+          "trait": "authority",
+          "nextScene": 7,
+          "healthDelta": -5
+        }
+      ]
+    },
+    {
+      "scene": 7,
+      "god": "none",
+      "image": "images/horror/icetruck.jpg",
+      "narration": "A sound. Music. Distorted. Familiar. An ice cream truck melody played backwards.\n\nThe truck sits in the middle of an empty parking lot. No driver. No children. The windows are dark. But the music plays. The freezer door is open. Cold fog spills out onto the asphalt.\n\nA voice from the truck: 'You're hungry, aren't you? You've been hungry for a long time.'\n\nYour stomach growls. You haven't eaten in... you can't remember.\n\n'Come closer. It's okay. It's just ice cream.'",
+      "choices": [
+        {
+          "text": "🍦 Approach the truck",
+          "trait": "devotion",
+          "nextScene": 10,
+          "healthDelta": -20
+        },
+        {
+          "text": "🎵 Record the music",
+          "trait": "cunning",
+          "nextScene": 11,
+          "healthDelta": -15
+        },
+        {
+          "text": "🏃 Run toward the attic",
+          "trait": "courage",
+          "nextScene": 9,
+          "healthDelta": 10
+        }
+      ]
+    },
+    {
+      "scene": 8,
+      "god": "izanami",
+      "image": "images/horror/izanami.jpg",
+      "narration": "You take her hand. Her fingers are cold. Not cold like ice — cold like absence. Like the space between heartbeats.\n\n'Good choice,' she whispers. 'Or bad. It's hard to tell from here.'\n\nShe leads you down the stairs. Past the bottom. Past where there should be floor. The stairs continue into darkness.\n\n'I can let you go back,' she says. 'But there's a price. You'll forget. You always forget. Or you can stay. Stay with me. It's not so bad, once you get used to the dark.'\n\nShe stops. Two doors. One leads up. One leads down.\n\n'Choose.'",
+      "choices": [
+        {
+          "text": "🚪 Take the door UP (forget)",
+          "trait": "courage",
+          "nextScene": 9,
+          "healthDelta": 15
+        },
+        {
+          "text": "⬇️ Take the door DOWN (stay)",
+          "trait": "devotion",
+          "nextScene": 12,
+          "healthDelta": -30
+        }
+      ]
+    },
+    {
+      "scene": 9,
+      "god": "none",
+      "image": "images/horror/attic.jpg",
+      "narration": "A ladder. Leading up. The only way out. You climb. Rung by rung. The ladder creaks. Below you, darkness. Above you, a trap door.\n\nYou push it open.\n\nAn attic. Dusty. Old boxes. A single window showing a sky that might be dawn. Or dusk. You can't tell.\n\nSomething moves in the corner. You turn.\n\nIt's you. Sitting in a chair. Younger. Seven years old. Staring at you.\n\n'You made it,' your younger self says. 'I was starting to think you wouldn't.'\n\n'What is this place?'\n\n'The place you forgot. The place you made up so you wouldn't have to remember.'\n\nYounger you stands. Walks toward you.\n\n'Do you want to remember now? Or do you want to go back and forget again?'",
+      "choices": [
+        {
+          "text": "🔓 Remember. Face it.",
+          "trait": "courage",
+          "nextScene": 13,
+          "healthDelta": 0
+        },
+        {
+          "text": "🌀 Forget. Go back.",
+          "trait": "cunning",
+          "nextScene": 14,
+          "healthDelta": 0
+        }
+      ]
+    },
+    {
+      "scene": 10,
+      "god": "none",
+      "image": "images/horror/icetruck.jpg",
+      "narration": "You take the ice cream. It tastes like childhood. Like summer. Like the last day before everything changed. You keep eating. You can't stop. The truck drives away with you still reaching for the window. The music plays. Forever.",
+      "choices": [],
+      "isEnding": true,
+      "endingType": "lure"
+    },
+    {
+      "scene": 11,
+      "god": "none",
+      "image": "images/horror/icetruck.jpg",
+      "narration": "You record the music. It plays on loop. Forever. You're still listening. The song never ends. Neither do you. Somewhere, in another version of this story, you made a different choice. You don't remember that version. You only remember the music.",
+      "choices": [],
+      "isEnding": true,
+      "endingType": "loop"
+    },
+    {
+      "scene": 12,
+      "god": "izanami",
+      "image": "images/horror/izanami.jpg",
+      "narration": "You take the door down. Izanami walks beside you. 'It's not so bad,' she says. 'I've been alone for a very long time.' The darkness becomes a garden. Black flowers. A sky with no sun. You sit beside her. 'Tell me about fire,' you say. She smiles. 'It was beautiful. Right up until the end.'",
+      "choices": [],
+      "isEnding": true,
+      "endingType": "gatekeeper"
+    },
+    {
+      "scene": 13,
+      "god": "none",
+      "image": "images/horror/attic.jpg",
+      "narration": "You remember. Everything. The basement wasn't a basement. It was a fever. The hospital wasn't a hospital. It was a goodbye. The pool wasn't a pool. It was the last time you saw her face.\n\nYou wake up. In a bed. In a room that smells like antiseptic and flowers. A hand holds yours.\n\n'Welcome back,' a voice says.\n\nYou're crying. You don't know why.\n\nBut you remember now. And remembering is the only way out.",
+      "choices": [],
+      "isEnding": true,
+      "endingType": "awakening"
+    },
+    {
+      "scene": 14,
+      "god": "none",
+      "image": "images/horror/basement.jpg",
+      "narration": "You choose to forget. The attic fades. The ladder disappears. You're back in the basement. The cage. The bulb. The shadows.\n\nBut this time, the cage door is closed.\n\nYou're not alone in here.\n\nA small figure sits in the corner. Back turned. White dress. Dark hair.\n\nIt doesn't move.\n\nIt doesn't need to.\n\nYou're already where it wanted you.",
+      "choices": [],
+      "isEnding": true,
+      "endingType": "cage"
+    }
+  ],
+  "endings": {
+    "lure": "The ice cream truck's music fades into static. You are still reaching for the window. Still hungry. Still listening. The dream doesn't end. It just changes channels.",
+    "loop": "The recording plays. On your phone. In your head. In every quiet moment. You can still hear it. The song that never ends. The choice you can't take back.",
+    "gatekeeper": "You sit beside Izanami in the garden of black flowers. 'Most choose the door up,' she says. 'You chose differently. That is why I will remember you when the others have faded.' The stars above have no light. But neither do you. You are home.",
+    "awakening": "You open your eyes. The hospital room is real. The hand holding yours is real. 'You were gone for three days,' they say. 'We thought we lost you.' You don't tell them where you went. You can't. The words don't exist. But you remember. And you will never forget again.",
+    "cage": "The basement keeps what falls. The cage holds what breathes. The small figure in the corner will never turn around. And neither will you. This is where the story ends. This is where it always ended.",
+    "default": "The dream dissolves. You wake up in your bed. It was just a nightmare. But the basement door in your house has always been locked. You've never been down there. Have you?"
+  }
+}
