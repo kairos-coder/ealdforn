@@ -1,0 +1,28 @@
+{
+  "name": "Izanami",
+  "domain": "death",
+  "trait": "death",
+  "glyph": "💀",
+  "color": "#8a0a0a",
+  "image": "images/actors/izanami.jpg",
+  "entrance": "The air grows cold. The shadows deepen. A figure emerges from the darkness — not walking, but *arriving*. Her white dress is the color of old bone. Her hair is the color of dried blood. Her eyes are empty wells. 'I am Izanami,' she says. 'Goddess of creation and death. I gave birth to fire. Fire killed me. Now I wait for those who wander too deep.'",
+  "scenes": {
+    "arrival": [
+      "The temperature drops. Your breath fogs. Izanami stands where no one stood a moment ago.",
+      "A single bulb flickers. When it steadies, she is there. Watching. Waiting.",
+      "The stairs creak behind you. You turn. She is one step closer than she should be."
+    ],
+    "wisdom": "You seek to understand death. I am not a riddle to be solved, child. I am the answer that ends all questions.",
+    "courage": "You are not afraid of me. That is... interesting. Most are. But courage in the face of death is not bravery. It is recognition.",
+    "cunning": "You think you can trick me? I have been waiting since before time had a name. Your cleverness is a candle in an endless cave.",
+    "authority": "You would command death itself? Arrogance becomes you. But authority means nothing in a place where all kings kneel.",
+    "devotion": "You offer yourself to me? I have received many offerings. None have ever walked away satisfied."
+  },
+  "closing": {
+    "authority": "You tried to command the darkness. But darkness cannot be commanded. It can only be shared.",
+    "wisdom": "You sought to understand. Now you do. Was it worth the knowing?",
+    "courage": "You faced me and did not flinch. That is not victory. But it is... respect.",
+    "cunning": "Your tricks amused me. I will remember you. That is not a blessing.",
+    "devotion": "You gave yourself to something greater. Perhaps that is the only way to survive the dark."
+  }
+}
