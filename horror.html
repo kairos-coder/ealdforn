@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Ealdforn · Childhood Dreamscape Horror</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --void: #060300;
+      --surface: #0e0804;
+      --blood: #8a0a0a;
+      --blood-bright: #c40a0a;
+      --flicker: #e8d8a0;
+      --flicker-dim: #8a7a40;
+      --health-high: #40c8c0;
+      --health-mid: #e8a840;
+      --health-low: #e8602a;
+      --health-dead: #8a0a0a;
+      --text: #f0e0d0;
+      --text-dim: #8a7a6a;
+      --mono: 'Share Tech Mono', monospace;
+    }
+
+    html {
+      font-size: 18px;
+    }
+
+    body {
+      background: var(--void);
+      color: var(--text);
+      font-family: 'Cormorant Garamond', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    @media (max-width: 768px) {
+      html { font-size: 16px; }
+    }
+
+    /* Broadcast Bar */
+    .broadcast-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      background: linear-gradient(90deg, #080402 0%, #0a0a08 100%);
+      border-bottom: 2px solid var(--blood);
+      gap: 1rem;
+    }
+
+    .live-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      color: var(--blood-bright);
+      flex-shrink: 0;
+    }
+
+    .live-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--blood-bright);
+      box-shadow: 0 0 8px var(--blood-bright);
+      animation: livepulse 1.4s ease-in-out infinite;
+    }
+
+    @keyframes livepulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.65); }
+    }
+
+    .bar-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      color: var(--flicker);
+      text-align: center;
+      flex: 1;
+    }
+
+    /* Main Container */
+    .game-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      min-height: calc(100vh - 64px);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    /* Health Bar */
+    .health-container {
+      background: rgba(0,0,0,0.6);
+      border: 1px solid var(--blood);
+      border-radius: 12px;
+      padding: 0.6rem 1rem;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .health-container.visible {
+      opacity: 1;
+    }
+
+    .health-label {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      margin-bottom: 0.3rem;
+    }
+
+    .health-bar-bg {
+      background: rgba(0,0,0,0.5);
+      border-radius: 6px;
+      height: 16px;
+      overflow: hidden;
+    }
+
+    .health-fill {
+      width: 100%;
+      height: 100%;
+      background: var(--health-high);
+      transition: width 0.3s ease, background-color 0.3s;
+      border-radius: 6px;
+    }
+
+    .health-value {
+      font-family: var(--mono);
+      font-size: 0.5rem;
+      color: var(--text-dim);
+      text-align: right;
+      margin-top: 0.2rem;
+    }
+
+    /* Image Anchor */
+    .image-anchor {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid var(--blood);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      background: #000;
+    }
+
+    .image-anchor img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Narration */
+    .narration-box {
+      background: rgba(0,0,0,0.7);
+      border-left: 4px solid var(--blood);
+      padding: 1rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      font-style: italic;
+      color: var(--text);
+    }
+
+    /* Choices */
+    .choices-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .choice-btn {
+      background: rgba(0,0,0,0.6);
+      border: 1px solid var(--blood);
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      color: var(--flicker);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      letter-spacing: 0.03em;
+    }
+
+    .choice-btn:hover {
+      background: rgba(138,10,10,0.2);
+      border-color: var(--blood-bright);
+      transform: translateX(4px);
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 0.8rem;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+
+    .action-btn {
+      background: rgba(0,0,0,0.5);
+      border: 1px solid var(--text-dim);
+      border-radius: 6px;
+      padding: 0.4rem 0.9rem;
+      font-family: var(--mono);
+      font-size: 0.5rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      border-color: var(--blood);
+      color: var(--blood-bright);
+    }
+
+    /* Death Screen */
+    .death-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s;
+      backdrop-filter: blur(4px);
+    }
+
+    .death-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .death-content {
+      text-align: center;
+      max-width: 500px;
+      padding: 2rem;
+      border: 2px solid var(--blood);
+      background: var(--surface);
+      border-radius: 16px;
+    }
+
+    .death-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 2rem;
+      color: var(--blood-bright);
+      margin-bottom: 1rem;
+    }
+
+    .death-text {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .reset-death-btn {
+      background: var(--blood);
+      border: none;
+      padding: 0.6rem 1.2rem;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: white;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      background: rgba(0,0,0,0.9);
+      border: 1px solid var(--blood);
+      color: var(--flicker);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.25s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<div class="broadcast-bar">
+  <div class="live-badge"><div class="live-dot"></div>HORROR</div>
+  <div class="bar-title">CHILDHOOD DREAMSCAPE · THE DESCENT</div>
+  <div class="live-badge">⟡ EALDFORN</div>
+</div>
+
+<div class="game-container" id="gameContainer">
+  <div class="health-container" id="healthContainer">
+    <div class="health-label">⟡ VESSEL INTEGRITY</div>
+    <div class="health-bar-bg"><div class="health-fill" id="healthFill" style="width:100%"></div></div>
+    <div class="health-value" id="healthValue">100 / 100</div>
+  </div>
+
+  <div class="image-anchor" id="imageAnchor">
+    <img id="storyImage" src="" alt="Scene">
+  </div>
+
+  <div class="narration-box" id="narrationText">
+    Loading nightmare...
+  </div>
+
+  <div class="choices-container" id="choicesContainer"></div>
+
+  <div class="action-buttons">
+    <button class="action-btn" id="resetBtn">⟳ RESET STORY</button>
+    <button class="action-btn" id="saveBtn">💾 SAVE PROGRESS</button>
+  </div>
+</div>
+
+<div class="death-overlay" id="deathOverlay">
+  <div class="death-content">
+    <div class="death-title">⟡ THE CAGE ⟡</div>
+    <div class="death-text" id="deathText">You didn't make it. The basement keeps what falls.</div>
+    <button class="reset-death-btn" id="deathResetBtn">BEGIN AGAIN</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+// STORY DATABASE
+// ════════════════════════════════════════════════════════════════
+
+let currentHealth = 100;
+let currentNodeId = "start";
+
+const STORY_NODES = {
+  // IMAGE 1: BASEMENT
+  start: {
+    id: "start",
+    image: "ealdforn/images/horror/basement.jpg",
+    narration: `You wake up. Dizzy. Your head pounds like someone drove a spike behind your eye. The floor is cold concrete against your cheek. You try to move your hands — they're bound behind your back with something that feels like zip ties. The room smells like damp earth and something else. Rust. Or old blood. A single bare bulb swings overhead, casting shadows that move wrong. In the corner: a cage. Empty. The door hangs open. What happened last night?`,
+    healthDelta: 0,
+    choices: [
+      { text: "🧠 Try to remember", nextId: "pool_dreamshaper", healthDelta: 0 },
+      { text: "🚪 Look for a way out", nextId: "stairs_early", healthDelta: 0 },
+      { text: "📞 Call out for help", nextId: "hospital_early", healthDelta: -8 }
+    ]
+  },
+
+  // IMAGE 2: POOL (DREAMSHAPER) - Memory path
+  pool_dreamshaper: {
+    id: "pool_dreamshaper",
+    image: "ealdforn/images/horror/pool-dreamshaper.jpg",
+    narration: `Fragments surface. A party. Someone's basement. Your friends dared you to explore the old house on Maple Street. You laughed. You went inside. The door closed behind you. That's the last thing you remember.
+
+    But there's something else. A pool. You remember water. Blue tiles. The smell of chlorine. You were there before the basement. You were swimming. No — you were drowning. Someone pulled you out. You can't see their face.
+
+    The bulb flickers. The cage creaks. You're not alone down here.`,
+    healthDelta: 0,
+    choices: [
+      { text: "🔍 Check the cage", nextId: "pool_sd", healthDelta: -5 },
+      { text: "🚪 Look for stairs", nextId: "stairs_early", healthDelta: 0 },
+      { text: "📞 Call out again", nextId: "hospital_early", healthDelta: -10 }
+    ]
+  },
+
+  // IMAGE 3: POOL (SD) - The twin
+  pool_sd: {
+    id: "pool_sd",
+    image: "ealdforn/images/horror/pool-sd.jpg",
+    narration: `You approach the cage. The door swings open. Inside: nothing. But the floor is wet. Wet footprints leading out. They're your size. Your shape.
+
+    You look at your feet. They're dry.
+
+    The bulb flickers. For a moment, the cage isn't empty. There's a figure inside. Sitting. Facing away. Shoulder-length dark hair. A white dress. Small. Child-sized.
+
+    Then the light steadies. The figure is gone.
+
+    This is the same pool. But different. Wrong. The water isn't water. It's something else. Something that remembers you.`,
+    healthDelta: -5,
+    choices: [
+      { text: "🏥 Find the hospital", nextId: "hospital", healthDelta: 0 },
+      { text: "⬇️ Go to the stairs", nextId: "stairs_early", healthDelta: -5 },
+      { text: "💧 Touch the water", nextId: "hospital", healthDelta: -15 }
+    ]
+  },
+
+  // IMAGE 4: HOSPITAL (Health bar reveals here)
+  hospital_early: {
+    id: "hospital_early",
+    image: "ealdforn/images/horror/hospital.jpg",
+    narration: `"Hello?" Your voice echoes. No response. Just the hum of fluorescent lights and the distant sound of dripping water.
+
+    You push through a door. The hallway stretches forever. Fluorescent lights flicker. A gurney waits. You look down. There's a bracelet on your wrist. Patient number. Date of birth. Blood type. You don't remember checking in.
+
+    Something is wrong with your body. Something you can't see. But you can feel it draining.`,
+    healthDelta: -5,
+    choices: [
+      { text: "🏥 Go deeper into the hospital", nextId: "hospital", healthDelta: -5 },
+      { text: "⬇️ Find the stairs", nextId: "stairs_early", healthDelta: 0 }
+    ]
+  },
+
+  hospital: {
+    id: "hospital",
+    image: "ealdforn/images/horror/hospital.jpg",
+    narration: `The hospital hallway never ends. Door after door. Room after room. Gurneys with empty restraints. Charts written in a language you almost recognize.
+
+    You pass a room. The light is different. Warmer. You look inside.
+
+    A bed. Your bed. From when you were seven. The night your grandmother died. You remember now. You were there. You saw something leave her body. Something that looked at you before it went.
+
+    A nurse's voice: "Time to go, sweetheart."
+
+    You turn. No one is there.
+
+    Your wrist burns. The bracelet tightens.`,
+    healthDelta: -5,
+    choices: [
+      { text: "⬇️ Find the stairs down", nextId: "stairs", healthDelta: 0 },
+      { text: "📞 Call for anyone", nextId: "playground", healthDelta: -10 },
+      { text: "🏃 Run toward the light", nextId: "icetruck", healthDelta: -5 }
+    ]
+  },
+
+  // IMAGE 5: STAIRS (Early variant - no figure yet)
+  stairs_early: {
+    id: "stairs_early",
+    image: "ealdforn/images/horror/stairs.jpg",
+    narration: `You find a staircase. It goes down. Further than it should. The light from above barely touches the bottom step.
+
+    A cold draft rises from below. It smells like earth. Like the basement you woke up in. Like somewhere you've been before.
+
+    Something whispers. You can't make out the words.`,
+    healthDelta: -3,
+    choices: [
+      { text: "⬇️ Descend the stairs", nextId: "stairs", healthDelta: 0 },
+      { text: "🏥 Go back to the hospital", nextId: "hospital", healthDelta: 0 }
+    ]
+  },
+
+  // IMAGE 5: STAIRS (Full sequence with figure)
+  stairs: {
+    id: "stairs",
+    image: "ealdforn/images/horror/stairs.jpg",
+    narration: `You descend. Step by step. The stairs creak under your weight. The walls feel closer than they should.
+
+    At the bottom, a figure. Small. Sitting with her back to you. Shoulder-length dark hair. A white dress. She doesn't move. She doesn't turn around.
+
+    Your heart pounds. Is she another victim? Someone who got lost down here years ago? A child, alone in the dark?
+
+    "Hello?" you whisper.
+
+    Nothing. No response. Just the silence and the stairs and that small back turned toward you.
+
+    You have to know. You have to see her face.`,
+    healthDelta: -8,
+    choices: [
+      { text: "🚶 Walk closer to the figure", nextId: "izanami_reveal", healthDelta: -5 },
+      { text: "📢 Call out again, louder", nextId: "izanami_reveal", healthDelta: -10 },
+      { text: "🏃 Try to run past her", nextId: "izanami_reveal", healthDelta: -15 }
+    ]
+  },
+
+  // IMAGE 7: IZANAMI REVEAL
+  izanami_reveal: {
+    id: "izanami_reveal",
+    image: "ealdforn/images/horror/izanami.jpg",
+    narration: `You take a step closer. Then another. Your footsteps echo in the dark. The figure still doesn't move.
+
+    You're close enough to touch her now. Close enough to see that her dress isn't white — it's the color of old bone. Her hair isn't dark — it's the color of dried blood.
+
+    You reach out. Your hand trembles. You touch her shoulder —
+
+    She turns.
+
+    It's not a little girl.
+
+    It's not a child at all.
+
+    Her face is ancient. Hollow. Beautiful in the way that a skull is beautiful. Her eyes are empty wells. Her smile has too many teeth.
+
+    "You were expecting someone else," she says. Her voice is dry leaves and funeral bells. "Everyone is."
+
+    She stands. She's not small anymore. She towers over you. Her shadow swallows the stairs.
+
+    "I am Izanami. Goddess of creation and death. I gave birth to fire. Fire killed me. Now I wait for those who wander too deep."
+
+    She tilts her head. Studies you like a thing she might keep.
+
+    "You're not dead yet. But you came down here anyway. That takes courage. Or stupidity."
+
+    She holds out her hand. Her fingers are too long.
+
+    "Shall we see which one it is?"`,
+    healthDelta: -10,
+    choices: [
+      { text: "🤝 Take her hand", nextId: "izanami_bargain", healthDelta: -20 },
+      { text: "🏃 Step back. Run.", nextId: "playground", healthDelta: 10 },
+      { text: "❓ Ask her why she's here", nextId: "izanami_story", healthDelta: 0 }
+    ]
+  },
+
+  izanami_story: {
+    id: "izanami_story",
+    image: "ealdforn/images/horror/izanami.jpg",
+    narration: `"Why?" She laughs. It sounds like breaking glass.
+
+    "I am here because I died giving birth to fire. Your fire. Every spark. Every flame. Every fever that ever burned through a child's body. They all come from me.
+
+    I am here because you've been walking toward me your whole life. Every nightmare. Every dark basement. Every time you woke up and couldn't move — that was me. Practicing."
+
+    She steps closer. Her breath is cold.
+
+    "I am here because you're almost ready to join me."
+
+    Her hand is still extended.`,
+    healthDelta: -5,
+    choices: [
+      { text: "🤝 Take her hand", nextId: "izanami_bargain", healthDelta: -15 },
+      { text: "🏃 Run. Now.", nextId: "playground", healthDelta: 5 }
+    ]
+  },
+
+  izanami_bargain: {
+    id: "izanami_bargain",
+    image: "ealdforn/images/horror/izanami.jpg",
+    narration: `You take her hand. Her fingers are cold. Not cold like ice — cold like absence. Like the space between heartbeats.
+
+    "Good choice," she whispers. "Or bad. It's hard to tell from here."
+
+    She leads you down the stairs. Past the bottom. Past where there should be floor. The stairs continue into darkness.
+
+    "I can let you go back," she says. "But there's a price. You'll forget. You always forget. Or you can stay. Stay with me. It's not so bad, once you get used to the dark."
+
+    She stops. Two doors. One leads up. One leads down.
+
+    "Choose."`,
+    healthDelta: -10,
+    choices: [
+      { text: "🚪 Take the door UP (forget)", nextId: "attic_climb", healthDelta: 15 },
+      { text: "⬇️ Take the door DOWN (stay with her)", nextId: "ending_death_goddess", healthDelta: -30 }
+    ]
+  },
+
+  // IMAGE 6: PLAYGROUND
+  playground: {
+    id: "playground",
+    image: "ealdforn/images/horror/playground.jpg",
+    narration: `You burst through a door. Outside. But wrong outside. The sky is the color of a bruise. No stars. No moon. Just darkness.
+
+    A playground. Abandoned. Swings moving in different directions. No wind. The merry-go-round spins slowly. One seesaw is down. Something heavy is sitting on it. Nothing is there.
+
+    A child's laugh. From the jungle gym. You look. No one.
+
+    The swings stop. All at once.
+
+    A whisper: "Play with us."`,
+    healthDelta: -5,
+    choices: [
+      { text: "🎠 Go to the swings", nextId: "icetruck", healthDelta: -10 },
+      { text: "🧗 Climb the jungle gym", nextId: "attic_climb", healthDelta: 0 },
+      { text: "🏃 Run toward the road", nextId: "icetruck", healthDelta: -5 }
+    ]
+  },
+
+  // IMAGE 8: ICE CREAM TRUCK
+  icetruck: {
+    id: "icetruck",
+    image: "ealdforn/images/horror/icetruck.jpg",
+    narration: `A sound. Music. Distorted. Familiar. An ice cream truck melody played backwards.
+
+    The truck sits in the middle of an empty parking lot. No driver. No children. The windows are dark. But the music plays. The freezer door is open. Cold fog spills out onto the asphalt.
+
+    A voice from the truck: "You're hungry, aren't you? You've been hungry for a long time."
+
+    Your stomach growls. You haven't eaten in... you can't remember.
+
+    "Come closer. It's okay. It's just ice cream."`,
+    healthDelta: -5,
+    choices: [
+      { text: "🍦 Approach the truck", nextId: "ending_lure", healthDelta: -20 },
+      { text: "🎵 Record the music", nextId: "ending_loop", healthDelta: -15 },
+      { text: "🏃 Run toward the attic", nextId: "attic_climb", healthDelta: 10 }
+    ]
+  },
+
+  // IMAGE 9: ATTIC CLIMB
+  attic_climb: {
+    id: "attic_climb",
+    image: "ealdforn/images/horror/attic.jpg",
+    narration: `A ladder. Leading up. The only way out. You climb. Rung by rung. The ladder creaks. Below you, darkness. Above you, a trap door.
+
+    You push it open.
+
+    An attic. Dusty. Old boxes. A single window showing a sky that might be dawn. Or dusk. You can't tell.
+
+    Something moves in the corner. You turn.
+
+    It's you. Sitting in a chair. Younger. Seven years old. Staring at you.
+
+    "You made it," your younger self says. "I was starting to think you wouldn't."
+
+    "What is this place?"
+
+    "The place you forgot. The place you made up so you wouldn't have to remember."
+
+    Younger you stands. Walks toward you.
+
+    "Do you want to remember now? Or do you want to go back and forget again?"`,
+    healthDelta: 0,
+    choices: []
+  }
+};
+
+// Endings (will be dynamically added based on health)
+function resolveEnding() {
+  if (currentHealth <= 0) {
+    showDeath("Your body gives out. The darkness takes you. You wake up in the cage. The door is closed now.");
+    return;
+  }
+  
+  // Health-based endings from attic
+  if (currentHealth > 60) {
+    showEnding("escape", "You climb through the window. Fresh air. Rain on your face. You're in a field. The house is gone. You never speak of this again. But sometimes, late at night, you hear the ice cream truck music. Far away. Getting closer.",
+               "⟡ ESCAPE ⟡");
+  } else if (currentHealth > 30) {
+    showEnding("imposter", "You make it home. Your parents are there. They look right. But the furniture is slightly shifted. They don't notice. You're not sure you're you anymore. Sometimes you catch yourself staring at mirrors, waiting for the reflection to move on its own.",
+               "⟡ THE IMPOSTER ⟡");
+  } else if (currentHealth > 0) {
+    showEnding("cage", "The ladder leads to another basement. The cage is open. It's not empty anymore. It's waiting for you. You step inside. The door closes behind you. The bulb flickers. A small figure sits in the corner. Back turned. White dress.",
+               "⟡ THE CAGE ⟡");
+  }
+}
+
+// Special endings
+function endingDeathGoddess() {
+  showEnding("death_goddess", "You take the door down. Izanami walks beside you. 'It's not so bad,' she says. 'I've been alone for a very long time.' The darkness becomes a garden. Black flowers. A sky with no sun. You sit beside her. 'Tell me about fire,' you say. She smiles. 'It was beautiful. Right up until the end.'",
+             "⟡ THE GATEKEEPER ⟡");
+}
+
+function endingLure() {
+  showEnding("lure", "You take the ice cream. It tastes like childhood. Like summer. Like the last day before everything changed. You keep eating. You can't stop. The truck drives away with you still reaching for the window. The music plays. Forever.",
+             "⟡ THE LURE ⟡");
+}
+
+function endingLoop() {
+  showEnding("loop", "You record the music. It plays on loop. Forever. You're still listening. The song never ends. Neither do you. Somewhere, in another version of this story, you made a different choice. You don't remember that version. You only remember the music.",
+             "⟡ THE LOOP ⟡");
+}
+
+// UI Functions
+function updateHealthUI() {
+  const fill = document.getElementById('healthFill');
+  const value = document.getElementById('healthValue');
+  const percent = (currentHealth / 100) * 100;
+  fill.style.width = `${percent}%`;
+  
+  if (percent > 60) fill.style.backgroundColor = '#40c8c0';
+  else if (percent > 30) fill.style.backgroundColor = '#e8a840';
+  else fill.style.backgroundColor = '#e8602a';
+  
+  value.textContent = `${Math.max(0, currentHealth)} / 100`;
+}
+
+function showHealthBar() {
+  const container = document.getElementById('healthContainer');
+  container.classList.add('visible');
+}
+
+function applyHealthDelta(delta) {
+  currentHealth = Math.max(0, Math.min(100, currentHealth + delta));
+  updateHealthUI();
+  
+  if (currentHealth <= 0) {
+    showDeath("Your body gives out. The darkness takes you. You wake up in the cage. The door is closed now.");
+    return false;
+  }
+  return true;
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+function showDeath(message) {
+  const overlay = document.getElementById('deathOverlay');
+  const deathText = document.getElementById('deathText');
+  deathText.textContent = message;
+  overlay.classList.add('open');
+}
+
+function showEnding(type, message, title) {
+  const overlay = document.getElementById('deathOverlay');
+  const deathText = document.getElementById('deathText');
+  const deathTitle = document.querySelector('#deathOverlay .death-title');
+  deathTitle.textContent = title;
+  deathText.textContent = message;
+  overlay.classList.add('open');
+  
+  // Save ending to localStorage for achievement tracking
+  localStorage.setItem('ealdforn_horror_ending', type);
+}
+
+function renderNode(nodeId) {
+  const node = STORY_NODES[nodeId];
+  if (!node) {
+    resolveEnding();
+    return;
+  }
+  
+  currentNodeId = nodeId;
+  
+  // Update image
+  const img = document.getElementById('storyImage');
+  img.src = node.image;
+  img.alt = "Scene";
+  
+  // Update narration
+  document.getElementById('narrationText').textContent = node.narration;
+  
+  // Apply health delta
+  if (node.healthDelta !== 0) {
+    applyHealthDelta(node.healthDelta);
+  }
+  
+  // Show health bar if we're at or past hospital (and not already visible)
+  if (nodeId === 'hospital' || nodeId === 'hospital_early' || 
+      (currentHealth < 90 && !document.getElementById('healthContainer').classList.contains('visible'))) {
+    showHealthBar();
+  }
+  
+  // Special handling for endings
+  if (nodeId === 'ending_death_goddess') {
+    endingDeathGoddess();
+    return;
+  }
+  if (nodeId === 'ending_lure') {
+    endingLure();
+    return;
+  }
+  if (nodeId === 'ending_loop') {
+    endingLoop();
+    return;
+  }
+  
+  // Render choices
+  const choicesContainer = document.getElementById('choicesContainer');
+  if (node.choices && node.choices.length > 0) {
+    choicesContainer.innerHTML = node.choices.map(choice => `
+      <button class="choice-btn" data-next="${choice.nextId}" data-health="${choice.healthDelta || 0}">
+        ${choice.text}
+      </button>
+    `).join('');
+    
+    // Attach event listeners
+    document.querySelectorAll('.choice-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const nextId = btn.dataset.next;
+        const healthDelta = parseInt(btn.dataset.health) || 0;
+        if (healthDelta !== 0) {
+          if (!applyHealthDelta(healthDelta)) return;
+        }
+        renderNode(nextId);
+      });
+    });
+  } else {
+    // No choices — resolve ending
+    resolveEnding();
+  }
+}
+
+function resetGame() {
+  currentHealth = 100;
+  currentNodeId = 'start';
+  updateHealthUI();
+  document.getElementById('healthContainer').classList.remove('visible');
+  document.getElementById('deathOverlay').classList.remove('open');
+  renderNode('start');
+  showToast('⟡ Story reset. The basement waits.');
+}
+
+function saveGame() {
+  const save = {
+    health: currentHealth,
+    nodeId: currentNodeId,
+    timestamp: Date.now()
+  };
+  localStorage.setItem('ealdforn_horror_save', JSON.stringify(save));
+  showToast('💾 Progress saved');
+}
+
+function loadGame() {
+  const saved = localStorage.getItem('ealdforn_horror_save');
+  if (saved) {
+    try {
+      const save = JSON.parse(saved);
+      currentHealth = save.health;
+      currentNodeId = save.nodeId;
+      updateHealthUI();
+      if (currentHealth < 100) showHealthBar();
+      renderNode(currentNodeId);
+      showToast('⟡ Save loaded');
+    } catch(e) { resetGame(); }
+  } else {
+    showToast('No save found');
+  }
+}
+
+// Event listeners and init
+document.getElementById('resetBtn').addEventListener('click', resetGame);
+document.getElementById('saveBtn').addEventListener('click', saveGame);
+document.getElementById('deathResetBtn').addEventListener('click', resetGame);
+
+// Check for save on load
+const saved = localStorage.getItem('ealdforn_horror_save');
+if (saved) {
+  try {
+    const save = JSON.parse(saved);
+    currentHealth = save.health;
+    currentNodeId = save.nodeId;
+    updateHealthUI();
+    if (currentHealth < 100) showHealthBar();
+    renderNode(currentNodeId);
+  } catch(e) { renderNode('start'); }
+} else {
+  renderNode('start');
+}
+
+console.log('%c💀 CHILDHOOD DREAMSCAPE HORROR', 'color:#c40a0a; font-size:14px');
+console.log('%c   Basement → Pool → Hospital → Stairs → Izanami → Playground → Truck → Attic', 'color:#e8d8a0');
+console.log('%c   Health bar appears at hospital. The stairs figure is not a child.', 'color:#8a0a0a');
+</script>
+</body>
+</html>
