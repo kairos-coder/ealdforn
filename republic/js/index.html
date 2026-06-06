@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ealdforn Republic | Assembly</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <header>
+        <h1>EALDFORN REPUBLIC</h1>
+        <div class="meta-line">
+            <span id="gen-tag">14th Generation</span>
+            <span id="sky-status">· Observing...</span>
+        </div>
+    </header>
+
+    <main class="dashboard">
+        <!-- Assembly Floor: The Mortal Mandates -->
+        <section class="panel assembly-floor">
+            <h2>⬡ Assembly Floor</h2>
+            <div id="mandates-container">
+                <p class="loading">Fetching current mandates from DivineDB...</p>
+            </div>
+        </section>
+
+        <!-- Divine Ledger: The Immutable Memory -->
+        <section class="panel divine-ledger">
+            <h2>⬡ Ledger of Memory-Events</h2>
+            <div id="ledger-feed" class="feed">
+                <div class="loading">Consulting the archives...</div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/gaia.js"></script>
+    <script src="js/assembly.js"></script>
+    <script>
+        // Trigger the Assembly boot sequence
+        document.addEventListener('DOMContentLoaded', () => {
+            Assembly.renderDashboard();
+        });
+    </script>
+</body>
+</html>
