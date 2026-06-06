@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>The Comitia Publia · Ealdforn Republic</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --parchment:    #f4ecd8;
+  --parchment-dark: #e8dcc0;
+  --ink:          #1a1410;
+  --ink-mid:      #3a3028;
+  --ink-dim:      #6a5e50;
+  --ink-faint:    #9a8e80;
+  
+  --gold:         #8a6518;
+  --gold-light:   #b8860b;
+  --gold-dim:     #5a4510;
+  
+  --red:          #8b1a1a;
+  --red-dim:      #5a1010;
+  --green:        #2d5a1e;
+  --green-bg:     rgba(45,90,30,0.04);
+  
+  --void:         #1a1410;
+  --chthonic:     #664488;
+  --border:       #d0c8b0;
+  --border-light: #e0d8c0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--parchment);
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d0c8b0' fill-opacity='0.2'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3Ccircle cx='15' cy='15' r='1.5'/%3E%3Ccircle cx='45' cy='15' r='1.5'/%3E%3Ccircle cx='15' cy='45' r='1.5'/%3E%3Ccircle cx='45' cy='45' r='1.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.site-header {
+  text-align: center;
+  padding: 48px 20px 20px;
+  border-bottom: 2px solid var(--gold);
+  margin-bottom: 0;
+}
+.site-header h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(20px, 4.5vw, 32px);
+  color: var(--ink);
+  letter-spacing: 3px;
+  margin-bottom: 6px;
+}
+.site-header .subtitle {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 4px;
+}
+.site-header .forum-motto {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--ink-mid);
+  margin-top: 8px;
+}
+
+/* ── NAV ── */
+.republic-nav {
+  text-align: center;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 28px;
+}
+.republic-nav a {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  text-decoration: none;
+  padding: 6px 14px;
+  margin: 0 3px;
+  transition: all 0.2s;
+}
+.republic-nav a:hover { color: var(--gold); }
+.republic-nav a.active { color: var(--gold); border-bottom: 1px solid var(--gold); }
+
+/* ── LAYOUT ── */
+.container { max-width: 760px; margin: 0 auto; padding: 0 20px 60px; }
+
+/* ── SESSION BAR ── */
+.session-bar {
+  text-align: center;
+  padding: 12px 20px;
+  margin-bottom: 24px;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+}
+.session-bar.in-session { color: var(--green); border-color: rgba(45,90,30,0.2); background: var(--green-bg); }
+.session-bar.adjourned { color: var(--red-dim); border-color: rgba(139,26,26,0.15); background: rgba(139,26,26,0.02); }
+
+/* ── TRIBUNE PANEL ── */
+.tribune-panel {
+  border: 2px solid var(--red);
+  padding: 24px 20px;
+  margin-bottom: 28px;
+  background: rgba(139,26,26,0.02);
+  text-align: center;
+}
+.tribune-panel .tribune-header {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--red-dim);
+  margin-bottom: 10px;
+}
+.tribune-panel .tribune-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 18px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.tribune-panel .tribune-title {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--ink-dim);
+  margin-bottom: 12px;
+}
+.tribune-panel .tribune-status {
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.6;
+}
+.tribune-panel .veto-count {
+  display: inline-block;
+  padding: 8px 18px;
+  margin-top: 12px;
+  border: 1px solid var(--red-dim);
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--red);
+}
+.tribune-panel .veto-count span {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 20px;
+  display: block;
+}
+
+/* ── SECTION HEADERS ── */
+.section-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 15px;
+  color: var(--ink);
+  text-align: center;
+  letter-spacing: 2px;
+  margin: 36px 0 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── COMPOSITION ── */
+.composition-note {
+  text-align: center;
+  padding: 16px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,0.015);
+  font-size: 13px;
+  color: var(--ink-mid);
+  font-style: italic;
+  line-height: 1.6;
+}
+.composition-note .count {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 28px;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* ── TURN PHASES ── */
+.phase-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.phase-card {
+  border: 1px solid var(--border);
+  padding: 24px 20px;
+  background: rgba(255,255,255,0.25);
+}
+.phase-card .phase-number {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 28px;
+  color: var(--gold-dim);
+  margin-bottom: 6px;
+}
+.phase-card .phase-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 14px;
+  color: var(--ink);
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.phase-card .phase-actor {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 12px;
+}
+.phase-card .phase-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-mid);
+  font-style: italic;
+}
+.phase-card .phase-action {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--border-light);
+  background: rgba(0,0,0,0.015);
+  font-size: 12px;
+  color: var(--ink-dim);
+  line-height: 1.5;
+}
+
+/* ── PROPOSAL LIST ── */
+.proposal-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+}
+.proposal-list li {
+  padding: 16px;
+  border-bottom: 1px solid var(--border-light);
+  border-left: 3px solid transparent;
+}
+.proposal-list li.passed { border-left-color: var(--green); }
+.proposal-list li.failed { border-left-color: var(--red); }
+.proposal-list li.pending { border-left-color: var(--gold); }
+.proposal-list li.vetoed { border-left-color: var(--red); background: rgba(139,26,26,0.015); }
+
+.proposal-list .prop-name {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+.proposal-list .prop-sponsor {
+  font-size: 10px;
+  color: var(--ink-faint);
+  font-style: italic;
+  margin-bottom: 4px;
+}
+.proposal-list .prop-desc {
+  font-size: 12px;
+  color: var(--ink-mid);
+  line-height: 1.5;
+}
+.proposal-list .prop-status {
+  font-size: 9px;
+  margin-top: 6px;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.proposal-list .prop-status.passed-status { color: var(--green); }
+.proposal-list .prop-status.failed-status { color: var(--red); }
+.proposal-list .prop-status.pending-status { color: var(--gold-dim); }
+.proposal-list .prop-status.vetoed-status { color: var(--red); }
+
+/* ── VETO LOG ── */
+.veto-log {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+}
+.veto-log li {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 12px;
+}
+.veto-log .veto-date {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: var(--ink-dim);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.veto-log .veto-measure {
+  color: var(--ink-mid);
+  font-style: italic;
+}
+.veto-log .veto-result {
+  font-size: 9px;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 1px;
+}
+.veto-log .veto-sustained { color: var(--red); }
+.veto-log .veto-overruled { color: var(--green); }
+
+/* ── ELIGIBILITY ── */
+.eligibility-note {
+  padding: 16px 20px;
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,0.015);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-mid);
+  line-height: 1.6;
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* ── FOOTER ── */
+.site-footer {
+  text-align: center;
+  padding: 28px 20px;
+  border-top: 2px solid var(--gold);
+  margin-top: 36px;
+  font-family: 'Cinzel', serif;
+  font-size: 7px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.site-footer span {
+  display: block;
+  margin-top: 4px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px;
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 1px;
+  color: var(--ink-faint);
+}
+
+@media (max-width: 600px) {
+  .republic-nav a { padding: 4px 8px; margin: 0 2px; font-size: 7px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="subtitle">The</div>
+  <h1>Comitia Publia</h1>
+  <div class="forum-motto">"Three hundred voices. One Tribune. The people speak first."</div>
+</header>
+
+<nav class="republic-nav">
+  <a href="index.html">Charter</a>
+  <a href="courts.html">Libraen Court</a>
+  <a href="senate.html">Senatus</a>
+  <a href="comitia.html" class="active">Comitia</a>
+  <a href="oracle.html">Oracle</a>
+  <a href="archives.html">Archives</a>
+</nav>
+
+<div class="container">
+
+  <!-- SESSION STATUS -->
+  <div class="session-bar in-session">
+    Assembly in Session · 287 of 300 Members Present · Next Sortition: December 21 (Winter Solstice)
+  </div>
+
+  <!-- COMPOSITION -->
+  <div class="composition-note">
+    <span class="count">300</span>
+    Citizens chosen annually by lot from the census rolls. Any citizen who has completed their Sky-Vigil is eligible. Refusing service is permitted — but the refuser's name is recorded in the Charon Archive. This is not a crime. It is remembered.
+  </div>
+
+  <!-- THE TRIBUNE -->
+  <div class="section-title">The Tribunus Plebis</div>
+
+  <div class="tribune-panel">
+    <div class="tribune-header">Current Tribune of the People</div>
+    <div class="tribune-name">The Harvester</div>
+    <div class="tribune-title">Former Shrine-Keeper of Virgo · Elected by the Assembly · Three Months Remaining</div>
+    <div class="tribune-status">
+      The Tribune holds <strong>veto power</strong> over any proposal in the Comitia and any ratification in the Senate. A single word — <em>Veto</em> — suspends the measure. The Tribune cannot veto a Dissolution ruling by the Quaestor Maximus. The Tribune cannot veto a Telos ratification. The Tribune cannot veto more than three times in a single session.
+    </div>
+    <div class="veto-count">
+      <span>2</span>
+      Vetos Invoked This Term
+    </div>
+    <div style="font-size:11px;color:var(--ink-faint);margin-top:6px;font-style:italic;">
+      Fourteen threats. The Senate does not know which threat is real. That is the point.
+    </div>
+  </div>
+
+  <!-- THE TURN SYSTEM -->
+  <div class="section-title">The Legislative Turn</div>
+
+  <div class="phase-grid">
+
+    <div class="phase-card">
+      <div class="phase-number">I</div>
+      <div class="phase-title">The Oracle Speaks</div>
+      <div class="phase-actor">Augur Maximus · Threshold Observatory</div>
+      <div class="phase-desc">
+        The Ephemeris Publica is published at dawn. The sky-state is recorded. Upcoming transits are forecast. The Calculatorium provides the data. This phase is automatic — the Oracle does not propose, only informs.
+      </div>
+      <div class="phase-action">
+        <strong>Current Sky-State:</strong> 7-5 Underworld · Cancer Stellium (3) · Aquarius Contested · Apollo approaches Leo boundary (~ June 21). Dark Moon advisory in effect through ~ June 15.
+      </div>
+    </div>
+
+    <div class="phase-card">
+      <div class="phase-number">II</div>
+      <div class="phase-title">The Comitia Proposes</div>
+      <div class="phase-actor">300 Citizens · Forum of Caepton</div>
+      <div class="phase-desc">
+        Any member of the Assembly may rise and propose a measure. The measure is debated. A vote is taken by raised hands — counted by the Censor's clerks. If it passes by simple majority (151 of 300), it becomes a <strong>Plebiscitum</strong> — a decree of the people — and moves to the Senate.
+      </div>
+      <div class="phase-action">
+        <strong>Tribune's Veto Available:</strong> The Harvester may veto any proposal before the vote concludes. Vetos used this session: 0 of 3.
+      </div>
+    </div>
+
+    <div class="phase-card">
+      <div class="phase-number">III</div>
+      <div class="phase-title">The Senate Ratifies or Rejects</div>
+      <div class="phase-actor">12 Senators · Senate Chamber · Meridian</div>
+      <div class="phase-desc">
+        The Senatus Ealdfornicus receives the Plebiscitum. The twelve families debate. A vote is taken. If it passes by simple majority (7 of 12), the measure becomes law. If it fails, the measure is dead — though the Comitia may revise and resubmit. If the Senate ties 6-6, the Aquarian Senator casts the tiebreaker.
+      </div>
+      <div class="phase-action">
+        <strong>Current Senate Status:</strong> Deadlocked. The Aquarian tiebreaker has refused to break three successive ties. Measures stalled: Leo shrine funding, Aquarius reinforcement, State of Celestial Emergency.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CURRENT PROPOSALS -->
+  <div class="section-title">Current Session — Proposed Measures</div>
+
+  <ul class="proposal-list">
+    <li class="pending">
+      <div class="prop-name">PLEBISCITUM I · LEO SHRINE FUNDING</div>
+      <div class="prop-sponsor">Proposed by: Citizen Marcus Granarius (Aedile Maximus, speaking as citizen)</div>
+      <div class="prop-desc">
+        Allocate 500 gold-weight of tokens from the Public Treasury to the Leo shrines for solstice offerings. Double the light-token allowance. Authorize the Aedile to open the granaries for the solstice feast regardless of Apollo's decision.
+      </div>
+      <div class="prop-status pending-status">Pending Senate Ratification · Vote: 217–80 · Tribune did not veto</div>
+    </li>
+    <li class="pending">
+      <div class="prop-name">PLEBISCITUM II · AQUARIUS REINFORCEMENT</div>
+      <div class="prop-sponsor">Proposed by: Citizen Mars Aretias (Senator for Aries, speaking as citizen)</div>
+      <div class="prop-desc">
+        Deploy the Libraen Guard to the Aquarius contested zone. Authorize the War Council to fortify the threshold. Increase the Augur's observation budget by 200 tokens per month for the duration of the Aquarius contest.
+      </div>
+      <div class="prop-status pending-status">Pending Senate Ratification · Vote: 164–133 · Tribune did not veto</div>
+    </li>
+    <li class="vetoed">
+      <div class="prop-name">PLEBISCITUM III · DARK MOON ADJOURNMENT</div>
+      <div class="prop-sponsor">Proposed by: Citizen Lucius Memor (Censor Maximus, speaking as citizen)</div>
+      <div class="prop-desc">
+        Adjourn all Senate sessions during the dark moon period (~ June 12–17). Relocate the Transcription Halls to the Stone Vaults for the duration. Cancel all public gatherings.
+      </div>
+      <div class="prop-status vetoed-status">VETOED · The Harvester: "The Republic does not hide from the dark. We work through it."</div>
+    </li>
+    <li class="failed">
+      <div class="prop-name">PLEBISCITUM IV · TOKEN EXCHANGE REGULATION</div>
+      <div class="prop-sponsor">Proposed by: Citizen Marina Piscari (Senator for Pisces, speaking as citizen)</div>
+      <div class="prop-desc">
+        Cap light-token prices at 3 silver per token during solstice season. Penalize hoarding. Require Exchange merchants to publish their holdings.
+      </div>
+      <div class="prop-status failed-status">Failed in Comitia · Vote: 112–181</div>
+    </li>
+  </ul>
+
+  <!-- VETO LOG -->
+  <div class="section-title">Tribunician Veto Log — Current Term</div>
+
+  <ul class="veto-log">
+    <li>
+      <span class="veto-date">May 3</span>
+      <span class="veto-measure">War Budget Extension — would have diverted shrine funds to Glimthaven fortifications.</span>
+      <span class="veto-result veto-sustained">Veto Sustained by Comitia (211–86)</span>
+    </li>
+    <li>
+      <span class="veto-date">May 28</span>
+      <span class="veto-measure">Dark Moon Adjournment — would have suspended Senate sessions during the dark moon.</span>
+      <span class="veto-result veto-sustained">Veto Sustained by Comitia (198–99)</span>
+    </li>
+  </ul>
+
+  <!-- ELIGIBILITY -->
+  <div class="section-title">Eligibility & Sortition</div>
+
+  <div class="eligibility-note">
+    <p>
+      <strong>The Sky-Vigil.</strong> Every citizen who wishes to stand for the Comitia must complete one year of nightly sky observation — recording planetary positions, moon phases, and any omens witnessed. The completed vigil is submitted to the Abbey for the Censor's review. Upon acceptance, the citizen's name is entered into the census rolls.
+    </p>
+    <p style="margin-top:10px;">
+      <strong>The Sortition.</strong> On the winter solstice of each year, 300 names are drawn publicly in the Forum of Caepton under the light of the full or waxing moon. The draw is conducted by the Censor Maximus and witnessed by the Tribune of the People. No citizen may serve consecutive terms. No Senator or Justice may serve in the Comitia while holding office — though former officeholders are eligible.
+    </p>
+    <p style="margin-top:10px;">
+      <strong>Refusal.</strong> A citizen whose name is drawn may refuse service. The refusal is recorded in the Charon Archive as "one who turned away from the Republic's call." This is not a crime. It is not a punishment. It is simply <em>remembered</em>.
+    </p>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="section-title">About the Comitia Publia</div>
+  <div style="max-width:600px;margin:0 auto;font-size:14px;line-height:1.7;color:var(--ink-mid);font-style:italic;text-align:center;">
+    <p>
+      The Comitia Publia is the voice of the people. It is the only body that can initiate legislation, levy taxes, and declare emergencies. The Senate may refuse. The Court may review. The Tribune may veto. But the Comitia speaks first.
+    </p>
+    <p style="margin-top:12px;">
+      The Assembly meets in the Forum of Caepton, in the open air, under the sky. No session may be held indoors. No session may be held under a solar eclipse. The people must be able to see the heavens they are governed by.
+    </p>
+    <p style="margin-top:12px;font-size:11px;color:var(--ink-faint);">
+      "Three hundred voices. One Tribune. The people speak first."
+    </p>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  The Comitia Publia · Forum · Caepton
+  <span>"Three hundred voices. One Tribune. The people speak first."</span>
+</footer>
+
+</body>
+</html>
