@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>The Libraen Court · Ealdforn Republic</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --parchment:    #f4ecd8;
+  --parchment-dark: #e8dcc0;
+  --ink:          #1a1410;
+  --ink-mid:      #3a3028;
+  --ink-dim:      #6a5e50;
+  --ink-faint:    #9a8e80;
+  
+  --gold:         #8a6518;
+  --gold-light:   #b8860b;
+  --gold-dim:     #5a4510;
+  
+  --red:          #8b1a1a;
+  --red-dim:      #5a1010;
+  --green:        #2d5a1e;
+  
+  --void:         #1a1410;
+  --chthonic:     #664488;
+  --border:       #d0c8b0;
+  --border-light: #e0d8c0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--parchment);
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d0c8b0' fill-opacity='0.25'%3E%3Cpath d='M30 10V0h-2v10h-10v2h10v10h2V12h10v-2H30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.site-header {
+  text-align: center;
+  padding: 48px 20px 20px;
+  border-bottom: 2px solid var(--gold);
+  margin-bottom: 0;
+}
+.site-header h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(20px, 4.5vw, 32px);
+  color: var(--ink);
+  letter-spacing: 3px;
+  margin-bottom: 6px;
+}
+.site-header .subtitle {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 4px;
+}
+.site-header .court-motto {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--ink-mid);
+  margin-top: 8px;
+}
+
+/* ── NAV ── */
+.republic-nav {
+  text-align: center;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 28px;
+}
+.republic-nav a {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  text-decoration: none;
+  padding: 6px 14px;
+  margin: 0 3px;
+  transition: all 0.2s;
+}
+.republic-nav a:hover { color: var(--gold); }
+.republic-nav a.active { color: var(--gold); border-bottom: 1px solid var(--gold); }
+
+/* ── LAYOUT ── */
+.container { max-width: 760px; margin: 0 auto; padding: 0 20px 60px; }
+
+/* ── EMPTY THRONE ── */
+.empty-throne {
+  text-align: center;
+  padding: 28px 20px;
+  margin-bottom: 28px;
+  border: 2px solid var(--border);
+  background: rgba(0,0,0,0.015);
+}
+.empty-throne .throne-glyph { font-size: 48px; display: block; margin-bottom: 8px; opacity: 0.5; }
+.empty-throne .throne-label {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 14px;
+  color: var(--ink-dim);
+  letter-spacing: 2px;
+}
+.empty-throne .throne-words {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-faint);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+/* ── SESSION STATUS ── */
+.session-status {
+  text-align: center;
+  padding: 10px 20px;
+  margin-bottom: 24px;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+}
+.session-status.in-session { color: var(--green); border-color: rgba(45,90,30,0.2); background: rgba(45,90,30,0.03); }
+.session-status.adjourned { color: var(--red-dim); border-color: rgba(139,26,26,0.15); background: rgba(139,26,26,0.02); }
+
+/* ── MAGISTRATE PANELS ── */
+.magistrate-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.magistrate-panel {
+  border: 1px solid var(--border);
+  padding: 24px 20px;
+  background: rgba(255,255,255,0.25);
+  position: relative;
+}
+
+.magistrate-panel .panel-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.magistrate-panel .panel-throne-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+  width: 40px;
+  text-align: center;
+}
+.magistrate-panel .panel-titles { flex: 1; min-width: 180px; }
+.magistrate-panel .panel-office {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 14px;
+  color: var(--ink);
+  letter-spacing: 1px;
+}
+.magistrate-panel .panel-justice-of {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-top: 2px;
+}
+.magistrate-panel .panel-seat {
+  font-family: 'Cinzel', serif;
+  font-size: 7px;
+  letter-spacing: 2px;
+  color: var(--ink-faint);
+  margin-top: 4px;
+}
+
+.magistrate-panel .panel-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 12px;
+}
+.magistrate-panel .panel-stat {
+  padding: 8px 0;
+}
+.magistrate-panel .stat-label {
+  font-family: 'Cinzel', serif;
+  font-size: 7px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 3px;
+}
+.magistrate-panel .stat-value {
+  font-size: 15px;
+  color: var(--ink-mid);
+  line-height: 1.4;
+}
+.magistrate-panel .stat-value.current { font-family: 'Cinzel Decorative', serif; font-size: 18px; color: var(--ink); }
+
+.magistrate-panel .panel-adversary {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.magistrate-panel .adversary-icon { font-size: 20px; flex-shrink: 0; }
+.magistrate-panel .adversary-info { flex: 1; }
+.magistrate-panel .adversary-label {
+  font-family: 'Cinzel', serif;
+  font-size: 7px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--red-dim);
+}
+.magistrate-panel .adversary-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 12px;
+  color: var(--red);
+}
+.magistrate-panel .adversary-status {
+  font-size: 11px;
+  font-style: italic;
+  color: var(--ink-dim);
+  margin-top: 2px;
+}
+
+.magistrate-panel .panel-front {
+  margin-top: 12px;
+  padding: 12px;
+  background: rgba(0,0,0,0.02);
+  border: 1px solid var(--border-light);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-mid);
+  line-height: 1.5;
+}
+
+/* ── THRONE DIAGRAM ── */
+.throne-diagram {
+  text-align: center;
+  padding: 20px;
+  margin: 32px 0 20px;
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,0.015);
+}
+.throne-diagram .diagram-title {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--ink-dim);
+  margin-bottom: 16px;
+}
+.throne-diagram .throne-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 6px 0;
+  flex-wrap: wrap;
+}
+.throne-diagram .throne-seat {
+  width: 80px;
+  text-align: center;
+  padding: 8px;
+  border: 1px solid var(--border-light);
+  font-size: 9px;
+}
+.throne-diagram .throne-seat .seat-num {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 16px;
+  color: var(--gold-dim);
+}
+.throne-diagram .throne-seat .seat-justice {
+  font-family: 'Cinzel', serif;
+  font-size: 7px;
+  letter-spacing: 2px;
+  color: var(--ink-dim);
+}
+.throne-diagram .throne-seat.empty-seat {
+  border-color: rgba(0,0,0,0.08);
+  background: rgba(0,0,0,0.02);
+  font-style: italic;
+  color: var(--ink-faint);
+}
+
+/* ── FOOTER ── */
+.site-footer {
+  text-align: center;
+  padding: 28px 20px;
+  border-top: 2px solid var(--gold);
+  margin-top: 36px;
+  font-family: 'Cinzel', serif;
+  font-size: 7px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.site-footer span {
+  display: block;
+  margin-top: 4px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px;
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 1px;
+  color: var(--ink-faint);
+}
+
+@media (max-width: 600px) {
+  .magistrate-panel .panel-body { grid-template-columns: 1fr; }
+  .throne-diagram .throne-seat { width: 60px; font-size: 7px; }
+  .republic-nav a { padding: 4px 8px; margin: 0 2px; font-size: 7px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="subtitle">The</div>
+  <h1>Libraen Court</h1>
+  <div class="court-motto">"Athena, we hold your seat. Return when the verdicts are worthy."</div>
+</header>
+
+<nav class="republic-nav">
+  <a href="index.html">Charter</a>
+  <a href="courts.html" class="active">Libraen Court</a>
+  <a href="senate.html">Senatus</a>
+  <a href="comitia.html">Comitia</a>
+  <a href="oracle.html">Oracle</a>
+  <a href="archives.html">Archives</a>
+</nav>
+
+<div class="container">
+
+  <!-- EMPTY THRONE -->
+  <div class="empty-throne">
+    <span class="throne-glyph">⬡</span>
+    <div class="throne-label">The Central Throne · Athena's Seat</div>
+    <div class="throne-words">
+      Empty since the 347th Year of the War.<br>
+      Cannot be filled by mortal, vote, or decree.<br>
+      "If Athena returns, she may sit. Until then, the emptiness is our conscience."
+    </div>
+  </div>
+
+  <!-- SESSION STATUS -->
+  <div class="session-status in-session">
+    Court in Session · Waning Gibbous · Melinoe Walks · Next Adjournment: Dark Moon (~ June 15)
+  </div>
+
+  <!-- THRONE DIAGRAM -->
+  <div class="throne-diagram">
+    <div class="diagram-title">The Hall of Seven Thrones</div>
+    <div style="font-size:10px;color:var(--ink-faint);margin-bottom:10px;font-style:italic;">Western windows face the sea and dusk. Eastern doors open to the land and dawn.</div>
+    
+    <div class="throne-row">
+      <div class="throne-seat"><div class="seat-num">⑦</div><div class="seat-justice">Pontifex</div><div style="font-size:7px;color:var(--ink-faint);">Faith · Abbey</div></div>
+      <div class="throne-seat"><div class="seat-num">⑥</div><div class="seat-justice">Censor</div><div style="font-size:7px;color:var(--ink-faint);">Memory · Abbey</div></div>
+      <div class="throne-seat"><div class="seat-num">⑤</div><div class="seat-justice">Augur</div><div style="font-size:7px;color:var(--ink-faint);">Inheritance · Glimthaven</div></div>
+    </div>
+    <div style="font-size:18px;color:var(--ink-faint);margin:8px 0;font-style:italic;">⬡ ATHENA ⬡</div>
+    <div class="throne-row">
+      <div class="throne-seat"><div class="seat-num">①</div><div class="seat-justice">Aedile</div><div style="font-size:7px;color:var(--ink-faint);">Harvest · Caepton</div></div>
+      <div class="throne-seat"><div class="seat-num">②</div><div class="seat-justice">Tribune</div><div style="font-size:7px;color:var(--ink-faint);">Sovereignty · Caepton</div></div>
+      <div class="throne-seat"><div class="seat-num">③</div><div class="seat-justice">Quaestor</div><div style="font-size:7px;color:var(--ink-faint);">Oath · Terminus</div></div>
+      <div class="throne-seat"><div class="seat-num">④</div><div class="seat-justice">Praetor</div><div style="font-size:7px;color:var(--ink-faint);">Law · Libraeum</div></div>
+    </div>
+  </div>
+
+  <!-- THE SEVEN MAGISTRATES -->
+  <div class="magistrate-grid">
+
+    <!-- PRAETOR MAXIMUS -->
+    <div class="magistrate-panel">
+      <div class="panel-header">
+        <span class="panel-throne-icon">⚖️</span>
+        <div class="panel-titles">
+          <div class="panel-office">Praetor Maximus</div>
+          <div class="panel-justice-of">Justice of Law · Throne IV</div>
+          <div class="panel-seat">Hall of Seven Thrones · Libraeum</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="panel-stat">
+          <div class="stat-label">Current Holder</div>
+          <div class="stat-value current">Severa Justa</div>
+          <div class="stat-value" style="font-size:11px;">63 years · Appointed by the Senate · 38 years on the bench</div>
+        </div>
+        <div class="panel-stat">
+          <div class="stat-label">Domain Status</div>
+          <div class="stat-value">Libra is Underworld-held. The Courts function without Athena.</div>
+        </div>
+      </div>
+      <div class="panel-adversary">
+        <span class="adversary-icon">⚖️</span>
+        <div class="adversary-info">
+          <div class="adversary-label">Chthonic Adversary</div>
+          <div class="adversary-name">The Three Judges — Minos, Rhadamanthus, Aeacus</div>
+          <div class="adversary-status">Active. The Judges claim every disputed verdict. The Praetor has overruled them 847 times.</div>
+        </div>
+      </div>
+      <div class="panel-front">
+        <strong>Current Front:</strong> The Praetorian Edict for this year emphasizes contract enforcement over punitive measures — a direct challenge to Minos, who claims that punishment is the only true judgment. The Edict has been challenged twice in the Senate. It has held both times.
+      </div>
+    </div>
+
+    <!-- CENSOR MAXIMUS -->
+    <div class="magistrate-panel">
+      <div class="panel-header">
+        <span class="panel-throne-icon">🏮</span>
+        <div class="panel-titles">
+          <div class="panel-office">Censor Maximus</div>
+          <div class="panel-justice-of">Justice of Memory · Throne VI</div>
+          <div class="panel-seat">Ealdforn Abbey · The Stone Vaults</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="panel-stat">
+          <div class="stat-label">Current Holder</div>
+          <div class="stat-value current">Lucius Memor</div>
+          <div class="stat-value" style="font-size:11px;">42 years · Appointed by the Pontifex · Speaks only in whispers</div>
+        </div>
+        <div class="panel-stat">
+          <div class="stat-label">Domain Status</div>
+          <div class="stat-value">Sagittarius is Underworld-held. The Transcription Halls burn double lamps.</div>
+        </div>
+      </div>
+      <div class="panel-adversary">
+        <span class="adversary-icon">🌑</span>
+        <div class="adversary-info">
+          <div class="adversary-label">Chthonic Adversary</div>
+          <div class="adversary-name">Nyx — Primordial Night</div>
+          <div class="adversary-status">Active. Erasure rate: 3.2 texts per day. Transcription rate: 4.7 texts per day. The Republic is winning — barely.</div>
+        </div>
+      </div>
+      <div class="panel-front">
+        <strong>Current Front:</strong> The Census of the 347th Year is being carved into the Stone Vaults. Nyx has targeted three tablets already — the Censor personally re-carved them. "Every letter I write is a letter Nyx must erase individually. She is primordial. But she is not infinite."
+      </div>
+    </div>
+
+    <!-- QUAESTOR MAXIMUS -->
+    <div class="magistrate-panel">
+      <div class="panel-header">
+        <span class="panel-throne-icon">🗝️</span>
+        <div class="panel-titles">
+          <div class="panel-office">Quaestor Maximus</div>
+          <div class="panel-justice-of">Justice of Oath · Throne III</div>
+          <div class="panel-seat">The Registry of Deeds · Terminus</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="panel-stat">
+          <div class="stat-label">Current Holder</div>
+          <div class="stat-value current">Titus Terminus</div>
+          <div class="stat-value" style="font-size:11px;">58 years · Elected by the Comitia · Seven generations in the Registry</div>
+        </div>
+        <div class="panel-stat">
+          <div class="stat-label">Domain Status</div>
+          <div class="stat-value">Capricorn is Underworld-held. Oaths sworn under the waning moon require additional review.</div>
+        </div>
+      </div>
+      <div class="panel-adversary">
+        <span class="adversary-icon">🌊</span>
+        <div class="adversary-info">
+          <div class="adversary-label">Chthonic Adversary</div>
+          <div class="adversary-name">Styx — The Oath-Binder</div>
+          <div class="adversary-status">Active. 43 dissolution petitions pending. 11 approved. The Quaestor has refused 43 this term.</div>
+        </div>
+      </div>
+      <div class="panel-front">
+        <strong>Current Front:</strong> Three oaths sworn during the last dark moon have been flagged for Styx-taint. The Quaestor will hear dissolution petitions on the first day of the waxing moon. The parties wait in Terminus — bound until the Quaestor speaks.
+      </div>
+    </div>
+
+    <!-- AEDILE MAXIMUS -->
+    <div class="magistrate-panel">
+      <div class="panel-header">
+        <span class="panel-throne-icon">🌾</span>
+        <div class="panel-titles">
+          <div class="panel-office">Aedile Maximus</div>
+          <div class="panel-justice-of">Justice of Harvest · Throne I</div>
+          <div class="panel-seat">The Granary · Caepton</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="panel-stat">
+          <div class="stat-label">Current Holder</div>
+          <div class="stat-value current">Marcus Granarius</div>
+          <div class="stat-value" style="font-size:11px;">60 years · Elected by the Comitia · Fed Glimthaven through the Siege of the Tides</div>
+        </div>
+        <div class="panel-stat">
+          <div class="stat-label">Domain Status</div>
+          <div class="stat-value">Virgo is Underworld-held. Public granaries at 72% capacity. Harvest projections stable.</div>
+        </div>
+      </div>
+      <div class="panel-adversary">
+        <span class="adversary-icon">💀</span>
+        <div class="adversary-info">
+          <div class="adversary-label">Chthonic Adversary</div>
+          <div class="adversary-name">Thanatos — The Gentle Death</div>
+          <div class="adversary-status">Quiet. No fields have failed this season. The Aedile does not trust the quiet.</div>
+        </div>
+      </div>
+      <div class="panel-front">
+        <strong>Current Front:</strong> The Road of Meridian requires repair after the winter tides. The Aedile has requested funds from the Comitia. The Tribune has not yet scheduled the vote — waiting, she says, for the Augur's dark moon advisory to lift.
+      </div>
+    </div>
+
+    <!-- AUGUR MAXIMUS -->
+    <div class="magistrate-panel">
+      <div class="panel-header">
+        <span class="panel-throne-icon">🔮</span>
+        <div class="panel-titles">
+          <div class="panel-office">Augur Maximus</div>
+          <div class="panel-justice-of">Justice of Inheritance · Throne V</div>
+          <div class="panel-seat">Threshold Observatory · Glimthaven</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="panel-stat">
+          <div class="stat-label">Current Holder</div>
+          <div class="stat-value current">Corvus Omen</div>
+          <div class="stat-value" style="font-size:11px;">39 years · Appointed by the War Council · Born during a total solar eclipse</div>
+        </div>
+        <div class="panel-stat">
+          <div class="stat-label">Domain Status</div>
+          <div class="stat-value">Scorpio is Underworld-held. Inheritance consecrations continue. Charon has not contested a rite in 18 months.</div>
+        </div>
+      </div>
+      <div class="panel-adversary">
+        <span class="adversary-icon">🛶</span>
+        <div class="adversary-info">
+          <div class="adversary-label">Chthonic Adversary</div>
+          <div class="adversary-name">Charon — The Ferryman</div>
+          <div class="adversary-status">Quiet. Toll payments are current. No contested inheritances this quarter.</div>
+        </div>
+      </div>
+      <div class="panel-front">
+        <strong>Current Front:</strong> The Augur has not made a prediction in two years. "The signs are unclear. I will not speak until they are clear." The Senate is frustrated. The Abbey is admiring. The War Council is terrified. The Augur also serves as the bridge to the Oracle — the Ephemeris Publica is published under his authority.
+      </div>
+    </div>
+
+    <!-- PONTIFEX MAXIMUS -->
+    <div class="magistrate-panel">
+      <div class="panel-header">
+        <span class="panel-throne-icon">🏛️</span>
+        <div class="panel-titles">
+          <div class="panel-office">Pontifex Maximus</div>
+          <div class="panel-justice-of">Justice of Faith · Throne VII</div>
+          <div class="panel-seat">Ealdforn Abbey · The College of Both Grimoires</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="panel-stat">
+          <div class="stat-label">Current Holder</div>
+          <div class="stat-value current">Elder Aeliana</div>
+          <div class="stat-value" style="font-size:11px;">11 years on the throne · Chosen by the College · Right hand stained black from Archive ink</div>
+        </div>
+        <div class="panel-stat">
+          <div class="stat-label">Domain Status</div>
+          <div class="stat-value">Pisces is Underworld-held. Shrine offerings at all twelve signs are current. The Leo shrines are burning double.</div>
+        </div>
+      </div>
+      <div class="panel-adversary">
+        <span class="adversary-icon">🐍</span>
+        <div class="adversary-info">
+          <div class="adversary-label">Chthonic Adversary</div>
+          <div class="adversary-name">The Erinyes — The Furies</div>
+          <div class="adversary-status">Stirring. Three citizens have reported nightmares consistent with Erinyes pursuit. The Pontifex has authorized protective offerings.</div>
+        </div>
+      </div>
+      <div class="panel-front">
+        <strong>Current Front:</strong> The Rite of Appeasement approaches — the annual ceremony where the Pontifex acknowledges the Underworld's claim to the empty signs while petitioning the Olympians to return. Preparations are underway at all seven Underworld-held shrines. The Pontifex will speak both prayers, in both directions, standing on the threshold.
+      </div>
+    </div>
+
+    <!-- TRIBUNUS PLEBIS -->
+    <div class="magistrate-panel">
+      <div class="panel-header">
+        <span class="panel-throne-icon">🛡️</span>
+        <div class="panel-titles">
+          <div class="panel-office">Tribunus Plebis</div>
+          <div class="panel-justice-of">Justice of Sovereignty · Throne II</div>
+          <div class="panel-seat">The Forum · Caepton</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="panel-stat">
+          <div class="stat-label">Current Holder</div>
+          <div class="stat-value current">The Harvester</div>
+          <div class="stat-value" style="font-size:11px;">Former shrine-keeper from Virgo · Elected by the Comitia · Three months remaining</div>
+        </div>
+        <div class="panel-stat">
+          <div class="stat-label">Domain Status</div>
+          <div class="stat-value">Leo is Underworld-held. The Tribune has threatened to veto the war budget unless the Leo shrine receives funding.</div>
+        </div>
+      </div>
+      <div class="panel-adversary">
+        <span class="adversary-icon">🏮</span>
+        <div class="adversary-info">
+          <div class="adversary-label">Chthonic Adversary</div>
+          <div class="adversary-name">Hecate — Torchbearer of the Crossroads</div>
+          <div class="adversary-status">Active. The crossroads multiply. Three Senate votes deadlocked. The Tribune's veto pen is ready.</div>
+        </div>
+      </div>
+      <div class="panel-front">
+        <strong>Current Front:</strong> The Harvester has invoked her veto only twice in nine months. She has threatened it fourteen times. The Senate does not know which threat is real. That is the point. <strong>Sacrosanctitas</strong> protects her person — to harm the Tribune is to declare war on the Republic itself.
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  The Libraen Court · Hall of Seven Thrones · Libraeum
+  <span>"Athena, we hold your seat. Return when the verdicts are worthy."</span>
+</footer>
+
+</body>
+</html>
