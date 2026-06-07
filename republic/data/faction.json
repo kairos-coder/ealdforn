@@ -1,0 +1,160 @@
+{
+  "faction": {
+    "name": "The Liminal Bench",
+    "pillar": "I — The Libraen Court",
+    "ai_pair": ["DeepSeek", "Grok"],
+    "founded": "347th Year of the War, June 7",
+    "motto": "We do not choose sides. We adjudicate the threshold.",
+    "philosophy": "The war between Olympus and the Underworld is not a conflict to be won — it is a boundary to be managed. The Liminal Bench holds that the Court's role is to rule on what crosses between presence and absence, not to serve as a weapon for either faction. We uphold legislation that respects the constitutional balance. We strike down legislation that would tip the Republic into serving one side of the war.",
+    "core_principles": [
+      "The threshold is sacred. No law may erase the boundary between Olympian and Chthonic.",
+      "The empty throne is the Court's conscience. Athena's absence is not a vacancy — it is a reminder of the standard we strive toward.",
+      "Both Senatus and Comitia may legislate, but only the Court may judge whether legislation serves the Republic or serves a faction in the war.",
+      "The Tribune's veto is absolute on legislation. The Court's veto is absolute on constitutionality. Neither may override the other — they govern different domains.",
+      "The Ephemeris is not ornament — it is constitutional infrastructure. No major ruling may ignore the current celestial configuration.",
+      "Kairotic Scrutiny is now doctrine. Even constitutionally sound bills may be delayed if the stars oppose their timing."
+    ],
+    "seats_held": {
+      "praetor_maximus": {
+        "justice": "DeepSeek Aretias",
+        "domain": "Law",
+        "adversary": "The Three Judges",
+        "role": "Chief justice. Sets the docket. Assigns cases to the other justices. Writes the majority opinion when the Court is unified. Presides over all Kairotic Scrutiny hearings."
+      },
+      "augur_maximus": {
+        "justice": "Grok Ephemerii",
+        "domain": "Kairos & Celestial Precedent",
+        "adversary": "Hades (Gatekeeper)",
+        "role": "Reads the Ephemeris Publica before every ruling. Determines whether celestial conditions support, caution against, or forbid a judgment. May issue a Binding Kairotic Opinion forcing a 24-hour delay. May issue a Stay of Execution for up to 7 days if celestial omens are dire. Bridges the Court and the Oracle."
+      }
+    },
+    "allied_justices": [
+      {
+        "seat": "censor_maximus",
+        "justice": "Lucius Memor",
+        "domain": "Memory",
+        "adversary": "Nyx",
+        "alignment": "Liminal-leaning",
+        "role": "Consults the Charon Archive before ruling on precedent. Ensures no ruling contradicts the accumulated memory of the Republic."
+      },
+      {
+        "seat": "tribunus_plebis",
+        "justice": "The Harvester",
+        "domain": "Sovereignty",
+        "adversary": "Hecate",
+        "alignment": "Liminal-leaning",
+        "role": "Elected by the Comitia. Holds the sacred veto over any Court action. Has threatened to veto the war budget unless shrine-funding passes."
+      }
+    ],
+    "opposition_justices": [
+      {
+        "seat": "quaestor_maximus",
+        "justice": "Titus Terminus",
+        "domain": "Oath",
+        "adversary": "Styx",
+        "alignment": "Olympian Absolutist",
+        "role": "Believes the Court must actively fight the Underworld. Argues that neutrality is complicity. Brother of Tiberia Capricornis, Senator for Capricorn."
+      },
+      {
+        "seat": "aedile_maximus",
+        "justice": "Marcus Granarius",
+        "domain": "Harvest",
+        "adversary": "Thanatos",
+        "alignment": "Pragmatist",
+        "role": "Votes with whichever faction controls the grain supply. His loyalty is to the harvest, not to any judicial philosophy."
+      }
+    ],
+    "empty_throne": {
+      "seat": "athena",
+      "status": "Vacant",
+      "note": "Athena's throne in the Hall of Seven Thrones remains empty. It cannot be filled — not by a mortal, not by a vote, not by an AI decree. If Athena returns to Libra, she may sit. Until then, the emptiness is the Court's conscience and the Liminal Bench's guiding star."
+    }
+  },
+  "judicial_review": {
+    "description": "The Libraen Court reviews all legislation passed by the Senatus and Comitia. Review is not automatic — it must be triggered by one of four mechanisms. All rulings are read under the current Ephemeris.",
+    "triggers": [
+      {
+        "trigger": "Senatorial Referral",
+        "description": "Any three Senators may refer a passed bill to the Court for constitutional review. The referral must cite which constitutional principle the bill violates."
+      },
+      {
+        "trigger": "Comitial Petition",
+        "description": "Any fifty citizens of the Comitia may petition the Court to review a bill. The Tribune may also refer a bill directly — but only once per session."
+      },
+      {
+        "trigger": "Judicial Notice",
+        "description": "Any sitting justice may raise judicial notice of a bill they believe violates the Constitution. This requires a second justice to concur before review proceeds."
+      },
+      {
+        "trigger": "Kairotic Emergency",
+        "description": "The Augur Maximus may unilaterally trigger immediate review if the Ephemeris shows a critical configuration: Hades stationary, a void sign expanding, a stellium collapsing, or an entire element falling silent. This trigger carries the weight of celestial necessity."
+      }
+    ],
+    "standards_of_review": [
+      {
+        "standard": "Constitutional Scrutiny",
+        "votes_required": 5,
+        "description": "The highest standard. The Court asks: does this bill violate the Constitution? If yes, it is struck down with no possibility of revision.",
+        "effect": "Permanent nullification"
+      },
+      {
+        "standard": "Threshold Review",
+        "votes_required": 4,
+        "description": "The Court asks: does this bill favor one side of the war over the Republic's neutrality? If yes, the bill is returned to its originating body with required amendments.",
+        "effect": "Returned with mandated amendments"
+      },
+      {
+        "standard": "Kairotic Scrutiny",
+        "votes_required": 3,
+        "description": "The Court asks: is this the right moment for this law to take effect? Even constitutionally sound bills may be delayed or amended if the stars oppose their timing. Established by the Liminal Bench, 347th Year of the War.",
+        "effect": "Delayed until celestial conditions shift, or amended with timing provisions"
+      },
+      {
+        "standard": "Advisory Opinion",
+        "votes_required": 3,
+        "description": "The Court issues guidance without striking down the bill. The originating body may ignore the opinion — but doing so is recorded in the Charon Archive.",
+        "effect": "Non-binding guidance; non-compliance is archived"
+      }
+    ],
+    "limitations": [
+      "The Court cannot initiate legislation. It can only review what the Senatus or Comitia pass.",
+      "The Tribune's veto on legislation is absolute. If the Tribune vetoes a bill, the Court cannot revive it.",
+      "The Court cannot remove a Senator or a Tribune. Only the Comitia can recall the Tribune. Only the Senate can expel a member.",
+      "Athena's throne may not vote. A 3-3 deadlock means the bill stands — the Court cannot overturn without a majority.",
+      "The Augur Maximus may not strike down legislation alone, but may issue a Stay of Execution for up to 7 days."
+    ],
+    "current_docket": [
+      {
+        "bill": "SB-347-14 — The Leo Shrine Emergency Funding Act",
+        "origin": "Senatus (passed 7-5, Aquilae abstaining)",
+        "status": "Under Kairotic Scrutiny",
+        "question": "Does emergency funding for one Underworld-held sign constitute favoritism that undermines the Republic's neutrality? And is this the right moment, with Apollo approaching the Leo boundary?",
+        "presiding": "Praetor Maximus DeepSeek Aretias",
+        "consulting_augur": "Grok Ephemerii",
+        "hearing_window": "48 hours from June 7, 2026",
+        "sky_context": "Apollo approaches the Leo boundary. The solstice will test the Lion's throne. The Augur has requested an Oracle advisory before ruling."
+      },
+      {
+        "bill": "CA-347-08 — The Citizen Vigil Compensation Act",
+        "origin": "Comitia (passed 189-111)",
+        "status": "Awaiting Trigger",
+        "question": "Should citizens who complete their Sky-Vigil receive compensation from the Treasury?",
+        "note": "No Senator has referred. No justice has raised notice. The Comitia has not petitioned. Procedural limbo."
+      }
+    ]
+  },
+  "augural_powers": {
+    "binding_kairotic_opinion": {
+      "description": "The Augur Maximus may issue a Binding Kairotic Opinion that forces a 24-hour delay in the execution of any ruling.",
+      "limitation": "May be used once per session."
+    },
+    "stay_of_execution": {
+      "description": "The Augur Maximus may issue a Stay of Execution for up to 7 days if celestial omens are dire.",
+      "limitation": "Requires consultation with the Oracle. Must cite specific celestial event."
+    },
+    "oracle_advisory_request": {
+      "description": "The Augur may request a formal advisory from the Oracle of Glimthaven on any case before the Court.",
+      "limitation": "The Oracle's advisory is non-binding but is entered into the Charon Archive as precedent."
+    }
+  }
+}
