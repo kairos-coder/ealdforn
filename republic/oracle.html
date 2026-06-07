@@ -3,37 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>The Oracle of Glimthaven · Ealdforn Republic</title>
+<title>The Oracle of Glimthaven · Ephemeris Publica · Ealdforn Republic</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&display=swap" rel="stylesheet">
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --parchment:    #f4ecd8;
-  --parchment-dark: #e8dcc0;
-  --ink:          #1a1410;
-  --ink-mid:      #3a3028;
-  --ink-dim:      #6a5e50;
-  --ink-faint:    #9a8e80;
-  
-  --gold:         #8a6518;
-  --gold-light:   #b8860b;
-  --gold-dim:     #5a4510;
-  
-  --red:          #8b1a1a;
-  --red-dim:      #5a1010;
-  --green:        #2d5a1e;
-  --green-dim:    #1a3a10;
-  
-  --void:         #1a1410;
+  --parchment:    #F5ECD7;
+  --parchment-deep: #EAD9BE;
+  --vellum:       #FBF5E8;
+  --ink:          #1A1410;
+  --ink-mid:      #3A3028;
+  --ink-dim:      #6A5E50;
+  --ink-faint:    #9A8E80;
+  --gold:         #8A6518;
+  --gold-bright:  #B8860B;
+  --gold-dark:    #5A4510;
+  --gold-border:  rgba(138,101,24,0.22);
+  --rubric:       #8B1A1A;
   --chthonic:     #664488;
-  --border:       #d0c8b0;
-  --border-light: #e0d8c0;
-  
-  --obsidian:     #1a1418;
-  --obsidian-light: #2a2430;
+  --chthonic-light: #9966CC;
+  --chaos:        #FF44FF;
+  --water:        #3878A0;
+  --border-parchment: rgba(164,134,80,0.28);
+  --font-display: 'Cinzel Decorative', serif;
+  --font-label:   'Cinzel', serif;
+  --font-body:    'Cormorant Garamond', Georgia, serif;
 }
 
 html { scroll-behavior: smooth; }
@@ -41,721 +38,581 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--parchment);
   background-image:
-    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d0c8b0' fill-opacity='0.25'%3E%3Ccircle cx='30' cy='30' r='1.5'/%3E%3Ccircle cx='10' cy='10' r='1'/%3E%3Ccircle cx='50' cy='20' r='1'/%3E%3Ccircle cx='20' cy='50' r='1'/%3E%3Ccircle cx='50' cy='50' r='1.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  color: var(--ink);
-  min-height: 100vh;
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(164,134,80,0.008) 2px, rgba(164,134,80,0.008) 4px),
+    radial-gradient(ellipse 100% 100% at 50% 0%, var(--vellum) 0%, var(--parchment) 40%, var(--parchment-deep) 100%);
+  font-family: var(--font-body); color: var(--ink); min-height: 100vh; overflow-x: hidden;
 }
 
-/* ── HEADER ── */
-.site-header {
-  text-align: center;
-  padding: 48px 20px 20px;
-  border-bottom: 2px solid var(--gold);
-  margin-bottom: 0;
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px 200px; opacity: 0.25; mix-blend-mode: multiply;
 }
-.site-header h1 {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: clamp(20px, 4.5vw, 32px);
-  color: var(--ink);
-  letter-spacing: 3px;
-  margin-bottom: 6px;
+
+/* ── CARD MOSAIC ── */
+#cardMosaic {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  display: grid; grid-template-columns: repeat(6, 1fr);
+  opacity: 0.05;
 }
-.site-header .subtitle {
-  font-family: 'Cinzel', serif;
-  font-size: 8px;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  color: var(--ink-dim);
-  margin-bottom: 4px;
+#cardMosaic img {
+  width: 100%; aspect-ratio: 2/3; object-fit: cover;
+  filter: sepia(0.5) brightness(1.05) saturate(0.6);
+  mix-blend-mode: multiply;
 }
-.site-header .observatory {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 15px;
-  font-style: italic;
-  color: var(--ink-mid);
-  margin-top: 8px;
-}
+
+.content-layer { position: relative; z-index: 2; }
 
 /* ── NAV ── */
-.republic-nav {
-  text-align: center;
-  padding: 12px 20px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 28px;
+.nav-oracle {
+  display: flex; justify-content: center; gap: 0; padding: 10px 0;
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(245,236,215,0.94); backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--gold-border);
+  flex-wrap: wrap;
 }
-.republic-nav a {
-  font-family: 'Cinzel', serif;
-  font-size: 8px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--ink-dim);
-  text-decoration: none;
-  padding: 6px 14px;
-  margin: 0 3px;
-  transition: all 0.2s;
+.nav-oracle a {
+  font-family: var(--font-label); font-size: 7px; letter-spacing: 3px;
+  color: var(--ink-faint); text-decoration: none;
+  padding: 5px 10px; border-bottom: 1px solid transparent;
+  transition: all 0.2s; text-transform: uppercase;
 }
-.republic-nav a:hover { color: var(--gold); }
-.republic-nav a.active { color: var(--gold); border-bottom: 1px solid var(--gold); }
+.nav-oracle a:hover { color: var(--gold); border-bottom-color: var(--gold-border); }
+.nav-oracle a.nav-active { color: var(--gold-dark); border-bottom-color: var(--gold); }
 
-/* ── LAYOUT ── */
-.container {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 0 20px 60px;
+/* ── HEADER ── */
+.oracle-header {
+  text-align: center; padding: 40px 20px 20px;
+  border-bottom: 2px solid var(--gold); max-width: 800px; margin: 0 auto;
 }
+.oracle-sigil { font-size: 52px; display: block; margin-bottom: 8px; animation: float 6s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+.oracle-eyebrow {
+  font-family: var(--font-label); font-size: 8px; letter-spacing: 6px;
+  text-transform: uppercase; color: var(--gold); opacity: 0.5; margin-bottom: 8px;
+}
+.oracle-header h1 {
+  font-family: var(--font-display); font-size: clamp(22px, 4vw, 34px);
+  font-weight: 900; color: var(--gold-dark); letter-spacing: 3px;
+}
+.oracle-motto {
+  font-size: 14px; color: var(--ink-dim); font-style: italic; margin-top: 6px;
+}
+
+/* ── CONTAINER ── */
+.container { max-width: 780px; margin: 0 auto; padding: 20px 20px 60px; }
 
 /* ── DATE BANNER ── */
 .date-banner {
-  text-align: center;
-  padding: 10px 20px;
-  margin-bottom: 24px;
-  font-family: 'Cinzel', serif;
-  font-size: 9px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--ink-dim);
-  border: 1px solid var(--border);
-  background: rgba(0,0,0,0.02);
+  text-align: center; padding: 12px; margin: 16px 0;
+  font-family: var(--font-label); font-size: 9px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--gold-dark);
+  border-bottom: 1px solid var(--gold-border);
 }
 
-/* ── SKY-STATE SUMMARY ── */
+/* ── SKY SUMMARY ── */
 .sky-summary {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 28px;
-  text-align: center;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px; margin: 16px 0;
 }
-.sky-summary .summary-card {
-  border: 1px solid var(--border);
-  padding: 16px 12px;
-  background: rgba(255,255,255,0.2);
+.summary-card {
+  text-align: center; padding: 14px; border-radius: 8px;
+  border: 1px solid var(--border-parchment);
+  background: rgba(251,245,232,0.7);
 }
-.summary-card .summary-label {
-  font-family: 'Cinzel', serif;
-  font-size: 7px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--ink-dim);
-  margin-bottom: 6px;
+.summary-card .sum-count {
+  font-family: var(--font-display); font-size: 28px; font-weight: 700;
 }
-.summary-card .summary-value {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 22px;
-  font-weight: 700;
+.sum-count.olympian { color: var(--gold-bright); }
+.sum-count.chthonic { color: var(--chthonic-light); }
+.sum-count.void { color: var(--ink-faint); }
+.sum-count.contested-count { color: var(--rubric); }
+.sum-label {
+  font-family: var(--font-label); font-size: 7px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--ink-dim); margin-top: 4px;
 }
-.summary-card.olympian .summary-value { color: var(--gold); }
-.summary-card.chthonic .summary-value { color: var(--void); }
-.summary-card.contested .summary-value { color: var(--red); }
 
 /* ── SECTION HEADERS ── */
 .section-title {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 15px;
-  color: var(--ink);
-  text-align: center;
-  letter-spacing: 2px;
-  margin: 36px 0 18px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border);
-}
-.section-title .icon {
-  display: block;
-  font-size: 20px;
-  margin-bottom: 4px;
+  font-family: var(--font-display); font-size: 15px; color: var(--gold-dark);
+  text-align: center; letter-spacing: 2px;
+  margin: 28px 0 14px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--gold-border);
 }
 
 /* ── PLANET TABLE ── */
 .planet-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 12px 0;
-  font-size: 12px;
+  width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 12px;
 }
 .planet-table th {
-  font-family: 'Cinzel', serif;
-  font-size: 7px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--ink-dim);
-  text-align: left;
-  padding: 10px 8px;
-  border-bottom: 2px solid var(--border);
+  font-family: var(--font-label); font-size: 7px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--ink-dim);
+  text-align: left; padding: 8px 6px; border-bottom: 2px solid var(--border-parchment);
 }
 .planet-table td {
-  padding: 10px 8px;
-  border-bottom: 1px solid var(--border-light);
-  color: var(--ink-mid);
-  vertical-align: top;
+  padding: 8px 6px; border-bottom: 1px solid var(--border-parchment);
+  color: var(--ink-mid); vertical-align: top;
 }
-.planet-table .planet-glyph {
-  font-size: 18px;
-  text-align: center;
-  width: 40px;
+.planet-table .p-glyph { font-size: 16px; text-align: center; width: 32px; }
+.planet-table .p-name {
+  font-family: var(--font-display); font-size: 11px; color: var(--ink);
 }
-.planet-table .planet-name {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 12px;
-  color: var(--ink);
-}
-.planet-table .planet-god {
-  font-size: 10px;
-  font-style: italic;
-  color: var(--gold-dim);
-}
-.planet-table .planet-sign {
-  font-size: 14px;
-  font-weight: 600;
-}
-.planet-table .planet-degree {
-  font-size: 11px;
-  color: var(--ink-dim);
-}
-.planet-table .planet-sign.olympian { color: var(--gold); }
-.planet-table .planet-sign.underworld { color: var(--void); }
-.planet-table .planet-sign.contested { color: var(--red); }
+.planet-table .p-god { font-size: 10px; color: var(--gold-dark); font-style: italic; }
+.planet-table .p-sign { font-size: 12px; }
+.planet-table .p-degree { font-size: 10px; color: var(--ink-faint); }
+.planet-table .p-status { font-size: 9px; }
+.status-olympian { color: var(--gold); }
+.status-underworld { color: var(--chthonic); }
 
-/* ── TRANSIT LIST ── */
-.transit-list {
-  list-style: none;
-  padding: 0;
-  margin: 12px 0;
+/* ── SIGN GRID ── */
+.sign-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px; margin: 12px 0;
 }
-.transit-list li {
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--border-light);
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
+.sign-card {
+  text-align: center; padding: 12px 8px; border-radius: 8px;
+  border: 1px solid var(--border-parchment);
+  background: rgba(251,245,232,0.6);
+  transition: all 0.25s;
 }
-.transit-list .transit-icon {
-  font-size: 22px;
-  flex-shrink: 0;
-  width: 32px;
-  text-align: center;
+.sign-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+.sign-card.olympian-sign { border-left: 3px solid var(--gold-bright); }
+.sign-card.underworld-sign { border-left: 3px solid var(--chthonic); opacity: 0.75; }
+.sign-card.void-sign { border-left: 3px solid var(--ink-faint); opacity: 0.55; }
+.sign-card.stellium-sign {
+  border-left: 3px solid var(--gold-bright);
+  background: rgba(255,248,220,0.7);
+  box-shadow: 0 0 8px rgba(138,101,24,0.08);
 }
-.transit-list .transit-info { flex: 1; }
-.transit-list .transit-date {
-  font-family: 'Cinzel', serif;
-  font-size: 9px;
-  letter-spacing: 2px;
-  color: var(--ink-dim);
-  margin-bottom: 3px;
+.sign-card.contested-sign { border-left: 3px solid var(--rubric); }
+.sign-card .sg-glyph { font-size: 22px; display: block; margin-bottom: 2px; }
+.sign-card .sg-name {
+  font-family: var(--font-label); font-size: 8px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--ink-dim);
 }
-.transit-list .transit-desc {
-  font-size: 14px;
-  color: var(--ink-mid);
-  line-height: 1.5;
+.sign-card .sg-occupants {
+  font-size: 9px; color: var(--ink-mid); margin-top: 4px; font-style: italic;
+  line-height: 1.4;
 }
-.transit-list .transit-desc strong {
-  color: var(--ink);
-  font-style: normal;
+.sign-card .sg-status {
+  display: inline-block; margin-top: 4px;
+  font-family: var(--font-label); font-size: 6px; letter-spacing: 2px;
+  text-transform: uppercase; padding: 2px 8px; border-radius: 6px;
 }
-.transit-list .transit-impact {
-  font-size: 11px;
-  color: var(--ink-faint);
-  font-style: italic;
-  margin-top: 4px;
-}
-.transit-list .transit-ingress { border-left: 3px solid var(--gold); }
-.transit-list .transit-egress { border-left: 3px solid var(--red); }
-.transit-list .transit-contested { border-left: 3px solid var(--red-dim); }
-.transit-list .transit-neutral { border-left: 3px solid var(--border); }
+.sg-status-olympian { color: var(--gold-dark); border: 1px solid var(--gold-border); background: rgba(138,101,24,0.04); }
+.sg-status-underworld { color: var(--chthonic); border: 1px solid rgba(102,68,136,0.2); background: rgba(102,68,136,0.03); }
+.sg-status-void { color: var(--ink-faint); border: 1px solid rgba(26,20,16,0.08); }
+.sg-status-contested { color: var(--rubric); border: 1px solid rgba(139,26,26,0.15); background: rgba(139,26,26,0.02); }
 
-/* ── MOON WIDGET ── */
-.moon-widget {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 20px;
-  border: 1px solid var(--border);
-  background: rgba(0,0,0,0.02);
-  margin: 12px 0;
-  flex-wrap: wrap;
+/* ── ADVISORY BOX ── */
+.advisory-box {
+  border: 2px solid var(--rubric); border-radius: 8px;
+  padding: 18px; margin: 16px 0;
+  background: rgba(139,26,26,0.03);
 }
-.moon-widget .moon-glyph {
-  font-size: 48px;
-  flex-shrink: 0;
-}
-.moon-widget .moon-info { flex: 1; min-width: 200px; }
-.moon-widget .moon-phase-name {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 14px;
-  color: var(--ink);
-  margin-bottom: 4px;
-}
-.moon-widget .moon-detail {
-  font-size: 13px;
-  color: var(--ink-mid);
-  line-height: 1.6;
-}
-.moon-widget .moon-deity {
-  font-family: 'Cinzel', serif;
-  font-size: 9px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-top: 6px;
-}
-.moon-widget .moon-deity.melinoe { color: var(--chthonic); }
-.moon-widget .moon-deity.artemis { color: var(--gold); }
-
-/* ── ECLIPSE ALERT ── */
-.eclipse-alert {
-  padding: 18px 20px;
-  border: 2px solid var(--red);
-  background: rgba(139,26,26,0.04);
-  margin: 16px 0;
-  text-align: center;
-}
-.eclipse-alert .alert-title {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 13px;
-  color: var(--red);
-  letter-spacing: 2px;
-  margin-bottom: 8px;
-}
-.eclipse-alert .alert-detail {
-  font-size: 13px;
-  color: var(--ink-mid);
-  line-height: 1.6;
-  font-style: italic;
-}
-.eclipse-none {
-  text-align: center;
-  padding: 14px;
-  font-size: 13px;
-  color: var(--green);
-  font-style: italic;
-  border: 1px solid var(--border);
-  background: rgba(45,90,30,0.03);
-}
-
-/* ── AUGUR'S NOTE ── */
-.augur-note {
-  padding: 20px 24px;
-  border: 1px solid var(--gold);
-  background: rgba(138,101,24,0.04);
-  margin: 20px 0;
-  text-align: center;
-}
-.augur-note .note-label {
-  font-family: 'Cinzel', serif;
-  font-size: 7px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--gold-dim);
+.advisory-box h3 {
+  font-family: var(--font-display); font-size: 14px;
+  color: var(--rubric); text-align: center; letter-spacing: 2px;
   margin-bottom: 10px;
 }
-.augur-note .note-text {
-  font-size: 15px;
-  font-style: italic;
-  color: var(--ink-mid);
+.advisory-body {
+  font-size: 13px; color: var(--ink-mid); font-style: italic;
   line-height: 1.7;
 }
-.augur-note .note-signature {
-  font-family: 'Cinzel', serif;
-  font-size: 9px;
-  letter-spacing: 2px;
-  color: var(--gold-dim);
-  margin-top: 10px;
-}
+.advisory-body strong { color: var(--ink); font-style: normal; }
 
-/* ── SIGN STATUS GRID ── */
-.sign-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  margin: 12px 0;
+/* ── EPHEMERIS READING ── */
+.ephemeris-reading {
+  border: 1px solid var(--border-parchment); border-radius: 8px;
+  padding: 20px; margin: 16px 0;
+  background: rgba(251,245,232,0.7);
+  font-size: 14px; line-height: 1.8; color: var(--ink-mid);
+  font-style: italic;
 }
-.sign-cell {
-  text-align: center;
-  padding: 12px 8px;
-  border: 1px solid var(--border);
-  font-size: 11px;
-}
-.sign-cell .cell-glyph { font-size: 20px; display: block; margin-bottom: 4px; }
-.sign-cell .cell-name { font-family: 'Cinzel', serif; font-size: 7px; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-dim); }
-.sign-cell .cell-status { font-size: 9px; margin-top: 4px; font-style: italic; }
-.sign-cell.olympian .cell-glyph { color: var(--gold); }
-.sign-cell.olympian .cell-status { color: var(--gold-dim); }
-.sign-cell.underworld .cell-glyph { color: var(--void); }
-.sign-cell.underworld .cell-status { color: var(--ink-faint); }
-.sign-cell.contested .cell-glyph { color: var(--red); }
-.sign-cell.contested .cell-status { color: var(--red-dim); }
+.ephemeris-reading strong { color: var(--ink); font-style: normal; }
+.ephemeris-reading .highlight { color: var(--gold-dark); }
 
 /* ── FOOTER ── */
 .site-footer {
-  text-align: center;
-  padding: 28px 20px;
-  border-top: 2px solid var(--gold);
-  margin-top: 36px;
-  font-family: 'Cinzel', serif;
-  font-size: 7px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--ink-dim);
+  text-align: center; padding: 32px 20px;
+  border-top: 2px solid var(--gold-border); margin-top: 36px;
+  font-family: var(--font-label); font-size: 7px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--ink-dim); opacity: 0.5;
 }
 .site-footer span {
-  display: block;
-  margin-top: 4px;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 11px;
-  font-style: italic;
-  text-transform: none;
-  letter-spacing: 1px;
-  color: var(--ink-faint);
+  display: block; margin-top: 4px;
+  font-family: var(--font-body); font-size: 11px; font-style: italic;
+  text-transform: none; letter-spacing: 1px;
 }
 
-/* ── RESPONSIVE ── */
 @media (max-width: 600px) {
-  .sky-summary { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
-  .sky-summary .summary-card { padding: 10px 6px; }
-  .summary-card .summary-value { font-size: 18px; }
-  .sign-grid { grid-template-columns: repeat(3, 1fr); }
+  .sky-summary { grid-template-columns: 1fr 1fr; }
+  .sign-grid { grid-template-columns: repeat(2, 1fr); }
   .planet-table { font-size: 10px; }
-  .planet-table .planet-glyph { font-size: 14px; width: 30px; }
-  .republic-nav a { padding: 4px 8px; margin: 0 2px; font-size: 7px; }
-  .moon-widget { gap: 12px; }
-  .moon-widget .moon-glyph { font-size: 36px; }
+  .nav-oracle { overflow-x: auto; justify-content: flex-start; flex-wrap: nowrap; }
 }
 </style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="subtitle">The Oracle of</div>
-  <h1>Glimthaven</h1>
-  <div class="observatory">Threshold Observatory · "The sky does not lie. It moves."</div>
-</header>
+<div id="cardMosaic"></div>
 
-<nav class="republic-nav">
+<div class="content-layer">
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav-oracle">
   <a href="index.html">Charter</a>
-  <a href="courts.html">Libraen Court</a>
+  <a href="courts.html">Court</a>
   <a href="senate.html">Senatus</a>
   <a href="comitia.html">Comitia</a>
-  <a href="oracle.html" class="active">Oracle</a>
+  <a href="oracle.html" class="nav-active">⬡ Oracle</a>
   <a href="archives.html">Archives</a>
 </nav>
+
+<!-- ═══ HEADER ═══ -->
+<header class="oracle-header">
+  <span class="oracle-sigil">⬡</span>
+  <div class="oracle-eyebrow">Foundational Pillar · Predates the Constitution</div>
+  <h1>The Oracle of Glimthaven</h1>
+  <div class="oracle-motto">"The sky does not lie. It moves."</div>
+</header>
 
 <div class="container">
 
   <!-- DATE -->
-  <div class="date-banner">
-    Ephemeris Publica · Friday, June 5, 2026 · Published at Dawn
+  <div class="date-banner" id="currentDate">—</div>
+
+  <!-- SKY SUMMARY -->
+  <div class="sky-summary" id="skySummary"></div>
+
+  <!-- EPHEMERIS READING -->
+  <div class="section-title">The Ephemeris Publica</div>
+  <div class="ephemeris-reading" id="ephemerisReading"></div>
+
+  <!-- ORACLE ADVISORIES -->
+  <div class="section-title">⬡ Oracle Advisories ⬡</div>
+  <div id="advisoriesContainer"></div>
+
+  <!-- PLANETARY POSITIONS -->
+  <div class="section-title">Planetary Positions</div>
+  <div style="overflow-x:auto;">
+    <table class="planet-table">
+      <thead>
+        <tr><th></th><th>Body</th><th>Olympian</th><th>Sign</th><th>Degree</th><th>Status</th></tr>
+      </thead>
+      <tbody id="planetTableBody"></tbody>
+    </table>
   </div>
 
-  <!-- SKY-STATE SUMMARY -->
-  <div class="sky-summary">
-    <div class="summary-card olympian">
-      <div class="summary-label">Olympian Held</div>
-      <div class="summary-value">5</div>
-      <div style="font-size:9px;color:var(--ink-dim);">Aries · Taurus · Gemini · Cancer · Aquarius*</div>
-    </div>
-    <div class="summary-card chthonic">
-      <div class="summary-label">Underworld Held</div>
-      <div class="summary-value">7</div>
-      <div style="font-size:9px;color:var(--ink-dim);">Leo · Virgo · Libra · Scorpio · Sagittarius · Capricorn · Pisces</div>
-    </div>
-    <div class="summary-card contested">
-      <div class="summary-label">Contested</div>
-      <div class="summary-value">1</div>
-      <div style="font-size:9px;color:var(--ink-dim);">Aquarius*</div>
-    </div>
-  </div>
+  <!-- THE TWELVE SIGNS -->
+  <div class="section-title">The Twelve Signs · Current Occupancy</div>
+  <div class="sign-grid" id="signGrid"></div>
 
-  <!-- AUGUR'S NOTE -->
-  <div class="augur-note">
-    <div class="note-label">Augur's Note</div>
-    <div class="note-text">
-      "The Cancer stellium holds — three gods in council. Apollo approaches the Leo boundary. 
-      The solstice will test whether light returns to the Lion's throne or turns away. 
-      The dark moon approaches. Prepare the shrines."
-    </div>
-    <div class="note-signature">— Corvus Omen, Augur Maximus</div>
-  </div>
-
-  <!-- CURRENT PLANETARY POSITIONS -->
-  <div class="section-title">
-    <span class="icon">☉</span>
-    Current Planetary Positions
-  </div>
-
-  <table class="planet-table">
-    <tr>
-      <th></th>
-      <th>Planet</th>
-      <th>God</th>
-      <th>Sign</th>
-      <th>Degree</th>
-      <th>Status</th>
-    </tr>
-    <tr>
-      <td class="planet-glyph">☀️</td>
-      <td class="planet-name">Sun</td>
-      <td class="planet-god">Apollo</td>
-      <td class="planet-sign olympian">Gemini ♊</td>
-      <td class="planet-degree">16°</td>
-      <td style="font-size:10px;color:var(--gold-dim);">Olympian</td>
-    </tr>
-    <tr>
-      <td class="planet-glyph">🌙</td>
-      <td class="planet-name">Moon</td>
-      <td class="planet-god">Artemis / Melinoe</td>
-      <td class="planet-sign contested">Aquarius ♒</td>
-      <td class="planet-degree">20°</td>
-      <td style="font-size:10px;color:var(--red-dim);">Contested</td>
-    </tr>
-    <tr>
-      <td class="planet-glyph">☿</td>
-      <td class="planet-name">Mercury</td>
-      <td class="planet-god">Hermes</td>
-      <td class="planet-sign olympian">Cancer ♋</td>
-      <td class="planet-degree">8°</td>
-      <td style="font-size:10px;color:var(--gold-dim);">Stellium</td>
-    </tr>
-    <tr>
-      <td class="planet-glyph">♀</td>
-      <td class="planet-name">Venus</td>
-      <td class="planet-god">Aphrodite</td>
-      <td class="planet-sign olympian">Cancer ♋</td>
-      <td class="planet-degree">22°</td>
-      <td style="font-size:10px;color:var(--gold-dim);">Stellium</td>
-    </tr>
-    <tr>
-      <td class="planet-glyph">♂</td>
-      <td class="planet-name">Mars</td>
-      <td class="planet-god">Ares</td>
-      <td class="planet-sign olympian">Taurus ♉</td>
-      <td class="planet-degree">14°</td>
-      <td style="font-size:10px;color:var(--gold-dim);">Olympian</td>
-    </tr>
-    <tr>
-      <td class="planet-glyph">♃</td>
-      <td class="planet-name">Jupiter</td>
-      <td class="planet-god">Zeus</td>
-      <td class="planet-sign olympian">Cancer ♋</td>
-      <td class="planet-degree">26°</td>
-      <td style="font-size:10px;color:var(--gold-dim);">Stellium</td>
-    </tr>
-    <tr>
-      <td class="planet-glyph">♄</td>
-      <td class="planet-name">Saturn</td>
-      <td class="planet-god">Hera</td>
-      <td class="planet-sign olympian">Aries ♈</td>
-      <td class="planet-degree">13°</td>
-      <td style="font-size:10px;color:var(--gold-dim);">Olympian</td>
-    </tr>
-    <tr>
-      <td class="planet-glyph">⛢</td>
-      <td class="planet-name">Uranus</td>
-      <td class="planet-god">Hephaestus</td>
-      <td class="planet-sign olympian">Gemini ♊</td>
-      <td class="planet-degree">3°</td>
-      <td style="font-size:10px;color:var(--gold-dim);">Olympian</td>
-    </tr>
-    <tr>
-      <td class="planet-glyph">♆</td>
-      <td class="planet-name">Neptune</td>
-      <td class="planet-god">Poseidon</td>
-      <td class="planet-sign olympian">Aries ♈</td>
-      <td class="planet-degree">5°</td>
-      <td style="font-size:10px;color:var(--gold-dim);">Olympian</td>
-    </tr>
-    <tr>
-      <td class="planet-glyph">♇</td>
-      <td class="planet-name">Pluto</td>
-      <td class="planet-god">Hades</td>
-      <td class="planet-sign contested">Aquarius ♒</td>
-      <td class="planet-degree">6°</td>
-      <td style="font-size:10px;color:var(--red-dim);">Threshold</td>
-    </tr>
-  </table>
-
-  <!-- SIGN STATUS -->
-  <div class="section-title">
-    <span class="icon">⬡</span>
-    The Twelve Signs — Territory Map
-  </div>
-
-  <div class="sign-grid">
-    <div class="sign-cell olympian">
-      <span class="cell-glyph">♈</span>
-      <span class="cell-name">Aries</span>
-      <span class="cell-status">Olympian</span>
-    </div>
-    <div class="sign-cell olympian">
-      <span class="cell-glyph">♉</span>
-      <span class="cell-name">Taurus</span>
-      <span class="cell-status">Olympian</span>
-    </div>
-    <div class="sign-cell olympian">
-      <span class="cell-glyph">♊</span>
-      <span class="cell-name">Gemini</span>
-      <span class="cell-status">Olympian</span>
-    </div>
-    <div class="sign-cell olympian">
-      <span class="cell-glyph">♋</span>
-      <span class="cell-name">Cancer</span>
-      <span class="cell-status">Stellium (3)</span>
-    </div>
-    <div class="sign-cell underworld">
-      <span class="cell-glyph">♌</span>
-      <span class="cell-name">Leo</span>
-      <span class="cell-status">Underworld</span>
-    </div>
-    <div class="sign-cell underworld">
-      <span class="cell-glyph">♍</span>
-      <span class="cell-name">Virgo</span>
-      <span class="cell-status">Underworld</span>
-    </div>
-    <div class="sign-cell underworld">
-      <span class="cell-glyph">♎</span>
-      <span class="cell-name">Libra</span>
-      <span class="cell-status">Underworld</span>
-    </div>
-    <div class="sign-cell underworld">
-      <span class="cell-glyph">♏</span>
-      <span class="cell-name">Scorpio</span>
-      <span class="cell-status">Underworld</span>
-    </div>
-    <div class="sign-cell underworld">
-      <span class="cell-glyph">♐</span>
-      <span class="cell-name">Sagittarius</span>
-      <span class="cell-status">Underworld</span>
-    </div>
-    <div class="sign-cell underworld">
-      <span class="cell-glyph">♑</span>
-      <span class="cell-name">Capricorn</span>
-      <span class="cell-status">Underworld</span>
-    </div>
-    <div class="sign-cell contested">
-      <span class="cell-glyph">♒</span>
-      <span class="cell-name">Aquarius</span>
-      <span class="cell-status">Contested</span>
-    </div>
-    <div class="sign-cell underworld">
-      <span class="cell-glyph">♓</span>
-      <span class="cell-name">Pisces</span>
-      <span class="cell-status">Underworld</span>
-    </div>
-  </div>
-
-  <!-- UPCOMING TRANSITS -->
-  <div class="section-title">
-    <span class="icon">⟳</span>
-    Upcoming Transits — Next Seven Days
-  </div>
-
-  <ul class="transit-list">
-    <li class="transit-ingress">
-      <div class="transit-icon">☀️→♌</div>
-      <div class="transit-info">
-        <div class="transit-date">~ June 21, 2026 · The Solstice</div>
-        <div class="transit-desc">
-          <strong>Apollo approaches the Leo boundary.</strong> The Sun will reach 29° Gemini and stand at the threshold of the Lion. If Apollo enters Leo, the empty throne is filled. The sky shifts from 7-5 to 6-6.
-        </div>
-        <div class="transit-impact">
-          Impact: Severe. All Leo shrines are burning double offerings. The Token Exchange is in frenzy. The Senate has postponed three votes awaiting the solstice.
-        </div>
-      </div>
-    </li>
-    <li class="transit-egress">
-      <div class="transit-icon">☿→♋</div>
-      <div class="transit-info">
-        <div class="transit-date">~ June 23, 2026</div>
-        <div class="transit-desc">
-          <strong>Hermes will leave Cancer.</strong> The stellium reduces from three gods to two. Cancer remains Olympian-held, but the Cancri family loses their strongest argument for special status in the Senate.
-        </div>
-        <div class="transit-impact">
-          Impact: Moderate. The stellium's dissolution weakens the Olympian position in the Senate but does not change the territory count.
-        </div>
-      </div>
-    </li>
-    <li class="transit-neutral">
-      <div class="transit-icon">🌙→🌑</div>
-      <div class="transit-info">
-        <div class="transit-date">~ June 15, 2026 · The Dark Moon</div>
-        <div class="transit-desc">
-          <strong>The Moon approaches darkness.</strong> Melinoe's influence peaks. Artemis withdraws. All Underworld-held signs are reinforced. The Court has canceled its session. The Comitia has been asked to adjourn.
-        </div>
-        <div class="transit-impact">
-          Impact: Severe for governance. The Augur has issued a Dark Moon Advisory — all shrines in Underworld-held signs should increase offerings. No state action is advised during the dark moon.
-        </div>
-      </div>
-    </li>
-    <li class="transit-contested">
-      <div class="transit-icon">♇⇄♒</div>
-      <div class="transit-info">
-        <div class="transit-date">Ongoing · No change expected for years</div>
-        <div class="transit-desc">
-          <strong>Hades remains in Aquarius.</strong> Pluto moves slowly. The contested sign will not resolve quickly. The Aquarian Senator's tiebreaker vote will continue to paralyze the Senate. The siege continues.
-        </div>
-        <div class="transit-impact">
-          Impact: Chronic. The war at Aquarius is not a battle — it is a condition.
-        </div>
-      </div>
-    </li>
-  </ul>
-
-  <!-- MOON PHASE -->
-  <div class="section-title">
-    <span class="icon">🌙</span>
-    Lunar State
-  </div>
-
-  <div class="moon-widget">
-    <div class="moon-glyph">🌖</div>
-    <div class="moon-info">
-      <div class="moon-phase-name">Waning Gibbous</div>
-      <div class="moon-detail">
-        71% illuminated · 20° Aquarius ♒<br>
-        Decreasing toward the Dark Moon (~ June 15)
-      </div>
-      <div class="moon-deity melinoe">⬡ Melinoe Walks · The Phantom Queen</div>
-      <div style="font-size:11px;color:var(--ink-dim);margin-top:4px;font-style:italic;">
-        The waning moon favors the Underworld. Artemis weakens. The threshold thins.
-      </div>
-    </div>
-  </div>
-
-  <!-- ECLIPSE WATCH -->
-  <div class="section-title">
-    <span class="icon">◉</span>
-    Eclipse Watch
-  </div>
-
-  <div class="eclipse-none">
-    No solar or lunar eclipses predicted for the next 30 days. The skies are clear.
-  </div>
-
-  <!-- ABOUT THE ORACLE -->
-  <div class="section-title">
-    <span class="icon">⌂</span>
-    About the Oracle
-  </div>
-
-  <div style="max-width:600px;margin:0 auto;font-size:14px;line-height:1.7;color:var(--ink-mid);font-style:italic;text-align:center;">
-    <p>
-      The Oracle of Glimthaven was built before the Republic. Before the Constitution. Before the first Praetor took the first throne. The astronomers were watching the sky while the founders were still arguing in the Hall of Seven Thrones.
-    </p>
-    <p style="margin-top:12px;">
-      The Oracle does not govern. It <strong>informs</strong>. The Ephemeris Publica is published daily and distributed to the Court, the Senate, the Comitia, and the shrines. Citizens may purchase copies at the Forum for one copper token.
-    </p>
-    <p style="margin-top:12px;">
-      The Oracle is led by the <strong>Augur Maximus</strong>, who sits on both the Oracle and the Libraen Court — the bridge between prediction and action. The Calculatorium computes. The Sign-Watchers watch. The Augur interprets. The Republic endures.
-    </p>
-    <p style="margin-top:12px;font-size:11px;color:var(--ink-faint);">
-      "The sky does not lie. It moves."
-    </p>
-  </div>
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    The Oracle of Glimthaven · Threshold Observatory<br>
+    Ephemeris Publica · Daily Edition · 347th Year of the War<br>
+    <span>"The sky does not lie. It moves." — Motto of the Threshold Observatory</span>
+  </footer>
 
 </div>
 
-<footer class="site-footer">
-  The Oracle of Glimthaven · Threshold Observatory
-  <span>"The sky does not lie. It moves."</span>
-</footer>
+</div>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.8/astronomy.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/suncalc@1.9.0/suncalc.min.js"></script>
+<script src="../js/observe.js"></script>
+<script src="../js/almanac.js"></script>
+<script src="../js/chthonic.js"></script>
+
+<script>
+/* ── Card Mosaic ── */
+(function() {
+  const imgs = [];
+  for (let i = 0; i < 24; i++) imgs.push(`../images/sets/glimthaven-keep.jpg`);
+  document.getElementById('cardMosaic').innerHTML = imgs.map(s => `<img src="${s}" alt="" loading="lazy">`).join('');
+})();
+
+/* ═══════════════════════════════════════════
+   ORACLE ENGINE
+   ═══════════════════════════════════════════ */
+const Oracle = (() => {
+
+  const SIGNS  = Almanac.SIGNS;
+  const GLYPHS = Almanac.SIGN_GLYPHS;
+  const NAMES  = Almanac.SIGN_NAMES;
+  const CELESTIAL = Almanac.CELESTIAL_OLYMPIANS;
+
+  const PLANET_ORDER = ['sun','moon','mercury','venus','mars','jupiter','saturn','uranus','neptune','pluto'];
+  const PLANET_GLYPHS = {
+    sun:'☀️', moon:'🌙', mercury:'☿', venus:'♀', mars:'♂',
+    jupiter:'♃', saturn:'♄', uranus:'⛢', neptune:'♆', pluto:'⬡'
+  };
+
+  function degreesStr(deg) { return `${Math.floor(deg)}°${Math.floor((deg%1)*60)}'`; }
+
+  function getOlympianStatus(planetName, sign) {
+    if (planetName === 'pluto') return 'Chthonic';
+    const god = CELESTIAL[planetName];
+    if (!god) return 'Unknown';
+    return 'Olympian';
+  }
+
+  function buildSkySummary(report) {
+    const olympian = report.olympianHouses;
+    const chthonic = report.chthonicHouses;
+    const voidCount = report.claims.filter(c => c.olympianCount === 0 && !c.chthonic).length;
+    const contested = report.claims.filter(c => c.olympianCount > 0 && c.chthonic).length;
+    return `
+      <div class="summary-card">
+        <div class="sum-count olympian">${olympian}</div>
+        <div class="sum-label">Olympian Signs</div>
+      </div>
+      <div class="summary-card">
+        <div class="sum-count chthonic">${chthonic}</div>
+        <div class="sum-label">Underworld Signs</div>
+      </div>
+      <div class="summary-card">
+        <div class="sum-count void">${voidCount}</div>
+        <div class="sum-label">Void Signs</div>
+      </div>
+      <div class="summary-card">
+        <div class="sum-count contested-count">${contested}</div>
+        <div class="sum-label">Contested</div>
+      </div>`;
+  }
+
+  function buildPlanetTable(planets) {
+    return PLANET_ORDER.filter(n => planets[n]).map(name => {
+      const p = planets[name];
+      const deity = CELESTIAL[name];
+      const status = name === 'pluto' ? 'Chthonic' : 'Olympian';
+      return `
+        <tr>
+          <td class="p-glyph">${PLANET_GLYPHS[name]}</td>
+          <td class="p-name">${name.charAt(0).toUpperCase() + name.slice(1)}</td>
+          <td class="p-god">${deity ? deity.olympian : '—'}</td>
+          <td class="p-sign">${p.sign} ${GLYPHS[p.sign]}</td>
+          <td class="p-degree">${degreesStr(p.degree)}</td>
+          <td class="p-status status-${status.toLowerCase()}">${status}</td>
+        </tr>`;
+    }).join('');
+  }
+
+  function buildSignGrid(report, planets) {
+    return report.claims.map(({ sign, olympianCount, chthonic }) => {
+      let classes = 'sign-card';
+      let statusLabel = '';
+      let statusClass = '';
+      let occupants = '';
+
+      if (olympianCount >= 3) {
+        classes += ' stellium-sign';
+        statusLabel = 'Stellium';
+        statusClass = 'sg-status-olympian';
+      } else if (chthonic && chthonic.isPrimordial) {
+        classes += ' void-sign';
+        statusLabel = 'Primordial Void';
+        statusClass = 'sg-status-void';
+      } else if (chthonic) {
+        classes += ' underworld-sign';
+        statusLabel = 'Underworld';
+        statusClass = 'sg-status-underworld';
+      } else if (olympianCount > 0) {
+        classes += ' olympian-sign';
+        statusLabel = 'Olympian';
+        statusClass = 'sg-status-olympian';
+      } else {
+        classes += ' void-sign';
+        statusLabel = 'Void';
+        statusClass = 'sg-status-void';
+      }
+
+      if (olympianCount > 0) {
+        const gods = Object.entries(planets)
+          .filter(([n, p]) => p && p.sign === sign && n !== 'pluto')
+          .map(([n]) => CELESTIAL[n]?.olympian || n);
+        if (planets.pluto && planets.pluto.sign === sign) gods.push('Hades');
+        occupants = gods.join(', ');
+      } else if (chthonic) {
+        occupants = chthonic.name;
+      } else {
+        occupants = '—';
+      }
+
+      return `
+        <div class="${classes}">
+          <span class="sg-glyph">${GLYPHS[sign]}</span>
+          <span class="sg-name">${sign}</span>
+          <div class="sg-occupants">${occupants}</div>
+          <span class="sg-status ${statusClass}">${statusLabel}</span>
+        </div>`;
+    }).join('');
+  }
+
+  function generateEphemerisReading(report, planets) {
+    const sun = planets.sun;
+    const moon = planets.moon;
+    const pluto = planets.pluto;
+    const stelliumSigns = report.claims.filter(c => c.olympianCount >= 3).map(c => c.sign);
+    const voidSigns = report.claims.filter(c => c.olympianCount === 0 && !c.chthonic).map(c => c.sign);
+    const chthonicSigns = report.claims.filter(c => c.chthonic && !c.chthonic.isPrimordial).map(c => c.sign);
+    const contestedSigns = report.claims.filter(c => c.olympianCount > 0 && c.chthonic).map(c => c.sign);
+    const hasChaos = Object.values(report.byElement).some(e => e.isFullyVoid);
+
+    let reading = '';
+
+    // Opening
+    reading += `<p>The <strong>Ephemeris Publica</strong> for this day, issued from the Threshold Observatory under the authority of the Augur Maximus and the Oracle of Glimthaven.</p>`;
+
+    // Solar position
+    if (sun) {
+      reading += `<p><strong>☀️ Apollo</strong> burns at <span class="highlight">${degreesStr(sun.degree)} ${sun.sign} ${GLYPHS[sun.sign]}</span>. `;
+      const element = Almanac.SIGN_ELEMENTS?.[sun.sign] || 'elemental';
+      const elementalReading = {
+        Fire: 'The day carries the quality of ignition — beginnings, declarations, the spark that catches.',
+        Earth: 'The day carries the quality of foundation — patience, building, the slow accumulation of weight.',
+        Air: 'The day carries the quality of motion — communication, travel, ideas that will not stay still.',
+        Water: 'The day carries the quality of depth — feeling, intuition, currents that move beneath the surface.'
+      };
+      reading += elementalReading[element] || 'The light falls where it will.';
+      reading += `</p>`;
+    }
+
+    // Lunar position
+    if (moon) {
+      reading += `<p><strong>🌙 The Moon</strong> rests at <span class="highlight">${degreesStr(moon.degree)} ${moon.sign} ${GLYPHS[moon.sign]}</span>. The night's emotional weather is shaped by ${NAMES[moon.sign] || moon.sign}. What rises in the dark should be examined by daylight before it is acted upon.</p>`;
+    }
+
+    // Hades position
+    if (pluto) {
+      reading += `<p><strong>⬡ Hades</strong> guards the gate at <span class="highlight">${degreesStr(pluto.degree)} ${pluto.sign} ${GLYPHS[pluto.sign]}</span>. The threshold is here. All legislation, all rulings, all oaths sworn today pass through this gate. The Augur watches.</p>`;
+    }
+
+    // Stellium warning
+    if (stelliumSigns.length > 0) {
+      reading += `<p><strong>⚠ Stellium Active:</strong> ${stelliumSigns.map(s => `${s} ${GLYPHS[s]}`).join(', ')} hold${stelliumSigns.length === 1 ? 's' : ''} three or more Olympian bodies. This concentration of divine presence amplifies the ${stelliumSigns.map(s => NAMES[s]).join(' and ')} domains. The Senate should act while the gods are gathered.</p>`;
+    }
+
+    // Void signs
+    if (voidSigns.length > 0) {
+      reading += `<p><strong>◌ Void Signs:</strong> ${voidSigns.map(s => `${s} ${GLYPHS[s]}`).join(', ')} — no god walks here. These are the hungriest places in the sky. The Court should note: legislation affecting void signs carries additional constitutional risk.</p>`;
+    }
+
+    // Chthonic claims
+    if (chthonicSigns.length > 0) {
+      reading += `<p><strong>⬡ Underworld-Held:</strong> ${chthonicSigns.map(s => `${s} ${GLYPHS[s]}`).join(', ')} — the Chthonic forces hold these signs. The Augur advises caution in all matters touching these houses.</p>`;
+    }
+
+    // Contested
+    if (contestedSigns.length > 0) {
+      reading += `<p><strong>⚔ Contested:</strong> ${contestedSigns.map(s => `${s} ${GLYPHS[s]}`).join(', ')} — both factions are present. The tiebreaker is active. The Aquarian Senator should be consulted before any vote that may deadlock.</p>`;
+    }
+
+    // Chaos emergence
+    if (hasChaos) {
+      const voidElements = Object.entries(report.byElement).filter(([_, d]) => d.isFullyVoid).map(([el]) => el);
+      reading += `<p><strong style="color:#FF44FF;">⛧ CHAOS EMERGENCE:</strong> All ${voidElements.join(' and ')} signs are void. The river Lethe rises. The primordial answers. The Augur Maximus is authorized to issue a Kairotic Emergency trigger. The Court should convene.</p>`;
+    }
+
+    // Closing
+    reading += `<p style="margin-top:12px;font-size:12px;color:var(--ink-faint);">This Ephemeris is entered into the Charon Archive. It may be cited as precedent in the Libraen Court. It is binding on no one — but ignoring it is remembered.</p>`;
+
+    return reading;
+  }
+
+  function generateAdvisories(report, planets) {
+    const advisories = [];
+    const sun = planets.sun;
+    const pluto = planets.pluto;
+
+    // Check for Leo boundary approach
+    if (sun && (sun.sign === 'Cancer' && sun.degree > 25) || (sun.sign === 'Leo' && sun.degree < 5)) {
+      advisories.push({
+        level: 'Kairotic Alert',
+        text: `<strong>Apollo approaches the Leo boundary.</strong> The solstice will test the Lion's throne. The Liminal Bench has placed SB-347-14 (Leo Shrine Emergency Funding) under Kairotic Scrutiny. All rulings on this bill should be completed before the solstice, or deferred until after Apollo's position is certain.`,
+        color: 'var(--gold-dark)'
+      });
+    }
+
+    // Check for stellium dissolution
+    const stelliumSigns = report.claims.filter(c => c.olympianCount >= 3).map(c => c.sign);
+    stelliumSigns.forEach(sign => {
+      advisories.push({
+        level: 'Stellium Advisory',
+        text: `<strong>${sign} ${GLYPHS[sign]} holds a stellium.</strong> This concentration is temporary. The Senate should act on ${sign}-related legislation while the gods are gathered. Delay risks the stellium dissolving and the political alignment shifting.`,
+        color: 'var(--gold-bright)'
+      });
+    });
+
+    // Hades stationary check
+    if (pluto) {
+      advisories.push({
+        level: 'Threshold Observation',
+        text: `<strong>Hades guards ${pluto.sign} ${GLYPHS[pluto.sign]} at ${degreesStr(pluto.degree)}.</strong> The gate is here. The Augur Maximus monitors this position for the Liminal Bench. Treaties with Chthonic forces, oaths sworn across the threshold, and legislation touching Underworld-held signs should be reviewed under Kairotic Scrutiny.`,
+        color: 'var(--chthonic-light)'
+      });
+    }
+
+    // Void sign count
+    const voidSigns = report.claims.filter(c => c.olympianCount === 0 && !c.chthonic);
+    if (voidSigns.length >= 4) {
+      advisories.push({
+        level: 'Void Warning',
+        text: `<strong>${voidSigns.length} signs are void.</strong> The absence is spreading. The Comitia should consider emergency shrine-funding for the void signs. The Court should prepare for potential Kairotic Emergency triggers if an entire element falls silent.`,
+        color: 'var(--rubric)'
+      });
+    }
+
+    // Chaos check
+    const hasChaos = Object.values(report.byElement).some(e => e.isFullyVoid);
+    if (hasChaos) {
+      const voidElements = Object.entries(report.byElement).filter(([_, d]) => d.isFullyVoid).map(([el]) => el);
+      advisories.push({
+        level: '⛧ CHAOS EMERGENCY ⛧',
+        text: `<strong>All ${voidElements.join(' and ')} signs are void.</strong> An entire element has fallen silent. Chaos stirs. The river Lethe rises. The Augur Maximus is <strong>commanded</strong> to issue a Kairotic Emergency trigger. The Liminal Bench must convene. The Senatus and Comitia are advised to suspend all non-essential legislation until the Court rules on the constitutional implications.`,
+        color: '#FF44FF'
+      });
+    }
+
+    if (advisories.length === 0) {
+      return `<div class="advisory-box"><h3>No Active Advisories</h3><div class="advisory-body">The sky is quiet. The Augur reports no celestial events requiring immediate attention. Routine observation continues.</div></div>`;
+    }
+
+    return advisories.map(a => `
+      <div class="advisory-box" style="border-color:${a.color};">
+        <h3 style="color:${a.color};">⬡ ${a.level}</h3>
+        <div class="advisory-body">${a.text}</div>
+      </div>`).join('');
+  }
+
+  async function refresh() {
+    try {
+      const raw = await Observe.getSkyState();
+      const report = Chthonic.getWarReport(raw.planets);
+
+      document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      }) + ' · Ephemeris Publica · Daily Edition';
+
+      document.getElementById('skySummary').innerHTML = buildSkySummary(report);
+      document.getElementById('ephemerisReading').innerHTML = generateEphemerisReading(report, raw.planets);
+      document.getElementById('advisoriesContainer').innerHTML = generateAdvisories(report, raw.planets);
+      document.getElementById('planetTableBody').innerHTML = buildPlanetTable(raw.planets);
+      document.getElementById('signGrid').innerHTML = buildSignGrid(report, raw.planets);
+
+    } catch(err) {
+      console.error('Oracle failed:', err);
+      document.getElementById('ephemerisReading').innerHTML = '<p><em>The sky is clouded. The Threshold Observatory cannot read the stars at this hour. Try again at dawn or dusk, when the light is right.</em></p>';
+    }
+  }
+
+  return { refresh };
+})();
+
+document.addEventListener('DOMContentLoaded', () => Oracle.refresh());
+</script>
 
 </body>
 </html>
