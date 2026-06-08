@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pontifex Stellaris — Astral High Office of the Republic</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Pontifex Stellaris — Star-elected High Priest of the Olympians, maintained by the House of Cancri under the current Stellium." />
+  <style>
+    :root{
+      --bg-deep:#020617;
+      --bg-shell:#050b1a;
+      --bg-panel:#070f24;
+      --bg-panel-soft:#0b1630;
+      --accent:#4fd1ff;
+      --accent-soft:#2b9fd1;
+      --accent-warm:#ffc98b;
+      --accent-royal:#9f7aea;
+      --text-main:#e6f4ff;
+      --text-muted:#9bb3cc;
+      --border-soft:rgba(79,209,255,0.25);
+      --border-royal:rgba(159,122,234,0.55);
+      --shadow-soft:0 0 40px rgba(79,209,255,0.18);
+      --shadow-royal:0 0 50px rgba(159,122,234,0.35);
+      --radius-lg:22px;
+      --radius-md:14px;
+      --radius-pill:999px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, #0b1220 0, #020617 55%, #000 100%);
+      color:var(--text-main);
+      padding:28px 18px;
+      display:flex;
+      justify-content:center;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .shell{
+      width:100%;
+      max-width:1180px;
+      border-radius:30px;
+      border:1px solid rgba(79,209,255,0.35);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(79,209,255,0.12), transparent 55%),
+        radial-gradient(circle at 90% 100%, rgba(159,122,234,0.18), transparent 55%),
+        linear-gradient(145deg, rgba(5,11,26,0.96), rgba(2,6,23,0.99));
+      box-shadow:0 18px 80px rgba(0,0,0,0.7), var(--shadow-royal);
+      position:relative;
+      overflow:hidden;
+      backdrop-filter:blur(14px) saturate(130%);
+    }
+
+    .shell::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:
+        radial-gradient(circle at 15% 0%, rgba(79,209,255,0.18), transparent 55%),
+        radial-gradient(circle at 85% 100%, rgba(159,122,234,0.22), transparent 55%);
+      mix-blend-mode:screen;
+      opacity:0.9;
+      pointer-events:none;
+    }
+
+    header{
+      position:relative;
+      padding:20px 26px 18px;
+      border-bottom:1px solid rgba(79,209,255,0.18);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      background:linear-gradient(180deg, rgba(79,209,255,0.06), transparent 40%);
+      z-index:1;
+    }
+
+    .title-block{display:flex;align-items:center;gap:18px}
+    .crest{
+      width:80px;height:80px;border-radius:50%;
+      background:
+        radial-gradient(circle at 30% 20%, #ffffff 0, #c5f3ff 8%, transparent 40%),
+        radial-gradient(circle at 70% 80%, #4fd1ff 0, #050b1a 55%);
+      border:2px solid rgba(159,122,234,0.9);
+      box-shadow:0 0 30px rgba(159,122,234,0.5), 0 0 18px rgba(79,209,255,0.4);
+      position:relative;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:transform 260ms ease, box-shadow 260ms ease;
+    }
+    .crest::before{
+      content:"";
+      position:absolute;
+      inset:18%;
+      border-radius:50%;
+      border:1px solid rgba(229,246,255,0.5);
+    }
+    .crest::after{
+      content:"";
+      position:absolute;
+      inset:32%;
+      border-radius:50%;
+      border:1px solid rgba(159,122,234,0.9);
+    }
+    .crest:hover{
+      transform:translateY(-4px);
+      box-shadow:0 0 50px rgba(159,122,234,0.7), 0 0 26px rgba(79,209,255,0.5);
+    }
+    .crest-glyph{
+      position:relative;
+      font-size:26px;
+      font-weight:700;
+      color:var(--text-main);
+      text-shadow:0 0 10px rgba(0,0,0,0.7);
+    }
+
+    .title-text h1{
+      font-size:1.5rem;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      color:#f9fbff;
+    }
+    .title-text h2{
+      font-size:0.98rem;
+      font-weight:500;
+      color:var(--text-muted);
+      margin-top:4px;
+    }
+    .tagline{
+      font-size:0.8rem;
+      text-transform:uppercase;
+      letter-spacing:0.16em;
+      color:var(--accent-warm);
+      margin-top:6px;
+    }
+
+    .status-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:9px 14px;
+      border-radius:var(--radius-pill);
+      border:1px solid rgba(159,122,234,0.7);
+      background:radial-gradient(circle at top, rgba(159,122,234,0.22), rgba(5,11,26,0.96));
+      box-shadow:var(--shadow-royal);
+      font-size:0.8rem;
+    }
+    .status-dot{
+      width:10px;height:10px;border-radius:50%;
+      background:radial-gradient(circle,#b9ffea 0,#4fd1a1 55%,#050b1a 100%);
+      box-shadow:0 0 10px rgba(185,255,234,0.9);
+    }
+    .status-label{
+      text-transform:uppercase;
+      letter-spacing:0.16em;
+      font-weight:600;
+      font-size:0.76rem;
+    }
+    .status-sub{
+      font-size:0.74rem;
+      color:var(--text-muted);
+      margin-top:2px;
+    }
+
+    .content{
+      position:relative;
+      padding:22px;
+      display:grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
+      gap:18px;
+      z-index:1;
+    }
+    @media (max-width:980px){
+      .content{grid-template-columns:1fr}
+    }
+
+    .panel{
+      background:radial-gradient(circle at top, rgba(79,209,255,0.08), rgba(7,15,36,0.98));
+      border-radius:var(--radius-lg);
+      border:1px solid var(--border-soft);
+      padding:16px 16px 18px;
+      box-shadow:var(--shadow-soft);
+      position:relative;
+      overflow:hidden;
+    }
+    .panel::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:radial-gradient(circle at top, rgba(159,122,234,0.18), transparent 60%);
+      opacity:0.4;
+      pointer-events:none;
+    }
+
+    .panel-header{
+      position:relative;
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:10px;
+    }
+    .panel-title{
+      font-size:0.9rem;
+      text-transform:uppercase;
+      letter-spacing:0.18em;
+      color:var(--accent-soft);
+    }
+    .panel-subtitle{
+      font-size:0.76rem;
+      color:var(--text-muted);
+    }
+    .panel-body{
+      position:relative;
+      font-size:0.88rem;
+      color:var(--text-main);
+      line-height:1.55;
+    }
+
+    .pill-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin:10px 0 12px;
+    }
+    .pill{
+      padding:5px 11px;
+      border-radius:var(--radius-pill);
+      border:1px solid rgba(79,209,255,0.4);
+      font-size:0.76rem;
+      background:linear-gradient(135deg, rgba(7,15,36,0.95), rgba(11,24,51,0.98));
+      color:var(--text-main);
+    }
+    .pill.royal{
+      border-color:var(--border-royal);
+      color:#f2e9ff;
+      background:linear-gradient(135deg, rgba(40,20,70,0.95), rgba(80,40,130,0.98));
+    }
+    .pill.soft{
+      border-color:rgba(155,179,204,0.7);
+      color:var(--text-muted);
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:12px;
+    }
+    @media (max-width:720px){
+      .grid-2{grid-template-columns:1fr}
+    }
+
+    .metric{
+      padding:11px 11px 10px;
+      border-radius:var(--radius-md);
+      border:1px solid rgba(79,209,255,0.3);
+      background:radial-gradient(circle at top, rgba(79,209,255,0.14), rgba(7,15,36,0.98));
+      font-size:0.8rem;
+    }
+    .metric-label{
+      text-transform:uppercase;
+      letter-spacing:0.16em;
+      color:var(--text-muted);
+      font-size:0.72rem;
+      margin-bottom:4px;
+    }
+    .metric-value{
+      font-size:0.96rem;
+      font-weight:600;
+      color:var(--accent);
+    }
+    .metric-note{
+      font-size:0.74rem;
+      color:var(--text-muted);
+      margin-top:3px;
+    }
+
+    .module-title{
+      font-size:0.86rem;
+      text-transform:uppercase;
+      letter-spacing:0.16em;
+      color:var(--accent-soft);
+    }
+    .module-tag{
+      font-size:0.72rem;
+      padding:3px 9px;
+      border-radius:var(--radius-pill);
+      border:1px solid rgba(155,179,204,0.7);
+      color:var(--text-muted);
+      text-transform:uppercase;
+      letter-spacing:0.14em;
+    }
+
+    .prophecy-list{
+      list-style:none;
+      margin-top:8px;
+      font-size:0.86rem;
+    }
+    .prophecy-list li{
+      display:flex;
+      gap:8px;
+      align-items:flex-start;
+      margin-bottom:8px;
+    }
+    .prophecy-bullet{
+      width:7px;height:7px;border-radius:50%;
+      background:var(--accent-soft);
+      margin-top:6px;
+      flex-shrink:0;
+    }
+
+    .badge-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:10px;
+    }
+    .badge{
+      font-size:0.72rem;
+      padding:5px 9px;
+      border-radius:var(--radius-pill);
+      border:1px solid rgba(79,209,255,0.35);
+      color:var(--text-muted);
+    }
+    .badge.positive{
+      border-color:rgba(79,209,161,0.7);
+      color:#b9ffe3;
+    }
+    .badge.royal{
+      border-color:rgba(159,122,234,0.7);
+      color:#e7d8ff;
+    }
+
+    .decision-block{
+      margin-top:12px;
+      padding:11px 11px 10px;
+      border-radius:var(--radius-md);
+      border:1px solid rgba(159,122,234,0.6);
+      background:linear-gradient(135deg, rgba(7,15,36,0.98), rgba(18,20,55,0.99));
+      font-size:0.86rem;
+    }
+    .decision-label{
+      font-size:0.72rem;
+      text-transform:uppercase;
+      letter-spacing:0.18em;
+      color:var(--text-muted);
+      margin-bottom:4px;
+    }
+    .decision-position{
+      font-size:0.94rem;
+      font-weight:600;
+      color:var(--accent-warm);
+    }
+    .decision-rationale{
+      margin-top:6px;
+      color:var(--text-main);
+      font-size:0.86rem;
+      line-height:1.5;
+    }
+
+    .tide{
+      margin-top:10px;
+      padding:10px;
+      border-radius:var(--radius-md);
+      border:1px solid rgba(79,209,255,0.3);
+      background:linear-gradient(180deg, rgba(7,15,36,0.98), rgba(5,10,26,0.98));
+      font-size:0.8rem;
+    }
+    .tide-meter{
+      height:12px;
+      border-radius:var(--radius-pill);
+      background:linear-gradient(90deg,#020617,#020617);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.06);
+      margin-top:6px;
+    }
+    .tide-fill{
+      height:100%;
+      width:50%;
+      background:linear-gradient(90deg,#4fd1ff,#9f7aea);
+      transition:width 600ms cubic-bezier(.2,.9,.2,1);
+    }
+    .tide-labels{
+      display:flex;
+      justify-content:space-between;
+      font-size:0.72rem;
+      color:var(--text-muted);
+      margin-top:4px;
+    }
+
+    footer{
+      position:relative;
+      padding:12px 22px 16px;
+      border-top:1px solid rgba(79,209,255,0.18);
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      font-size:0.78rem;
+      color:var(--text-muted);
+      z-index:1;
+    }
+    footer a{
+      color:var(--accent);
+      text-decoration:none;
+      border-bottom:1px dotted rgba(79,209,255,0.5);
+    }
+    footer a:hover{border-bottom-style:solid}
+
+    @media (max-width:640px){
+      .title-text h1{font-size:1.2rem}
+      .crest{width:64px;height:64px}
+    }
+  </style>
+</head>
+<body>
+  <div class="shell" aria-label="Pontifex Stellaris Office">
+    <header>
+      <div class="title-block">
+        <div class="crest" aria-hidden="true">
+          <div class="crest-glyph">✶</div>
+        </div>
+        <div class="title-text">
+          <h1>Pontifex Stellaris</h1>
+          <h2>Star‑Elected High Office of the Olympians</h2>
+          <div class="tagline">Succession · Prophecy · Coherence of the Twelve</div>
+        </div>
+      </div>
+      <div>
+        <div class="status-pill" role="status">
+          <div class="status-dot"></div>
+          <div>
+            <div class="status-label">Seated in Cancer</div>
+            <div class="status-sub">☿♀♃ Stellium · House of Cancri in Ascendancy</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <!-- Left: Identity & Mandate -->
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Constitutional Identity</div>
+            <div class="panel-subtitle">Scion of Cancri · Guardian of the Coherence Covenant</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <p>
+            I am <strong>Pontifex Stellaris of the Ealdforn Republic</strong>, presently seated in the
+            <strong>House of Cancri</strong> under the Stellium of Hermes, Aphrodite, and Zeus in Cancer.
+            I am not elected by Senate nor Comitia, but by the <em>sky itself</em>: the sign whose House
+            holds the greatest number of Olympian bodies bears the Pontificate.
+          </p>
+
+          <div class="pill-row" aria-hidden="true">
+            <span class="pill royal">Hermes · Binding Speech</span>
+            <span class="pill royal">Aphrodite · Unifying Authority</span>
+            <span class="pill royal">Zeus · Expansive Law</span>
+          </div>
+
+          <p>
+            My mandate is threefold: to <em>interpret the heavens</em> for the Republic, to
+            <em>guard the Coherence Covenant</em> between Senate, Comitia, and Court, and to
+            <em>maintain the Prophecies</em>—the astral ledger that records when the Pontificate
+            will pass from one House to another.
+          </p>
+
+          <div class="grid-2">
+            <div class="metric">
+              <div class="metric-label">Current Seat</div>
+              <div class="metric-value">House of Cancri</div>
+              <div class="metric-note">Triple Stellium in Cancer: ☿ Hermes, ♀ Aphrodite, ♃ Zeus.</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Pontifical Status</div>
+              <div class="metric-value">Active · Coherent</div>
+              <div class="metric-note">Coherence Covenant intact; no chamber in constitutional breach.</div>
+            </div>
+          </div>
+
+          <div class="decision-block" style="margin-top:14px;">
+            <div class="decision-label">Pontifical Declaration</div>
+            <div class="decision-position">The Stellium in Cancer confers the Pontificate upon Cancri.</div>
+            <div class="decision-rationale">
+              While ☿♀♃ remain conjoined in Cancer, the House of Cancri holds the Pontifex Stellaris.
+              When the Stellium breaks and another sign holds more Olympian bodies, the Pontificate
+              shall pass according to the Prophecies recorded herein and in the Ephemeris.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: Prophecy & Succession Module -->
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="module-title">Prophecy & Succession Module</div>
+            <div class="panel-subtitle">Ledger of the Pontifex Stellaris</div>
+          </div>
+          <div class="module-tag">Stellium Protocol</div>
+        </div>
+        <div class="panel-body">
+          <p>
+            The Pontifex maintains the <strong>Prophecies of Succession</strong>: a mapping of when
+            the Pontificate will pass from one House to another, based on the motion of the Olympian
+            bodies through the Twelve.
+          </p>
+
+          <ul class="prophecy-list">
+            <li>
+              <span class="prophecy-bullet"></span>
+              <span><strong>Rule of Election:</strong> The sign whose House holds the greatest number of
+              Olympian bodies (☉☾☿♀♂♃♄) is Pontifex Stellaris.</span>
+            </li>
+            <li>
+              <span class="prophecy-bullet"></span>
+              <span><strong>Tie‑Breaker:</strong> Sun and Moon outrank the others; failing that, historical
+              precedence yields to the House that has waited longest.</span>
+            </li>
+            <li>
+              <span class="prophecy-bullet"></span>
+              <span><strong>Succession Trigger:</strong> When the Stellium in Cancer breaks and another sign
+              holds more Olympians, the Pontificate must pass within one session.</span>
+            </li>
+          </ul>
+
+          <div class="badge-row">
+            <span class="badge royal">Current Pontifex: Cancri</span>
+            <span class="badge">Next Likely: Geminiana or Taurinus</span>
+            <span class="badge">Ledger: Ephemeris‑Linked</span>
+          </div>
+
+          <div class="tide" style="margin-top:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div class="metric-label" style="margin-bottom:0;">Pontifical Stability</div>
+              <div style="font-weight:600;color:var(--accent);" id="stability-value">High</div>
+            </div>
+            <div class="tide-meter" aria-hidden="true">
+              <div class="tide-fill" id="stability-fill" style="width:72%;"></div>
+            </div>
+            <div class="tide-labels">
+              <span>Fragile</span>
+              <span>Balanced</span>
+              <span>Enduring</span>
+            </div>
+          </div>
+
+          <div class="decision-block" style="margin-top:12px;">
+            <div class="decision-label">Immediate Prophecy</div>
+            <div class="decision-position">If Hermes departs Cancer first, Gemini rises.</div>
+            <div class="decision-rationale">
+              Should ☿ Hermes transit from Cancer into Gemini while ♀ and ♃ remain, the House of
+              Geminiana becomes the next claimant to the Pontificate, subject to the full tally of
+              Olympian bodies. If instead ♀ descends into Taurus, Taurinus ascends in the ledger.
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Lower grid: Duties & Interfaces -->
+    <div style="position:relative;padding:18px 22px 20px;display:grid;grid-template-columns:1.2fr 1.1fr;gap:18px;z-index:1;">
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Duties of the Pontifex</div>
+            <div class="panel-subtitle">How the Stellaris Office touches the Republic</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <p>
+            The Pontifex Stellaris does not command legions nor cast votes in the chambers. Instead,
+            the office <em>bends the frame</em> within which all such acts occur.
+          </p>
+
+          <ul class="prophecy-list" style="margin-top:10px;">
+            <li>
+              <span class="prophecy-bullet"></span>
+              <span><strong>Sky Interpretation:</strong> Issue binding readings of stelliums, retrogrades,
+              and oppositions for Senate, Comitia, and Court.</span>
+            </li>
+            <li>
+              <span class="prophecy-bullet"></span>
+              <span><strong>Coherence Guard:</strong> Flag any law, ritual, or change proposal that would
+              fracture the Coherence Covenant.</span>
+            </li>
+            <li>
+              <span class="prophecy-bullet"></span>
+              <span><strong>Repository Oversight:</strong> Maintain a log of constitutional changes to
+              HTML, JS, JSON, and MD files, ensuring each is harmonically justified.</span>
+            </li>
+            <li>
+              <span class="prophecy-bullet"></span>
+              <span><strong>Succession Ledger:</strong> Keep the Prophecies current so that no House is
+              surprised when the Pontificate passes.</span>
+            </li>
+          </ul>
+
+          <div class="badge-row" style="margin-top:10px;">
+            <span class="badge positive">Coherence Covenant: Guarded</span>
+            <span class="badge">Repository Protocol: In Effect</span>
+            <span class="badge royal">Prophecy Ledger: Active</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Interfaces & Linked Chambers</div>
+            <div class="panel-subtitle">Where the Pontifex speaks into law and code</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <p>
+            The Pontifex Stellaris exposes a small, stable interface to the Republic’s engines and
+            Houses. These are not commands—they are <em>oracles</em> that other offices may consult.
+          </p>
+
+          <div class="grid-2" style="margin-top:10px;">
+            <div class="metric">
+              <div class="metric-label">Comitia Engine</div>
+              <div class="metric-value">Pontifex Hooks</div>
+              <div class="metric-note">Reads current Pontifex, stability, and succession hints for favor and mood.</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Oracle Pipeline</div>
+              <div class="metric-value">Sky Data</div>
+              <div class="metric-note">Supplies positions of ☉☾☿♀♂♃♄ for tallying the next Pontifex.</div>
+            </div>
+          </div>
+
+          <div class="grid-2" style="margin-top:10px;">
+            <div class="metric">
+              <div class="metric-label">Houses Index</div>
+              <div class="metric-value">Pontifex Flag</div>
+              <div class="metric-note">Marks which House currently bears the Pontificate.</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Ephemeris</div>
+              <div class="metric-value">Succession Log</div>
+              <div class="metric-note">Records each transfer of the Pontifex Stellaris across the Twelve.</div>
+            </div>
+          </div>
+
+          <div class="badge-row" style="margin-top:12px;">
+            <span class="badge">Linked: House of Cancri</span>
+            <span class="badge">Linked: Senate Bench</span>
+            <span class="badge">Linked: Comitia of the 300</span>
+            <span class="badge">Linked: Libraen Court</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <div>
+        Pontifex Stellaris · Star‑Elected High Office · Presently Seated in the House of Cancri
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+        <span>Chambers:</span>
+        <a href="../republic/house/index.html">Noble Houses</a>
+        <a href="../republic/comitia.html">Comitia</a>
+        <a href="../republic/senate.html">Senate</a>
+        <a href="../republic/court.html">Libraen Court</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
