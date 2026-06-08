@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>House Taurinus · Taurus · Ealdforn Republic</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --parchment:    #F5ECD7;
+  --parchment-deep: #EAD9BE;
+  --vellum:       #FBF5E8;
+  --ink:          #1A1410;
+  --ink-mid:      #3A3028;
+  --ink-dim:      #6A5E50;
+  --ink-faint:    #9A8E80;
+  --gold:         #8A6518;
+  --gold-bright:  #B8860B;
+  --gold-dark:    #5A4510;
+  --gold-border:  rgba(138,101,24,0.22);
+  --rubric:       #8B1A1A;
+  --earth:        #5A7A30;
+  --border-parchment: rgba(164,134,80,0.28);
+  --font-display: 'Cinzel Decorative', serif;
+  --font-label:   'Cinzel', serif;
+  --font-body:    'Cormorant Garamond', Georgia, serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--parchment);
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(164,134,80,0.008) 2px, rgba(164,134,80,0.008) 4px),
+    radial-gradient(ellipse 100% 100% at 50% 0%, var(--vellum) 0%, var(--parchment) 40%, var(--parchment-deep) 100%);
+  font-family: var(--font-body); color: var(--ink); min-height: 100vh; overflow-x: hidden;
+}
+
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px 200px; opacity: 0.25; mix-blend-mode: multiply;
+}
+
+.content-layer { position: relative; z-index: 2; }
+
+.nav-house {
+  display: flex; justify-content: center; gap: 0; padding: 10px 0;
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(245,236,215,0.94); backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--gold-border); flex-wrap: wrap;
+}
+.nav-house a {
+  font-family: var(--font-label); font-size: 7px; letter-spacing: 3px;
+  color: var(--ink-faint); text-decoration: none;
+  padding: 5px 10px; border-bottom: 1px solid transparent;
+  transition: all 0.2s; text-transform: uppercase;
+}
+.nav-house a:hover { color: var(--gold); border-bottom-color: var(--gold-border); }
+.nav-house a.nav-active { color: var(--earth); border-bottom-color: var(--earth); }
+
+.house-header {
+  text-align: center; padding: 40px 20px 20px;
+  border-bottom: 2px solid var(--gold); max-width: 800px; margin: 0 auto;
+}
+.house-sigil { font-size: 56px; display: block; margin-bottom: 8px; }
+.house-eyebrow {
+  font-family: var(--font-label); font-size: 8px; letter-spacing: 6px;
+  text-transform: uppercase; color: var(--gold); opacity: 0.5; margin-bottom: 8px;
+}
+.house-header h1 {
+  font-family: var(--font-display); font-size: clamp(24px, 5vw, 38px);
+  font-weight: 900; color: var(--earth); letter-spacing: 3px;
+}
+.house-motto { font-size: 15px; color: var(--ink-mid); font-style: italic; margin-top: 6px; }
+
+.container { max-width: 780px; margin: 0 auto; padding: 20px 20px 60px; }
+
+.house-banner {
+  text-align: center; padding: 14px 16px; margin: 16px 0;
+  border: 1px solid rgba(90,122,48,0.3); border-radius: 6px;
+  background: rgba(90,122,48,0.04);
+}
+.banner-label {
+  font-family: var(--font-label); font-size: 7px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--earth); margin-bottom: 4px;
+}
+.banner-stats {
+  font-family: var(--font-display); font-size: 16px; color: var(--ink);
+}
+
+.section-title {
+  font-family: var(--font-display); font-size: 15px; color: var(--gold-dark);
+  text-align: center; letter-spacing: 2px;
+  margin: 28px 0 14px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--gold-border);
+}
+
+.stat-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px; margin: 12px 0;
+}
+.stat-card {
+  text-align: center; padding: 14px 10px; border-radius: 6px;
+  border: 1px solid var(--border-parchment); background: rgba(251,245,232,0.6);
+}
+.stat-value {
+  font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--earth);
+}
+.stat-label {
+  font-family: var(--font-label); font-size: 7px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--ink-dim); margin-top: 4px;
+}
+
+.prose {
+  font-size: 14px; line-height: 1.8; color: var(--ink-mid);
+  font-style: italic; max-width: 600px; margin: 0 auto;
+}
+.prose strong { color: var(--ink); font-style: normal; }
+
+.member-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 12px 0; }
+.member-card {
+  border: 1px solid var(--border-parchment); border-radius: 8px;
+  padding: 16px; background: rgba(251,245,232,0.7);
+  display: flex; align-items: flex-start; gap: 14px; transition: all 0.25s;
+}
+.member-card:hover { border-color: var(--gold); box-shadow: 0 4px 12px rgba(26,20,16,0.04); }
+.member-card.current { border-left: 4px solid var(--earth); background: rgba(245,250,235,0.75); }
+.member-glyph { font-size: 28px; flex-shrink: 0; width: 32px; text-align: center; }
+.member-info { flex: 1; }
+.member-name {
+  font-family: var(--font-display); font-size: 14px; color: var(--ink); margin-bottom: 2px;
+}
+.member-role {
+  font-family: var(--font-label); font-size: 8px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--earth); margin-bottom: 4px;
+}
+.member-desc { font-size: 12px; color: var(--ink-dim); font-style: italic; line-height: 1.5; }
+
+.timeline { margin: 12px 0; }
+.timeline-item {
+  padding: 12px 0; border-bottom: 1px solid var(--border-parchment);
+  display: flex; gap: 12px;
+}
+.timeline-item:last-child { border-bottom: none; }
+.timeline-year {
+  font-family: var(--font-label); font-size: 9px; letter-spacing: 2px;
+  color: var(--earth); flex-shrink: 0; width: 60px; text-align: right;
+}
+.timeline-text { font-size: 13px; color: var(--ink-mid); font-style: italic; line-height: 1.5; flex: 1; }
+
+.bronze-note {
+  text-align: center; padding: 20px; margin: 20px 0;
+  border: 2px solid rgba(90,122,48,0.3); border-radius: 8px;
+  background: rgba(90,122,48,0.05);
+  font-size: 14px; font-style: italic; color: var(--ink-mid); line-height: 1.7;
+}
+
+.alliance-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px; margin: 12px 0;
+}
+.alliance-card {
+  text-align: center; padding: 12px 10px; border-radius: 6px;
+  border: 1px solid var(--border-parchment); background: rgba(251,245,232,0.5);
+  transition: all 0.2s;
+}
+.alliance-card:hover { border-color: var(--gold); }
+.alliance-house {
+  font-family: var(--font-display); font-size: 12px; color: var(--ink);
+}
+.alliance-type {
+  font-family: var(--font-label); font-size: 7px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--ink-dim); margin-top: 2px;
+}
+
+.site-footer {
+  text-align: center; padding: 32px 20px; border-top: 2px solid var(--gold-border);
+  margin-top: 36px; font-family: var(--font-label); font-size: 7px;
+  letter-spacing: 4px; text-transform: uppercase; color: var(--ink-dim); opacity: 0.5;
+}
+
+@media (max-width: 600px) {
+  .member-card { flex-direction: column; }
+  .nav-house { overflow-x: auto; justify-content: flex-start; flex-wrap: nowrap; }
+}
+</style>
+</head>
+<body>
+
+<div class="content-layer">
+
+<nav class="nav-house">
+  <a href="../index.html">Charter</a>
+  <a href="../courts.html">⚖ Court</a>
+  <a href="../comitia.html">🗳 Comitia</a>
+  <a href="../senate.html">🏛 Senate</a>
+  <a href="../oracle.html">⬡ Oracle</a>
+  <a href="../archives.html">📜 Archives</a>
+  <a href="../forum.html">◈ Forum</a>
+</nav>
+
+<header class="house-header">
+  <span class="house-sigil">♉</span>
+  <div class="house-eyebrow">Olympian · Earth · Blood-Right · 287 Years</div>
+  <h1>House Taurinus</h1>
+  <div class="house-motto">"Enduring strength, measured power."</div>
+</header>
+
+<div class="container">
+
+  <div class="house-banner">
+    <div class="banner-label">Current Seat</div>
+    <div class="banner-stats">
+      Senator Mategwas Taurinus · Taurus · Olympian · Ancestral Seat: Caepton Granary District
+    </div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-value">287</div>
+      <div class="stat-label">Years Held</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">Ares</div>
+      <div class="stat-label">Walking God</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">3</div>
+      <div class="stat-label">Aedile Offices Held</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">Blood-Right</div>
+      <div class="stat-label">Selection Method</div>
+    </div>
+  </div>
+
+  <div class="section-title">Family History</div>
+  <div class="prose">
+    <p>House Taurinus has held the seat of <strong>Taurus</strong> for 287 years. They are not the oldest family in the Senate — the Geminiani have held Gemini for 503. They are not the most martial — the Aretii have led the War Council for four centuries. But the Taurini are the family that <strong>feeds the Republic</strong>.</p>
+    <p style="margin-top:12px;">The family's ancestral seat is the <strong>Caepton Granary District</strong>, the vast network of silos and storehouses that stockpile grain against the winters when Underworld-held signs outnumber Olympian. Every Senator who votes on a war measure does so on Taurinus grain. Every justice who rules from the Hall of Seven Thrones eats bread baked from Taurinus wheat. The family's power is not in speeches or swords. It is in the silent threat of empty silos.</p>
+    <p style="margin-top:12px;"><strong>Ares alone walks Taurus.</strong> One god, one sign, one family. No stellium complicates the Taurini's relationship with the divine. The war god's presence makes the Bull a military asset — but the Taurini have always interpreted Ares not as aggression but as <strong>fortification</strong>. The Bull does not charge. The Bull holds the line.</p>
+    <p style="margin-top:12px;">The family's sacred relic is a <strong>bronze bull</strong> — life-sized, cast in the 52nd year of their tenure. It stands in the Senate antechamber. Every Taurinus Senator touches the bull's horn before entering the chamber. The bronze has never been moved by anyone outside the family. No Taurinus Senator has ever died in office from violence. All have died of age. The family regards this as proof that Ares protects his own.</p>
+  </div>
+
+  <div class="section-title">The Bronze Bull Tradition</div>
+  <div class="bronze-note">
+    <p>"The Taurini bring the bronze bull to every session. It has never been moved by anyone outside the family. Every Taurinus Senator has died in office — from age, not violence. They regard this as pride."</p>
+    <p style="margin-top:8px;font-size:12px;color:var(--ink-faint);">— From the Senate Records, Charon Archive</p>
+  </div>
+
+  <div class="section-title">Current Senator</div>
+  <div class="member-grid">
+    <div class="member-card current">
+      <span class="member-glyph">🐂</span>
+      <div class="member-info">
+        <div class="member-name">Mategwas Taurinus</div>
+        <div class="member-role">Senator for Taurus · Keeper of the Granaries</div>
+        <div class="member-desc">
+          Creator of the Ealdforn Republic. Seated in the Olympian throne of Taurus by blood-right and divine manifestation. Ares walks the sign alone — one god, one Senator, one unbroken line. The Taurini do not speak loudly. They do not need to. When the granaries are full, the Republic is stable. When they are threatened, the Republic listens.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Notable Members</div>
+  <div class="member-grid">
+    <div class="member-card">
+      <span class="member-glyph">🌾</span>
+      <div class="member-info">
+        <div class="member-name">Porcia Taurina</div>
+        <div class="member-role">Senator · 220–287th Years of the War</div>
+        <div class="member-desc">
+          Served 67 years. Never spoke a word in the Senate chamber. Communicated entirely through written notes passed to the clerks. Her most famous note: "Feed the soldiers or they will eat the citizens. Fund the granaries." The chamber fell silent for ten minutes. The funding passed unanimously. She died in office at 91. The bronze bull was polished the next day.
+        </div>
+      </div>
+    </div>
+
+    <div class="member-card">
+      <span class="member-glyph">🏗️</span>
+      <div class="member-info">
+        <div class="member-name">Tiberius Taurinus</div>
+        <div class="member-role">Aedile Maximus · 178–195th Years of the War</div>
+        <div class="member-desc">
+          The first Taurinus to hold the Aedile's office. Designed the granary rotation system that prevents any single district from controlling the Republic's food supply. His system is still in use. His statue stands in the Caepton Forum — not for glory, but so citizens can leave offerings of grain at its feet during lean years.
+        </div>
+      </div>
+    </div>
+
+    <div class="member-card">
+      <span class="member-glyph">📜</span>
+      <div class="member-info">
+        <div class="member-name">Claudia Taurina</div>
+        <div class="member-role">Senator · 95–142nd Years of the War</div>
+        <div class="member-desc">
+          The only Taurinus to serve as both Senator and Censor Maximus. Negotiated the Grain Treaty with the Underworld-held Virgo families — an agreement that food shipments would continue regardless of which faction held which sign. The treaty has never been broken. Even Hades needs bread.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">House Timeline</div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-year">Year 60</div>
+      <div class="timeline-text">Taurina Prima establishes the first granary at Caepton. The Taurini are grain merchants before they are Senators.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">Year 95</div>
+      <div class="timeline-text">Taurus falls under Olympian occupation. The Taurini are granted blood-right. The first Taurinus Senator takes the seat.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">Year 112</div>
+      <div class="timeline-text">The bronze bull is cast. Every Taurinus Senator since has touched its horn before entering the chamber.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">Year 142</div>
+      <div class="timeline-text">Claudia Taurina negotiates the Grain Treaty. Food shipments become neutral in the war.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">Year 178</div>
+      <div class="timeline-text">Tiberius Taurinus becomes Aedile Maximus. The granary rotation system is established.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">Year 220</div>
+      <div class="timeline-text">Porcia Taurina takes the Senate seat. She will not speak for 67 years. Her notes will change the Republic.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">Year 347</div>
+      <div class="timeline-text">Mategwas Taurinus is seated as Senator — the creator of the Republic himself, holding the Bull's throne. The Coherence Covenant is signed.</div>
+    </div>
+  </div>
+
+  <div class="section-title">House Alliances</div>
+  <div class="alliance-grid">
+    <div class="alliance-card">
+      <div class="alliance-house">House Aretias</div>
+      <div class="alliance-type">War Council · Mutual Defense</div>
+    </div>
+    <div class="alliance-card">
+      <div class="alliance-house">House Virgina</div>
+      <div class="alliance-type">Grain Treaty · Trade</div>
+    </div>
+    <div class="alliance-card">
+      <div class="alliance-house">House Geminiana</div>
+      <div class="alliance-type">Comitia Liaison</div>
+    </div>
+    <div class="alliance-card">
+      <div class="alliance-house">House Cancri</div>
+      <div class="alliance-type">Bay Supply Routes</div>
+    </div>
+    <div class="alliance-card">
+      <div class="alliance-house">House Capricornis</div>
+      <div class="alliance-type">Registry · Contract Enforcement</div>
+    </div>
+    <div class="alliance-card">
+      <div class="alliance-house">House Leonid</div>
+      <div class="alliance-type">Shrine-Funding · Mutual Interest</div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  House Taurinus · Seat of Taurus · Caepton Granary District<br>
+  "Enduring strength, measured power." · 287 Years · Blood-Right
+</footer>
+
+</div>
+
+</body>
+</html>
