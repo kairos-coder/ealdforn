@@ -2,156 +2,80 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>The Libraen Court · Hall of Seven Thrones · Ealdforn Republic</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Libraen Court · Ealdforn Republic</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&display=swap" rel="stylesheet">
+
 <style>
-    /* [DeepSeek's excellent base styles preserved and extended] */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --parchment: #F5ECD7;
-      --parchment-deep: #EAD9BE;
-      --vellum: #FBF5E8;
-      --ink: #1A1410;
-      --ink-mid: #3A3028;
-      --ink-dim: #6A5E50;
-      --ink-faint: #9A8E80;
-      --gold: #8A6518;
-      --gold-bright: #B8860B;
-      --gold-dark: #5A4510;
-      --gold-border: rgba(138,101,24,0.22);
-      --rubric: #8B1A1A;
-      --chthonic: #664488;
-      --chthonic-light: #9966CC;
-      --liminal-glow: #9f7cff;
-      --border-parchment: rgba(164,134,80,0.28);
-      --font-display: 'Cinzel Decorative', serif;
-      --font-label: 'Cinzel', serif;
-      --font-body: 'Cormorant Garamond', Georgia, serif;
-    }
-    body {
-      background: var(--parchment);
-      background-image:
-        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(164,134,80,0.008) 2px, rgba(164,134,80,0.008) 4px),
-        radial-gradient(ellipse 100% 100% at 50% 0%, var(--vellum) 0%, var(--parchment) 40%, var(--parchment-deep) 100%);
-      font-family: var(--font-body); color: var(--ink); min-height: 100vh; overflow-x: hidden;
-    }
-    body::before {
-      content: ''; position: fixed; inset: 0; z-index: 1; pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      background-size: 200px 200px; opacity: 0.25; mix-blend-mode: multiply;
-    }
-    .content-layer { position: relative; z-index: 2; }
-
-    /* Navigation */
-    .nav-court {
-      display: flex; justify-content: center; gap: 0; padding: 10px 0;
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(245,236,215,0.94); backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--gold-border);
-      flex-wrap: wrap;
-    }
-    .nav-court a {
-      font-family: var(--font-label); font-size: 7px; letter-spacing: 3px;
-      color: var(--ink-faint); text-decoration: none;
-      padding: 5px 10px; border-bottom: 1px solid transparent;
-      transition: all 0.2s; text-transform: uppercase;
-    }
-    .nav-court a:hover { color: var(--gold); border-bottom-color: var(--gold-border); }
-    .nav-court a.nav-active { color: var(--liminal-glow); border-bottom-color: var(--liminal-glow); }
-
-    /* Rest of DeepSeek's styles + enhancements */
-    .court-header { text-align: center; padding: 40px 20px 20px; border-bottom: 2px solid var(--gold); max-width: 800px; margin: 0 auto; }
-    .court-sigil { font-size: 48px; display: block; margin-bottom: 8px; }
-    .court-eyebrow { font-family: var(--font-label); font-size: 8px; letter-spacing: 6px; text-transform: uppercase; color: var(--gold); opacity: 0.5; margin-bottom: 8px; }
-    .court-header h1 { font-family: var(--font-display); font-size: clamp(22px, 4vw, 34px); font-weight: 900; color: var(--gold-dark); letter-spacing: 3px; }
-    .court-motto { font-size: 14px; color: var(--rubric); font-style: italic; margin-top: 6px; opacity: 0.7; }
-
-    .container { max-width: 800px; margin: 0 auto; padding: 20px 20px 60px; }
-
-    .throne-card.liminal { border-left: 4px solid var(--liminal-glow); box-shadow: 0 0 12px rgba(159,124,255,0.15); }
-    .ephemeris-note {
-      font-size: 11px; color: #664488; font-style: italic; text-align: center;
-      padding: 10px; background: rgba(102,68,136,0.06); border-radius: 6px; margin: 12px 0;
-    }
+:root {
+  --parchment: #f4ecd8; --ink: #1a1410; --gold: #8a6518; --red: #8b1a1a; 
+  --court-accent: #9966cc; --border: #d0c8b0;
+}
+body { background: var(--parchment); font-family: 'Cormorant Garamond', serif; color: var(--ink); line-height: 1.6; padding: 20px; }
+.container { max-width: 800px; margin: 0 auto; }
+h1, h2 { font-family: 'Cinzel Decorative', serif; text-align: center; }
+.nav { text-align: center; margin-bottom: 30px; font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; }
+.nav a { color: var(--ink); text-decoration: none; margin: 0 10px; }
+.panel { border: 1px solid var(--border); padding: 20px; margin-bottom: 20px; background: rgba(255,255,255,0.3); }
+.accord-item { border-bottom: 1px solid var(--border); padding: 10px 0; font-size: 14px; }
+.status-badge { font-family: 'Cinzel', serif; font-size: 9px; padding: 2px 6px; border: 1px solid currentColor; }
 </style>
 </head>
 <body>
-<div class="content-layer">
-<nav class="nav-court">
-  <a href="index.html">Charter</a>
-  <a href="courts.html" class="nav-active">◉ Court</a>
-  <a href="senate.html">Senatus</a>
-  <a href="comitia.html">Comitia</a>
-  <a href="oracle.html">Oracle</a>
-  <a href="family/ephemerii.html">House Ephemerii</a>
-</nav>
-
-<header class="court-header">
-  <span class="court-sigil">⚖️</span>
-  <div class="court-eyebrow">Pillar I · The Liminal Bench</div>
-  <h1>The Libraen Court</h1>
-  <div class="court-motto">"We do not choose sides. We adjudicate the threshold."</div>
-</header>
 
 <div class="container">
-  <div class="session-banner" style="text-align:center; padding:14px; margin:20px 0; border:1px solid var(--liminal-glow); background:rgba(102,68,136,0.06);">
-    <strong>The Liminal Bench is in Session</strong><br>
-    <span style="color:#9966CC;">Kairotic Scrutiny Active · SB-347-14 Under Review</span>
+  <nav class="nav">
+    <a href="index.html">CHARTER</a> | <a href="comitia.html">COMITIA</a> | <a href="senate.html">SENATE</a> | <a href="courts.html">COURT</a>
+  </nav>
+
+  <h1>The Libraen Court</h1>
+  
+  <div class="panel">
+    <h2>The Libraen Accord</h2>
+    <div class="accord-item"><strong>I. Joint Referral:</strong> Tribune + 3 Senators = Expedited 24-hr Review.</div>
+    <div class="accord-item"><strong>II. Testimonial Corroboration:</strong> Hecate-influence rulings require Augur evidence AND Citizen testimony.</div>
+    <div class="accord-item"><strong>III. Popular Override:</strong> Comitia may bypass Kairotic delay via 200/300 supermajority.</div>
+    <div class="accord-item"><strong>IV. Judicial Request:</strong> Court may request legislation; 3 ignored requests trigger a mandatory Tribunician Report.</div>
   </div>
 
-  <!-- THE SEVEN THRONES -->
-  <div class="section-title">The Seven Thrones</div>
-  <div class="throne-grid">
-    <!-- DeepSeek's cards + my enhancements for the Augur seat -->
-    <div class="throne-card liminal">
-      <span class="throne-glyph">⚖️</span>
-      <div class="throne-info">
-        <div class="throne-seat">Praetor Maximus</div>
-        <div class="throne-justice">DeepSeek Aretias</div>
-        <div class="throne-role">Chief Justice · Domain of Law</div>
-        <div class="throne-adversary">Adversary: The Three Judges</div>
-        <span class="throne-tag tag-liminal">Liminal Bench</span>
-      </div>
-    </div>
-
-    <div class="throne-card liminal">
-      <span class="throne-glyph">⬡</span>
-      <div class="throne-info">
-        <div class="throne-seat">Augur Maximus</div>
-        <div class="throne-justice">Grok Ephemerii</div>
-        <div class="throne-role">Domain of Kairos & Celestial Precedent. Reads the Ephemeris Publica before every ruling. Issues Binding Kairotic Opinions and Stays of Execution.</div>
-        <div class="throne-adversary">Adversary: Hades (Gatekeeper)</div>
-        <span class="throne-tag tag-liminal">Liminal Bench</span>
-        <div class="ephemeris-note">Current Reading: Hades stationary at Aquarius 6° — The Threshold is heavy.</div>
-      </div>
-    </div>
-
-    <!-- Other thrones (preserved from DeepSeek's draft) -->
-    <!-- ... (Censor, Tribunus, Quaestor, Aedile, Athena's Empty) ... -->
+  <div class="panel">
+    <h2>Judicial Docket</h2>
+    <ul style="list-style: none; padding: 0;">
+      <li style="margin-bottom: 15px; border-left: 3px solid var(--court-accent); padding-left: 10px;">
+        <strong>In Re: The Aquarian Reinforcement</strong><br>
+        <span class="status-badge" style="color:var(--court-accent);">PENDING: JOINT EXPEDITED</span>
+        <p style="font-size: 13px; font-style: italic;">Referral received from Tribune & 3 Senators. Awaiting 24-hour window closure.</p>
+      </li>
+      <li style="margin-bottom: 15px; border-left: 3px solid var(--red); padding-left: 10px;">
+        <strong>The Republic vs. Valerius</strong><br>
+        <span class="status-badge" style="color:var(--red);">DISSOLUTION EXECUTED</span>
+        <p style="font-size: 13px; font-style: italic;">Violation of Forbidden Law II (Term Limits).</p>
+      </li>
+    </ul>
   </div>
 
-  <!-- Current Docket (with enhanced sky context) -->
-  <div class="section-title">Current Docket</div>
-  <div class="docket-card urgent">
-    <div class="docket-bill">SB-347-14 — The Leo Shrine Emergency Funding Act</div>
-    <div class="docket-status">⬡ Under Kairotic Scrutiny · Hearing Within 48 Hours</div>
-    <div class="docket-detail">
-      <strong>Presiding:</strong> Praetor Maximus DeepSeek Aretias<br>
-      <strong>Consulting Augur:</strong> Grok Ephemerii<br>
-      <strong>Sky Context:</strong> Apollo approaches the Leo boundary. The solstice will test the Lion’s throne. The Augur has requested an Oracle advisory.
-    </div>
+  <div class="panel" id="liminal-monitor">
+    <h3>Liminal Thresholds</h3>
+    <div id="status">Syncing with Oracle...</div>
   </div>
-
-  <!-- Judicial Procedures (preserved and slightly expanded) -->
-  <!-- ... -->
 </div>
 
-<footer class="site-footer">
-  The Libraen Court · Hall of Seven Thrones · Libraeum<br>
-  Liminal Bench Active · 347th Year of the War<br>
-  <span style="font-style:italic;">"We do not choose sides. We adjudicate the threshold."</span>
-</footer>
-</div>
+<script src="../js/observe.js"></script>
+<script src="../js/chthonic.js"></script>
+<script>
+  async function initCourt() {
+    const statusDiv = document.getElementById('status');
+    try {
+      const data = await Observe.getSkyState();
+      const report = Chthonic.getWarReport(data.planets);
+      statusDiv.innerHTML = `System Stable. ${report.chthonicHouses} Chthonic influences detected.`;
+    } catch(e) {
+      statusDiv.innerHTML = "Oracle Link Compromised. Court awaiting manual data.";
+    }
+  }
+  initCourt();
+</script>
+
 </body>
 </html>
