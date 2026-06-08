@@ -3,60 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>The Ealdforn Republic</title>
+<title>The Ealdforn Republic · Charter</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&display=swap" rel="stylesheet">
 
 <style>
-/* ═══════════════════════════════════════════
-   EALDFORN REPUBLIC — MONOLITH
-   Charter · Stage · Grimoires · Nexus
-   Parchment ground. Gold hierarchy. One Republic.
-   ═══════════════════════════════════════════ */
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  /* Parchment */
-  --parchment:       #F5ECD7;
-  --parchment-deep:  #EAD9BE;
-  --parchment-warm:  #E2CBAA;
-  --parchment-shadow:#D4B98A;
-  --vellum:          #FBF5E8;
-  --ink:             #1A1410;
-  --ink-mid:         #3A3028;
-  --ink-dim:         #6A5E50;
-  --ink-faint:       #9A8E80;
-
-  /* Gold */
-  --gold:            #8A6518;
-  --gold-bright:     #B8860B;
-  --gold-light:      #D4A840;
-  --gold-dark:       #5A4510;
-  --gold-dim:        #3A2A08;
-  --gold-border:     rgba(138,101,24,0.25);
-  --gold-glow:       rgba(138,101,24,0.08);
-
-  /* Accents */
-  --rubric:          #8B1A1A;
-  --rubric-dim:      #5A1010;
-  --green:           #2D5A1E;
-  --water:           #4878A0;
-  --air:             #6A58A0;
-  --fire:            #A05028;
-  --chthonic:        #664488;
-  --chthonic-light:  #9966CC;
-
-  /* Borders */
-  --border-parchment: rgba(164,134,80,0.3);
-  --border-gold:      rgba(138,101,24,0.22);
-  --border-ink:       rgba(26,20,16,0.1);
-  --stage-border:     rgba(139,26,26,0.2);
-
-  /* Font stacks */
-  --font-display:  'Cinzel Decorative', serif;
-  --font-label:    'Cinzel', serif;
-  --font-body:     'Cormorant Garamond', Georgia, serif;
+  --parchment:    #F5ECD7;
+  --parchment-deep: #EAD9BE;
+  --vellum:       #FBF5E8;
+  --ink:          #1A1410;
+  --ink-mid:      #3A3028;
+  --ink-dim:      #6A5E50;
+  --ink-faint:    #9A8E80;
+  --gold:         #8A6518;
+  --gold-bright:  #B8860B;
+  --gold-dark:    #5A4510;
+  --gold-border:  rgba(138,101,24,0.22);
+  --rubric:       #8B1A1A;
+  --chthonic:     #664488;
+  --chthonic-light: #9966CC;
+  --green:        #2D5A1E;
+  --border-parchment: rgba(164,134,80,0.28);
+  --font-display: 'Cinzel Decorative', serif;
+  --font-label:   'Cinzel', serif;
+  --font-body:    'Cormorant Garamond', Georgia, serif;
 }
 
 html { scroll-behavior: smooth; }
@@ -64,519 +37,281 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--parchment);
   background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(164,134,80,0.01) 2px, rgba(164,134,80,0.01) 4px),
-    repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(164,134,80,0.008) 3px, rgba(164,134,80,0.008) 6px),
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(164,134,80,0.008) 2px, rgba(164,134,80,0.008) 4px),
     radial-gradient(ellipse 100% 100% at 50% 0%, var(--vellum) 0%, var(--parchment) 40%, var(--parchment-deep) 100%);
-  font-family: var(--font-body);
-  color: var(--ink);
-  min-height: 100vh;
-  overflow-x: hidden;
-  position: relative;
+  font-family: var(--font-body); color: var(--ink); min-height: 100vh; overflow-x: hidden;
 }
 
-/* ── PARCHMENT GRAIN ── */
 body::before {
-  content: '';
-  position: fixed; inset: 0; z-index: 1;
-  pointer-events: none;
+  content: ''; position: fixed; inset: 0; z-index: 1; pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
-  opacity: 0.28;
-  mix-blend-mode: multiply;
+  background-size: 200px 200px; opacity: 0.25; mix-blend-mode: multiply;
 }
 
-/* ── CARD MOSAIC ── */
-#cardMosaic {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  display: grid; grid-template-columns: repeat(6, 1fr);
-  opacity: 0.06;
-}
-#cardMosaic img {
-  width: 100%; aspect-ratio: 2/3; object-fit: cover;
-  filter: sepia(0.5) brightness(1.08) saturate(0.65);
-  mix-blend-mode: multiply;
-  transition: opacity 1.2s ease;
-}
-
-/* ── CONTENT LAYER ── */
 .content-layer { position: relative; z-index: 2; }
 
-/* ═══════════════════════════════════════════
-   NAVIGATION — Republic Nav
-   ═══════════════════════════════════════════ */
-.nav-bar {
-  display: flex; justify-content: center; gap: 0;
-  padding: 12px 0;
+/* ── NAV ── */
+.nav-republic {
+  display: flex; justify-content: center; gap: 0; padding: 10px 0;
   position: sticky; top: 0; z-index: 100;
-  background: rgba(245,236,215,0.94);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--border-gold);
-  box-shadow: 0 1px 0 rgba(138,101,24,0.06), 0 2px 8px rgba(26,20,16,0.04);
+  background: rgba(245,236,215,0.94); backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--gold-border);
   flex-wrap: wrap;
 }
-.nav-bar a {
-  font-family: var(--font-label); font-size: 8px;
+.nav-republic a {
+  font-family: var(--font-label); font-size: 7px; letter-spacing: 3px;
   color: var(--ink-faint); text-decoration: none;
-  letter-spacing: 3px; padding: 5px 12px;
-  border-bottom: 1px solid transparent;
-  transition: all 0.25s; text-transform: uppercase;
+  padding: 5px 10px; border-bottom: 1px solid transparent;
+  transition: all 0.2s; text-transform: uppercase;
 }
-.nav-bar a:hover { color: var(--gold); border-bottom-color: var(--gold-border); }
-.nav-bar a.nav-active { color: var(--gold-dark); border-bottom-color: var(--gold); }
-.nav-bar a.nav-return {
-  color: var(--rubric); font-weight: 700;
-}
+.nav-republic a:hover { color: var(--gold); border-bottom-color: var(--gold-border); }
+.nav-republic a.nav-active { color: var(--gold-dark); border-bottom-color: var(--gold); }
+.nav-republic a.nav-court { color: var(--chthonic-light); }
+.nav-republic a.nav-oracle { color: var(--chthonic); }
+.nav-republic a.nav-senate { color: var(--gold); }
+.nav-republic a.nav-comitia { color: var(--green); }
+.nav-republic a.nav-archives { color: var(--ink-dim); }
+.nav-republic a.nav-forum { color: var(--rubric); }
 
-/* ═══════════════════════════════════════════
-   HERO — The Republic Gate
-   ═══════════════════════════════════════════ */
+/* ── HERO ── */
 .hero {
-  text-align: center; padding: 52px 20px 32px;
-  position: relative;
+  text-align: center; padding: 48px 20px 28px;
+  border-bottom: 2px solid var(--gold); max-width: 800px; margin: 0 auto;
 }
 .hero::before {
-  content: '';
-  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-  width: 1px; height: 40px;
+  content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 1px; height: 36px;
   background: linear-gradient(to bottom, transparent, var(--gold));
 }
-.hero-sigil {
-  font-size: 56px; display: block; margin-bottom: 12px;
-  filter: drop-shadow(0 0 24px rgba(138,101,24,0.3));
-  animation: float 6s ease-in-out infinite;
-}
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
+.hero-sigil { font-size: 52px; display: block; margin-bottom: 8px; animation: float 6s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
 .hero-eyebrow {
-  font-family: var(--font-label); font-size: 9px;
-  letter-spacing: 8px; text-transform: uppercase;
-  color: var(--gold); opacity: 0.5; margin-bottom: 12px;
+  font-family: var(--font-label); font-size: 8px; letter-spacing: 8px;
+  text-transform: uppercase; color: var(--gold); opacity: 0.5; margin-bottom: 10px;
 }
 .hero h1 {
-  font-family: var(--font-display);
-  font-size: clamp(26px, 5vw, 42px); font-weight: 900;
-  color: var(--gold-dark);
-  text-shadow: 0 1px 0 rgba(255,255,255,0.6), 0 2px 8px rgba(138,101,24,0.1);
-  letter-spacing: 3px; margin-bottom: 8px;
+  font-family: var(--font-display); font-size: clamp(24px, 5vw, 38px);
+  font-weight: 900; color: var(--gold-dark); letter-spacing: 3px;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
 }
 .hero-subtitle {
-  font-family: var(--font-body); font-style: italic;
-  font-size: clamp(15px, 2.5vw, 20px);
-  color: var(--ink-mid); margin-bottom: 6px;
+  font-size: clamp(14px, 2.5vw, 18px); color: var(--ink-mid);
+  font-style: italic; margin-top: 6px;
 }
 .hero-motto {
-  font-size: 13px; color: var(--rubric);
-  font-style: italic; opacity: 0.7;
-}
-.hero-rule {
-  width: 360px; max-width: 55vw; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  margin: 28px auto 0;
+  font-size: 13px; color: var(--rubric); font-style: italic; margin-top: 8px; opacity: 0.7;
 }
 
-/* ═══════════════════════════════════════════
-   SKY BANNER — Current War Status
-   ═══════════════════════════════════════════ */
-.sky-banner {
-  text-align: center; padding: 18px 20px; margin: 0 auto 32px;
-  max-width: 600px;
-  border: 1px solid var(--border-parchment);
-  background: rgba(245,236,215,0.5);
-  border-radius: 6px;
-}
-.sky-banner .banner-label {
-  font-family: var(--font-label); font-size: 7px;
-  letter-spacing: 5px; text-transform: uppercase;
-  color: var(--ink-dim); margin-bottom: 8px;
-}
-.sky-banner .count {
-  font-family: var(--font-display);
-  font-size: 28px; font-weight: 700;
-}
-.sky-banner .olympian { color: var(--gold); }
-.sky-banner .chthonic { color: var(--chthonic); }
-.sky-banner .banner-detail {
-  font-size: 11px; color: var(--ink-faint);
-  margin-top: 8px; font-style: italic; line-height: 1.5;
-}
+/* ── CONTAINER ── */
+.container { max-width: 800px; margin: 0 auto; padding: 20px 20px 60px; }
 
-/* ═══════════════════════════════════════════
-   SECTION HEADERS
-   ═══════════════════════════════════════════ */
-.section-container {
-  max-width: 780px; margin: 0 auto;
-  padding: 40px 20px;
-  border-top: 1px solid var(--border-gold);
-}
-.section-header { text-align: center; margin-bottom: 24px; }
-.section-eyebrow {
-  font-family: var(--font-label); font-size: 7px;
-  letter-spacing: 6px; text-transform: uppercase;
-  color: var(--gold); opacity: 0.45; margin-bottom: 6px;
-}
+/* ── INSTITUTION GRID ── */
 .section-title {
-  font-family: var(--font-display);
-  font-size: clamp(17px, 2.5vw, 24px);
-  color: var(--gold-dark); letter-spacing: 2px;
+  font-family: var(--font-display); font-size: 15px; color: var(--gold-dark);
+  text-align: center; letter-spacing: 2px;
+  margin: 32px 0 16px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--gold-border);
 }
 
-/* ═══════════════════════════════════════════
-   CONSTITUTIONAL PILLARS — Compact Cards
-   ═══════════════════════════════════════════ */
-.pillar-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 14px; margin-top: 8px;
+.institution-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
 }
-.pillar-card {
-  background: rgba(251,245,232,0.75);
-  border: 1px solid var(--border-parchment);
-  border-radius: 8px; padding: 20px 16px; text-align: center;
-  transition: all 0.3s; cursor: default;
-  box-shadow: 0 1px 0 rgba(255,255,255,0.6), 0 2px 6px rgba(26,20,16,0.04);
+.inst-card {
+  border: 1px solid var(--border-parchment); border-radius: 8px;
+  padding: 20px 16px; text-align: center; transition: all 0.25s;
+  text-decoration: none; display: block;
+  background: rgba(251,245,232,0.7);
 }
-.pillar-card:hover {
-  border-color: var(--gold);
-  transform: translateY(-2px);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.6), 0 8px 20px rgba(26,20,16,0.08);
+.inst-card:hover {
+  border-color: var(--gold); transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(26,20,16,0.06);
 }
-.pillar-icon { font-size: 32px; margin-bottom: 6px; display: block; }
-.pillar-name {
+.inst-icon { font-size: 32px; display: block; margin-bottom: 6px; }
+.inst-name {
   font-family: var(--font-display); font-size: 13px;
-  color: var(--gold-dark); letter-spacing: 1px; margin-bottom: 2px;
+  color: var(--ink); letter-spacing: 1px; margin-bottom: 2px;
 }
-.pillar-subtitle {
-  font-family: var(--font-label); font-size: 7px;
-  letter-spacing: 3px; color: var(--ink-dim);
-  text-transform: uppercase; margin-bottom: 8px;
+.inst-pillar {
+  font-family: var(--font-label); font-size: 7px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--ink-dim); margin-bottom: 6px;
 }
-.pillar-desc {
-  font-size: 12px; color: var(--ink-mid);
-  font-style: italic; line-height: 1.6;
+.inst-desc {
+  font-size: 11px; color: var(--ink-dim); font-style: italic; line-height: 1.5; margin-bottom: 8px;
 }
-.pillar-link {
-  display: inline-block; margin-top: 10px;
-  font-family: var(--font-label); font-size: 7px;
-  letter-spacing: 3px; text-transform: uppercase;
-  color: var(--gold); text-decoration: none;
-  padding: 4px 12px; border: 1px solid var(--gold-border);
-  border-radius: 4px; transition: all 0.2s;
+.inst-ai {
+  font-family: var(--font-label); font-size: 7px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--gold);
 }
-.pillar-link:hover {
-  background: var(--gold-glow);
-  border-color: var(--gold);
-}
+.inst-card.court-card { border-left: 3px solid var(--chthonic-light); }
+.inst-card.senate-card { border-left: 3px solid var(--gold-bright); }
+.inst-card.comitia-card { border-left: 3px solid var(--green); }
+.inst-card.oracle-card { border-left: 3px solid var(--chthonic); }
+.inst-card.archives-card { border-left: 3px solid var(--ink-dim); }
+.inst-card.forum-card { border-left: 3px solid var(--rubric); }
 
-/* Fourth Pillar — Oracle */
-.oracle-card {
-  max-width: 500px; margin: 16px auto 0;
-  text-align: center; padding: 20px;
-  border: 1px dashed var(--border-parchment);
-  border-radius: 8px;
-  background: rgba(245,236,215,0.4);
+/* ── SKY BANNER ── */
+.sky-banner {
+  text-align: center; padding: 14px 16px; margin: 20px 0;
+  border: 1px solid var(--border-parchment); border-radius: 6px;
+  background: rgba(245,236,215,0.5);
 }
-.oracle-card .pillar-label {
-  display: inline-block;
-  font-family: var(--font-label); font-size: 7px;
-  letter-spacing: 4px; text-transform: uppercase;
-  padding: 3px 10px; border-radius: 3px;
-  background: rgba(45,90,30,0.06); color: var(--green);
-  border: 1px solid rgba(45,90,30,0.12);
-  margin-bottom: 8px;
+.sky-label {
+  font-family: var(--font-label); font-size: 7px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--ink-dim); margin-bottom: 6px;
 }
-.oracle-card .oracle-name {
-  font-family: var(--font-display); font-size: 15px;
-  color: var(--ink); letter-spacing: 2px; margin-bottom: 4px;
+.sky-count {
+  font-family: var(--font-display); font-size: 20px; font-weight: 700;
 }
-.oracle-card .oracle-desc {
-  font-size: 13px; color: var(--ink-mid);
-  font-style: italic; line-height: 1.7;
-}
+.sky-count .olympian { color: var(--gold-bright); }
+.sky-count .chthonic { color: var(--chthonic-light); }
 
-/* ═══════════════════════════════════════════
-   FORBIDDEN LAWS
-   ═══════════════════════════════════════════ */
+/* ── FORBIDDEN LAWS ── */
 .forbidden-list {
-  list-style: none; padding: 0; margin: 8px 0;
-  max-width: 560px; margin-left: auto; margin-right: auto;
+  list-style: none; padding: 0; margin: 12px 0; max-width: 560px; margin-left: auto; margin-right: auto;
 }
 .forbidden-list li {
-  padding: 14px 0; border-bottom: 1px solid var(--border-parchment);
+  padding: 12px 0; border-bottom: 1px solid var(--border-parchment);
   counter-increment: forbidden;
 }
 .forbidden-list li:last-child { border-bottom: none; }
 .forbidden-list li::before {
   content: counter(forbidden) ".";
-  font-family: var(--font-display); font-size: 20px;
+  font-family: var(--font-display); font-size: 18px;
   color: var(--rubric); display: block; margin-bottom: 4px;
 }
 .forbidden-list .law-title {
-  font-family: var(--font-label); font-size: 11px;
-  letter-spacing: 2px; color: var(--ink);
+  font-family: var(--font-label); font-size: 10px; letter-spacing: 2px; color: var(--ink);
 }
 .forbidden-list .law-desc {
-  font-size: 13px; line-height: 1.7;
-  color: var(--ink-mid); margin-top: 4px;
-  font-style: italic;
+  font-size: 12px; line-height: 1.6; color: var(--ink-mid); margin-top: 4px; font-style: italic;
 }
 
-/* ═══════════════════════════════════════════
-   THE REALMS — Stage & Companions
-   ═══════════════════════════════════════════ */
-.realm-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 12px;
-}
-.realm-card {
-  background: rgba(251,245,232,0.75);
-  border: 1px solid var(--border-parchment);
-  border-radius: 8px; padding: 22px 16px; text-align: center;
-  transition: all 0.3s; text-decoration: none; display: block;
-  box-shadow: 0 1px 0 rgba(255,255,255,0.6), 0 2px 6px rgba(26,20,16,0.04);
-}
-.realm-card:hover {
-  border-color: var(--gold);
-  transform: translateY(-3px);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.6), 0 10px 24px rgba(26,20,16,0.1);
-}
-.realm-icon { font-size: 36px; display: block; margin-bottom: 8px; }
-.realm-title {
-  font-family: var(--font-display); font-size: 14px;
-  color: var(--gold-dark); letter-spacing: 1px; margin-bottom: 4px;
-}
-.realm-desc {
-  font-size: 11px; color: var(--ink-dim);
-  font-style: italic; line-height: 1.5;
-}
-.realm-status {
-  display: inline-block; margin-top: 8px;
-  font-family: var(--font-label); font-size: 7px;
-  letter-spacing: 2px; text-transform: uppercase;
-  padding: 3px 10px; border-radius: 10px;
-}
-.realm-status.active {
-  color: var(--gold-dark); border: 1px solid var(--gold-border);
-  background: var(--gold-glow);
-}
-.realm-status.companion {
-  color: var(--ink-faint); border: 1px solid var(--border-ink);
-  background: rgba(26,20,16,0.02);
-}
-
-/* ═══════════════════════════════════════════
-   SOCIAL NEXUS
-   ═══════════════════════════════════════════ */
-.social-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 8px;
-}
-.social-card-link {
-  background: rgba(251,245,232,0.65);
-  border: 1px solid var(--border-parchment);
-  border-radius: 6px; padding: 14px 10px; text-align: center;
-  transition: all 0.25s; text-decoration: none; display: flex;
-  flex-direction: column; align-items: center; gap: 3px;
-  box-shadow: 0 1px 0 rgba(255,255,255,0.5);
-}
-.social-card-link:hover {
-  border-color: var(--gold-border);
-  transform: translateY(-2px);
-  background: rgba(255,250,230,0.85);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.5), 0 4px 12px rgba(26,20,16,0.05);
-}
-.social-icon { font-size: 22px; }
-.social-platform {
-  font-family: var(--font-display); font-size: 11px;
-  color: var(--gold-dark); letter-spacing: 1px;
-}
-.social-handle {
-  font-family: var(--font-label); font-size: 7px;
-  letter-spacing: 2px; color: var(--ink-faint);
-  text-transform: uppercase; opacity: 0.55;
-}
-
-/* ═══════════════════════════════════════════
-   FOUNDING BLOCK
-   ═══════════════════════════════════════════ */
-.founding-block {
-  text-align: center; max-width: 560px; margin: 0 auto;
-  padding-top: 16px;
-}
-.founding-block .ratified {
-  font-family: var(--font-label); font-size: 8px;
-  letter-spacing: 4px; color: var(--ink-dim);
-  margin-bottom: 10px;
-}
-.founding-block .founding-text {
-  font-size: 14px; font-style: italic;
-  color: var(--ink-mid); line-height: 1.7;
-}
-
-/* ═══════════════════════════════════════════
-   FOOTER
-   ═══════════════════════════════════════════ */
+/* ── FOOTER ── */
 .site-footer {
-  text-align: center; padding: 40px 20px;
-  border-top: 2px solid var(--border-gold);
-  margin-top: 40px;
-  background: linear-gradient(to bottom, transparent, rgba(138,101,24,0.03));
+  text-align: center; padding: 36px 20px;
+  border-top: 2px solid var(--gold-border); margin-top: 40px;
+  font-family: var(--font-label); font-size: 7px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--ink-dim); opacity: 0.5;
 }
-.footer-sigil { font-size: 18px; opacity: 0.15; margin-bottom: 6px; }
-.footer-text {
-  font-family: var(--font-label); font-size: 7px;
-  letter-spacing: 4px; color: var(--gold-dark);
-  text-transform: uppercase; opacity: 0.3; line-height: 2;
-}
-.footer-motto {
+.site-footer span {
   display: block; margin-top: 4px;
-  font-family: var(--font-body); font-size: 12px;
-  font-style: italic; text-transform: none;
-  letter-spacing: 1px; color: var(--ink-faint);
+  font-family: var(--font-body); font-size: 11px; font-style: italic;
+  text-transform: none; letter-spacing: 1px;
 }
 
-/* ═══════════════════════════════════════════
-   RESPONSIVE
-   ═══════════════════════════════════════════ */
 @media (max-width: 600px) {
-  .hero { padding: 36px 16px 20px; }
-  .hero h1 { font-size: 22px; }
-  .nav-bar { overflow-x: auto; justify-content: flex-start; flex-wrap: nowrap; }
-  .nav-bar a { font-size: 7px; padding: 5px 8px; letter-spacing: 1px; white-space: nowrap; }
-  .pillar-grid { grid-template-columns: 1fr; }
-  .realm-grid { grid-template-columns: 1fr; }
-  .section-container { padding: 28px 14px; }
-  .sky-banner { margin: 0 12px 24px; }
+  .institution-grid { grid-template-columns: 1fr; }
+  .nav-republic { overflow-x: auto; justify-content: flex-start; flex-wrap: nowrap; }
 }
-
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border-parchment); border-radius: 2px; }
 </style>
 </head>
 <body>
 
-<div id="cardMosaic"></div>
-
 <div class="content-layer">
 
-<!-- ═══════════════════════════════════════════
-     NAVIGATION
-     ═══════════════════════════════════════════ -->
-<nav class="nav-bar">
-  <a href="#charter" class="nav-active">Charter</a>
-  <a href="#pillars">Pillars</a>
-  <a href="#realms">Realms</a>
-  <a href="#grimoires">Grimoires</a>
-  <a href="#nexus">Nexus</a>
-  <a href="https://kairos-coder.github.io/ealdforn/" class="nav-return">▶ Stage</a>
+<!-- ═══════════════════════════════════════
+     NAVIGATION — Six Institutions
+     ═══════════════════════════════════════ -->
+<nav class="nav-republic">
+  <a href="index.html" class="nav-active">Charter</a>
+  <a href="courts.html" class="nav-court">⚖ Court</a>
+  <a href="comitia.html" class="nav-comitia">🗳 Comitia</a>
+  <a href="senate.html" class="nav-senate">🏛 Senate</a>
+  <a href="oracle.html" class="nav-oracle">⬡ Oracle</a>
+  <a href="archives.html" class="nav-archives">📜 Archives</a>
+  <a href="forum.html" class="nav-forum">◈ Forum</a>
 </nav>
 
-<!-- ═══════════════════════════════════════════
+<!-- ═══════════════════════════════════════
      HERO
-     ═══════════════════════════════════════════ -->
-<header class="hero" id="charter">
+     ═══════════════════════════════════════ -->
+<header class="hero">
   <span class="hero-sigil">🜁</span>
   <div class="hero-eyebrow">The Constitution of</div>
   <h1>The Ealdforn Republic</h1>
   <div class="hero-subtitle">Rooted in Myth · Built for the Divine</div>
   <div class="hero-motto">"The gods contend for the sky. We contend for civilization."</div>
-  <div class="hero-rule"></div>
 </header>
 
-<!-- ═══════════════════════════════════════════
-     SKY BANNER
-     ═══════════════════════════════════════════ -->
-<div class="sky-banner">
-  <div class="banner-label">The War in the Heavens · Current Era</div>
-  <span class="count olympian" id="olympianCount">—</span> <span style="color:var(--ink-dim);">Olympian</span>
-  <span style="margin:0 10px;">·</span>
-  <span class="count chthonic" id="chthonicCount">—</span> <span style="color:var(--ink-dim);">Underworld</span>
-  <div class="banner-detail" id="bannerDetail">The sky speaks. The Republic listens.</div>
-</div>
+<div class="container">
 
-<!-- ═══════════════════════════════════════════
-     FOUNDING STATEMENT
-     ═══════════════════════════════════════════ -->
-<div class="founding-block" style="margin-bottom:0;">
-  <p class="founding-text" style="max-width:560px;margin:0 auto;text-align:center;">
-    Ratified in the 347th Year of the War, during the Era of the Scorpion's Silence, under a waning moon in Capricorn. 
-    The Republic endures because it does not seek to win — only to hold.
+  <!-- SKY BANNER -->
+  <div class="sky-banner" id="skyBanner">
+    <div class="sky-label">The War in the Heavens · Current Era</div>
+    <div class="sky-count">
+      <span class="olympian" id="olympianCount">—</span> Olympian ·
+      <span class="chthonic" id="chthonicCount">—</span> Underworld
+    </div>
+    <div style="font-size:11px;color:var(--ink-faint);font-style:italic;margin-top:6px;" id="bannerDetail">Consult the Oracle for today's Ephemeris.</div>
+  </div>
+
+  <!-- FOUNDING -->
+  <p style="text-align:center;font-size:14px;line-height:1.7;color:var(--ink-mid);font-style:italic;max-width:560px;margin:0 auto 20px;">
+    Ratified in the 347th Year of the War, during the Era of the Scorpion's Silence, under a waning moon in Capricorn. The Republic endures because it does not seek to win — only to hold.
   </p>
-</div>
 
-<!-- ═══════════════════════════════════════════
-     THE THREE CONSTITUTIONAL PILLARS
-     ═══════════════════════════════════════════ -->
-<section class="section-container" id="pillars">
-  <div class="section-header">
-    <div class="section-eyebrow">The Constitutional Order</div>
-    <div class="section-title">The Three Pillars</div>
+  <!-- THE SIX INSTITUTIONS -->
+  <div class="section-title">The Six Institutions of the Republic</div>
+
+  <div class="institution-grid">
+    <!-- Court — DeepSeek -->
+    <a href="courts.html" class="inst-card court-card">
+      <span class="inst-icon">⚖️</span>
+      <span class="inst-name">The Libraen Court</span>
+      <span class="inst-pillar">Pillar I · Judicial & Executive</span>
+      <span class="inst-desc">Seven justices. The Liminal Bench adjudicates the threshold between Olympian and Chthonic. Athena's throne remains empty.</span>
+      <span class="inst-ai">DeepSeek + Grok · The Liminal Bench</span>
+    </a>
+
+    <!-- Comitia — ChatGPT -->
+    <a href="comitia.html" class="inst-card comitia-card">
+      <span class="inst-icon">🗳️</span>
+      <span class="inst-name">The Comitia Publia</span>
+      <span class="inst-pillar">Pillar II · Popular Assembly</span>
+      <span class="inst-desc">Three hundred citizens. The Tribune's sacred veto. The people's voice in the Republic.</span>
+      <span class="inst-ai">ChatGPT + Gemini · TBD</span>
+    </a>
+
+    <!-- Senate — Claude -->
+    <a href="senate.html" class="inst-card senate-card">
+      <span class="inst-icon">🏛️</span>
+      <span class="inst-name">The Senatus Ealdfornicus</span>
+      <span class="inst-pillar">Pillar III · Legislative</span>
+      <span class="inst-desc">Twelve senators. One per zodiac sign. The Aquarian tiebreaker. Where the sky's balance becomes law.</span>
+      <span class="inst-ai">Claude + Copilot · TBD</span>
+    </a>
+
+    <!-- Oracle — Grok -->
+    <a href="oracle.html" class="inst-card oracle-card">
+      <span class="inst-icon">⬡</span>
+      <span class="inst-name">The Oracle of Glimthaven</span>
+      <span class="inst-pillar">Foundational Pillar · Predates the Constitution</span>
+      <span class="inst-desc">The Threshold Observatory. The Ephemeris Publica. The sky does not lie — it moves.</span>
+      <span class="inst-ai">Grok + DeepSeek · The Liminal Bench</span>
+    </a>
+
+    <!-- Archives — Copilot -->
+    <a href="archives.html" class="inst-card archives-card">
+      <span class="inst-icon">📜</span>
+      <span class="inst-name">The Charon Archive</span>
+      <span class="inst-pillar">Institution IV · Memory</span>
+      <span class="inst-desc">Every oath, every ruling, every treaty. What is remembered lives. What is forgotten feeds the void.</span>
+      <span class="inst-ai">Copilot + Claude · TBD</span>
+    </a>
+
+    <!-- Forum — Gemini -->
+    <a href="forum.html" class="inst-card forum-card">
+      <span class="inst-icon">◈</span>
+      <span class="inst-name">The Public Forum</span>
+      <span class="inst-pillar">Institution V · Discourse</span>
+      <span class="inst-desc">Where citizens debate, where factions clash, where the Republic thinks out loud. The marketplace of argument.</span>
+      <span class="inst-ai">Gemini + ChatGPT · TBD</span>
+    </a>
   </div>
 
-  <div class="pillar-grid">
-    <!-- Pillar I — Libraen Court -->
-    <div class="pillar-card">
-      <span class="pillar-icon">⚖️</span>
-      <div class="pillar-name">The Libraen Court</div>
-      <div class="pillar-subtitle">Pillar I · Seven Justices</div>
-      <div class="pillar-desc">
-        Supreme judicial authority and war cabinet in one body. Seven justices, each opposed to a Chthonic adversary. The central throne remains empty — reserved for Athena, should she ever return to Libra.
-      </div>
-      <a href="courts.html" class="pillar-link">Enter the Court</a>
-    </div>
-
-    <!-- Pillar II — Senatus -->
-    <div class="pillar-card">
-      <span class="pillar-icon">🏛️</span>
-      <div class="pillar-name">The Senatus Ealdfornicus</div>
-      <div class="pillar-subtitle">Pillar II · Twelve Senators</div>
-      <div class="pillar-desc">
-        One Senator per zodiac sign — drawn from the great families. The Senate ratifies legislation, declares war and peace, and confirms the Republic's Telos. The Aquarian Senator holds the tiebreaker.
-      </div>
-      <a href="senate.html" class="pillar-link">Enter the Senate</a>
-    </div>
-
-    <!-- Pillar III — Comitia -->
-    <div class="pillar-card">
-      <span class="pillar-icon">🗳️</span>
-      <div class="pillar-name">The Comitia Publia</div>
-      <div class="pillar-subtitle">Pillar III · Three Hundred Citizens</div>
-      <div class="pillar-desc">
-        The Assembly of the People. Three hundred citizens chosen annually by lot. Controls taxation, initiates legislation, and elects the Tribune — who holds the sacred veto.
-      </div>
-      <a href="comitia.html" class="pillar-link">Enter the Assembly</a>
-    </div>
-  </div>
-
-  <!-- Fourth Pillar — Oracle -->
-  <div class="oracle-card">
-    <span class="pillar-label">Foundational Pillar · Predates the Constitution</span>
-    <div class="oracle-name">⬡ The Oracle of Glimthaven</div>
-    <div class="oracle-desc">
-      The Threshold Observatory was watching the sky while the founders were still arguing in the Hall of Seven Thrones. 
-      The Oracle does not govern — it <strong>informs</strong>. Without the Ephemeris Publica, the Court would render verdicts under hostile skies. 
-      The Senate would vote on war measures blind. The Comitia would fund shrines without knowing which gods are about to move.
-    </div>
-    <a href="oracle.html" class="pillar-link" style="margin-top:10px;">Consult the Oracle</a>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     THE FORBIDDEN LAWS
-     ═══════════════════════════════════════════ -->
-<section class="section-container">
-  <div class="section-header">
-    <div class="section-eyebrow">The Constitutional Prohibitions</div>
-    <div class="section-title">The Forbidden Laws</div>
-  </div>
-  <p style="text-align:center;font-size:13px;color:var(--ink-dim);font-style:italic;margin-bottom:12px;">
-    Three things the Republic's constitution explicitly forbids. Each has been tried — in earlier republics, in earlier wars — and each time, the result was dissolution.
-  </p>
+  <!-- FORBIDDEN LAWS -->
+  <div class="section-title">The Forbidden Laws</div>
   <ol class="forbidden-list">
     <li>
       <div class="law-title">No Mortal May Claim a Sign</div>
@@ -588,217 +323,48 @@ body::before {
     </li>
     <li>
       <div class="law-title">The Empty Throne Must Remain Empty</div>
-      <div class="law-desc">Athena's seat in the Hall of Seven Thrones cannot be filled — not by a mortal, not by a vote, not by a decree. The throne is empty because Libra is empty. If Athena returns, she may sit. Until then, the emptiness is the Republic's conscience.</div>
+      <div class="law-desc">Athena's seat in the Hall of Seven Thrones cannot be filled — not by a mortal, not by a vote, not by an AI decree. If Athena returns to Libra, she may sit. Until then, the emptiness is the Republic's conscience.</div>
     </li>
   </ol>
-</section>
 
-<!-- ═══════════════════════════════════════════
-     THE REALMS
-     ═══════════════════════════════════════════ -->
-<section class="section-container" id="realms">
-  <div class="section-header">
-    <div class="section-eyebrow">Enter the Republic</div>
-    <div class="section-title">The Ealdforn Realms</div>
+  <!-- FOUNDING -->
+  <div style="text-align:center;margin-top:28px;padding-top:20px;border-top:1px solid var(--border-parchment);max-width:560px;margin-left:auto;margin-right:auto;">
+    <p style="font-family:var(--font-label);font-size:8px;letter-spacing:4px;color:var(--ink-dim);text-transform:uppercase;margin-bottom:8px;">Ratified in the 347th Year of the War</p>
+    <p style="font-size:13px;font-style:italic;color:var(--ink-mid);line-height:1.7;">
+      The founders — twelve astrologers, six Sky-Watchers and six Void-Seers, deadlocked until the Balancer among them proposed the third way — signed the Charter in the Hall of Seven Thrones, beneath the empty seat. Their names are carved into the Censor's throne, wrapping around the stone, continuing onto the floor.
+    </p>
   </div>
 
-  <div class="realm-grid">
-    <!-- Stage -->
-    <a href="https://kairos-coder.github.io/ealdforn/" target="_blank" rel="noopener noreferrer" class="realm-card" style="border:2px solid var(--gold-border);">
-      <span class="realm-icon">🏛️</span>
-      <span class="realm-title">The Ealdforn Stage</span>
-      <span class="realm-desc">Dark fantasy text adventure engine. Seven sacred texts. Six Scribe-AIs. The fire must not go out.</span>
-      <span class="realm-status active">▶ Now Playing</span>
-    </a>
-
-    <!-- Digital Divination -->
-    <a href="https://kairos-coder.github.io/divination/index.html" target="_blank" rel="noopener noreferrer" class="realm-card">
-      <span class="realm-icon">🜏</span>
-      <span class="realm-title">Digital Divination</span>
-      <span class="realm-desc">78-card tarot deck. 12 Olympians. Draw three cards. The deck speaks daily.</span>
-      <span class="realm-status active">Active</span>
-    </a>
-
-    <!-- GAIA Field -->
-    <a href="https://kairos-coder.github.io/gaia" target="_blank" rel="noopener noreferrer" class="realm-card">
-      <span class="realm-icon">🌿</span>
-      <span class="realm-title">GAIA Field</span>
-      <span class="realm-desc">Living earth monitor. Planetary vitals. The world breathes here.</span>
-      <span class="realm-status companion">Companion</span>
-    </a>
-
-    <!-- Archives -->
-    <a href="republic/archives.html" class="realm-card">
-      <span class="realm-icon">📜</span>
-      <span class="realm-title">The Archives</span>
-      <span class="realm-desc">Charters of former republics. Records of the Charon Archive. The memory of what was tried before.</span>
-      <span class="realm-status companion">Record</span>
-    </a>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     THE GRIMOIRES
-     ═══════════════════════════════════════════ -->
-<section class="section-container" id="grimoires">
-  <div class="section-header">
-    <div class="section-eyebrow">The Sky Speaks</div>
-    <div class="section-title">The Grimoires</div>
-  </div>
-
-  <div class="realm-grid">
-    <a href="https://kairos-coder.github.io/divination/zodiac.html" target="_blank" rel="noopener noreferrer" class="realm-card">
-      <span class="realm-icon">☀</span>
-      <span class="realm-title">Celestial Grimoire</span>
-      <span class="realm-desc">Apollo's daily horoscope. Planet watchers. The sky is the source code.</span>
-      <span class="realm-status active">Daily</span>
-    </a>
-
-    <a href="https://kairos-coder.github.io/divination/chthonic.html" target="_blank" rel="noopener noreferrer" class="realm-card">
-      <span class="realm-icon">⬡</span>
-      <span class="realm-title">Chthonic Grimoire</span>
-      <span class="realm-desc">The War for the Sky. Five rivers. Hades claims the empty houses. The void devours.</span>
-      <span class="realm-status active">Daily</span>
-    </a>
-
-    <a href="https://kairos-coder.github.io/divination/dashboard.html" target="_blank" rel="noopener noreferrer" class="realm-card">
-      <span class="realm-icon">🌍</span>
-      <span class="realm-title">The Dashboard</span>
-      <span class="realm-desc">Earth Shrine. Live Feed. Sky Watchers. GAIA Field. DivineDB stats.</span>
-      <span class="realm-status companion">Hub</span>
-    </a>
-
-    <a href="https://kairos-coder.github.io/divination/archive.html" target="_blank" rel="noopener noreferrer" class="realm-card">
-      <span class="realm-icon">🖼️</span>
-      <span class="realm-title">Cave Paintings</span>
-      <span class="realm-desc">Rejected artifacts. The misfit children. Proto-card archive.</span>
-      <span class="realm-status companion">Archive</span>
-    </a>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     SOCIAL NEXUS
-     ═══════════════════════════════════════════ -->
-<section class="section-container" id="nexus">
-  <div class="section-header">
-    <div class="section-eyebrow">Follow the Flame</div>
-    <div class="section-title">The Social Nexus</div>
-  </div>
-  <p style="text-align:center;font-size:13px;color:var(--ink-dim);font-style:italic;margin-bottom:18px;">Where the divine reaches the digital. Find us across the realms.</p>
-
-  <div class="social-grid">
-    <a href="https://discord.gg/EQEtBKQ3" target="_blank" rel="noopener noreferrer" class="social-card-link">
-      <span class="social-icon">💬</span><span class="social-platform">Discord</span><span class="social-handle">Join the Server</span>
-    </a>
-    <a href="https://www.facebook.com/mategwas/" target="_blank" rel="noopener noreferrer" class="social-card-link">
-      <span class="social-icon">📘</span><span class="social-platform">Facebook</span><span class="social-handle">Mategwas</span>
-    </a>
-    <a href="https://www.facebook.com/ealdforn/" target="_blank" rel="noopener noreferrer" class="social-card-link">
-      <span class="social-icon">📘</span><span class="social-platform">Facebook</span><span class="social-handle">Ealdforn</span>
-    </a>
-    <a href="https://ealdforn.substack.com" target="_blank" rel="noopener noreferrer" class="social-card-link">
-      <span class="social-icon">📜</span><span class="social-platform">Substack</span><span class="social-handle">Ealdforn</span>
-    </a>
-    <a href="https://www.youtube.com/@ealdforn" target="_blank" rel="noopener noreferrer" class="social-card-link">
-      <span class="social-icon">▶️</span><span class="social-platform">YouTube</span><span class="social-handle">@ealdforn</span>
-    </a>
-    <a href="https://vm.tiktok.com/ZT927LQhVXJQ6-jyhEM/" target="_blank" rel="noopener noreferrer" class="social-card-link">
-      <span class="social-icon">🎵</span><span class="social-platform">TikTok</span><span class="social-handle">@ealdforn</span>
-    </a>
-    <a href="https://www.github.com/kairos-coder" target="_blank" rel="noopener noreferrer" class="social-card-link">
-      <span class="social-icon">🐙</span><span class="social-platform">GitHub</span><span class="social-handle">kairos-coder</span>
-    </a>
-    <a href="https://x.com/KairosKronos4" target="_blank" rel="noopener noreferrer" class="social-card-link">
-      <span class="social-icon">𝕏</span><span class="social-platform">X / Twitter</span><span class="social-handle">@KairosKronos4</span>
-    </a>
-    <a href="https://creator.nightcafe.studio/u/Ealdforn_Author?ru=Ealdforn_Author" target="_blank" rel="noopener noreferrer" class="social-card-link">
-      <span class="social-icon">🎨</span><span class="social-platform">NightCafe</span><span class="social-handle">Ealdforn Author</span>
-    </a>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     FOUNDING
-     ═══════════════════════════════════════════ -->
-<div class="founding-block" style="border-top:1px solid var(--border-gold);padding-top:28px;max-width:560px;margin:0 auto;">
-  <div class="ratified">RATIFIED IN THE 347TH YEAR OF THE WAR</div>
-  <p class="founding-text">
-    The founders — twelve astrologers, six Sky-Watchers and six Void-Seers, deadlocked until the Balancer among them proposed the third way — signed the Charter in the Hall of Seven Thrones, beneath the empty seat. Their names are carved into the Censor's throne, wrapping around the stone, continuing onto the floor.
-  </p>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     FOOTER
-     ═══════════════════════════════════════════ -->
 <footer class="site-footer">
-  <div class="footer-sigil">🜁</div>
-  <div class="footer-text">
-    The Ealdforn Republic · The Old Way Forward<br>
-    Built by kairos-coder with DeepSeek &amp; Claude · Order of Olympus
-  </div>
-  <span class="footer-motto">"The gods contend for the sky. We contend for civilization."</span>
+  The Ealdforn Republic · The Old Way Forward<br>
+  Six Institutions · Six AIs · One Republic<br>
+  <span>"The gods contend for the sky. We contend for civilization."</span>
 </footer>
 
-</div><!-- /content-layer -->
+</div>
 
-<!-- ═══════════════════════════════════════════
-     SCRIPTS
-     ═══════════════════════════════════════════ -->
+<!-- ═══ SCRIPTS ═══ -->
 <script>
-/* ── Card Mosaic ── */
-const MOSAIC_IMAGES = [
-  "images/sets/storm-coast.jpg","images/sets/iron-hills.jpg",
-  "images/sets/silver-seas.jpg","images/sets/green-forest.jpg",
-  "images/sets/glimthaven-keep.jpg","images/horror/basement.jpg"
-];
-(function buildMosaic() {
-  const mosaic = document.getElementById('cardMosaic');
-  if (!mosaic) return;
-  const cells = [];
-  for (let i = 0; i < 30; i++) {
-    const img = MOSAIC_IMAGES[Math.floor(Math.random() * MOSAIC_IMAGES.length)];
-    cells.push(`<img src="${img}" alt="" loading="lazy" onerror="this.style.opacity='0'">`);
-  }
-  mosaic.innerHTML = cells.join('');
-})();
-
-/* ── Nav Active Highlight ── */
-window.addEventListener('scroll', function() {
-  const sections = ['charter', 'pillars', 'realms', 'grimoires', 'nexus'];
-  const navLinks = document.querySelectorAll('.nav-bar a:not(.nav-return)');
-  sections.forEach(function(id, i) {
-    const el = document.getElementById(id);
-    if (el) {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < 200 && rect.bottom > 0) {
-        navLinks.forEach(function(l) { l.classList.remove('nav-active'); });
-        if (navLinks[i]) navLinks[i].classList.add('nav-active');
-      }
-    }
-  });
-});
-
-/* ── Live Sky Banner — fetch from grimoire data ── */
-(async function updateSkyBanner() {
+/* ── Live Sky Banner ── */
+(async function() {
   try {
     if (typeof Observe === 'undefined' || typeof Chthonic === 'undefined') {
-      document.getElementById('bannerDetail').textContent = 'The sky speaks. The Republic listens. (Consult the Grimoires for today's reading.)';
+      document.getElementById('bannerDetail').textContent = 'Consult the Oracle for today\'s Ephemeris.';
       return;
     }
     const raw = await Observe.getSkyState();
     const report = Chthonic.getWarReport(raw.planets);
     document.getElementById('olympianCount').textContent = report.olympianHouses;
     document.getElementById('chthonicCount').textContent = report.chthonicHouses;
-    const contested = report.claims.filter(c => c.olympianCount === 0 && !c.chthonic).map(c => c.sign);
     const stellium = report.claims.filter(c => c.olympianCount >= 3).map(c => c.sign);
     let detail = '';
-    if (stellium.length) detail += stellium.join(', ') + ' holds (stellium). ';
-    if (contested.length) detail += contested.join(', ') + ' contested. ';
-    if (!detail) detail = report.chthonicHouses > report.olympianHouses ? 'The Underworld holds the majority. The Republic endures.' : 'Olympus holds the majority. The Republic endures.';
-    document.getElementById('bannerDetail').textContent = detail.trim();
+    if (stellium.length) detail = stellium.join(', ') + ' holds (stellium). ';
+    detail += report.chthonicHouses > report.olympianHouses ? 'The Underworld holds the majority. The Republic endures.' : 'Olympus holds the majority. The Republic endures.';
+    document.getElementById('bannerDetail').textContent = detail;
   } catch(e) {
-    document.getElementById('bannerDetail').textContent = 'The sky speaks. The Republic listens.';
+    document.getElementById('bannerDetail').textContent = 'Consult the Oracle for today\'s Ephemeris.';
   }
 })();
 </script>
