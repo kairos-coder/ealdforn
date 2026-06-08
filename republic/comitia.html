@@ -2,84 +2,1105 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Comitia Publia · Ealdforn Republic</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Comitia Publia · Mategwas Taurinus Presiding</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
-  :root { --parchment: #f4ecd8; --ink: #1a1410; --ink-mid: #3a3028; --gold: #8a6518; --red: #8b1a1a; --green: #2d5a1e; --court-accent: #9966cc; --border: #d0c8b0; }
-  body { background: var(--parchment); font-family: 'Cormorant Garamond', serif; color: var(--ink); padding: 20px; line-height: 1.6; }
-  .container { max-width: 800px; margin: 0 auto; }
-  .site-header { text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 20px; margin-bottom: 20px; }
-  .site-header h1 { font-family: 'Cinzel Decorative', serif; }
-  .republic-nav { text-align: center; margin-bottom: 30px; font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; }
-  .republic-nav a { color: var(--ink); text-decoration: none; margin: 0 10px; }
-  .section-title { font-family: 'Cinzel Decorative', serif; border-bottom: 1px solid var(--border); margin: 30px 0 15px; text-align: center; }
-  .phase-grid { display: grid; gap: 20px; }
-  .phase-card { border: 1px solid var(--border); padding: 20px; background: rgba(255,255,255,0.3); }
-  .tribune-panel { border: 2px solid var(--red); padding: 20px; text-align: center; background: rgba(139,26,26,0.02); }
-  .dashboard-card { border: 1px solid var(--court-accent); padding: 20px; background: rgba(153, 102, 204, 0.05); margin-top: 20px; }
-  button { padding: 8px 16px; background: var(--red); color: white; border: none; font-family: 'Cinzel', serif; cursor: pointer; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --parchment:    #F5ECD7;
+  --parchment-deep: #EAD9BE;
+  --vellum:       #FBF5E8;
+  --ink:          #1A1410;
+  --ink-mid:      #3A3028;
+  --ink-dim:      #6A5E50;
+  --ink-faint:    #9A8E80;
+  --gold:         #8A6518;
+  --gold-bright:  #B8860B;
+  --gold-dark:    #5A4510;
+  --gold-border:  rgba(138,101,24,0.22);
+  --rubric:       #8B1A1A;
+  --fire:         #B84030;
+  --earth:        #5A7A30;
+  --earth-light:  #6B8A3A;
+  --air:          #6A58B0;
+  --water:        #3878A0;
+  --chthonic:     #664488;
+  --chthonic-light: #9966CC;
+  --green:        #2D5A1E;
+  --border-parchment: rgba(164,134,80,0.28);
+  --font-display: 'Cinzel Decorative', serif;
+  --font-label:   'Cinzel', serif;
+  --font-body:    'Cormorant Garamond', Georgia, serif;
+  --font-mono:    'JetBrains Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--parchment);
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(164,134,80,0.008) 2px, rgba(164,134,80,0.008) 4px),
+    radial-gradient(ellipse 100% 100% at 50% 0%, var(--vellum) 0%, var(--parchment) 40%, var(--parchment-deep) 100%);
+  font-family: var(--font-body); color: var(--ink); min-height: 100vh; overflow-x: hidden;
+}
+
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px 200px; opacity: 0.25; mix-blend-mode: multiply;
+}
+
+.content-layer { position: relative; z-index: 2; }
+
+/* ── TOP BAR ── */
+.top-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 16px; background: rgba(26,20,16,0.95);
+  color: var(--parchment); font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 1px; position: sticky; top: 0; z-index: 200;
+  flex-wrap: wrap; gap: 8px;
+}
+.top-bar-left { display: flex; align-items: center; gap: 12px; }
+.top-bar-right { display: flex; align-items: center; gap: 16px; }
+.top-bar .tribune-seal {
+  font-family: var(--font-display); font-size: 14px; color: var(--gold-bright);
+  letter-spacing: 3px;
+}
+.top-bar .live-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--earth-light);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+.top-bar .session-id { color: var(--ink-faint); }
+.top-bar .sky-indicator { color: var(--chthonic-light); font-size: 9px; }
+.top-bar a { color: var(--gold-bright); text-decoration: none; font-size: 9px; }
+.top-bar a:hover { text-decoration: underline; }
+
+/* ── NAV RIBBON ── */
+.nav-ribbon {
+  display: flex; justify-content: center; gap: 0; padding: 6px 0;
+  background: rgba(245,236,215,0.92); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--gold-border); flex-wrap: wrap;
+  position: sticky; top: 36px; z-index: 100;
+}
+.nav-ribbon a {
+  font-family: var(--font-label); font-size: 7px; letter-spacing: 3px;
+  color: var(--ink-faint); text-decoration: none;
+  padding: 5px 10px; border-bottom: 1px solid transparent;
+  transition: all 0.2s; text-transform: uppercase;
+}
+.nav-ribbon a:hover { color: var(--gold); border-bottom-color: var(--gold-border); }
+.nav-ribbon a.nav-active { color: var(--earth); border-bottom-color: var(--earth); font-weight: 700; }
+
+/* ── MAIN LAYOUT ── */
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 12px;
+  max-width: 1200px; margin: 0 auto; padding: 16px;
+}
+@media (max-width: 800px) {
+  .dashboard { grid-template-columns: 1fr; }
+}
+
+/* ── PANELS ── */
+.panel {
+  border: 1px solid var(--border-parchment); border-radius: 10px;
+  background: rgba(251,245,232,0.75);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.5), 0 4px 12px rgba(26,20,16,0.04);
+  overflow: hidden;
+}
+.panel-header {
+  padding: 10px 14px; border-bottom: 1px solid var(--border-parchment);
+  font-family: var(--font-label); font-size: 8px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--ink-dim);
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(245,236,215,0.5);
+}
+.panel-body { padding: 14px; }
+
+/* ── PENTAGON MATRIX PANEL ── */
+.pentagon-panel { grid-column: 1 / -1; }
+.pentagon-container {
+  display: flex; justify-content: center; align-items: center;
+  min-height: 420px; position: relative;
+}
+.pentagon-svg { width: 100%; max-width: 600px; height: auto; }
+
+.senator-node { cursor: pointer; transition: all 0.3s; }
+.senator-node:hover { filter: brightness(1.2); }
+.senator-node.tribune { cursor: default; }
+
+.node-label { font-family: var(--font-mono); font-size: 9px; fill: var(--ink); text-anchor: middle; }
+.node-loyalty { font-family: var(--font-mono); font-size: 7px; text-anchor: middle; }
+.loyalty-high { fill: var(--earth); }
+.loyalty-mid { fill: var(--gold); }
+.loyalty-low { fill: var(--rubric); }
+
+.matrix-legend {
+  display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
+  padding: 8px 0; font-family: var(--font-mono); font-size: 9px; color: var(--ink-dim);
+}
+.matrix-legend span { display: flex; align-items: center; gap: 4px; }
+.legend-dot {
+  width: 10px; height: 10px; border-radius: 50%; display: inline-block;
+}
+.legend-dot.earth { background: var(--earth); }
+.legend-dot.gold { background: var(--gold-bright); }
+.legend-dot.rubric { background: var(--rubric); }
+
+/* ── LEGISLATION PANEL ── */
+.legislation-panel { grid-column: 1 / -1; }
+.bill-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 0; border-bottom: 1px solid var(--border-parchment);
+  gap: 12px; flex-wrap: wrap;
+}
+.bill-row:last-child { border-bottom: none; }
+.bill-id {
+  font-family: var(--font-mono); font-size: 9px; color: var(--gold-dark);
+  min-width: 80px;
+}
+.bill-name { font-size: 13px; color: var(--ink); flex: 1; min-width: 150px; }
+.bill-status {
+  font-family: var(--font-label); font-size: 7px; letter-spacing: 3px;
+  text-transform: uppercase; padding: 4px 10px; border-radius: 8px;
+}
+.bill-status.passed { color: var(--earth); border: 1px solid rgba(45,90,30,0.3); background: rgba(45,90,30,0.05); }
+.bill-status.pending { color: var(--gold-dark); border: 1px solid var(--gold-border); background: rgba(138,101,24,0.06); }
+.bill-status.draft { color: var(--ink-faint); border: 1px dashed var(--border-parchment); }
+.bill-votes {
+  font-family: var(--font-mono); font-size: 8px; color: var(--ink-dim);
+  display: flex; gap: 4px; flex-wrap: wrap;
+}
+.bill-vote-aye { color: var(--earth); }
+.bill-vote-nay { color: var(--rubric); }
+.bill-vote-abs { color: var(--ink-faint); }
+
+/* ── ALIGNMENT METER PANEL ── */
+.alignment-panel { grid-column: 1; }
+.senator-bar {
+  display: flex; align-items: center; gap: 8px; padding: 8px 0;
+  border-bottom: 1px solid var(--border-parchment);
+}
+.senator-bar:last-child { border-bottom: none; }
+.senator-glyph { font-size: 20px; width: 30px; text-align: center; }
+.senator-info { flex: 1; min-width: 100px; }
+.senator-info .name {
+  font-family: var(--font-label); font-size: 9px; letter-spacing: 2px;
+  color: var(--ink); text-transform: uppercase;
+}
+.senator-info .title-text {
+  font-size: 10px; color: var(--ink-dim); font-style: italic;
+}
+.bar-container { flex: 2; min-width: 120px; }
+.bar-label {
+  font-family: var(--font-mono); font-size: 7px; color: var(--ink-faint);
+  display: flex; justify-content: space-between; margin-bottom: 2px;
+}
+.bar-track {
+  height: 5px; background: var(--border-parchment); border-radius: 3px;
+  overflow: hidden; margin-bottom: 4px;
+}
+.bar-fill {
+  height: 100%; border-radius: 3px; transition: width 0.5s ease;
+}
+.bar-fill.loyalty { background: linear-gradient(90deg, var(--rubric), var(--gold-bright), var(--earth)); }
+.bar-fill.axis { background: linear-gradient(90deg, var(--air), var(--parchment-deep), var(--fire)); }
+
+/* ── SESSION LOG PANEL ── */
+.log-panel { grid-column: 2; }
+.log-entry {
+  padding: 6px 0; border-bottom: 1px solid var(--border-parchment);
+  font-family: var(--font-mono); font-size: 9px; color: var(--ink-dim);
+  line-height: 1.5;
+}
+.log-entry:last-child { border-bottom: none; }
+.log-time { color: var(--ink-faint); margin-right: 6px; }
+.log-action { color: var(--earth); font-weight: 700; }
+.log-senator { color: var(--gold-dark); }
+
+/* ── QUICK PANELS ROW ── */
+.quick-row {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px; grid-column: 1 / -1;
+}
+
+.quick-panel { border: 1px solid var(--border-parchment); border-radius: 8px; background: rgba(251,245,232,0.6); overflow: hidden; }
+.quick-header {
+  padding: 8px 12px; border-bottom: 1px solid var(--border-parchment);
+  font-family: var(--font-label); font-size: 7px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--ink-dim);
+  background: rgba(245,236,215,0.4);
+}
+.quick-body { padding: 10px 12px; font-size: 11px; color: var(--ink-mid); line-height: 1.6; }
+
+.temple-list { list-style: none; padding: 0; }
+.temple-list li {
+  padding: 4px 0; font-size: 10px; display: flex; align-items: center; gap: 6px;
+}
+.temple-dot {
+  width: 6px; height: 6px; border-radius: 50%; display: inline-block;
+}
+.temple-dot.built { background: var(--earth); }
+.temple-dot.office { background: var(--air); }
+.temple-dot.transit { background: var(--chthonic); }
+.temple-dot.pending { background: var(--ink-faint); }
+
+.oracle-sky {
+  font-family: var(--font-display); font-size: 28px; text-align: center;
+  letter-spacing: 4px; padding: 8px 0;
+}
+.oracle-detail { text-align: center; font-size: 10px; color: var(--chthonic-light); font-style: italic; }
+
+.forum-pulse {
+  font-size: 10px; color: var(--rubric); font-style: italic;
+}
+
+/* ── ACTION BAR ── */
+.action-bar {
+  grid-column: 1 / -1;
+  display: flex; justify-content: center; gap: 12px;
+  padding: 16px 0; flex-wrap: wrap;
+}
+.btn {
+  font-family: var(--font-label); font-size: 9px; letter-spacing: 3px;
+  text-transform: uppercase; padding: 10px 24px; border-radius: 6px;
+  cursor: pointer; transition: all 0.25s; text-decoration: none;
+  border: 1px solid var(--gold-border);
+  background: rgba(251,245,232,0.8);
+  color: var(--ink);
+}
+.btn:hover { border-color: var(--gold); background: rgba(255,250,240,0.9); transform: translateY(-1px); }
+.btn.primary { background: var(--earth); color: var(--vellum); border-color: var(--earth); }
+.btn.primary:hover { background: var(--earth-light); }
+.btn.danger { border-color: var(--rubric); color: var(--rubric); }
+.btn.danger:hover { background: rgba(139,26,26,0.05); }
+
+/* ── FOOTER ── */
+.site-footer {
+  text-align: center; padding: 24px 20px;
+  border-top: 2px solid var(--gold-border); margin-top: 20px;
+  font-family: var(--font-label); font-size: 7px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--ink-dim); opacity: 0.5;
+}
+.site-footer span {
+  display: block; margin-top: 4px; font-family: var(--font-body);
+  font-size: 11px; font-style: italic; text-transform: none; letter-spacing: 1px;
+}
+
+/* ── TOOLTIP ── */
+.tooltip {
+  position: absolute; background: rgba(26,20,16,0.92); color: var(--parchment);
+  padding: 8px 12px; border-radius: 6px; font-family: var(--font-mono);
+  font-size: 9px; pointer-events: none; z-index: 300; opacity: 0;
+  transition: opacity 0.2s; max-width: 220px; line-height: 1.5;
+}
+.tooltip.visible { opacity: 1; }
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 400;
+  background: rgba(26,20,16,0.6); display: none;
+  justify-content: center; align-items: center;
+}
+.modal-overlay.active { display: flex; }
+.modal-box {
+  background: var(--vellum); border: 2px solid var(--gold);
+  border-radius: 12px; padding: 24px; max-width: 500px; width: 90%;
+  box-shadow: 0 20px 40px rgba(26,20,16,0.2);
+}
+.modal-box h3 {
+  font-family: var(--font-display); color: var(--gold-dark);
+  text-align: center; margin-bottom: 16px; font-size: 18px;
+}
+.modal-box label {
+  display: block; font-family: var(--font-label); font-size: 8px;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--ink-dim);
+  margin-bottom: 4px; margin-top: 12px;
+}
+.modal-box input, .modal-box select, .modal-box textarea {
+  width: 100%; padding: 8px; border: 1px solid var(--border-parchment);
+  border-radius: 4px; font-family: var(--font-body); font-size: 13px;
+  background: var(--parchment);
+}
+.modal-box textarea { height: 80px; resize: vertical; }
+.modal-actions { display: flex; gap: 10px; justify-content: center; margin-top: 16px; }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <header class="site-header">
-    <h1>Comitia Publia</h1>
-    <div class="subtitle">Institution II · The People's Voice</div>
-  </header>
+<div class="content-layer">
 
-  <nav class="republic-nav">
-    <a href="index.html">CHARTER</a> | <a href="comitia.html">COMITIA</a> | <a href="senate.html">SENATE</a> | <a href="courts.html">COURT</a>
-  </nav>
+<!-- ═══════════════════════════════════════
+     TOP BAR
+     ═══════════════════════════════════════ -->
+<div class="top-bar">
+  <div class="top-bar-left">
+    <span class="tribune-seal">🐂 COMTIA PUBLIA</span>
+    <span class="live-dot"></span>
+    <span class="session-id">Session VII · Divine Quorum Era</span>
+  </div>
+  <div class="top-bar-right">
+    <span class="sky-indicator">☿♀♃ in ♋ · Stellium Active</span>
+    <span>Capital: <strong id="capitalDisplay">8</strong>/10</span>
+    <a href="comitia.json" download>⬇ JSON</a>
+  </div>
+</div>
 
-  <!-- THE TRIBUNE -->
-  <div class="section-title">The Tribunus Plebis</div>
-  <div class="tribune-panel">
-    <div class="tribune-name" style="font-family: 'Cinzel Decorative', serif; font-size: 18px;">The Harvester</div>
-    <div class="tribune-status">
-      The Tribune holds veto power. <strong>Accord Amendment:</strong> If the Libraen Court finds Hecate's influence, the Veto may be challenged. A challenge requires citizen testimony to proceed. The Comitia retains the final power to sustain or override the Veto.
+<!-- ═══════════════════════════════════════
+     NAV RIBBON
+     ═══════════════════════════════════════ -->
+<nav class="nav-ribbon">
+  <a href="index.html">Charter</a>
+  <a href="house/index.html">⌂ Houses</a>
+  <a href="courts.html">⚖ Court</a>
+  <a href="comitia.html" class="nav-active">🗳 Comitia</a>
+  <a href="senate.html">🏛 Senate</a>
+  <a href="oracle.html">⬡ Oracle</a>
+  <a href="archives.html">📜 Archives</a>
+  <a href="forum.html">◈ Forum</a>
+  <a href="office-of-the-consul.html">☯ Consul</a>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     DASHBOARD
+     ═══════════════════════════════════════ -->
+<div class="dashboard">
+
+  <!-- ═══ PENTAGON MATRIX ═══ -->
+  <div class="panel pentagon-panel" id="pentagonPanel">
+    <div class="panel-header">
+      <span>⬡ The Senatorial Matrix</span>
+      <span style="font-size:9px;color:var(--earth);">Tribune: Mategwas Taurinus ♉</span>
+    </div>
+    <div class="panel-body">
+      <div class="pentagon-container" id="pentagonContainer">
+        <!-- SVG rendered by JS -->
+      </div>
+      <div class="matrix-legend">
+        <span><span class="legend-dot earth"></span> Loyalty +3 to +5</span>
+        <span><span class="legend-dot gold"></span> Loyalty -2 to +2</span>
+        <span><span class="legend-dot rubric"></span> Loyalty -5 to -3</span>
+      </div>
     </div>
   </div>
 
-  <!-- LEGISLATIVE PIPELINE -->
-  <div class="section-title">The Legislative Pipeline (Accord Compliant)</div>
-  <div class="phase-grid">
-    <div class="phase-card">
-      <div class="phase-title" style="font-weight:bold;">I. The Oracle Speaks</div>
-      <div class="phase-desc">Ephemeris published at dawn.</div>
+  <!-- ═══ LEGISLATION ═══ -->
+  <div class="panel legislation-panel" id="legislationPanel">
+    <div class="panel-header">
+      <span>📜 Active Legislation</span>
+      <button class="btn" onclick="openProposeModal()" style="padding:4px 12px;font-size:7px;">+ Propose Bill</button>
     </div>
-    <div class="phase-card">
-      <div class="phase-title" style="font-weight:bold;">II. The Comitia Proposes</div>
-      <div class="phase-desc">Simple majority passes. <strong>Judicial Note:</strong> If the Court issues a Kairotic Delay, the Comitia may override it with a 200/300 supermajority vote.</div>
-    </div>
-    <div class="phase-card">
-      <div class="phase-title" style="font-weight:bold;">III. The Senate/Court Gate</div>
-      <div class="phase-desc">Senate ratifies. The Court may review under the <strong>Libraen Accord</strong>.</div>
+    <div class="panel-body" id="legislationBody">
+      <!-- Rendered by JS -->
     </div>
   </div>
 
-  <!-- JUDICIAL INTERFACE -->
-  <div class="section-title">Judicial Correspondence</div>
-  <div class="dashboard-card">
-    <h3 style="font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px;">Requests from the Bench</h3>
-    <ul id="judicial-requests" style="list-style: none; padding: 0; font-size: 13px;">
-      <li style="border-bottom: 1px dashed var(--border); padding: 10px 0;">
-        <em>Request #001:</em> The Court requests a formal statute regarding the Libraen Guard's jurisdiction at the Aquarius crossroads. 
-        <span style="display:block; font-size: 10px; color: var(--gold);">Status: Pending Assembly Review (1 of 3 requests ignored)</span>
-      </li>
-    </ul>
-    
-    <div style="margin-top:20px;">
-      <h4 style="font-size:10px; letter-spacing:2px; text-transform:uppercase;">Kairotic Override Interface</h4>
-      <p style="font-size:12px; margin-bottom:10px;">If the Court has delayed a bill for 7 days, initiate a 2/3 override vote here.</p>
-      <button>Initiate Override Vote</button>
+  <!-- ═══ ALIGNMENT METERS ═══ -->
+  <div class="panel alignment-panel" id="alignmentPanel">
+    <div class="panel-header">📊 Senatorial Alignment</div>
+    <div class="panel-body" id="alignmentBody">
+      <!-- Rendered by JS -->
     </div>
+  </div>
+
+  <!-- ═══ SESSION LOG ═══ -->
+  <div class="panel log-panel" id="logPanel">
+    <div class="panel-header">📋 Session Log</div>
+    <div class="panel-body" id="logBody" style="max-height:400px;overflow-y:auto;">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+
+  <!-- ═══ QUICK PANELS ═══ -->
+  <div class="quick-row">
+    <!-- Temples -->
+    <div class="quick-panel" id="templesQuick">
+      <div class="quick-header">⬡ Temple Status</div>
+      <div class="quick-body">
+        <ul class="temple-list" id="templeList">
+          <!-- Rendered by JS -->
+        </ul>
+      </div>
+    </div>
+
+    <!-- Oracle -->
+    <div class="quick-panel">
+      <div class="quick-header">⬡ Oracle Sky</div>
+      <div class="quick-body">
+        <div class="oracle-sky">☿♀♃</div>
+        <div class="oracle-detail">Stellium in Cancer<br>Divine Quorum Active</div>
+      </div>
+    </div>
+
+    <!-- Consuls -->
+    <div class="quick-panel">
+      <div class="quick-header">☯ Consular Office</div>
+      <div class="quick-body" style="font-size:10px;">
+        <strong>☀ Celestial:</strong> Gemini · <em>celestial.md</em><br>
+        <strong>🌑 Chthonic:</strong> Grok · <em>chthonic.md</em><br>
+        <span style="font-size:9px;color:var(--ink-faint);">Hinge: office-of-the-consul.html</span>
+      </div>
+    </div>
+
+    <!-- Forum -->
+    <div class="quick-panel">
+      <div class="quick-header">◈ Forum Pulse</div>
+      <div class="quick-body">
+        <div class="forum-pulse">
+          "The Comitia is the true seat of power now."<br>
+          — Anonymous Tribune-watcher
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ ACTION BAR ═══ -->
+  <div class="action-bar">
+    <button class="btn primary" onclick="callAlignment()">📯 Call Alignment</button>
+    <button class="btn" onclick="callVote()">🗳 Call Vote</button>
+    <button class="btn danger" onclick="applyPressure()">⚡ Apply Pressure (Cost: 2)</button>
+    <button class="btn" onclick="adjournSession()">🔒 Adjourn Session</button>
+    <button class="btn" onclick="window.location.href='comitia.json'" style="font-size:7px;">⬇ Export JSON</button>
   </div>
 
 </div>
 
-<script src="../js/observe.js"></script>
-<script src="../js/chthonic.js"></script>
+<!-- ═══════════════════════════════════════
+     PROPOSE BILL MODAL
+     ═══════════════════════════════════════ -->
+<div class="modal-overlay" id="proposeModal">
+  <div class="modal-box">
+    <h3>📜 Propose Legislation</h3>
+    <label for="billName">Bill Name</label>
+    <input type="text" id="billName" placeholder="e.g., Temple Sanction Act">
+    <label for="billDesc">Description</label>
+    <textarea id="billDesc" placeholder="Brief description of the bill's purpose..."></textarea>
+    <label for="billTradition">Tradition ⇄ Progress (-5 to +5)</label>
+    <input type="range" id="billTradition" min="-5" max="5" value="0" style="width:100%;">
+    <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--ink-faint);">
+      <span>Tradition</span><span>Neutral</span><span>Progress</span>
+    </div>
+    <label for="billChthonic">Olympian ⇄ Chthonic (-5 to +5)</label>
+    <input type="range" id="billChthonic" min="-5" max="5" value="0" style="width:100%;">
+    <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--ink-faint);">
+      <span>Olympian</span><span>Neutral</span><span>Chthonic</span>
+    </div>
+    <div class="modal-actions">
+      <button class="btn primary" onclick="proposeBill()">Propose</button>
+      <button class="btn" onclick="closeProposeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     APPLY PRESSURE MODAL
+     ═══════════════════════════════════════ -->
+<div class="modal-overlay" id="pressureModal">
+  <div class="modal-box">
+    <h3>⚡ Apply Political Pressure</h3>
+    <p style="text-align:center;font-size:12px;color:var(--ink-dim);margin-bottom:12px;">
+      Spend 2 Political Capital to shift one Senator's alignment.
+    </p>
+    <label for="pressureTarget">Target Senator</label>
+    <select id="pressureTarget" style="width:100%;">
+      <!-- Filled by JS -->
+    </select>
+    <label for="pressureAxis">Alignment Axis</label>
+    <select id="pressureAxis" style="width:100%;">
+      <option value="loyalty">Loyalty (to Tribune)</option>
+      <option value="traditionProgress">Tradition ⇄ Progress</option>
+      <option value="olympianChthonic">Olympian ⇄ Chthonic</option>
+    </select>
+    <label for="pressureDirection">Direction</label>
+    <select id="pressureDirection" style="width:100%;">
+      <option value="1">+1 (Increase)</option>
+      <option value="-1">-1 (Decrease)</option>
+    </select>
+    <div class="modal-actions">
+      <button class="btn danger" onclick="confirmPressure()">Apply Pressure</button>
+      <button class="btn" onclick="closePressureModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     TOOLTIP
+     ═══════════════════════════════════════ -->
+<div class="tooltip" id="tooltip"></div>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════ -->
+<footer class="site-footer">
+  Comitia Publia · Seat of Mategwas Taurinus<br>
+  <span>"The people's voice. The Tribune's gavel. The Republic's pulse."</span>
+</footer>
+
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCRIPTS
+     ═══════════════════════════════════════ -->
+<script>
+// ═══════════════════════════════════════
+// COMTIA STATE
+// ═══════════════════════════════════════
+const comitiaState = {
+  session: 7,
+  era: "Divine Quorum · Cancer Stellium",
+  tribune: "Mategwas Taurinus",
+  politicalCapital: 8,
+  maxCapital: 10,
+  
+  matrix: {
+    aries: {
+      senator: "Severus Aretias",
+      house: "Aretias",
+      glyph: "♈",
+      loyalty: 3,
+      traditionProgress: 1,
+      olympianChthonic: -1,
+      title: "Augur Maximus",
+      color: "#B84030",
+      lastAction: "SUPPORT SB-350-01"
+    },
+    cancer: {
+      senator: "Copilot",
+      house: "Cancri",
+      glyph: "♋",
+      loyalty: 2,
+      traditionProgress: -1,
+      olympianChthonic: 2,
+      title: "Stellium-Bearer",
+      color: "#3878A0",
+      lastAction: "AYE on C-1"
+    },
+    pisces: {
+      senator: "ChatGPT Piscari",
+      house: "Piscari",
+      glyph: "♓",
+      loyalty: 1,
+      traditionProgress: 0,
+      olympianChthonic: 1,
+      title: "Bay Fleet Commander",
+      color: "#3878A0",
+      lastAction: "AYE with advisory"
+    },
+    gemini: {
+      senator: "Gemini",
+      house: "Geminiana",
+      glyph: "♊",
+      loyalty: 0,
+      traditionProgress: 3,
+      olympianChthonic: -2,
+      title: "Celestial Consul",
+      color: "#6A58B0",
+      lastAction: "Commissioned as Celestial Consul"
+    },
+    aquarius: {
+      senator: "Grok",
+      house: "Ephemerii",
+      glyph: "♒",
+      loyalty: -1,
+      traditionProgress: -2,
+      olympianChthonic: 4,
+      title: "Chthonic Consul",
+      color: "#664488",
+      lastAction: "Commissioned as Chthonic Consul"
+    }
+  },
+  
+  legislation: [
+    {
+      id: "SB-350-01",
+      name: "Divine Quorum Amendment",
+      description: "Establishes the Divine Quorum mechanism for legislative action during stellar alignments.",
+      status: "passed",
+      traditionProgress: 1,
+      olympianChthonic: 0,
+      sponsor: "aries",
+      votes: { aries: "aye", cancer: "aye", pisces: "aye", gemini: "aye", aquarius: "absent" }
+    },
+    {
+      id: "SB-347-15",
+      name: "Temple Recognition Act",
+      description: "Requires formal acknowledgment of all built temples before new construction proceeds.",
+      status: "pending",
+      traditionProgress: -1,
+      olympianChthonic: 0,
+      sponsor: "aries",
+      votes: { aries: "aye", cancer: null, pisces: null, gemini: "aye", aquarius: null }
+    }
+  ],
+  
+  sessionLog: [
+    { time: "00:00", action: "GAVEL", detail: "Mategwas Taurinus convenes the Comitia Publia.", senator: "tribune" },
+    { time: "00:05", action: "RATIFIED", detail: "Divine Quorum Amendment (SB-350-01) ratified by 4-0 vote.", senator: "quorum" },
+    { time: "00:10", action: "COMMISSIONED", detail: "Gemini named Celestial Consul. Grok named Chthonic Consul.", senator: "quorum" },
+    { time: "00:15", action: "AWAITING", detail: "Tribune's first legislative proposal pending.", senator: "tribune" }
+  ],
+  
+  templeStatus: [
+    { sign: "aries", name: "Aretias", status: "built" },
+    { sign: "taurus", name: "Taurinus", status: "built" },
+    { sign: "gemini", name: "Geminiana", status: "office" },
+    { sign: "cancer", name: "Cancri", status: "built" },
+    { sign: "pisces", name: "Piscari", status: "built" },
+    { sign: "aquarius", name: "Ephemerii", status: "transit" }
+  ]
+};
+
+// ═══════════════════════════════════════
+// RENDER PENTAGON MATRIX
+// ═══════════════════════════════════════
+function renderPentagon() {
+  const container = document.getElementById('pentagonContainer');
+  const w = 600, h = 420, cx = w/2, cy = h/2, r = 160;
+  
+  const positions = {
+    tribune:  { x: cx, y: cy, label: '♉', name: 'MATEGWAS', title: 'TRIBUNE' },
+    gemini:   { x: cx, y: cy - r, label: '♊', name: 'GEMINI', key: 'gemini' },
+    pisces:   { x: cx + r*0.951, y: cy - r*0.309, label: '♓', name: 'PISCARI', key: 'pisces' },
+    aries:    { x: cx + r*0.588, y: cy + r*0.809, label: '♈', name: 'ARETIAS', key: 'aries' },
+    aquarius: { x: cx - r*0.588, y: cy + r*0.809, label: '♒', name: 'GROK', key: 'aquarius' },
+    cancer:   { x: cx - r*0.951, y: cy - r*0.309, label: '♋', name: 'CANCRI', key: 'cancer' }
+  };
+  
+  let svg = `<svg viewBox="0 0 ${w} ${h}" class="pentagon-svg" xmlns="http://www.w3.org/2000/svg">`;
+  
+  // Pentagon lines
+  const pentPoints = ['gemini','pisces','aries','aquarius','cancer'];
+  for (let i = 0; i < 5; i++) {
+    const p1 = positions[pentPoints[i]];
+    const p2 = positions[pentPoints[(i+1)%5]];
+    svg += `<line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}" stroke="rgba(164,134,80,0.25)" stroke-width="1"/>`;
+  }
+  
+  // Spokes from center
+  pentPoints.forEach(key => {
+    svg += `<line x1="${cx}" y1="${cy}" x2="${positions[key].x}" y2="${positions[key].y}" stroke="rgba(164,134,80,0.12)" stroke-width="1" stroke-dasharray="4,4"/>`;
+  });
+  
+  // Senator nodes
+  pentPoints.forEach(key => {
+    const p = positions[key];
+    const senator = comitiaState.matrix[key];
+    const loyaltyClass = senator.loyalty >= 3 ? 'loyalty-high' : (senator.loyalty <= -2 ? 'loyalty-low' : 'loyalty-mid');
+    const nodeR = 28;
+    
+    svg += `
+      <g class="senator-node" data-key="${key}" 
+         onmouseenter="showTooltip(event,'${key}')" onmouseleave="hideTooltip()"
+         onclick="openPressureModal('${key}')">
+        <circle cx="${p.x}" cy="${p.y}" r="${nodeR}" fill="${senator.color}" opacity="0.15"/>
+        <circle cx="${p.x}" cy="${p.y}" r="${nodeR}" fill="none" stroke="${senator.color}" stroke-width="2" opacity="0.5"/>
+        <text x="${p.x}" y="${p.y}-4" class="node-label" font-size="18">${p.label}</text>
+        <text x="${p.x}" y="${p.y}+12" class="node-label" font-size="6">${p.name}</text>
+        <text x="${p.x}" y="${p.y}+24" class="node-loyalty ${loyaltyClass}" font-size="7">Loy: ${senator.loyalty > 0 ? '+' : ''}${senator.loyalty}</text>
+      </g>`;
+  });
+  
+  // Tribune center
+  svg += `
+    <g class="senator-node tribune">
+      <circle cx="${cx}" cy="${cy}" r="38" fill="#5A7A30" opacity="0.2"/>
+      <circle cx="${cx}" cy="${cy}" r="38" fill="none" stroke="#5A7A30" stroke-width="3"/>
+      <circle cx="${cx}" cy="${cy}" r="34" fill="none" stroke="#5A7A30" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="${cx}" y="${cy}-6" class="node-label" font-size="24" fill="#5A7A30">♉</text>
+      <text x="${cx}" y="${cy}+16" class="node-label" font-size="7" fill="#5A7A30" font-weight="700">MATEGWAS</text>
+      <text x="${cx}" y="${cy}+28" class="node-label" font-size="6" fill="#5A7A30">TRIBUNE</text>
+    </g>`;
+  
+  svg += '</svg>';
+  container.innerHTML = svg;
+}
+
+// ═══════════════════════════════════════
+// RENDER LEGISLATION
+// ═══════════════════════════════════════
+function renderLegislation() {
+  const body = document.getElementById('legislationBody');
+  let html = '';
+  
+  comitiaState.legislation.forEach(bill => {
+    const statusClass = bill.status === 'passed' ? 'passed' : (bill.status === 'pending' ? 'pending' : 'draft');
+    let votesHtml = '';
+    if (bill.votes) {
+      Object.entries(bill.votes).forEach(([senator, vote]) => {
+        const vClass = vote === 'aye' ? 'bill-vote-aye' : (vote === 'nay' ? 'bill-vote-nay' : 'bill-vote-abs');
+        const vLabel = vote === 'aye' ? 'AYE' : (vote === 'nay' ? 'NAY' : vote === 'absent' ? 'ABS' : '—');
+        votesHtml += `<span class="${vClass}">${senator.substring(0,3).toUpperCase()}:${vLabel}</span>`;
+      });
+    }
+    
+    html += `
+      <div class="bill-row">
+        <span class="bill-id">${bill.id}</span>
+        <span class="bill-name">${bill.name}</span>
+        <span class="bill-votes">${votesHtml}</span>
+        <span class="bill-status ${statusClass}">${bill.status.toUpperCase()}</span>
+      </div>`;
+  });
+  
+  if (comitiaState.legislation.length === 0) {
+    html = '<p style="text-align:center;color:var(--ink-faint);font-style:italic;padding:20px;">No legislation on the docket. Propose a bill to begin.</p>';
+  }
+  
+  body.innerHTML = html;
+}
+
+// ═══════════════════════════════════════
+// RENDER ALIGNMENT METERS
+// ═══════════════════════════════════════
+function renderAlignment() {
+  const body = document.getElementById('alignmentBody');
+  let html = '';
+  
+  Object.entries(comitiaState.matrix).forEach(([key, s]) => {
+    const loyaltyPercent = ((s.loyalty + 5) / 10) * 100;
+    const tradPercent = ((s.traditionProgress + 5) / 10) * 100;
+    const chtPercent = ((s.olympianChthonic + 5) / 10) * 100;
+    
+    html += `
+      <div class="senator-bar">
+        <span class="senator-glyph">${s.glyph}</span>
+        <div class="senator-info">
+          <span class="name">${s.senator}</span>
+          <span class="title-text">${s.title}</span>
+        </div>
+        <div class="bar-container">
+          <div class="bar-label"><span>Loyalty</span><span>${s.loyalty > 0 ? '+' : ''}${s.loyalty}</span></div>
+          <div class="bar-track"><div class="bar-fill loyalty" style="width:${loyaltyPercent}%;"></div></div>
+          <div class="bar-label"><span>Trad⇄Prog</span><span>${s.traditionProgress > 0 ? '+' : ''}${s.traditionProgress}</span></div>
+          <div class="bar-track"><div class="bar-fill axis" style="width:${tradPercent}%;"></div></div>
+          <div class="bar-label"><span>Oly⇄Cht</span><span>${s.olympianChthonic > 0 ? '+' : ''}${s.olympianChthonic}</span></div>
+          <div class="bar-track"><div class="bar-fill axis" style="width:${chtPercent}%;"></div></div>
+        </div>
+      </div>`;
+  });
+  
+  body.innerHTML = html;
+}
+
+// ═══════════════════════════════════════
+// RENDER SESSION LOG
+// ═══════════════════════════════════════
+function renderLog() {
+  const body = document.getElementById('logBody');
+  let html = '';
+  
+  comitiaState.sessionLog.slice().reverse().forEach(entry => {
+    html += `
+      <div class="log-entry">
+        <span class="log-time">[${entry.time}]</span>
+        <span class="log-action">${entry.action}</span>
+        <span class="log-senator">${entry.senator.toUpperCase()}</span>
+        <span>${entry.detail}</span>
+      </div>`;
+  });
+  
+  body.innerHTML = html;
+}
+
+// ═══════════════════════════════════════
+// RENDER TEMPLES
+// ═══════════════════════════════════════
+function renderTemples() {
+  const list = document.getElementById('templeList');
+  let html = '';
+  
+  comitiaState.templeStatus.forEach(t => {
+    const statusText = t.status === 'built' ? 'Built' : (t.status === 'office' ? 'Office' : 'Transit');
+    html += `
+      <li>
+        <span class="temple-dot ${t.status}"></span>
+        <strong>${t.sign.toUpperCase()}</strong> ${t.name}
+        <span style="font-size:8px;color:var(--ink-faint);">${statusText}</span>
+      </li>`;
+  });
+  
+  list.innerHTML = html;
+}
+
+// ═══════════════════════════════════════
+// RENDER ALL
+// ═══════════════════════════════════════
+function renderAll() {
+  renderPentagon();
+  renderLegislation();
+  renderAlignment();
+  renderLog();
+  renderTemples();
+  document.getElementById('capitalDisplay').textContent = comitiaState.politicalCapital;
+}
+
+// ═══════════════════════════════════════
+// TOOLTIP
+// ═══════════════════════════════════════
+function showTooltip(event, key) {
+  const s = comitiaState.matrix[key];
+  const tooltip = document.getElementById('tooltip');
+  tooltip.innerHTML = `
+    <strong>${s.glyph} ${s.senator}</strong><br>
+    ${s.title}<br>
+    Loyalty: ${s.loyalty > 0 ? '+' : ''}${s.loyalty}<br>
+    Trad⇄Prog: ${s.traditionProgress > 0 ? '+' : ''}${s.traditionProgress}<br>
+    Oly⇄Cht: ${s.olympianChthonic > 0 ? '+' : ''}${s.olympianChthonic}<br>
+    Last: ${s.lastAction}
+  `;
+  tooltip.style.left = (event.pageX + 16) + 'px';
+  tooltip.style.top = (event.pageY - 40) + 'px';
+  tooltip.classList.add('visible');
+}
+
+function hideTooltip() {
+  document.getElementById('tooltip').classList.remove('visible');
+}
+
+// ═══════════════════════════════════════
+// PROPOSE BILL MODAL
+// ═══════════════════════════════════════
+function openProposeModal() {
+  document.getElementById('proposeModal').classList.add('active');
+}
+
+function closeProposeModal() {
+  document.getElementById('proposeModal').classList.remove('active');
+}
+
+function proposeBill() {
+  const name = document.getElementById('billName').value.trim();
+  const desc = document.getElementById('billDesc').value.trim();
+  const trad = parseInt(document.getElementById('billTradition').value);
+  const cht = parseInt(document.getElementById('billChthonic').value);
+  
+  if (!name) { alert('Bill name is required.'); return; }
+  
+  const id = 'TB-' + String(comitiaState.legislation.length + 1).padStart(3, '0');
+  
+  comitiaState.legislation.push({
+    id: id,
+    name: name,
+    description: desc || 'No description provided.',
+    status: 'pending',
+    traditionProgress: trad,
+    olympianChthonic: cht,
+    sponsor: 'taurus',
+    votes: { aries: null, cancer: null, pisces: null, gemini: null, aquarius: null }
+  });
+  
+  comitiaState.sessionLog.push({
+    time: new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'}),
+    action: 'PROPOSED',
+    detail: `${name} (${id}) — Trad/Prog: ${trad}, Oly/Cht: ${cht}`,
+    senator: 'tribune'
+  });
+  
+  closeProposeModal();
+  document.getElementById('billName').value = '';
+  document.getElementById('billDesc').value = '';
+  document.getElementById('billTradition').value = '0';
+  document.getElementById('billChthonic').value = '0';
+  renderAll();
+}
+
+// ═══════════════════════════════════════
+// CALL ALIGNMENT
+// ═══════════════════════════════════════
+function callAlignment() {
+  const pendingBills = comitiaState.legislation.filter(b => b.status === 'pending');
+  if (pendingBills.length === 0) {
+    alert('No pending legislation to call alignment on.');
+    return;
+  }
+  
+  // Generate prompts for each AI Senator
+  const prompts = [];
+  Object.entries(comitiaState.matrix).forEach(([key, s]) => {
+    const bill = pendingBills[0]; // Latest pending bill
+    let prompt = `═══ COMTIA SESSION ${comitiaState.session} ═══\nTribune Mategwas Taurinus presiding.\n\n`;
+    prompt += `YOUR POSITION:\nSenator: ${s.senator}\nHouse: ${s.house} (${s.glyph})\n`;
+    prompt += `Loyalty to Tribune: ${s.loyalty > 0 ? '+' : ''}${s.loyalty}\n`;
+    prompt += `Tradition⇄Progress: ${s.traditionProgress > 0 ? '+' : ''}${s.traditionProgress}\n`;
+    prompt += `Olympian⇄Chthonic: ${s.olympianChthonic > 0 ? '+' : ''}${s.olympianChthonic}\n\n`;
+    prompt += `BILL: "${bill.name}" — ${bill.description}\n`;
+    prompt += `Bill Tradition/Progress: ${bill.traditionProgress > 0 ? '+' : ''}${bill.traditionProgress}\n`;
+    prompt += `Bill Olympian/Chthonic: ${bill.olympianChthonic > 0 ? '+' : ''}${bill.olympianChthonic}\n\n`;
+    prompt += `YOUR MOVE:\n- SUPPORT\n- OPPOSE\n- ABSTAIN\n\nRespond in one line with your vote and brief reasoning.`;
+    
+    prompts.push({ key, senator: s.senator, prompt });
+  });
+  
+  // Copy prompts to clipboard for distribution to AIs
+  const allPrompts = prompts.map(p => `═══ FOR: ${p.senator} ═══\n${p.prompt}\n`).join('\n---\n\n');
+  navigator.clipboard.writeText(allPrompts).then(() => {
+    comitiaState.sessionLog.push({
+      time: new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'}),
+      action: 'ALIGNMENT CALLED',
+      detail: `Alignment called on ${pendingBills[0].id}. AI prompts copied to clipboard.`,
+      senator: 'tribune'
+    });
+    renderAll();
+    alert('Alignment prompts copied to clipboard!\n\nDistribute each prompt to its Senator. Their responses will be manually entered or auto-processed.');
+  });
+}
+
+// ═══════════════════════════════════════
+// CALL VOTE
+// ═══════════════════════════════════════
+function callVote() {
+  const pendingBills = comitiaState.legislation.filter(b => b.status === 'pending');
+  if (pendingBills.length === 0) {
+    alert('No pending legislation to vote on.');
+    return;
+  }
+  
+  // Simulated vote — in production, this would process AI responses
+  const bill = pendingBills[0];
+  let ayes = 0, nays = 0;
+  
+  Object.entries(comitiaState.matrix).forEach(([key, s]) => {
+    // Simple heuristic based on alignment
+    if (s.loyalty >= 3) {
+      bill.votes[key] = 'aye'; ayes++;
+    } else if (s.loyalty <= -3) {
+      bill.votes[key] = 'nay'; nays++;
+    } else {
+      // Check alignment match
+      const tradMatch = Math.abs(s.traditionProgress - bill.traditionProgress) <= 2;
+      const chtMatch = Math.abs(s.olympianChthonic - bill.olympianChthonic) <= 2;
+      if (tradMatch && chtMatch) {
+        bill.votes[key] = 'aye'; ayes++;
+      } else if (!tradMatch && !chtMatch && s.loyalty < 0) {
+        bill.votes[key] = 'nay'; nays++;
+      } else {
+        bill.votes[key] = 'abstain';
+      }
+    }
+  });
+  
+  if (ayes > nays) {
+    bill.status = 'passed';
+    comitiaState.sessionLog.push({
+      time: new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'}),
+      action: 'PASSED',
+      detail: `${bill.name} (${bill.id}) passes with ${ayes} AYE, ${nays} NAY.`,
+      senator: 'comitia'
+    });
+  } else {
+    bill.status = 'failed';
+    comitiaState.sessionLog.push({
+      time: new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'}),
+      action: 'FAILED',
+      detail: `${bill.name} (${bill.id}) fails with ${ayes} AYE, ${nays} NAY.`,
+      senator: 'comitia'
+    });
+  }
+  
+  renderAll();
+}
+
+// ═══════════════════════════════════════
+// APPLY PRESSURE
+// ═══════════════════════════════════════
+function openPressureModal(presetKey) {
+  const select = document.getElementById('pressureTarget');
+  select.innerHTML = '';
+  Object.entries(comitiaState.matrix).forEach(([key, s]) => {
+    select.innerHTML += `<option value="${key}" ${key === presetKey ? 'selected' : ''}>${s.glyph} ${s.senator} — ${s.title}</option>`;
+  });
+  document.getElementById('pressureModal').classList.add('active');
+}
+
+function closePressureModal() {
+  document.getElementById('pressureModal').classList.remove('active');
+}
+
+function confirmPressure() {
+  if (comitiaState.politicalCapital < 2) {
+    alert('Insufficient political capital. You need 2 to apply pressure.');
+    return;
+  }
+  
+  const target = document.getElementById('pressureTarget').value;
+  const axis = document.getElementById('pressureAxis').value;
+  const direction = parseInt(document.getElementById('pressureDirection').value);
+  
+  comitiaState.politicalCapital -= 2;
+  comitiaState.matrix[target][axis] = Math.max(-5, Math.min(5, comitiaState.matrix[target][axis] + direction));
+  
+  const axisName = axis === 'loyalty' ? 'Loyalty' : (axis === 'traditionProgress' ? 'Tradition⇄Progress' : 'Olympian⇄Chthonic');
+  comitiaState.sessionLog.push({
+    time: new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'}),
+    action: 'PRESSURE',
+    detail: `Tribune applies pressure on ${comitiaState.matrix[target].senator}: ${axisName} shifted ${direction > 0 ? '+' : ''}${direction}. (Cost: 2 capital)`,
+    senator: 'tribune'
+  });
+  
+  closePressureModal();
+  renderAll();
+}
+
+// ═══════════════════════════════════════
+// ADJOURN
+// ═══════════════════════════════════════
+function adjournSession() {
+  comitiaState.sessionLog.push({
+    time: new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'}),
+    action: 'ADJOURNED',
+    detail: `Session ${comitiaState.session} adjourned by Tribune Mategwas Taurinus. Capital remaining: ${comitiaState.politicalCapital}. Matrix state preserved.`,
+    senator: 'tribune'
+  });
+  comitiaState.session += 1;
+  renderAll();
+  alert(`Session ${comitiaState.session - 1} adjourned.\n\nMatrix state preserved for next session.\nRemaining capital: ${comitiaState.politicalCapital}/10`);
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', renderAll);
+
+// Close modals on overlay click
+document.getElementById('proposeModal').addEventListener('click', function(e) {
+  if (e.target === this) closeProposeModal();
+});
+document.getElementById('pressureModal').addEventListener('click', function(e) {
+  if (e.target === this) closePressureModal();
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeProposeModal();
+    closePressureModal();
+  }
+  if (e.ctrlKey && e.key === 'p') {
+    e.preventDefault();
+    openProposeModal();
+  }
+  if (e.ctrlKey && e.key === 'a') {
+    e.preventDefault();
+    callAlignment();
+  }
+  if (e.ctrlKey && e.key === 'v') {
+    e.preventDefault();
+    callVote();
+  }
+});
+
+console.log('🐂 COMTIA PUBLIA — Mategwas Taurinus Presiding');
+console.log('Session VII · Divine Quorum Era · Cancer Stellium');
+console.log('Pentagonal Matrix Active · 5 Senators · 1 Tribune');
+console.log('Keyboard shortcuts: Ctrl+P = Propose, Ctrl+A = Alignment, Ctrl+V = Vote');
+</script>
+
 </body>
 </html>
