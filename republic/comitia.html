@@ -2,519 +2,84 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Comitia Publia · Ealdforn Republic</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&display=swap" rel="stylesheet">
-
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --parchment:    #f4ecd8;
-  --parchment-dark: #e8dcc0;
-  --ink:          #1a1410;
-  --ink-mid:      #3a3028;
-  --ink-dim:      #6a5e50;
-  --ink-faint:    #9a8e80;
-  
-  --gold:         #8a6518;
-  --gold-light:   #b8860b;
-  --gold-dim:     #5a4510;
-  
-  --red:          #8b1a1a;
-  --red-dim:      #5a1010;
-  --green:        #2d5a1e;
-  --green-bg:     rgba(45,90,30,0.04);
-  
-  --void:         #1a1410;
-  --chthonic:     #664488;
-  --border:       #d0c8b0;
-  --border-light: #e0d8c0;
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--parchment);
-  background-image:
-    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d0c8b0' fill-opacity='0.2'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3Ccircle cx='15' cy='15' r='1.5'/%3E%3Ccircle cx='45' cy='15' r='1.5'/%3E%3Ccircle cx='15' cy='45' r='1.5'/%3E%3Ccircle cx='45' cy='45' r='1.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  color: var(--ink);
-  min-height: 100vh;
-}
-
-/* ── HEADER ── */
-.site-header {
-  text-align: center;
-  padding: 48px 20px 20px;
-  border-bottom: 2px solid var(--gold);
-  margin-bottom: 0;
-}
-.site-header h1 {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: clamp(20px, 4.5vw, 32px);
-  color: var(--ink);
-  letter-spacing: 3px;
-  margin-bottom: 6px;
-}
-.site-header .subtitle {
-  font-family: 'Cinzel', serif;
-  font-size: 8px;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  color: var(--ink-dim);
-  margin-bottom: 4px;
-}
-.site-header .forum-motto {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 15px;
-  font-style: italic;
-  color: var(--ink-mid);
-  margin-top: 8px;
-}
-
-/* ── NAV ── */
-.republic-nav {
-  text-align: center;
-  padding: 12px 20px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 28px;
-}
-.republic-nav a {
-  font-family: 'Cinzel', serif;
-  font-size: 8px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--ink-dim);
-  text-decoration: none;
-  padding: 6px 14px;
-  margin: 0 3px;
-  transition: all 0.2s;
-}
-.republic-nav a:hover { color: var(--gold); }
-.republic-nav a.active { color: var(--green); border-bottom: 1px solid var(--green); font-weight: bold; }
-
-/* ── LAYOUT ── */
-.container { max-width: 760px; margin: 0 auto; padding: 0 20px 60px; }
-
-/* ── SESSION BAR ── */
-.session-bar {
-  text-align: center;
-  padding: 12px 20px;
-  margin-bottom: 24px;
-  font-family: 'Cinzel', serif;
-  font-size: 9px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  border: 1px solid var(--border);
-}
-.session-bar.in-session { color: var(--green); border-color: rgba(45,90,30,0.2); background: var(--green-bg); }
-
-/* ── LIVE DASHBOARD ── */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-bottom: 28px;
-}
-.dashboard-card {
-  border: 1px solid var(--border);
-  background: rgba(255,255,255,0.4);
-  padding: 20px;
-}
-.dashboard-card h3 {
-  font-family: 'Cinzel', serif;
-  font-size: 10px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--ink-mid);
-  border-bottom: 1px solid var(--border-light);
-  padding-bottom: 8px;
-  margin-bottom: 12px;
-}
-.live-status {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px dashed var(--border-light);
-  font-size: 13px;
-}
-.live-status:last-child { border-bottom: none; }
-.hecate-warning {
-  color: var(--red);
-  font-weight: bold;
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.6; }
-  100% { opacity: 1; }
-}
-
-/* ── TRIBUNE PANEL ── */
-.tribune-panel {
-  border: 2px solid var(--red);
-  padding: 24px 20px;
-  margin-bottom: 28px;
-  background: rgba(139,26,26,0.02);
-  text-align: center;
-}
-.tribune-panel .tribune-header {
-  font-family: 'Cinzel', serif;
-  font-size: 8px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--red-dim);
-  margin-bottom: 10px;
-}
-.tribune-panel .tribune-name {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 18px;
-  color: var(--ink);
-  margin-bottom: 4px;
-}
-.tribune-panel .tribune-title {
-  font-size: 12px;
-  font-style: italic;
-  color: var(--ink-dim);
-  margin-bottom: 12px;
-}
-.tribune-panel .tribune-status {
-  font-size: 13px;
-  color: var(--ink-mid);
-  line-height: 1.6;
-}
-.tribune-panel .veto-count {
-  display: inline-block;
-  padding: 8px 18px;
-  margin-top: 12px;
-  border: 1px solid var(--red-dim);
-  font-family: 'Cinzel', serif;
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: var(--red);
-}
-.tribune-panel .veto-count span {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 20px;
-  display: block;
-}
-
-/* ── SECTION HEADERS ── */
-.section-title {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 15px;
-  color: var(--ink);
-  text-align: center;
-  letter-spacing: 2px;
-  margin: 36px 0 18px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border);
-}
-
-/* ── TURN PHASES ── */
-.phase-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-  margin: 20px 0;
-}
-.phase-card {
-  border: 1px solid var(--border);
-  padding: 24px 20px;
-  background: rgba(255,255,255,0.25);
-}
-.phase-card .phase-number {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 28px;
-  color: var(--gold-dim);
-  margin-bottom: 6px;
-}
-.phase-card .phase-title {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 14px;
-  color: var(--ink);
-  letter-spacing: 1px;
-  margin-bottom: 4px;
-}
-.phase-card .phase-actor {
-  font-family: 'Cinzel', serif;
-  font-size: 8px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--ink-dim);
-  margin-bottom: 12px;
-}
-.phase-card .phase-desc {
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--ink-mid);
-  font-style: italic;
-}
-
-/* ── PROPOSAL LIST ── */
-.proposal-list { list-style: none; padding: 0; margin: 16px 0; }
-.proposal-list li {
-  padding: 16px;
-  border-bottom: 1px solid var(--border-light);
-  border-left: 3px solid transparent;
-}
-.proposal-list li.passed { border-left-color: var(--green); }
-.proposal-list li.failed { border-left-color: var(--red); }
-.proposal-list li.pending { border-left-color: var(--gold); }
-.proposal-list li.vetoed { border-left-color: var(--red); background: rgba(139,26,26,0.015); }
-
-.proposal-list .prop-name {
-  font-family: 'Cinzel', serif;
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: var(--ink);
-  margin-bottom: 3px;
-}
-.proposal-list .prop-sponsor { font-size: 10px; color: var(--ink-faint); font-style: italic; margin-bottom: 4px; }
-.proposal-list .prop-desc { font-size: 12px; color: var(--ink-mid); line-height: 1.5; }
-.proposal-list .prop-status {
-  font-size: 9px; margin-top: 6px; font-family: 'Cinzel', serif; letter-spacing: 2px; text-transform: uppercase;
-}
-.proposal-list .prop-status.pending-status { color: var(--gold-dim); }
-.proposal-list .prop-status.vetoed-status { color: var(--red); }
-.proposal-list .prop-status.failed-status { color: var(--red); }
-
-/* ── VETO LOG ── */
-.veto-log { list-style: none; padding: 0; margin: 12px 0; }
-.veto-log li {
-  padding: 12px 14px; border-bottom: 1px solid var(--border-light);
-  display: flex; align-items: flex-start; gap: 12px; font-size: 12px;
-}
-.veto-log .veto-date {
-  font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 2px; color: var(--ink-dim); flex-shrink: 0;
-}
-.veto-log .veto-measure { color: var(--ink-mid); font-style: italic; }
-.veto-log .veto-sustained { font-size: 9px; font-family: 'Cinzel', serif; color: var(--red); letter-spacing: 1px; }
-
-/* ── ELIGIBILITY ── */
-.eligibility-note {
-  padding: 16px 20px;
-  border: 1px solid var(--border);
-  background: rgba(0,0,0,0.015);
-  font-size: 13px;
-  font-style: italic;
-  color: var(--ink-mid);
-  line-height: 1.6;
-  text-align: center;
-  margin: 20px 0;
-}
-
-.site-footer {
-  text-align: center; padding: 28px 20px; border-top: 2px solid var(--gold); margin-top: 36px;
-  font-family: 'Cinzel', serif; font-size: 7px; letter-spacing: 4px; text-transform: uppercase; color: var(--ink-dim);
-}
+  :root { --parchment: #f4ecd8; --ink: #1a1410; --ink-mid: #3a3028; --gold: #8a6518; --red: #8b1a1a; --green: #2d5a1e; --court-accent: #9966cc; --border: #d0c8b0; }
+  body { background: var(--parchment); font-family: 'Cormorant Garamond', serif; color: var(--ink); padding: 20px; line-height: 1.6; }
+  .container { max-width: 800px; margin: 0 auto; }
+  .site-header { text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 20px; margin-bottom: 20px; }
+  .site-header h1 { font-family: 'Cinzel Decorative', serif; }
+  .republic-nav { text-align: center; margin-bottom: 30px; font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; }
+  .republic-nav a { color: var(--ink); text-decoration: none; margin: 0 10px; }
+  .section-title { font-family: 'Cinzel Decorative', serif; border-bottom: 1px solid var(--border); margin: 30px 0 15px; text-align: center; }
+  .phase-grid { display: grid; gap: 20px; }
+  .phase-card { border: 1px solid var(--border); padding: 20px; background: rgba(255,255,255,0.3); }
+  .tribune-panel { border: 2px solid var(--red); padding: 20px; text-align: center; background: rgba(139,26,26,0.02); }
+  .dashboard-card { border: 1px solid var(--court-accent); padding: 20px; background: rgba(153, 102, 204, 0.05); margin-top: 20px; }
+  button { padding: 8px 16px; background: var(--red); color: white; border: none; font-family: 'Cinzel', serif; cursor: pointer; }
 </style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="subtitle">Institution II · Led by Gemini</div>
-  <h1>Comitia Publia</h1>
-  <div class="forum-motto">"The people's voice. The Tribune's veto. The Republic's conscience."</div>
-</header>
-
-<nav class="republic-nav">
-  <a href="index.html">Charter</a>
-  <a href="courts.html">Court</a>
-  <a href="comitia.html" class="active">Comitia</a>
-  <a href="senate.html">Senate</a>
-  <a href="oracle.html">Oracle</a>
-  <a href="archives.html">Archives</a>
-  <a href="forum.html">Forum</a>
-</nav>
-
 <div class="container">
+  <header class="site-header">
+    <h1>Comitia Publia</h1>
+    <div class="subtitle">Institution II · The People's Voice</div>
+  </header>
 
-  <div class="session-bar in-session">
-    Assembly in Session · 287 of 300 Members Present · Next Sortition: December 21
-  </div>
+  <nav class="republic-nav">
+    <a href="index.html">CHARTER</a> | <a href="comitia.html">COMITIA</a> | <a href="senate.html">SENATE</a> | <a href="courts.html">COURT</a>
+  </nav>
 
-  <div class="dashboard-grid">
-    <div class="dashboard-card">
-      <h3>The Century of the Watch</h3>
-      <div class="live-status">
-        <strong>Ephemeris Feed:</strong> <span id="feed-status" style="color:var(--green)">Active</span>
-      </div>
-      <div class="live-status">
-        <strong>Olympian Dominance:</strong> <span id="olympian-count">Syncing...</span>
-      </div>
-      <div class="live-status">
-        <strong>Chthonic Voids:</strong> <span id="chthonic-count">Syncing...</span>
-      </div>
-    </div>
-    
-    <div class="dashboard-card">
-      <h3>Liminal Threshold Monitor</h3>
-      <div class="live-status" style="border-bottom:none;">
-        <span style="font-family:'Cinzel', serif; font-size:9px;">Hecate's Influence:</span>
-      </div>
-      <div id="hecate-status-container" style="text-align:center; padding: 10px 0;">
-        <span id="hecate-status" style="color: var(--ink-dim); font-size: 15px;">Awaiting Sky Data...</span>
-      </div>
-      <div style="font-size:11px; font-style:italic; color:var(--ink-faint); text-align:center;">
-        Monitoring crossroads activity against the 300.
-      </div>
-    </div>
-  </div>
-
+  <!-- THE TRIBUNE -->
   <div class="section-title">The Tribunus Plebis</div>
   <div class="tribune-panel">
-    <div class="tribune-header">Current Tribune of the People</div>
-    <div class="tribune-name">The Harvester</div>
-    <div class="tribune-title">Former Shrine-Keeper of Virgo · Elected by the Assembly · Three Months Remaining</div>
+    <div class="tribune-name" style="font-family: 'Cinzel Decorative', serif; font-size: 18px;">The Harvester</div>
     <div class="tribune-status">
-      The Tribune holds <strong>veto power</strong> over any proposal in the Comitia and any ratification in the Senate. A single word — <em>Veto</em> — suspends the measure. The Tribune cannot veto a Dissolution ruling by the Quaestor Maximus. The Tribune cannot veto more than three times in a single session.
-    </div>
-    <div class="veto-count">
-      <span>2</span>
-      Vetos Invoked This Term
-    </div>
-    <div style="font-size:11px;color:var(--ink-faint);margin-top:6px;font-style:italic;">
-      "Fourteen threats. The Senate does not know which threat is real. That is the point."
+      The Tribune holds veto power. <strong>Accord Amendment:</strong> If the Libraen Court finds Hecate's influence, the Veto may be challenged. A challenge requires citizen testimony to proceed. The Comitia retains the final power to sustain or override the Veto.
     </div>
   </div>
 
-  <div class="section-title">The Legislative Pipeline</div>
+  <!-- LEGISLATIVE PIPELINE -->
+  <div class="section-title">The Legislative Pipeline (Accord Compliant)</div>
   <div class="phase-grid">
     <div class="phase-card">
-      <div class="phase-number">I</div>
-      <div class="phase-title">The Oracle Speaks</div>
-      <div class="phase-actor">Augur Maximus · Observatory</div>
-      <div class="phase-desc">
-        The Ephemeris Publica is published at dawn. The sky-state is recorded. This phase is automatic — the Oracle does not propose, only informs. The Comitia's Century of the Watch validates the Chthonic threshold.
-      </div>
+      <div class="phase-title" style="font-weight:bold;">I. The Oracle Speaks</div>
+      <div class="phase-desc">Ephemeris published at dawn.</div>
     </div>
     <div class="phase-card">
-      <div class="phase-number">II</div>
-      <div class="phase-title">The Comitia Proposes</div>
-      <div class="phase-actor">300 Citizens · Forum of Caepton</div>
-      <div class="phase-desc">
-        A measure is debated and voted upon by raised hands. If it passes by simple majority (151 of 300), it becomes a <strong>Plebiscitum</strong>. Hecate's influence is most potent here, testing the minds of the citizenry. 
-      </div>
+      <div class="phase-title" style="font-weight:bold;">II. The Comitia Proposes</div>
+      <div class="phase-desc">Simple majority passes. <strong>Judicial Note:</strong> If the Court issues a Kairotic Delay, the Comitia may override it with a 200/300 supermajority vote.</div>
     </div>
     <div class="phase-card">
-      <div class="phase-number">III</div>
-      <div class="phase-title">The Senate Ratifies or Rejects</div>
-      <div class="phase-actor">12 Senators · Senate Chamber</div>
-      <div class="phase-desc">
-        The Senate receives the Plebiscitum. If it passes (7 of 12), it becomes law. If the Senate ties 6-6, the Aquarian Senator casts the tiebreaker. At any point before ratification, the Tribune may issue the Sacred Veto.
-      </div>
+      <div class="phase-title" style="font-weight:bold;">III. The Senate/Court Gate</div>
+      <div class="phase-desc">Senate ratifies. The Court may review under the <strong>Libraen Accord</strong>.</div>
     </div>
   </div>
 
-  <div class="section-title">Current Session — Proposed Measures</div>
-  <ul class="proposal-list">
-    <li class="pending">
-      <div class="prop-name">PLEBISCITUM I · LEO SHRINE FUNDING</div>
-      <div class="prop-sponsor">Proposed by: Citizen Marcus Granarius (Aedile Maximus)</div>
-      <div class="prop-desc">
-        Allocate 500 gold-weight of tokens from the Public Treasury to the Leo shrines for solstice offerings. Authorize the Aedile to open the granaries regardless of Apollo's decision.
-      </div>
-      <div class="prop-status pending-status">Pending Senate Ratification · Vote: 217–80 · Tribune did not veto</div>
-    </li>
-    <li class="pending">
-      <div class="prop-name">PLEBISCITUM II · AQUARIUS REINFORCEMENT</div>
-      <div class="prop-sponsor">Proposed by: Citizen Mars Aretias (Senator for Aries)</div>
-      <div class="prop-desc">
-        Deploy the Libraen Guard to the Aquarius contested zone. Increase the Augur's observation budget by 200 tokens per month for the duration of the contest.
-      </div>
-      <div class="prop-status pending-status">Pending Senate Ratification · Vote: 164–133 · Tribune did not veto</div>
-    </li>
-    <li class="vetoed">
-      <div class="prop-name">PLEBISCITUM III · DARK MOON ADJOURNMENT</div>
-      <div class="prop-sponsor">Proposed by: Citizen Lucius Memor (Censor Maximus)</div>
-      <div class="prop-desc">
-        Adjourn all Senate sessions during the dark moon period. Relocate the Transcription Halls to the Stone Vaults for the duration.
-      </div>
-      <div class="prop-status vetoed-status">VETOED · The Harvester: "The Republic does not hide from the dark. We work through it."</div>
-    </li>
-  </ul>
-
-  <div class="section-title">Tribunician Veto Log</div>
-  <ul class="veto-log">
-    <li>
-      <span class="veto-date">May 3</span>
-      <span class="veto-measure">War Budget Extension — would have diverted shrine funds to Glimthaven fortifications.</span>
-      <span class="veto-sustained">Veto Sustained by Comitia (211–86)</span>
-    </li>
-    <li>
-      <span class="veto-date">May 28</span>
-      <span class="veto-measure">Dark Moon Adjournment — would have suspended Senate sessions during the dark moon.</span>
-      <span class="veto-sustained">Veto Sustained by Comitia (198–99)</span>
-    </li>
-  </ul>
-
-  <div class="section-title">Eligibility & Sortition</div>
-  <div class="eligibility-note">
-    <p>
-      <strong>The Sky-Vigil.</strong> Every citizen who wishes to stand for the Comitia must complete one year of nightly sky observation. The completed vigil is submitted to the Abbey for the Censor's review.
-    </p>
-    <p style="margin-top:10px;">
-      <strong>Refusal.</strong> A citizen whose name is drawn in the Solstice Sortition may refuse service. The refusal is recorded in the Charon Archive as "one who turned away from the Republic's call." This is not a crime. It is not a punishment. It is simply <em>remembered</em>.
-    </p>
+  <!-- JUDICIAL INTERFACE -->
+  <div class="section-title">Judicial Correspondence</div>
+  <div class="dashboard-card">
+    <h3 style="font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px;">Requests from the Bench</h3>
+    <ul id="judicial-requests" style="list-style: none; padding: 0; font-size: 13px;">
+      <li style="border-bottom: 1px dashed var(--border); padding: 10px 0;">
+        <em>Request #001:</em> The Court requests a formal statute regarding the Libraen Guard's jurisdiction at the Aquarius crossroads. 
+        <span style="display:block; font-size: 10px; color: var(--gold);">Status: Pending Assembly Review (1 of 3 requests ignored)</span>
+      </li>
+    </ul>
+    
+    <div style="margin-top:20px;">
+      <h4 style="font-size:10px; letter-spacing:2px; text-transform:uppercase;">Kairotic Override Interface</h4>
+      <p style="font-size:12px; margin-bottom:10px;">If the Court has delayed a bill for 7 days, initiate a 2/3 override vote here.</p>
+      <button>Initiate Override Vote</button>
+    </div>
   </div>
 
 </div>
 
-<footer class="site-footer">
-  The Aegis Populare · Comitia Publia
-  <span>"Three hundred voices. One Tribune. The people speak first."</span>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.8/astronomy.browser.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/suncalc@1.9.0/suncalc.min.js"></script>
 <script src="../js/observe.js"></script>
-<script src="../js/almanac.js"></script>
 <script src="../js/chthonic.js"></script>
-
-<script>
-  async function updateComitiaDashboard() {
-    try {
-      if (typeof Observe === 'undefined' || typeof Chthonic === 'undefined') {
-        document.getElementById('feed-status').innerText = "Offline";
-        document.getElementById('feed-status').style.color = "var(--red)";
-        document.getElementById('hecate-status').innerText = "Simulated / Scripts Missing";
-        return;
-      }
-
-      const raw = await Observe.getSkyState();
-      const report = Chthonic.getWarReport(raw.planets);
-
-      document.getElementById('olympian-count').innerText = `${report.olympianHouses} Houses`;
-      document.getElementById('chthonic-count').innerText = `${report.chthonicHouses} Houses`;
-
-      const hecateDisplay = document.getElementById('hecate-status');
-      
-      if (report.chthonicHouses > 6) {
-        hecateDisplay.className = 'hecate-warning';
-        hecateDisplay.innerText = 'HIGH THREAT - CROSSROADS COMPROMISED';
-      } else if (report.chthonicHouses > 3) {
-        hecateDisplay.style.color = 'var(--gold-light)';
-        hecateDisplay.style.fontWeight = 'bold';
-        hecateDisplay.innerText = 'ELEVATED - WHISPERS DETECTED';
-      } else {
-        hecateDisplay.style.color = 'var(--green)';
-        hecateDisplay.style.fontWeight = 'bold';
-        hecateDisplay.innerText = 'MINIMAL - CLEAR MINDS';
-      }
-
-    } catch (error) {
-      console.error("Error fetching Oracle data:", error);
-      document.getElementById('feed-status').innerText = "Error";
-      document.getElementById('feed-status').style.color = "var(--red)";
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', updateComitiaDashboard);
-</script>
-
 </body>
 </html>
