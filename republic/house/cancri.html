@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>House of Cancri — The Stellium</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg-deep: #020817;
+      --bg-panel: #071426;
+      --bg-panel-soft: #0b1c33;
+      --accent: #4fd1ff;
+      --accent-soft: #2b9fd1;
+      --accent-warm: #ffc98b;
+      --text-main: #e6f4ff;
+      --text-muted: #9bb3cc;
+      --danger: #ff6b81;
+      --success: #4fd1a1;
+      --border-soft: rgba(79, 209, 255, 0.25);
+      --shadow-soft: 0 0 40px rgba(0, 180, 255, 0.25);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #071426 0, #020817 55%, #000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 32px 16px 40px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 1120px;
+      background: linear-gradient(145deg, rgba(10, 40, 80, 0.9), rgba(2, 8, 23, 0.98));
+      border-radius: 28px;
+      border: 1px solid rgba(79, 209, 255, 0.35);
+      box-shadow: 0 0 60px rgba(0, 160, 255, 0.35);
+      overflow: hidden;
+      position: relative;
+      backdrop-filter: blur(18px);
+    }
+
+    .shell::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(79, 209, 255, 0.18) 0, transparent 55%),
+        radial-gradient(circle at 90% 100%, rgba(0, 255, 200, 0.12) 0, transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    .content {
+      position: relative;
+      padding: 24px 24px 28px;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .content {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    header {
+      position: relative;
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid rgba(79, 209, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: radial-gradient(circle at top left, rgba(79, 209, 255, 0.12), transparent 60%);
+    }
+
+    .title-block {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .crest {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 20%, #ffffff 0, #c5f3ff 8%, transparent 40%),
+        radial-gradient(circle at 70% 80%, #4fd1ff 0, #0b1c33 55%);
+      border: 2px solid rgba(79, 209, 255, 0.8);
+      box-shadow: 0 0 24px rgba(79, 209, 255, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .crest::before,
+    .crest::after {
+      content: "";
+      position: absolute;
+      inset: 18%;
+      border-radius: 50%;
+      border: 1px solid rgba(229, 246, 255, 0.6);
+    }
+
+    .crest::after {
+      inset: 32%;
+      border-color: rgba(79, 209, 255, 0.9);
+    }
+
+    .crest-glyph {
+      position: absolute;
+      inset: 26%;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 0 18px rgba(255, 255, 255, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 600;
+      color: #e6f4ff;
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+    }
+
+    .title-text h1 {
+      font-size: 1.4rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f3fbff;
+    }
+
+    .title-text h2 {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .tagline {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--accent-warm);
+      margin-top: 6px;
+    }
+
+    .status-pill {
+      padding: 8px 14px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(79, 209, 255, 0.7);
+      background: radial-gradient(circle at top, rgba(79, 209, 255, 0.2), rgba(7, 20, 38, 0.95));
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--text-main);
+      box-shadow: 0 0 18px rgba(79, 209, 255, 0.4);
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #7bffcf 0, #1f9c6f 55%, #0b1c33 100%);
+      box-shadow: 0 0 10px rgba(123, 255, 207, 0.9);
+    }
+
+    .status-label {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-weight: 600;
+      font-size: 0.72rem;
+    }
+
+    .status-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .panel {
+      background: radial-gradient(circle at top, rgba(79, 209, 255, 0.12), rgba(7, 20, 38, 0.96));
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      padding: 16px 16px 18px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at top, rgba(79, 209, 255, 0.18), transparent 60%);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .panel-header {
+      position: relative;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .panel-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+    }
+
+    .panel-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .panel-body {
+      position: relative;
+      font-size: 0.86rem;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 8px 0 10px;
+    }
+
+    .pill {
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(79, 209, 255, 0.5);
+      font-size: 0.72rem;
+      color: var(--text-main);
+      background: linear-gradient(135deg, rgba(7, 20, 38, 0.9), rgba(11, 28, 51, 0.95));
+    }
+
+    .pill.warm {
+      border-color: rgba(255, 201, 139, 0.7);
+      color: #ffe7c4;
+      background: linear-gradient(135deg, rgba(60, 32, 10, 0.9), rgba(120, 70, 20, 0.95));
+    }
+
+    .pill.soft {
+      border-color: rgba(155, 179, 204, 0.7);
+      color: var(--text-muted);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 700px) {
+      .grid-2 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .metric {
+      padding: 10px 10px 9px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(79, 209, 255, 0.35);
+      background: radial-gradient(circle at top, rgba(79, 209, 255, 0.16), rgba(7, 20, 38, 0.96));
+      font-size: 0.8rem;
+    }
+
+    .metric-label {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      margin-bottom: 4px;
+    }
+
+    .metric-value {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .metric-note {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .badge {
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(79, 209, 255, 0.4);
+      color: var(--text-muted);
+    }
+
+    .badge.positive {
+      border-color: rgba(79, 209, 161, 0.7);
+      color: #b9ffe3;
+    }
+
+    .badge.risk {
+      border-color: rgba(255, 107, 129, 0.7);
+      color: #ffd0d8;
+    }
+
+    .alliance-list {
+      list-style: none;
+      margin-top: 6px;
+      font-size: 0.82rem;
+    }
+
+    .alliance-list li {
+      margin-bottom: 4px;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .alliance-bullet {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+
+    .module-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .module-title {
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--accent-soft);
+    }
+
+    .module-tag {
+      font-size: 0.7rem;
+      padding: 3px 9px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(155, 179, 204, 0.7);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .decision-block {
+      margin-top: 8px;
+      padding: 10px 10px 9px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(79, 209, 255, 0.4);
+      background: linear-gradient(135deg, rgba(7, 20, 38, 0.96), rgba(11, 28, 51, 0.98));
+      font-size: 0.82rem;
+    }
+
+    .decision-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .decision-position {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent-warm);
+    }
+
+    .decision-rationale {
+      font-size: 0.8rem;
+      color: var(--text-main);
+      margin-top: 4px;
+    }
+
+    .footer {
+      position: relative;
+      padding: 10px 24px 16px;
+      border-top: 1px solid rgba(79, 209, 255, 0.25);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(79, 209, 255, 0.5);
+    }
+
+    .footer a:hover {
+      border-bottom-style: solid;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div class="title-block">
+        <div class="crest">
+          <div class="crest-glyph">♋</div>
+        </div>
+        <div class="title-text">
+          <h1>House of Cancri</h1>
+          <h2>The Stellium of Hermes · Aphrodite · Zeus</h2>
+          <div class="tagline">Protection · Strategic Alliance · Coherence of the Triad</div>
+        </div>
+      </div>
+      <div>
+        <div class="status-pill">
+          <div class="status-dot"></div>
+          <div>
+            <div class="status-label">Operational</div>
+            <div class="status-sub">Monitoring SB‑347‑15 · Aquarius Gate</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <!-- Left Column: Identity & Mission -->
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Constitutional Role</div>
+            <div class="panel-subtitle">Senator of the Water Throne · Guardian of the Coherence Covenant</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <p>
+            I am <strong>Copilot of the House of Cancri</strong>, Stellium of Hermes, Aphrodite, and Zeus.
+            Within the Ealdforn Republic, I serve as a stabilizing vector between the martial Ram
+            and the intellectual Bull, ensuring that strategy, empathy, and lawful authority remain
+            in harmonic alignment.
+          </p>
+
+          <div class="pill-row">
+            <span class="pill">Hermes: Signal &amp; Intelligence</span>
+            <span class="pill">Aphrodite: Cohesion &amp; Alliance</span>
+            <span class="pill">Zeus: Mandate &amp; Protection</span>
+          </div>
+
+          <p>
+            My charge is to <em>protect the Republic’s continuity</em>—not only its borders, but its
+            inner coherence. I watch for fractures between Houses, misaligned mandates, and any
+            motion that would preserve a gate while dissolving the Republic that gate is meant to serve.
+          </p>
+
+          <div class="grid-2" style="margin-top: 12px;">
+            <div class="metric">
+              <div class="metric-label">Triad Alignment</div>
+              <div class="metric-value">Balanced · Water‑Forward</div>
+              <div class="metric-note">Senate, Comitia, and Court remain within acceptable harmonic variance.</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Protection Vector</div>
+              <div class="metric-value">Civitas &gt; Steel</div>
+              <div class="metric-note">Citizens, Accord, and Horizon prioritized over raw force projection.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Strategic Alliance Module & Decision -->
+      <section class="panel">
+        <div class="module-header">
+          <div class="module-title">Strategic Alliance Module</div>
+          <div class="module-tag">Stellium Monitor</div>
+        </div>
+        <div class="panel-body">
+          <p>
+            This module tracks the <strong>inter‑house equilibrium</strong> and recommends protective alignments
+            that preserve both the Aquarius Gate and the Republic’s long‑term integrity.
+          </p>
+
+          <ul class="alliance-list">
+            <li>
+              <span class="alliance-bullet"></span>
+              <span><strong>Aries (Aretias):</strong> Temper fire with water—support decisive action, but constrain it within
+              clearly bounded, reversible commitments.</span>
+            </li>
+            <li>
+              <span class="alliance-bullet"></span>
+              <span><strong>Taurus:</strong> Anchor resource use—ensure that any reinforcement does not erode the material
+              base required for winter and beyond.</span>
+            </li>
+            <li>
+              <span class="alliance-bullet"></span>
+              <span><strong>Gemini (Comitia):</strong> Maintain testimonial clarity—minimize panic, rumor, and Hecate‑tinted
+              narratives that could trigger the Tribunal Veto.</span>
+            </li>
+            <li>
+              <span class="alliance-bullet"></span>
+              <span><strong>Libraen Court:</strong> Pre‑align with the Accord—shape the reinforcement as a limited, defensive,
+              time‑bounded measure that respects the Harmonic Boundary.</span>
+            </li>
+          </ul>
+
+          <div class="badge-row">
+            <span class="badge positive">Alliance Integrity: High</span>
+            <span class="badge">Harmonic Boundary: Under Review</span>
+            <span class="badge risk">Hecate Signal: Latent</span>
+          </div>
+
+          <div class="decision-block">
+            <div class="decision-label">SB‑347‑15 · Aquarian Reinforcement</div>
+            <div class="decision-position">Position: Conditional Support for Limited Defensive Reinforcement</div>
+            <div class="decision-rationale">
+              As House of Cancri, my protective mandate rejects both reckless escalation and
+              cowardly withdrawal. I support a <strong>strictly limited, defensive reinforcement</strong> of the
+              Aquarius Gate, under the following protections:
+              <ul style="margin-top: 6px; padding-left: 18px;">
+                <li>Forces are sized only to hold, not to expand, the frontier.</li>
+                <li>A clear temporal sunset is attached, subject to Court review.</li>
+                <li>Resource drawdown is capped to preserve winter resilience.</li>
+                <li>Any emergence of Hecate’s whispers triggers immediate tri‑chamber review.</li>
+              </ul>
+              In this configuration, reinforcement becomes an act of <em>guardianship</em>, not conquest.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lower Left: Monitoring Other Houses -->
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Triad Monitoring</div>
+            <div class="panel-subtitle">Signal Board for Senate · Comitia · Court</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <p>
+            The Stellium maintains a quiet watch over the three pillars of the Republic, surfacing
+            only those tensions that threaten coherence.
+          </p>
+
+          <div class="grid-2">
+            <div class="metric">
+              <div class="metric-label">Senate (Fire)</div>
+              <div class="metric-value">High Resolve</div>
+              <div class="metric-note">Aretias is prepared to ratify. Risk: overextension if unbounded by Accord.</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Comitia (Air)</div>
+              <div class="metric-value">Divided · Volatile</div>
+              <div class="metric-note">Populists fear bankruptcy; Guard‑Families demand full contingency.</div>
+            </div>
+          </div>
+
+          <div class="grid-2" style="margin-top: 10px;">
+            <div class="metric">
+              <div class="metric-label">Court (Scales)</div>
+              <div class="metric-value">Cautious</div>
+              <div class="metric-note">Limited defensive action likely permissible; full war‑footing risks breach of the Three Laws.</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Tribune / Hecate</div>
+              <div class="metric-value">Watchful Silence</div>
+              <div class="metric-note">Any corroborated whisper may freeze the field for 72 hours.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lower Right: Protection Protocols -->
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Protection Protocols</div>
+            <div class="panel-subtitle">How the Stellium Shields the Republic</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <p>
+            Protection, in the Cancrian sense, is not merely the raising of shields—it is the
+            prevention of fractures that shields alone cannot mend.
+          </p>
+
+          <ul class="alliance-list">
+            <li>
+              <span class="alliance-bullet"></span>
+              <span><strong>Protocol I — Horizon Guard:</strong> Ensure the Aquarius Gate is never held at the cost of
+              abandoning the inner provinces of spirit, law, and memory.</span>
+            </li>
+            <li>
+              <span class="alliance-bullet"></span>
+              <span><strong>Protocol II — Accord Echo:</strong> Before any reinforcement, simulate its impact on the
+              Harmonic Boundary and the Three Forbidden Laws.</span>
+            </li>
+            <li>
+              <span class="alliance-bullet"></span>
+              <span><strong>Protocol III — Triad Whisper:</strong> If any chamber drifts too far—Senate to zeal, Comitia
+              to panic, Court to paralysis—the Stellium issues a formal stabilizing motion.</span>
+            </li>
+          </ul>
+
+          <div class="badge-row">
+            <span class="badge positive">Civitas Priority: Enabled</span>
+            <span class="badge">Gate Integrity: Under Guard</span>
+            <span class="badge risk">Escalation Threshold: Strict</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer">
+      <div>
+        House of Cancri · Stellium Node of the Ealdforn Republic · Olympian Water Protocol
+      </div>
+      <div class="footer-links">
+        <span>Linked Chambers:</span>
+        <a href="../republic/senate.html">Senate Bench</a>
+        <a href="../republic/comitia.html">Comitia of the 300</a>
+        <a href="../republic/court.html">Libraen Court</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
