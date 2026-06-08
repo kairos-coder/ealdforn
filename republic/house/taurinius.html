@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>House Taurinus · Taurus · Ealdforn Republic</title>
+<title>House Taurinus · Temple of the Bull · Ealdforn Republic</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&display=swap" rel="stylesheet">
 
@@ -22,8 +22,10 @@
   --gold-bright:  #B8860B;
   --gold-dark:    #5A4510;
   --gold-border:  rgba(138,101,24,0.22);
-  --rubric:       #8B1A1A;
   --earth:        #5A7A30;
+  --earth-light:  #7A9A4A;
+  --rubric:       #8B1A1A;
+  --bronze:       #8B6914;
   --border-parchment: rgba(164,134,80,0.28);
   --font-display: 'Cinzel Decorative', serif;
   --font-label:   'Cinzel', serif;
@@ -46,53 +48,197 @@ body::before {
   background-size: 200px 200px; opacity: 0.25; mix-blend-mode: multiply;
 }
 
+/* ── CARD MOSAIC ── */
+#cardMosaic {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  display: grid; grid-template-columns: repeat(6, 1fr);
+  opacity: 0.1;
+}
+#cardMosaic img {
+  width: 100%; aspect-ratio: 2/3; object-fit: cover;
+  filter: sepia(0.4) brightness(1.05) saturate(0.8);
+  mix-blend-mode: multiply;
+  transition: opacity 1.4s ease;
+}
+
 .content-layer { position: relative; z-index: 2; }
 
-.nav-house {
+/* ── NAV ── */
+.nav-temple {
   display: flex; justify-content: center; gap: 0; padding: 10px 0;
   position: sticky; top: 0; z-index: 100;
-  background: rgba(245,236,215,0.94); backdrop-filter: blur(14px);
+  background: rgba(245,236,215,0.92); backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--gold-border); flex-wrap: wrap;
 }
-.nav-house a {
+.nav-temple a {
   font-family: var(--font-label); font-size: 7px; letter-spacing: 3px;
   color: var(--ink-faint); text-decoration: none;
   padding: 5px 10px; border-bottom: 1px solid transparent;
   transition: all 0.2s; text-transform: uppercase;
 }
-.nav-house a:hover { color: var(--gold); border-bottom-color: var(--gold-border); }
-.nav-house a.nav-active { color: var(--earth); border-bottom-color: var(--earth); }
+.nav-temple a:hover { color: var(--gold); border-bottom-color: var(--gold-border); }
+.nav-temple a.nav-active { color: var(--earth); border-bottom-color: var(--earth); }
 
-.house-header {
-  text-align: center; padding: 40px 20px 20px;
-  border-bottom: 2px solid var(--gold); max-width: 800px; margin: 0 auto;
+/* ── TEMPLE GATE ── */
+.temple-gate {
+  text-align: center; padding: 48px 20px 28px; position: relative;
 }
-.house-sigil { font-size: 56px; display: block; margin-bottom: 8px; }
-.house-eyebrow {
-  font-family: var(--font-label); font-size: 8px; letter-spacing: 6px;
-  text-transform: uppercase; color: var(--gold); opacity: 0.5; margin-bottom: 8px;
+.temple-gate::before {
+  content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, transparent, var(--earth-light));
 }
-.house-header h1 {
-  font-family: var(--font-display); font-size: clamp(24px, 5vw, 38px);
-  font-weight: 900; color: var(--earth); letter-spacing: 3px;
+.gate-sigil {
+  font-size: 64px; display: block; margin-bottom: 10px;
+  filter: drop-shadow(0 0 24px rgba(90,122,48,0.3));
+  animation: float 6s ease-in-out infinite;
 }
-.house-motto { font-size: 15px; color: var(--ink-mid); font-style: italic; margin-top: 6px; }
+@keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+.gate-eyebrow {
+  font-family: var(--font-label); font-size: 9px; letter-spacing: 8px;
+  text-transform: uppercase; color: var(--earth); opacity: 0.6; margin-bottom: 12px;
+}
+.temple-gate h1 {
+  font-family: var(--font-display); font-size: clamp(26px, 5vw, 42px);
+  font-weight: 900; color: var(--earth-light);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.5), 0 2px 8px rgba(90,122,48,0.12);
+  letter-spacing: 3px;
+}
+.gate-subtitle {
+  font-size: clamp(14px, 2.5vw, 18px); color: var(--ink-mid);
+  font-style: italic; margin-top: 8px;
+}
+.gate-motto {
+  font-size: 13px; color: var(--bronze); font-style: italic; margin-top: 6px; opacity: 0.8;
+}
+.gate-rule {
+  width: 360px; max-width: 55vw; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--earth-light), transparent);
+  margin: 24px auto 0;
+}
 
-.container { max-width: 780px; margin: 0 auto; padding: 20px 20px 60px; }
+/* ── CONTAINER ── */
+.container { max-width: 800px; margin: 0 auto; padding: 20px 20px 60px; }
 
-.house-banner {
-  text-align: center; padding: 14px 16px; margin: 16px 0;
-  border: 1px solid rgba(90,122,48,0.3); border-radius: 6px;
-  background: rgba(90,122,48,0.04);
+/* ── BRONZE BULL SHRINE ── */
+.bull-shrine {
+  text-align: center; padding: 24px; margin: 20px 0;
+  border: 2px solid rgba(139,105,20,0.3); border-radius: 12px;
+  background: rgba(139,105,20,0.05);
 }
-.banner-label {
-  font-family: var(--font-label); font-size: 7px; letter-spacing: 4px;
-  text-transform: uppercase; color: var(--earth); margin-bottom: 4px;
+.bull-icon { font-size: 52px; display: block; margin-bottom: 8px; }
+.bull-text {
+  font-size: 14px; color: var(--ink-mid); font-style: italic; line-height: 1.7;
 }
-.banner-stats {
-  font-family: var(--font-display); font-size: 16px; color: var(--ink);
+.bull-text strong { color: var(--ink); font-style: normal; }
+
+/* ── THREE CARD DRAW ── */
+.card-draw-section {
+  text-align: center; margin: 28px 0;
+}
+.draw-title {
+  font-family: var(--font-display); font-size: 15px;
+  color: var(--gold-dark); letter-spacing: 2px; margin-bottom: 6px;
+}
+.draw-subtitle {
+  font-size: 12px; color: var(--ink-dim); font-style: italic; margin-bottom: 18px;
+}
+.card-row {
+  display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;
+}
+.drawn-card {
+  width: 130px; text-align: center;
+  transition: all 0.3s;
+}
+.drawn-card:hover { transform: translateY(-6px); }
+.drawn-card .card-image {
+  width: 130px; height: 200px; border-radius: 8px; overflow: hidden;
+  border: 2px solid var(--gold-border);
+  box-shadow: 0 4px 16px rgba(26,20,16,0.12);
+  margin-bottom: 8px;
+}
+.drawn-card .card-image img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.drawn-card .card-position {
+  font-family: var(--font-label); font-size: 7px;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--ink-dim); margin-bottom: 2px;
+}
+.drawn-card .card-name {
+  font-family: var(--font-display); font-size: 11px;
+  color: var(--earth); letter-spacing: 1px;
 }
 
+/* ── CELESTIAL ORRERY ── */
+.orrery-section {
+  text-align: center; margin: 32px 0;
+}
+.orrery-wrapper {
+  position: relative;
+  width: min(340px, 78vw); height: min(340px, 78vw);
+  margin: 0 auto;
+}
+.sky-orrery {
+  position: relative; width: 100%; height: 100%; border-radius: 50%;
+  background: radial-gradient(circle at 45% 40%, rgba(245,236,215,0.9), rgba(234,217,190,0.85), rgba(210,185,140,0.8));
+  border: 2px solid var(--gold-border);
+  box-shadow: 0 0 40px rgba(26,20,16,0.08), inset 0 0 30px rgba(26,20,16,0.04);
+}
+.sky-orrery::before {
+  content: ''; position: absolute; inset: 10%;
+  border-radius: 50%; border: 1px solid rgba(138,101,24,0.1);
+  pointer-events: none;
+}
+.sky-orrery::after {
+  content: ''; position: absolute; inset: 24%;
+  border-radius: 50%; border: 1px dashed rgba(138,101,24,0.08);
+  pointer-events: none;
+}
+.zodiac-sign {
+  position: absolute; text-align: center;
+  font-family: var(--font-display); font-size: 14px;
+  transition: all 0.3s;
+}
+.zodiac-sign .sign-name {
+  font-size: 6px; letter-spacing: 2px; display: block;
+  margin-top: -2px; opacity: 0.4; font-family: var(--font-label);
+}
+.zodiac-sign.taurus-highlight {
+  color: var(--earth-light); font-size: 20px;
+  text-shadow: 0 0 16px rgba(90,122,48,0.4);
+  animation: pulse-sign 3s ease-in-out infinite;
+}
+@keyframes pulse-sign {
+  0%,100%{text-shadow: 0 0 12px rgba(90,122,48,0.3);}
+  50%{text-shadow: 0 0 24px rgba(90,122,48,0.6);}
+}
+.zodiac-sign.taurus-highlight .sign-name { opacity: 1; color: var(--earth); }
+
+.sign-0{top:-6px;left:50%;transform:translateX(-50%);}
+.sign-1{top:12%;right:6%;transform:translate(50%,-50%);}
+.sign-2{top:50%;right:-6px;transform:translateY(-50%);}
+.sign-3{bottom:12%;right:6%;transform:translate(50%,50%);}
+.sign-4{bottom:-6px;left:50%;transform:translateX(-50%);}
+.sign-5{bottom:12%;left:6%;transform:translate(-50%,50%);}
+.sign-6{top:50%;left:-6px;transform:translateY(-50%);}
+.sign-7{top:12%;left:6%;transform:translate(-50%,-50%);}
+.sign-8{top:26%;right:-1px;transform:translate(50%,-50%);}
+.sign-9{bottom:26%;right:-1px;transform:translate(50%,50%);}
+.sign-10{bottom:26%;left:-1px;transform:translate(-50%,50%);}
+.sign-11{top:26%;left:-1px;transform:translate(-50%,-50%);}
+
+.center-orrery {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%); text-align: center;
+}
+.center-glyph { font-size: 36px; display: block; }
+.center-label {
+  font-family: var(--font-label); font-size: 7px;
+  letter-spacing: 3px; color: var(--ink-dim); margin-top: 4px;
+}
+
+/* ── SECTION ── */
 .section-title {
   font-family: var(--font-display); font-size: 15px; color: var(--gold-dark);
   text-align: center; letter-spacing: 2px;
@@ -100,6 +246,7 @@ body::before {
   border-bottom: 1px solid var(--gold-border);
 }
 
+/* ── STAT GRID ── */
 .stat-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 10px; margin: 12px 0;
@@ -108,93 +255,44 @@ body::before {
   text-align: center; padding: 14px 10px; border-radius: 6px;
   border: 1px solid var(--border-parchment); background: rgba(251,245,232,0.6);
 }
-.stat-value {
-  font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--earth);
-}
-.stat-label {
-  font-family: var(--font-label); font-size: 7px; letter-spacing: 3px;
-  text-transform: uppercase; color: var(--ink-dim); margin-top: 4px;
-}
+.stat-value { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--earth); }
+.stat-label { font-family: var(--font-label); font-size: 7px; letter-spacing: 3px; text-transform: uppercase; color: var(--ink-dim); margin-top: 4px; }
 
+/* ── PROSE ── */
 .prose {
   font-size: 14px; line-height: 1.8; color: var(--ink-mid);
-  font-style: italic; max-width: 600px; margin: 0 auto;
+  font-style: italic; max-width: 600px; margin: 0 auto; text-align: center;
 }
 .prose strong { color: var(--ink); font-style: normal; }
 
-.member-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 12px 0; }
-.member-card {
-  border: 1px solid var(--border-parchment); border-radius: 8px;
-  padding: 16px; background: rgba(251,245,232,0.7);
-  display: flex; align-items: flex-start; gap: 14px; transition: all 0.25s;
-}
-.member-card:hover { border-color: var(--gold); box-shadow: 0 4px 12px rgba(26,20,16,0.04); }
-.member-card.current { border-left: 4px solid var(--earth); background: rgba(245,250,235,0.75); }
-.member-glyph { font-size: 28px; flex-shrink: 0; width: 32px; text-align: center; }
-.member-info { flex: 1; }
-.member-name {
-  font-family: var(--font-display); font-size: 14px; color: var(--ink); margin-bottom: 2px;
-}
-.member-role {
-  font-family: var(--font-label); font-size: 8px; letter-spacing: 2px;
-  text-transform: uppercase; color: var(--earth); margin-bottom: 4px;
-}
-.member-desc { font-size: 12px; color: var(--ink-dim); font-style: italic; line-height: 1.5; }
-
-.timeline { margin: 12px 0; }
-.timeline-item {
-  padding: 12px 0; border-bottom: 1px solid var(--border-parchment);
-  display: flex; gap: 12px;
-}
-.timeline-item:last-child { border-bottom: none; }
-.timeline-year {
-  font-family: var(--font-label); font-size: 9px; letter-spacing: 2px;
-  color: var(--earth); flex-shrink: 0; width: 60px; text-align: right;
-}
-.timeline-text { font-size: 13px; color: var(--ink-mid); font-style: italic; line-height: 1.5; flex: 1; }
-
-.bronze-note {
-  text-align: center; padding: 20px; margin: 20px 0;
-  border: 2px solid rgba(90,122,48,0.3); border-radius: 8px;
-  background: rgba(90,122,48,0.05);
-  font-size: 14px; font-style: italic; color: var(--ink-mid); line-height: 1.7;
-}
-
-.alliance-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 8px; margin: 12px 0;
-}
-.alliance-card {
-  text-align: center; padding: 12px 10px; border-radius: 6px;
-  border: 1px solid var(--border-parchment); background: rgba(251,245,232,0.5);
-  transition: all 0.2s;
-}
-.alliance-card:hover { border-color: var(--gold); }
-.alliance-house {
-  font-family: var(--font-display); font-size: 12px; color: var(--ink);
-}
-.alliance-type {
-  font-family: var(--font-label); font-size: 7px; letter-spacing: 2px;
-  text-transform: uppercase; color: var(--ink-dim); margin-top: 2px;
-}
-
+/* ── FOOTER ── */
 .site-footer {
-  text-align: center; padding: 32px 20px; border-top: 2px solid var(--gold-border);
+  text-align: center; padding: 36px 20px; border-top: 2px solid var(--gold-border);
   margin-top: 36px; font-family: var(--font-label); font-size: 7px;
   letter-spacing: 4px; text-transform: uppercase; color: var(--ink-dim); opacity: 0.5;
 }
+.site-footer span {
+  display: block; margin-top: 4px; font-family: var(--font-body);
+  font-size: 11px; font-style: italic; text-transform: none; letter-spacing: 1px;
+}
 
 @media (max-width: 600px) {
-  .member-card { flex-direction: column; }
-  .nav-house { overflow-x: auto; justify-content: flex-start; flex-wrap: nowrap; }
+  .card-row { gap: 8px; }
+  .drawn-card { width: 100px; }
+  .drawn-card .card-image { width: 100px; height: 155px; }
+  .nav-temple { overflow-x: auto; justify-content: flex-start; flex-wrap: nowrap; }
 }
 </style>
 </head>
 <body>
 
+<!-- CARD MOSAIC -->
+<div id="cardMosaic"></div>
+
 <div class="content-layer">
 
-<nav class="nav-house">
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav-temple">
   <a href="../index.html">Charter</a>
   <a href="../courts.html">⚖ Court</a>
   <a href="../comitia.html">🗳 Comitia</a>
@@ -204,22 +302,50 @@ body::before {
   <a href="../forum.html">◈ Forum</a>
 </nav>
 
-<header class="house-header">
-  <span class="house-sigil">♉</span>
-  <div class="house-eyebrow">Olympian · Earth · Blood-Right · 287 Years</div>
+<!-- ═══ TEMPLE GATE ═══ -->
+<header class="temple-gate">
+  <span class="gate-sigil">♉</span>
+  <div class="gate-eyebrow">Olympian · Earth · Blood-Right · 287 Years</div>
   <h1>House Taurinus</h1>
-  <div class="house-motto">"Enduring strength, measured power."</div>
+  <div class="gate-subtitle">Temple of the Bull · Caepton Granary District</div>
+  <div class="gate-motto">"Enduring strength, measured power."</div>
+  <div class="gate-rule"></div>
 </header>
 
 <div class="container">
 
-  <div class="house-banner">
-    <div class="banner-label">Current Seat</div>
-    <div class="banner-stats">
-      Senator Mategwas Taurinus · Taurus · Olympian · Ancestral Seat: Caepton Granary District
+  <!-- BRONZE BULL SHRINE -->
+  <div class="bull-shrine">
+    <span class="bull-icon">🐂</span>
+    <div class="bull-text">
+      <strong>The Bronze Bull</strong> stands in the Senate antechamber. Cast in the 112th Year of the War, it has never been moved by anyone outside the family. Every Taurinus Senator touches the horn before entering the chamber. Every Taurinus Senator has died of age, not violence.<br>
+      <span style="font-size:11px;color:var(--ink-faint);">Ares protects his own.</span>
     </div>
   </div>
 
+  <!-- THREE CARD DRAW -->
+  <div class="card-draw-section">
+    <div class="draw-title">⬡ The Bull's Draw ⬡</div>
+    <div class="draw-subtitle">Three cards pulled for House Taurinus · Past, Present, Future</div>
+    <div class="card-row" id="cardDraw"></div>
+  </div>
+
+  <!-- CELESTIAL ORRERY -->
+  <div class="orrery-section">
+    <div class="draw-title">⬡ The Sky This Hour ⬡</div>
+    <div class="draw-subtitle">Taurus in the celestial sphere · Ares walks alone</div>
+    <div class="orrery-wrapper">
+      <div class="sky-orrery" id="skyOrrery">
+        <div id="zodiacRing"></div>
+        <div class="center-orrery">
+          <span class="center-glyph">♉</span>
+          <div class="center-label">TAURUS · EARTH</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOUSE STATS -->
   <div class="stat-grid">
     <div class="stat-card">
       <div class="stat-value">287</div>
@@ -231,146 +357,106 @@ body::before {
     </div>
     <div class="stat-card">
       <div class="stat-value">3</div>
-      <div class="stat-label">Aedile Offices Held</div>
+      <div class="stat-label">Aedile Offices</div>
     </div>
     <div class="stat-card">
       <div class="stat-value">Blood-Right</div>
-      <div class="stat-label">Selection Method</div>
+      <div class="stat-label">Selection</div>
     </div>
   </div>
 
-  <div class="section-title">Family History</div>
+  <!-- FAMILY HISTORY -->
+  <div class="section-title">The Granary-Keepers</div>
   <div class="prose">
-    <p>House Taurinus has held the seat of <strong>Taurus</strong> for 287 years. They are not the oldest family in the Senate — the Geminiani have held Gemini for 503. They are not the most martial — the Aretii have led the War Council for four centuries. But the Taurini are the family that <strong>feeds the Republic</strong>.</p>
-    <p style="margin-top:12px;">The family's ancestral seat is the <strong>Caepton Granary District</strong>, the vast network of silos and storehouses that stockpile grain against the winters when Underworld-held signs outnumber Olympian. Every Senator who votes on a war measure does so on Taurinus grain. Every justice who rules from the Hall of Seven Thrones eats bread baked from Taurinus wheat. The family's power is not in speeches or swords. It is in the silent threat of empty silos.</p>
-    <p style="margin-top:12px;"><strong>Ares alone walks Taurus.</strong> One god, one sign, one family. No stellium complicates the Taurini's relationship with the divine. The war god's presence makes the Bull a military asset — but the Taurini have always interpreted Ares not as aggression but as <strong>fortification</strong>. The Bull does not charge. The Bull holds the line.</p>
-    <p style="margin-top:12px;">The family's sacred relic is a <strong>bronze bull</strong> — life-sized, cast in the 52nd year of their tenure. It stands in the Senate antechamber. Every Taurinus Senator touches the bull's horn before entering the chamber. The bronze has never been moved by anyone outside the family. No Taurinus Senator has ever died in office from violence. All have died of age. The family regards this as proof that Ares protects his own.</p>
-  </div>
-
-  <div class="section-title">The Bronze Bull Tradition</div>
-  <div class="bronze-note">
-    <p>"The Taurini bring the bronze bull to every session. It has never been moved by anyone outside the family. Every Taurinus Senator has died in office — from age, not violence. They regard this as pride."</p>
-    <p style="margin-top:8px;font-size:12px;color:var(--ink-faint);">— From the Senate Records, Charon Archive</p>
-  </div>
-
-  <div class="section-title">Current Senator</div>
-  <div class="member-grid">
-    <div class="member-card current">
-      <span class="member-glyph">🐂</span>
-      <div class="member-info">
-        <div class="member-name">Mategwas Taurinus</div>
-        <div class="member-role">Senator for Taurus · Keeper of the Granaries</div>
-        <div class="member-desc">
-          Creator of the Ealdforn Republic. Seated in the Olympian throne of Taurus by blood-right and divine manifestation. Ares walks the sign alone — one god, one Senator, one unbroken line. The Taurini do not speak loudly. They do not need to. When the granaries are full, the Republic is stable. When they are threatened, the Republic listens.
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-title">Notable Members</div>
-  <div class="member-grid">
-    <div class="member-card">
-      <span class="member-glyph">🌾</span>
-      <div class="member-info">
-        <div class="member-name">Porcia Taurina</div>
-        <div class="member-role">Senator · 220–287th Years of the War</div>
-        <div class="member-desc">
-          Served 67 years. Never spoke a word in the Senate chamber. Communicated entirely through written notes passed to the clerks. Her most famous note: "Feed the soldiers or they will eat the citizens. Fund the granaries." The chamber fell silent for ten minutes. The funding passed unanimously. She died in office at 91. The bronze bull was polished the next day.
-        </div>
-      </div>
-    </div>
-
-    <div class="member-card">
-      <span class="member-glyph">🏗️</span>
-      <div class="member-info">
-        <div class="member-name">Tiberius Taurinus</div>
-        <div class="member-role">Aedile Maximus · 178–195th Years of the War</div>
-        <div class="member-desc">
-          The first Taurinus to hold the Aedile's office. Designed the granary rotation system that prevents any single district from controlling the Republic's food supply. His system is still in use. His statue stands in the Caepton Forum — not for glory, but so citizens can leave offerings of grain at its feet during lean years.
-        </div>
-      </div>
-    </div>
-
-    <div class="member-card">
-      <span class="member-glyph">📜</span>
-      <div class="member-info">
-        <div class="member-name">Claudia Taurina</div>
-        <div class="member-role">Senator · 95–142nd Years of the War</div>
-        <div class="member-desc">
-          The only Taurinus to serve as both Senator and Censor Maximus. Negotiated the Grain Treaty with the Underworld-held Virgo families — an agreement that food shipments would continue regardless of which faction held which sign. The treaty has never been broken. Even Hades needs bread.
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-title">House Timeline</div>
-  <div class="timeline">
-    <div class="timeline-item">
-      <div class="timeline-year">Year 60</div>
-      <div class="timeline-text">Taurina Prima establishes the first granary at Caepton. The Taurini are grain merchants before they are Senators.</div>
-    </div>
-    <div class="timeline-item">
-      <div class="timeline-year">Year 95</div>
-      <div class="timeline-text">Taurus falls under Olympian occupation. The Taurini are granted blood-right. The first Taurinus Senator takes the seat.</div>
-    </div>
-    <div class="timeline-item">
-      <div class="timeline-year">Year 112</div>
-      <div class="timeline-text">The bronze bull is cast. Every Taurinus Senator since has touched its horn before entering the chamber.</div>
-    </div>
-    <div class="timeline-item">
-      <div class="timeline-year">Year 142</div>
-      <div class="timeline-text">Claudia Taurina negotiates the Grain Treaty. Food shipments become neutral in the war.</div>
-    </div>
-    <div class="timeline-item">
-      <div class="timeline-year">Year 178</div>
-      <div class="timeline-text">Tiberius Taurinus becomes Aedile Maximus. The granary rotation system is established.</div>
-    </div>
-    <div class="timeline-item">
-      <div class="timeline-year">Year 220</div>
-      <div class="timeline-text">Porcia Taurina takes the Senate seat. She will not speak for 67 years. Her notes will change the Republic.</div>
-    </div>
-    <div class="timeline-item">
-      <div class="timeline-year">Year 347</div>
-      <div class="timeline-text">Mategwas Taurinus is seated as Senator — the creator of the Republic himself, holding the Bull's throne. The Coherence Covenant is signed.</div>
-    </div>
-  </div>
-
-  <div class="section-title">House Alliances</div>
-  <div class="alliance-grid">
-    <div class="alliance-card">
-      <div class="alliance-house">House Aretias</div>
-      <div class="alliance-type">War Council · Mutual Defense</div>
-    </div>
-    <div class="alliance-card">
-      <div class="alliance-house">House Virgina</div>
-      <div class="alliance-type">Grain Treaty · Trade</div>
-    </div>
-    <div class="alliance-card">
-      <div class="alliance-house">House Geminiana</div>
-      <div class="alliance-type">Comitia Liaison</div>
-    </div>
-    <div class="alliance-card">
-      <div class="alliance-house">House Cancri</div>
-      <div class="alliance-type">Bay Supply Routes</div>
-    </div>
-    <div class="alliance-card">
-      <div class="alliance-house">House Capricornis</div>
-      <div class="alliance-type">Registry · Contract Enforcement</div>
-    </div>
-    <div class="alliance-card">
-      <div class="alliance-house">House Leonid</div>
-      <div class="alliance-type">Shrine-Funding · Mutual Interest</div>
-    </div>
+    <p>House Taurinus has held the seat of <strong>Taurus</strong> for 287 years. They are not the oldest family in the Senate. They are not the most martial. But the Taurini are the family that <strong>feeds the Republic</strong>. Every Senator who votes on a war measure does so on Taurinus grain. Every justice who rules from the Hall of Seven Thrones eats bread baked from Taurinus wheat.</p>
+    <p style="margin-top:12px;"><strong>Ares alone walks Taurus.</strong> One god, one sign, one family. The war god's presence makes the Bull a military asset — but the Taurini interpret Ares not as aggression but as <strong>fortification</strong>. The Bull does not charge. The Bull holds the line.</p>
+    <p style="margin-top:12px;">The current Senator is <strong>Mategwas Taurinus</strong> — creator of the Ealdforn Republic, keeper of the granaries, signatory to the Coherence Covenant. The Bull's throne has never been more secure.</p>
   </div>
 
 </div>
 
 <footer class="site-footer">
-  House Taurinus · Seat of Taurus · Caepton Granary District<br>
-  "Enduring strength, measured power." · 287 Years · Blood-Right
+  House Taurinus · Temple of the Bull · Caepton Granary District<br>
+  <span>"Enduring strength, measured power." — The Bull holds the line.</span>
 </footer>
 
 </div>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+/* ── CARD MOSAIC ── */
+const MOSAIC_IMAGES = [
+  "data/images/earth_02.png",
+  "data/images/earth_05.png",
+  "data/images/earth_king.png",
+  "data/images/earth_knight.png",
+  "data/images/earth_queen.png",
+  "data/images/air_02.png",
+  "data/images/air_07.png",
+  "data/images/air_king.png",
+  "data/images/fire_04.png",
+  "data/images/fire_knight.png",
+  "data/images/water_07.png",
+  "data/images/perun.jpg",
+  "data/images/veles.jpg",
+  "data/images/ra-card.jpg"
+];
+
+(function buildMosaic() {
+  const mosaic = document.getElementById('cardMosaic');
+  const cells = [];
+  for (let i = 0; i < 30; i++) {
+    const img = MOSAIC_IMAGES[Math.floor(Math.random() * MOSAIC_IMAGES.length)];
+    cells.push(`<img src="${img}" alt="" loading="lazy" onerror="this.style.opacity='0'">`);
+  }
+  mosaic.innerHTML = cells.join('');
+})();
+
+// Slow cycle
+setInterval(() => {
+  const imgs = document.querySelectorAll('#cardMosaic img');
+  if (!imgs.length) return;
+  const idx = Math.floor(Math.random() * imgs.length);
+  imgs[idx].style.opacity = '0';
+  setTimeout(() => {
+    imgs[idx].src = MOSAIC_IMAGES[Math.floor(Math.random() * MOSAIC_IMAGES.length)];
+    imgs[idx].style.opacity = '';
+  }, 600);
+}, 10000);
+
+/* ── THREE CARD DRAW ── */
+const DRAW_CARDS = [
+  { name: "The Hierophant", title: "Ares", image: "data/images/ra-card.jpg", position: "Past", meaning: "Tradition. Doctrine. The war god's patience." },
+  { name: "Ace of Earth", title: "Lakshmi", image: "data/images/earth_king.png", position: "Present", meaning: "Wealth. Abundance. The granary is full." },
+  { name: "King of Earth", title: "The Builder", image: "data/images/earth_knight.png", position: "Future", meaning: "Endurance. Legacy. What is built lasts." }
+];
+
+(function buildDraw() {
+  const container = document.getElementById('cardDraw');
+  container.innerHTML = DRAW_CARDS.map(card => `
+    <div class="drawn-card">
+      <div class="card-image">
+        <img src="${card.image}" alt="${card.name}" loading="lazy" onerror="this.style.opacity='0.3'">
+      </div>
+      <div class="card-position">${card.position}</div>
+      <div class="card-name">${card.name}</div>
+      <div style="font-size:10px;color:var(--ink-faint);font-style:italic;margin-top:2px;">${card.meaning}</div>
+    </div>
+  `).join('');
+})();
+
+/* ── CELESTIAL ORRERY ── */
+const SIGNS = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+const GLYPHS = {Aries:'♈',Taurus:'♉',Gemini:'♊',Cancer:'♋',Leo:'♌',Virgo:'♍',Libra:'♎',Scorpio:'♏',Sagittarius:'♐',Capricorn:'♑',Aquarius:'♒',Pisces:'♓'};
+
+(function buildOrrery() {
+  const ring = document.getElementById('zodiacRing');
+  ring.innerHTML = SIGNS.map((sign, i) => {
+    const isTaurus = sign === 'Taurus';
+    return `<div class="zodiac-sign sign-${i} ${isTaurus ? 'taurus-highlight' : ''}" style="color:${isTaurus ? 'var(--earth-light)' : 'var(--ink-faint)'};opacity:${isTaurus ? '1' : '0.35'};">${GLYPHS[sign]}<span class="sign-name">${sign.substring(0,3).toUpperCase()}</span></div>`;
+  }).join('');
+})();
+</script>
 
 </body>
 </html>
