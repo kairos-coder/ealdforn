@@ -512,23 +512,33 @@ body::before {
 
   <div class="temple">
 
-    <!-- ═══ NAVIGATION BAR ═══ -->
+<!-- ═══ NAVIGATION BAR (REFACTORED) ═══ -->
     <div class="nav-bar">
       <a href="#gate">The Gate</a>
       <a href="#altar">The Altar</a>
-      <a href="#bastard-cycle">Bastard Cycle</a>
-      <a href="#tales">Tales</a>
-      <a href="#horror">The Descent</a>
+      <a href="/republic/house/">The Houses</a> <!-- Added House Access -->
+      <a href="/republic/senate.html">Senate</a>
+      <a href="/republic/comitia.html">Comitia</a>
       <a href="#gallery">Gallery</a>
     </div>
 
-    <!-- ═══ TEMPLE GATE ═══ -->
+    <!-- ═══ TEMPLE GATE (REFACTORED) ═══ -->
     <div class="temple-gate" id="gate">
       <span class="gate-glyph">🏛️</span>
       <h1>The Ealdforn Stage</h1>
       <div class="subtitle">A Temple of Stories · Scriptorium of the Order</div>
+      
+      <!-- REPUBLIC STATUS MODULE -->
+      <div style="margin: 20px auto; padding: 15px; border: 1px solid var(--border-gold); background: var(--surface-gold); max-width: 400px;">
+        <div style="font-family:'Cinzel',serif; font-size:8px; letter-spacing:3px; color:var(--gold-dark); margin-bottom:5px;">REPUBLIC STATUS: 347TH YEAR</div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:12px; color:var(--ink-mid);">
+          Senate Status: <strong>DEADLOCKED</strong> · 
+          <a href="/republic/senate.html" style="color:var(--rubric); text-decoration:none;">View Docket</a>
+        </div>
+      </div>
+
       <div class="mantra">"The fire must not go out. The gate is always open."</div>
-      <div class="stats"><span class="candle">🕯️</span> Seven Sacred Texts · Six Scribe-AIs · Izanami Walks <span class="candle">🕯️</span></div>
+      <div class="stats"><span class="candle">🕯️</span> Seven Sacred Texts · Six Scribe-AIs · The Triad Governs <span class="candle">🕯️</span></div>
     </div>
 
     <!-- ═══ ALTAR — The Long Night ═══ -->
