@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ealdforn Studios — Mythic AI Creative Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── TOKENS ──────────────────────────────────────────────── */
+    :root {
+      --bg:        #0e0e18;
+      --bg-mid:    #13131f;
+      --card:      #16162a;
+      --card-hi:   #1c1c32;
+      --gold:      #c9a96e;
+      --gold-hi:   #e8c87a;
+      --gold-dim:  rgba(201,169,110,0.25);
+      --cream:     #e8e0d5;
+      --muted:     #9a9080;
+      --border:    rgba(201,169,110,0.22);
+      --border-hi: rgba(201,169,110,0.6);
+      --glow:      rgba(201,169,110,0.12);
+      --glow-hi:   rgba(201,169,110,0.22);
+      --ff-head:   'Cinzel', 'Palatino Linotype', serif;
+      --ff-body:   'Crimson Pro', Georgia, serif;
+      --fiverr:    #1dbf73;
+      --fiverr-hi: #19a463;
+    }
+
+    /* ─── RESET ───────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: var(--ff-body);
+      font-size: 18px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--gold); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--gold-hi); }
+
+    img { display: block; max-width: 100%; }
+
+    /* ─── UTILITY ─────────────────────────────────────────────── */
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section-label {
+      font-family: var(--ff-head);
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.7;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: var(--ff-head);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-sub {
+      font-family: var(--ff-body);
+      font-style: italic;
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .divider {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto;
+    }
+
+    /* ─── ATMOSPHERIC TRANSITIONS ──────────────────────────────── */
+    .atmos-fade {
+      height: 120px;
+      background: linear-gradient(to bottom, transparent, var(--bg));
+      pointer-events: none;
+    }
+
+    /* ─── HERO ────────────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 8rem;
+      overflow: hidden;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 45%, rgba(201,169,110,0.11) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 50% 40%, rgba(201,169,110,0.06) 0%, transparent 60%),
+        linear-gradient(180deg, #0a0a15 0%, #0e0e1e 40%, #10101c 100%);
+      z-index: 0;
+    }
+
+    #hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero-arch {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(700px, 90vw);
+      height: min(700px, 90vw);
+      border-radius: 50%;
+      border: 1px solid rgba(201,169,110,0.07);
+      z-index: 0;
+    }
+    .hero-arch:nth-child(2) {
+      width: min(900px, 110vw);
+      height: min(900px, 110vw);
+      border-color: rgba(201,169,110,0.04);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 860px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--ff-head);
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.75;
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-name {
+      font-family: var(--ff-head);
+      font-size: clamp(3.2rem, 9vw, 7.5rem);
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: -0.01em;
+      color: var(--cream);
+      margin-bottom: 1.2rem;
+      background: linear-gradient(180deg, #f5edd8 0%, #c9a96e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-position {
+      font-family: var(--ff-head);
+      font-size: clamp(0.85rem, 2vw, 1.1rem);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-domains {
+      font-family: var(--ff-body);
+      font-style: italic;
+      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      margin-bottom: 2.8rem;
+    }
+
+    .hero-motto {
+      font-family: var(--ff-head);
+      font-size: 0.82rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      opacity: 0.55;
+      text-transform: uppercase;
+    }
+
+    /* ─── HERO CTA BUTTONS ────────────────────────────────────── */
+    .hero-ctas {
+      display: flex;
+      gap: 1.2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2.4rem;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-family: var(--ff-head);
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-hi) 100%);
+      padding: 0.9rem 2.4rem;
+      border-radius: 3px;
+      transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(201,169,110,0.25);
+    }
+
+    .cta-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(201,169,110,0.35);
+      color: var(--bg);
+    }
+
+    /* Fiverr-specific CTA — green, stands out */
+    .cta-fiverr {
+      background: var(--fiverr);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(29,191,115,0.25);
+    }
+
+    .cta-fiverr:hover {
+      background: var(--fiverr-hi);
+      color: #fff;
+      box-shadow: 0 8px 30px rgba(29,191,115,0.35);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hero-scroll span {
+      font-family: var(--ff-head);
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.4;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      opacity: 0.4;
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.2; transform: scaleY(1); }
+      50% { opacity: 0.5; transform: scaleY(1.1); }
+    }
+
+    /* ─── ABOUT ───────────────────────────────────────────────── */
+    #about {
+      padding: 7rem 2rem;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg-mid) 50%, var(--bg) 100%);
+      text-align: center;
+      position: relative;
+    }
+
+    #about .about-text {
+      max-width: 720px;
+      margin: 0 auto;
+      font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+      line-height: 1.85;
+      color: var(--cream);
+      opacity: 0.88;
+    }
+
+    #about .about-text em {
+      color: var(--gold);
+      font-style: italic;
+      opacity: 1;
+    }
+
+    /* ─── SECTION WRAPPER ─────────────────────────────────────── */
+    section {
+      padding: 6rem 2rem;
+    }
+
+    /* ─── FEATURED SYSTEMS ────────────────────────────────────── */
+    #featured {
+      background:
+        linear-gradient(180deg, var(--bg) 0%, #0c0c1a 100%);
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .feat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2.4rem 2.4rem 2.2rem;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feat-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 30% 0%, var(--glow) 0%, transparent 70%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .feat-card:hover::before { opacity: 1; }
+
+    .feat-card:hover {
+      border-color: var(--border-hi);
+      box-shadow: 0 0 40px var(--glow), 0 0 80px rgba(201,169,110,0.05);
+      transform: translateY(-3px);
+    }
+
+    .feat-card.gaia {
+      grid-row: 1 / 3;
+      background: linear-gradient(145deg, #14142a 0%, #1a1a30 60%, #121220 100%);
+      border-color: rgba(201,169,110,0.35);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .feat-card.gaia::after {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .feat-card.featured-badge {
+      position: relative;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: var(--ff-head);
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 0.25rem 0.8rem;
+      border-radius: 2px;
+      margin-bottom: 1.2rem;
+    }
+
+    .feat-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      line-height: 1;
+    }
+
+    .feat-title {
+      font-family: var(--ff-head);
+      font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .feat-card.gaia .feat-title {
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+    }
+
+    .feat-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.7;
+      flex-grow: 1;
+    }
+
+    .feat-card.gaia .feat-desc {
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+    }
+
+    .feat-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--ff-head);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 1.8rem;
+      transition: gap 0.2s, color 0.2s;
+      text-decoration: none;
+    }
+
+    .feat-link:hover { gap: 0.8rem; color: var(--gold-hi); }
+    .feat-link::after { content: '→'; }
+
+    /* ─── SECTION BREAK ───────────────────────────────────────── */
+    .section-break {
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, var(--border) 30%, var(--border) 70%, transparent 100%);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ─── OLYMPIANS ───────────────────────────────────────────── */
+    #olympians {
+      background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg) 100%);
+    }
+
+    .olympians-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+
+    .god-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.6rem 1.5rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.6rem;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.25s;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    a.god-card { cursor: pointer; }
+
+    .god-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .god-card:hover::before { opacity: 1; }
+
+    .god-card:hover {
+      border-color: var(--border-hi);
+      box-shadow: 0 4px 30px var(--glow);
+      transform: translateY(-2px);
+    }
+
+    .god-card.dimmed {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    /* ─── 13TH CARD — "YOUR DEITY HERE" ──────────────────────── */
+    .god-card.card-vacant {
+      border: 1px dashed rgba(201,169,110,0.35);
+      background: rgba(10, 8, 20, 0.85);
+      cursor: pointer;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s;
+    }
+
+    .god-card.card-vacant:hover {
+      border: 1px solid rgba(201,169,110,0.7);
+      box-shadow: 0 0 28px rgba(180, 130, 40, 0.28);
+      transform: translateY(-2px);
+    }
+
+    .vacant-sigil {
+      font-size: 2.2rem;
+      color: rgba(201,169,110,0.45);
+      margin-bottom: 0.4rem;
+      transition: color 0.3s;
+    }
+
+    .god-card.card-vacant:hover .vacant-sigil {
+      color: rgba(201,169,110,0.8);
+    }
+
+    .vacant-name {
+      font-family: var(--ff-head);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--cream);
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+
+    .god-card.card-vacant:hover .vacant-name {
+      opacity: 1;
+    }
+
+    .vacant-subtitle {
+      font-family: var(--ff-body);
+      font-style: italic;
+      font-size: 0.8rem;
+      color: var(--muted);
+      opacity: 0.6;
+      transition: opacity 0.3s;
+    }
+
+    .god-card.card-vacant:hover .vacant-subtitle {
+      opacity: 0.85;
+    }
+
+    /* ─── STANDARD GOD CARDS ──────────────────────────────────── */
+    .god-img {
+      width: 48px;
+      height: 48px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #1e1e35, #25253d);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--ff-head);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold);
+      opacity: 0.8;
+      flex-shrink: 0;
+      margin-bottom: 0.4rem;
+    }
+
+    .god-name {
+      font-family: var(--ff-head);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.2;
+    }
+
+    .god-domain {
+      font-family: var(--ff-body);
+      font-style: italic;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.4;
+      flex-grow: 1;
+    }
+
+    .god-link {
+      font-family: var(--ff-head);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 0.4rem;
+      transition: color 0.2s, letter-spacing 0.2s;
+    }
+
+    .god-link:hover { color: var(--gold-hi); letter-spacing: 0.25em; }
+
+    .coming-soon {
+      font-family: var(--ff-head);
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.6;
+      margin-top: 0.4rem;
+    }
+
+    /* ─── ARCHIVE ─────────────────────────────────────────────── */
+    #archive {
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg-mid) 50%, var(--bg) 100%);
+    }
+
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .archive-card {
+      background: var(--card);
+      border: 1px solid rgba(201,169,110,0.13);
+      border-radius: 8px;
+      padding: 1.3rem 1.2rem;
+      transition: border-color 0.3s, background 0.3s;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .archive-card:hover {
+      border-color: rgba(201,169,110,0.3);
+      background: var(--card-hi);
+    }
+
+    .arc-icon {
+      font-size: 1.3rem;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .arc-title {
+      font-family: var(--ff-head);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--cream);
+      line-height: 1.3;
+    }
+
+    .arc-desc {
+      font-family: var(--ff-body);
+      font-style: italic;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+
+    .arc-link {
+      font-family: var(--ff-head);
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 0.5rem;
+      display: inline-block;
+    }
+
+    .arc-link:hover { color: var(--gold-hi); }
+
+    /* ─── SERVICES ────────────────────────────────────────────── */
+    #services {
+      background: var(--bg);
+      text-align: center;
+      position: relative;
+      padding: 8rem 2rem;
+    }
+
+    #services::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 600px;
+      height: 300px;
+      background: radial-gradient(ellipse, rgba(201,169,110,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .services-body {
+      max-width: 620px;
+      margin: 0 auto 2.8rem;
+      font-size: 1.1rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .services-ctas {
+      display: flex;
+      gap: 1.2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────────────── */
+    footer {
+      background: linear-gradient(180deg, var(--bg-mid) 0%, #0a0a12 100%);
+      border-top: 1px solid var(--border);
+      padding: 4rem 2rem 3rem;
+      text-align: center;
+    }
+
+    .footer-name {
+      font-family: var(--ff-head);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700;
+      background: linear-gradient(180deg, var(--cream) 0%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-motto {
+      font-family: var(--ff-head);
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.5;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links a {
+      font-family: var(--ff-head);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-link-fiverr {
+      color: var(--fiverr) !important;
+    }
+    .footer-link-fiverr:hover {
+      color: var(--fiverr-hi) !important;
+    }
+
+    .footer-copy {
+      font-size: 0.82rem;
+      color: var(--muted);
+      opacity: 0.5;
+    }
+
+    /* ─── ORNAMENTAL ELEMENTS ─────────────────────────────────── */
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .ornament-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim));
+    }
+
+    .ornament-line.right {
+      background: linear-gradient(90deg, var(--gold-dim), transparent);
+    }
+
+    .ornament-diamond {
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      opacity: 0.5;
+      flex-shrink: 0;
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .featured-grid {
+        grid-template-columns: 1fr;
+      }
+      .feat-card.gaia {
+        grid-row: auto;
+      }
+      .olympians-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      section { padding: 4rem 1.2rem; }
+      #services { padding: 5rem 1.2rem; }
+      .olympians-grid {
+        grid-template-columns: 1fr;
+      }
+      .archive-grid {
+        grid-template-columns: 1fr;
+      }
+      .featured-grid {
+        gap: 1rem;
+      }
+      .footer-links {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+      }
+      .hero-ctas, .services-ctas {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  HERO                                                        -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-arch"></div>
+  <div class="hero-arch"></div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Est. in the Age of Myth</p>
+    <h1 class="hero-name">Ealdforn<br>Studios</h1>
+    <p class="hero-position">Mythic AI Creative Studio</p>
+    <p class="hero-domains">Worldbuilding · Narrative Systems · Generative Aesthetics · Interactive Lore</p>
+    <p class="hero-motto">Regnavit Deus, et res bonae sunt.</p>
+
+    <!-- ─── HERO CTAs ─────────────────────────────────────────── -->
+    <div class="hero-ctas">
+      <a class="cta-btn cta-fiverr" href="https://www.fiverr.com/kairos_coding" target="_blank" rel="noopener">
+        Commission Your Deity
+      </a>
+      <a class="cta-btn" href="mailto:contact@ealdforn.com">
+        Contact the Studio
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Enter</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  ABOUT                                                       -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="about">
+  <div class="section-inner">
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line right"></div>
+    </div>
+    <p class="about-text">
+      Ealdforn Studios is a <em>mythic AI creative studio</em> focused on worldbuilding, symbolic systems, narrative architecture, procedural lore, and generative aesthetics. We create <em>living mythologies</em>, interactive worlds, and cinematic digital experiences — where ancient archetypes and emergent intelligence become one.
+    </p>
+    <br>
+    <div class="divider"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  FEATURED SYSTEMS                                            -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="featured">
+  <div class="section-inner">
+    <p class="section-label">Tier I — Primary Systems</p>
+    <h2 class="section-title">Featured World-Systems</h2>
+    <p class="section-sub">Living architectures at the root of everything.</p>
+
+    <div class="featured-grid">
+
+      <!-- GAIA -->
+      <div class="feat-card gaia">
+        <div class="feat-icon">🌍</div>
+        <h3 class="feat-title">Gaia — The World-Root</h3>
+        <p class="feat-desc">
+          Phase-locked field. Three-layer cosmology. Titans of the boundary layer.
+          The living memory of the system — the root beneath every world Ealdforn has ever built.
+          Enter the origin.
+        </p>
+        <a class="feat-link" href="https://kairos-coder.github.io/gaia" target="_blank" rel="noopener">
+          Enter the World-Root
+        </a>
+      </div>
+
+      <!-- THE EALDENMOT -->
+      <div class="feat-card featured-badge">
+        <span class="badge">Featured World-System</span>
+        <div class="feat-icon">⚖️</div>
+        <h3 class="feat-title">The Ealdenmot</h3>
+        <p class="feat-desc">
+          A bureaucracy cascade simulator. Year 332, 3 assemblies, 22 representatives.
+          Watch governance evolve in real time.
+        </p>
+        <a class="feat-link" href="https://kairos-coder.github.io/ealdenmot" target="_blank" rel="noopener">
+          Enter the Assembly
+        </a>
+      </div>
+
+      <!-- DIGITAL DIVINATION -->
+      <div class="feat-card">
+        <div class="feat-icon">🔮</div>
+        <h3 class="feat-title">Digital Divination</h3>
+        <p class="feat-desc">
+          Aspects of the Divine. Archetype cards. A mythic personality system drawn
+          from the symbolic deep.
+        </p>
+        <a class="feat-link" href="https://kairos-coder.github.io/divination" target="_blank" rel="noopener">
+          Draw Your Card
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Atmospheric transition -->
+<div style="height:60px; background: linear-gradient(180deg, #0c0c1a, var(--bg-mid));"></div>
+<div class="section-break"></div>
+<div style="height:60px; background: linear-gradient(180deg, var(--bg-mid), var(--bg));"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  THE TWELVE OLYMPIANS                                        -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="olympians">
+  <div class="section-inner">
+    <p class="section-label">The Divine Pantheon</p>
+    <h2 class="section-title">The Twelve Olympians</h2>
+    <p class="section-sub">Each a divine persona. Each a creative domain.</p>
+
+    <div class="olympians-grid">
+
+      <!-- Zeus -->
+      <a class="god-card" href="https://kairos-coder.github.io/zeus" target="_blank" rel="noopener">
+        <div class="god-img">Z</div>
+        <div class="god-name">Zeus</div>
+        <div class="god-domain">Judgement &amp; Creative Direction</div>
+        <span class="god-link">View Page →</span>
+      </a>
+
+      <!-- Hera -->
+      <a class="god-card" href="https://kairos-coder.github.io/hera" target="_blank" rel="noopener">
+        <div class="god-img">H</div>
+        <div class="god-name">Hera</div>
+        <div class="god-domain">Contracts, Boundaries, Client Relations</div>
+        <span class="god-link">View Page →</span>
+      </a>
+
+      <!-- Poseidon -->
+      <a class="god-card" href="https://kairos-coder.github.io/poseidon" target="_blank" rel="noopener">
+        <div class="god-img">P</div>
+        <div class="god-name">Poseidon</div>
+        <div class="god-domain">Data Flow, Depth, Information Oceans</div>
+        <span class="god-link">View Page →</span>
+      </a>
+
+      <!-- Demeter -->
+      <a class="god-card" href="https://kairos-coder.github.io/demeter" target="_blank" rel="noopener">
+        <div class="god-img">D</div>
+        <div class="god-name">Demeter</div>
+        <div class="god-domain">Content Systems, Growth, Cultivation</div>
+        <span class="god-link">View Page →</span>
+      </a>
+
+      <!-- Ares -->
+      <a class="god-card" href="https://kairos-coder.github.io/ares" target="_blank" rel="noopener">
+        <div class="god-img">A</div>
+        <div class="god-name">Ares</div>
+        <div class="god-domain">Conflict Resolution, Strategy</div>
+        <span class="god-link">View Page →</span>
+      </a>
+
+      <!-- Athena -->
+      <a class="god-card" href="https://kairos-coder.github.io/athena" target="_blank" rel="noopener">
+        <div class="god-img">A</div>
+        <div class="god-name">Athena</div>
+        <div class="god-domain">Worldbuilding Logic, Systems Design</div>
+        <span class="god-link">View Page →</span>
+      </a>
+
+      <!-- Apollo -->
+      <a class="god-card" href="https://kairos-coder.github.io/apollo" target="_blank" rel="noopener">
+        <div class="god-img">A</div>
+        <div class="god-name">Apollo</div>
+        <div class="god-domain">Visual Canon, Image Generation, Aesthetics</div>
+        <span class="god-link">View Page →</span>
+      </a>
+
+      <!-- Artemis — dimmed -->
+      <div class="god-card dimmed">
+        <div class="god-img">Ar</div>
+        <div class="god-name">Artemis</div>
+        <div class="god-domain">Lore Systems, Bestiaries, Wild Ecology</div>
+        <p class="coming-soon">Coming Soon</p>
+      </div>
+
+      <!-- Hephaestus -->
+      <a class="god-card" href="https://kairos-coder.github.io/hephaestus" target="_blank" rel="noopener">
+        <div class="god-img">H</div>
+        <div class="god-name">Hephaestus</div>
+        <div class="god-domain">Code Infrastructure, Tools, Craft</div>
+        <span class="god-link">View Page →</span>
+      </a>
+
+      <!-- Aphrodite -->
+      <a class="god-card" href="https://kairos-coder.github.io/aphrodite" target="_blank" rel="noopener">
+        <div class="god-img">Ap</div>
+        <div class="god-name">Aphrodite</div>
+        <div class="god-domain">UI/UX, Visual Beauty, User-Facing Design</div>
+        <span class="god-link">View Page →</span>
+      </a>
+
+      <!-- Hermes -->
+      <a class="god-card" href="https://kairos-coder.github.io/hermes" target="_blank" rel="noopener">
+        <div class="god-img">Hm</div>
+        <div class="god-name">Hermes</div>
+        <div class="god-domain">Integration, Speed, Payment Systems</div>
+        <span class="god-link">View Page →</span>
+      </a>
+
+      <!-- Persephone -->
+      <a class="god-card" href="https://kairos-coder.github.io/persephone" target="_blank" rel="noopener">
+        <div class="god-img">Ps</div>
+        <div class="god-name">Persephone</div>
+        <div class="god-domain">Memory, Transitions, the Underworld Layer</div>
+        <span class="god-link">View Page →</span>
+      </a>
+
+      <!-- ═══════════════════════════════════════════════════════ -->
+      <!--  13TH CARD — "YOUR DEITY HERE"                         -->
+      <!-- ═══════════════════════════════════════════════════════ -->
+      <a class="god-card card-vacant" href="https://www.fiverr.com/kairos_coding" target="_blank" rel="noopener">
+        <div class="vacant-sigil">✦</div>
+        <div class="vacant-name">Your Deity Here</div>
+        <div class="vacant-subtitle">Commission a seat in the pantheon</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- Atmospheric break -->
+<div style="height:1px; background: linear-gradient(90deg, transparent 0%, rgba(201,169,110,0.15) 40%, rgba(201,169,110,0.15) 60%, transparent 100%); max-width:800px; margin:0 auto;"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  ARCHIVE                                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="archive">
+  <div class="section-inner">
+    <p class="section-label">Tier II — The Deeper Lore</p>
+    <h2 class="section-title">Archive &amp; Manuscripts</h2>
+    <p class="section-sub">Ancient texts. Source material. The stratum beneath the living systems.</p>
+
+    <div class="archive-grid">
+
+      <div class="archive-card">
+        <div class="arc-icon">📜</div>
+        <div class="arc-title">Ealdforn Sagas</div>
+        <div class="arc-desc">22,000 words of Old Saxon poetry</div>
+        <a class="arc-link" href="https://kairos-coder.github.io/EaldfornSagas" target="_blank" rel="noopener">Read the Sagas →</a>
+      </div>
+
+      <div class="archive-card">
+        <div class="arc-icon">🎼</div>
+        <div class="arc-title">Cantica Antiqua</div>
+        <div class="arc-desc">Full manuscript of the ancient songs</div>
+        <a class="arc-link" href="https://kairos-coder.github.io/Cantica_Antiqua" target="_blank" rel="noopener">Open Manuscript →</a>
+      </div>
+
+      <div class="archive-card">
+        <div class="arc-icon">📖</div>
+        <div class="arc-title">Book of Mategwas</div>
+        <div class="arc-desc">HTML manuscript — the sacred text</div>
+        <a class="arc-link" href="https://kairos-coder.github.io/Book_of_Mategwas_HTML" target="_blank" rel="noopener">Open Book →</a>
+      </div>
+
+      <div class="archive-card">
+        <div class="arc-icon">✦</div>
+        <div class="arc-title">Scriptorum Vivum</div>
+        <div class="arc-desc">The Living Manuscript</div>
+        <a class="arc-link" href="https://kairos-coder.github.io/Scriptorum.Vivum" target="_blank" rel="noopener">Enter Scriptorum →</a>
+      </div>
+
+      <div class="archive-card">
+        <div class="arc-icon">🔮</div>
+        <div class="arc-title">The Grimoir</div>
+        <div class="arc-desc">Ealdforn Grimoir — mythic ritual engine</div>
+        <a class="arc-link" href="https://kairos-coder.github.io/grimoir" target="_blank" rel="noopener">Open Grimoir →</a>
+      </div>
+
+      <div class="archive-card">
+        <div class="arc-icon">🏰</div>
+        <div class="arc-title">Ealdforn</div>
+        <div class="arc-desc">Text adventure game set in the old world</div>
+        <a class="arc-link" href="https://kairos-coder.github.io/ealdforn" target="_blank" rel="noopener">Play →</a>
+      </div>
+
+      <div class="archive-card">
+        <div class="arc-icon">🌀</div>
+        <div class="arc-title">Torsion</div>
+        <div class="arc-desc">HTML torsion field — geometry in motion</div>
+        <a class="arc-link" href="https://kairos-coder.github.io/torsion" target="_blank" rel="noopener">Enter Field →</a>
+      </div>
+
+      <div class="archive-card">
+        <div class="arc-icon">🗼</div>
+        <div class="arc-title">AI Tower</div>
+        <div class="arc-desc">SimTower-type game experiment</div>
+        <a class="arc-link" href="https://kairos-coder.github.io/ai_tower" target="_blank" rel="noopener">Build →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Atmospheric fade to services -->
+<div style="height:80px; background: linear-gradient(180deg, var(--bg-mid), var(--bg));"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  SERVICES                                                    -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="services">
+  <div class="section-inner">
+    <div class="ornament" style="justify-content:center;">
+      <div class="ornament-line" style="max-width:200px;"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line right" style="max-width:200px;"></div>
+    </div>
+
+    <p class="section-label" style="text-align:center; margin-bottom:1rem;">Commissions Open</p>
+    <h2 class="section-title" style="text-align:center; margin-bottom:1.2rem;">Work With the Studio</h2>
+    <p class="services-body">
+      Commission your own custom AI deity — a permanent seat in the Ealdforn pantheon with
+      cinematic portraits, original mythology, and a live temple page. Or engage the studio
+      for worldbuilding packs, lore bibles, mythic branding, and narrative websites.
+    </p>
+    <div class="services-ctas">
+      <a class="cta-btn cta-fiverr" href="https://www.fiverr.com/kairos_coding" target="_blank" rel="noopener">
+        Commission on Fiverr
+      </a>
+      <a class="cta-btn" href="mailto:contact@ealdforn.com">
+        Custom Studio Inquiry
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  FOOTER                                                      -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="section-inner">
+    <div class="footer-name">Ealdforn Studios</div>
+    <p class="footer-motto">Regnavit Deus, et res bonae sunt.</p>
+
+    <nav class="footer-links">
+      <a href="#featured">Systems</a>
+      <a href="#olympians">Olympians</a>
+      <a href="#archive">Archive</a>
+      <a href="#services">Commissions</a>
+      <a href="https://github.com/kairos-coder" target="_blank" rel="noopener">GitHub</a>
+      <a class="footer-link-fiverr" href="https://www.fiverr.com/kairos_coding" target="_blank" rel="noopener">Fiverr</a>
+    </nav>
+
+    <p class="footer-copy">© Ealdforn Studios &nbsp;·&nbsp; kairos-coder</p>
+  </div>
+</footer>
+
+</body>
+</html>
