@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convene · The Ealdenmot</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #f5f0e8;
+    --ink: #2c2416;
+    --ink-light: #4a3e2e;
+    --gold: #b8963e;
+    --gold-dark: #7a5c18;
+    --red: #8b3a3a;
+    --green: #3a5a3a;
+    --stone: #c8c0b0;
+    --shadow: 0 2px 12px rgba(0,0,0,0.1);
+    --ff-display: 'Cinzel Decorative', serif;
+    --ff-title: 'Cinzel', serif;
+    --ff-body: 'Cormorant Garamond', Georgia, serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--parchment);
+    background-image: url('data/images/ealdenmot-tree.jpg');
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    background-size: 180px;
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: var(--ff-body);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  nav {
+    width: 100%;
+    background: #fff;
+    border-bottom: 1px solid var(--stone);
+    padding: 12px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--ff-display);
+    font-size: 15px;
+    letter-spacing: 2px;
+  }
+  .nav-brand img {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .nav-year {
+    font-family: var(--ff-title);
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold-dark);
+    text-transform: uppercase;
+  }
+  .nav-back {
+    font-family: var(--ff-title);
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--gold); }
+  main {
+    width: 100%;
+    max-width: 820px;
+    padding: 32px 24px 48px;
+  }
+  .session-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .session-header h1 {
+    font-family: var(--ff-display);
+    font-size: clamp(20px, 4vw, 34px);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+  .session-header img {
+    max-width: 320px;
+    width: 100%;
+    border-radius: 8px;
+    margin: 0 auto 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    display: block;
+  }
+  .session-meta {
+    font-size: 14px;
+    color: var(--ink-light);
+    font-style: italic;
+  }
+  .chambers {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .chambers.bicameral {
+    grid-template-columns: 1fr 1fr;
+  }
+  .chamber {
+    background: #fff;
+    border: 1px solid var(--stone);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+  }
+  .chamber-title {
+    font-family: var(--ff-title);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--stone);
+  }
+  .card-display {
+    background: #faf7f0;
+    border: 1px dashed var(--stone);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .card-title {
+    font-family: var(--ff-title);
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .card-text {
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-light);
+    line-height: 1.5;
+  }
+  .card-thresholds {
+    font-size: 12px;
+    color: var(--gold-dark);
+    margin-top: 8px;
+    font-family: var(--ff-title);
+  }
+  .choices-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .choice-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 14px 18px;
+    background: #fff;
+    border: 1px solid var(--stone);
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--ff-body);
+    font-size: 15px;
+    color: var(--ink);
+    transition: all 0.2s;
+    box-shadow: var(--shadow);
+  }
+  .choice-btn:hover {
+    border-color: var(--gold);
+    background: #fdfaf0;
+    transform: translateY(-1px);
+  }
+  .choice-btn.selected {
+    border-color: var(--gold);
+    background: #fdf8e8;
+    box-shadow: 0 0 0 3px rgba(184,150,62,0.15);
+  }
+  .choice-letter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: #fff;
+    font-family: var(--ff-title);
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .vote-breakdown {
+    background: #faf7f0;
+    border: 1px solid var(--stone);
+    border-radius: 8px;
+    padding: 14px;
+    margin-top: 14px;
+  }
+  .vote-header {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .vote-faction-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    font-size: 13px;
+  }
+  .faction-name { font-weight: 600; }
+  .vote-aye { color: var(--green); font-weight: 600; }
+  .vote-nay { color: var(--red); font-weight: 600; margin-left: 10px; }
+  .vote-super {
+    font-size: 11px;
+    color: var(--ink-light);
+    margin-top: 6px;
+    font-style: italic;
+  }
+  .veto-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .btn-sign, .btn-veto {
+    flex: 1;
+    padding: 12px;
+    border-radius: 6px;
+    font-family: var(--ff-title);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .btn-sign { background: var(--green); color: #fff; }
+  .btn-veto { background: var(--red); color: #fff; }
+  .btn-sign:hover, .btn-veto:hover { opacity: 0.85; transform: translateY(-1px); }
+  .btn-area {
+    text-align: center;
+    margin-top: 32px;
+  }
+  .btn-advance {
+    font-family: var(--ff-title);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--ink);
+    border: none;
+    padding: 14px 36px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: background 0.2s;
+  }
+  .btn-advance:hover { background: var(--gold-dark); }
+  .btn-advance:disabled { opacity: 0.4; cursor: not-allowed; }
+  .turn-log {
+    margin-top: 24px;
+    padding: 16px;
+    background: #fff;
+    border: 1px solid var(--stone);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    max-height: 250px;
+    overflow-y: auto;
+  }
+  .log-entry {
+    font-size: 13px;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+    color: var(--ink-light);
+  }
+  .veto-result {
+    background: #fef9f0;
+    border: 2px solid var(--gold);
+    border-radius: 8px;
+    padding: 14px;
+    margin-top: 14px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  @media (max-width: 600px) {
+    nav { padding: 10px 16px; }
+    .chambers.bicameral { grid-template-columns: 1fr; }
+    .nav-brand { font-size: 13px; }
+    .veto-buttons { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <img src="data/images/ealdenmot-tree.jpg" alt="🌳" />
+    ⚖️ The Ealdenmot · In Session
+  </div>
+  <span class="nav-year" id="navYear">Year 1 AE</span>
+  <a href="index.html" class="nav-back">← Dashboard</a>
+</nav>
+
+<main>
+  <div class="session-header">
+    <h1 id="sessionTitle">The Assembly Convenes</h1>
+    <img src="data/images/ealdenmot.jpg" alt="The Ealdenmot in session" />
+    <div class="session-meta" id="sessionMeta"></div>
+  </div>
+
+  <div class="chambers" id="chambers">
+    <!-- Populated by JS -->
+  </div>
+
+  <div class="btn-area">
+    <button class="btn-advance" id="btnAdvance" onclick="Session.advance()">▸ Advance Turn</button>
+  </div>
+
+  <div class="turn-log" id="turnLog">
+    <div class="log-entry" style="font-style:italic;opacity:0.5;">The chronicle awaits the first session.</div>
+  </div>
+</main>
+
+<script src="witan.js"></script>
+<script>
+  const Session = (() => {
+    let S, pending, vote, selectedChoice = null;
+
+    async function init() {
+      S = await Witan.init();
+      if (!S) {
+        document.getElementById('sessionTitle').textContent = 'Could not load state.';
+        return;
+      }
+      render();
+    }
+
+    function render() {
+      document.getElementById('navYear').textContent = `Year ${S.meta.year} AE · Turn ${S.meta.turn}`;
+      const isBicam = S.government.type === 'bicameral';
+      document.getElementById('sessionTitle').textContent = isBicam ? 'The Chambers Convene' : 'The Assembly Convenes';
+      document.getElementById('sessionMeta').textContent = 
+        `${S.reps.count} Reps · ${isBicam ? 'Elders & Thanes' : 'Unicameral'} · Pop: ${(S.meta.population || 4872).toLocaleString()}`;
+
+      pending = Witan.getPendingChoice();
+      vote = Witan.getCurrentVote();
+
+      const chambersDiv = document.getElementById('chambers');
+      chambersDiv.className = 'chambers' + (isBicam ? ' bicameral' : '');
+
+      if (pending && vote) {
+        renderVoteDisplay();
+      } else if (isBicam) {
+        chambersDiv.innerHTML = `
+          <div class="chamber">
+            <div class="chamber-title">📜 Council of Elders (21 seats)</div>
+            <div class="card-display">
+              <div class="card-text">The Elders consider matters of classification, law, tradition, and treaties.</div>
+            </div>
+          </div>
+          <div class="chamber">
+            <div class="chamber-title">⚔️ Council of Thanes (${S.reps.count - 21} seats)</div>
+            <div class="card-display">
+              <div class="card-text">The Thanes consider matters of commerce, taxation, defense, and infrastructure.</div>
+            </div>
+          </div>
+        `;
+      } else {
+        chambersDiv.innerHTML = `
+          <div class="chamber">
+            <div class="chamber-title">🏛️ The Ealdenmot (${S.reps.count} Reps)</div>
+            <div class="card-display">
+              <div class="card-text">Advance the turn to bring a matter before the Assembly.</div>
+            </div>
+          </div>
+        `;
+      }
+
+      // Turn log
+      const log = S.meta?.turn_log || [];
+      document.getElementById('turnLog').innerHTML = log.length === 0
+        ? '<div class="log-entry" style="font-style:italic;opacity:0.5;">The chronicle awaits the first session.</div>'
+        : log.slice(-15).reverse().map(entry => `<div class="log-entry">${entry}</div>`).join('');
+
+      // Button state
+      const btn = document.getElementById('btnAdvance');
+      if (pending && vote) {
+        btn.style.display = 'none';
+      } else {
+        btn.style.display = '';
+        btn.textContent = '▸ Advance Turn';
+        btn.disabled = false;
+        btn.style.opacity = '1';
+      }
+    }
+
+    function renderVoteDisplay() {
+      const card = pending.card;
+      const typeLabel = pending.type === 'crisis' ? '⚡ CRISIS' :
+                        pending.type === 'judicial' ? '⚖️ COURT CASE' :
+                        pending.type === 'executive' ? '👑 EXECUTIVE ACTION' : '📜 POLICY';
+
+      const choiceHTML = card.choices.map((c, i) => {
+        const letter = String.fromCharCode(97 + i);
+        const isSelected = selectedChoice === c.id;
+        return `
+          <button class="choice-btn ${isSelected ? 'selected' : ''}" onclick="Session.selectChoice('${c.id}')">
+            <span class="choice-letter">${letter.toUpperCase()}</span>
+            <span class="choice-text">${c.text}</span>
+          </button>
+        `;
+      }).join('');
+
+      const v = vote;
+      const factionRows = Object.entries(v.byFaction).map(([id, fv]) =>
+        `<div class="vote-faction-row">
+          <span class="faction-name">${fv.name}</span>
+          <span>${fv.total} seats</span>
+          <span class="vote-aye">AYE ${fv.aye}</span>
+          <span class="vote-nay">NAY ${fv.nay}</span>
+        </div>`
+      ).join('');
+
+      document.getElementById('chambers').innerHTML = `
+        <div class="chamber" style="grid-column:1 / -1;">
+          <div class="chamber-title">${typeLabel} · Turn ${S.meta.turn}</div>
+          <div class="card-display">
+            <div class="card-title">${card.title}</div>
+            <div class="card-text">${card.description || ''}</div>
+            ${card.thresholds ? `<div class="card-thresholds">Thresholds: ${Object.entries(card.thresholds).map(([k,v]) => k + ' ≥ ' + v).join(', ')}</div>` : ''}
+          </div>
+          <div class="choices-container">${choiceHTML}</div>
+          <div class="vote-breakdown">
+            <div class="vote-header">
+              ${v.passed ? '✓ PASSES' : '✗ FAILS'} — ${v.total.aye} AYE / ${v.total.nay} NAY 
+              (margin: ${v.margin > 0 ? '+' : ''}${v.margin})
+            </div>
+            ${factionRows}
+            <div class="vote-super">
+              Supermajority threshold (67%): ${v.supermajority ? '✓ Met' : '✗ Not met'}
+              — ${v.vetoOverridePossible ? 'A veto CAN be overridden.' : 'A veto WILL hold.'}
+            </div>
+          </div>
+          <div class="veto-buttons">
+            <button class="btn-sign" onclick="Session.sign()">✍️ Sign into Law</button>
+            <button class="btn-veto" onclick="Session.veto()">🚫 Veto</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function selectChoice(id) {
+      selectedChoice = id;
+      if (vote) vote.choiceId = id;
+      render();
+    }
+
+    async function sign() {
+      if (!selectedChoice && vote && vote.choiceId) selectedChoice = vote.choiceId;
+      if (!selectedChoice) {
+        const defaultChoice = pending?.card?.choices?.[0]?.id;
+        if (defaultChoice) selectedChoice = defaultChoice;
+        else return;
+      }
+      const result = Witan.resolveChoice(selectedChoice);
+      if (result) {
+        S = Witan.getState();
+        selectedChoice = null;
+        render();
+      }
+    }
+
+    async function veto() {
+      if (!selectedChoice && vote && vote.choiceId) selectedChoice = vote.choiceId;
+      if (!selectedChoice) {
+        const defaultChoice = pending?.card?.choices?.[0]?.id;
+        if (defaultChoice) selectedChoice = defaultChoice;
+        else return;
+      }
+      // For veto, we check if override is possible
+      if (vote && vote.vetoOverridePossible) {
+        // Override — same as sign
+        const result = Witan.resolveChoice(selectedChoice);
+        if (result) {
+          S = Witan.getState();
+          selectedChoice = null;
+          render();
+        }
+      } else {
+        // Veto succeeds — block the motion
+        if (pending) {
+          const vetoResult = { vetoed: true, choiceId: selectedChoice };
+          Witan.resolveChoice(null); // Clear pending without applying
+          S = Witan.getState();
+          selectedChoice = null;
+          render();
+          // Add to log
+          if (S.meta && S.meta.turn_log) {
+            S.meta.turn_log.push(`Year ${S.meta.year} AE, Turn ${S.meta.turn}: Consul vetoed the motion.`);
+            Witan.saveState();
+          }
+        }
+      }
+    }
+
+    async function advance() {
+      if (Witan.getPendingChoice() && Witan.getCurrentVote()) return;
+      const btn = document.getElementById('btnAdvance');
+      btn.disabled = true;
+      btn.textContent = 'The Assembly deliberates...';
+
+      try {
+        await Witan.advanceTurn();
+        S = Witan.getState();
+        selectedChoice = null;
+        render();
+      } catch(e) {
+        console.error('Failed to advance:', e);
+        btn.disabled = false;
+        btn.textContent = '▸ Advance Turn';
+      }
+    }
+
+    return { init, advance, selectChoice, sign, veto };
+  })();
+
+  document.addEventListener('DOMContentLoaded', () => Session.init());
+</script>
+
+</body>
+</html>

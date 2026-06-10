@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚖️ The Ealdenmot · Bay of Ealdforn</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #f5f0e8;
+    --ink: #2c2416;
+    --ink-light: #4a3e2e;
+    --gold: #b8963e;
+    --gold-dark: #7a5c18;
+    --red: #8b3a3a;
+    --green: #3a5a3a;
+    --stone: #c8c0b0;
+    --shadow: 0 2px 12px rgba(0,0,0,0.1);
+    --ff-display: 'Cinzel Decorative', serif;
+    --ff-title: 'Cinzel', serif;
+    --ff-body: 'Cormorant Garamond', Georgia, serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: var(--ff-body);
+    min-height: 100vh;
+  }
+  nav {
+    background: #fff;
+    border-bottom: 1px solid var(--stone);
+    padding: 14px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .nav-brand {
+    font-family: var(--ff-display);
+    font-size: 15px;
+    letter-spacing: 2px;
+    color: var(--ink);
+  }
+  .nav-motto {
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-light);
+    opacity: 0.6;
+  }
+  .nav-btn {
+    font-family: var(--ff-title);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--ink);
+    padding: 10px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-btn:hover { background: var(--gold-dark); }
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+  .hero {
+    text-align: center;
+    padding: 40px 0 32px;
+  }
+  .hero h1 {
+    font-family: var(--ff-display);
+    font-size: clamp(28px, 5vw, 44px);
+    letter-spacing: 3px;
+    margin-bottom: 6px;
+  }
+  .hero .motto {
+    font-style: italic;
+    color: var(--ink-light);
+    opacity: 0.5;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  .hero .era {
+    font-family: var(--ff-title);
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-top: 8px;
+  }
+  .hero .stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--ink-light);
+  }
+  .hero .stat span {
+    display: block;
+    font-family: var(--ff-display);
+    font-size: 22px;
+    color: var(--ink);
+  }
+  .enter-btn {
+    display: block;
+    width: fit-content;
+    margin: 28px auto 0;
+    font-family: var(--ff-title);
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #fff;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    padding: 16px 40px;
+    border-radius: 8px;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(184,150,62,0.25);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .enter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(184,150,62,0.35);
+  }
+  .panel {
+    background: #fff;
+    border: 1px solid var(--stone);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .panel-title {
+    font-family: var(--ff-title);
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--stone);
+  }
+  .offices-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+  }
+  .office-card {
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--stone);
+    background: #fdfcf7;
+  }
+  .office-spoken {
+    font-family: var(--ff-display);
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .office-latin {
+    font-family: var(--ff-title);
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: var(--gold-dark);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .office-holder {
+    font-size: 13px;
+    font-style: italic;
+    color: var(--ink-light);
+  }
+  .office-inactive {
+    opacity: 0.4;
+  }
+  .meter-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .meter-label {
+    font-family: var(--ff-title);
+    font-size: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    width: 80px;
+    text-align: right;
+  }
+  .meter-track {
+    flex: 1;
+    height: 8px;
+    background: var(--stone);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .meter-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease;
+  }
+  .meter-fill.authority { background: #4a3a6a; }
+  .meter-fill.commerce { background: #3a6a4a; }
+  .meter-fill.militarism { background: #8b3a3a; }
+  .meter-fill.tradition { background: #6a5a3a; }
+  .meter-fill.sovereignty { background: #3a5a8b; }
+  .meter-fill.piety { background: #8b8a3a; }
+  .meter-value {
+    font-family: var(--ff-title);
+    font-size: 10px;
+    width: 30px;
+    text-align: left;
+    color: var(--ink-light);
+  }
+  .faction-row, .crisis-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    font-size: 14px;
+  }
+  .faction-name { font-weight: 600; }
+  .faction-seats { color: var(--ink-light); font-style: italic; }
+  .crisis-active { border-left: 3px solid var(--red); padding-left: 10px; }
+  .crisis-resolved { border-left: 3px solid var(--green); padding-left: 10px; opacity: 0.5; }
+  .chronicle {
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 13px;
+    color: var(--ink-light);
+  }
+  .chronicle-entry {
+    padding: 3px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+  }
+  .empty-state {
+    text-align: center;
+    color: var(--ink-light);
+    opacity: 0.4;
+    font-style: italic;
+    padding: 16px;
+  }
+  .reset-link {
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+    font-family: var(--ff-title);
+    font-size: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    opacity: 0.4;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .reset-link:hover { opacity: 0.7; }
+  @media (max-width: 600px) {
+    nav { flex-wrap: wrap; gap: 8px; }
+    .hero .stats { flex-wrap: wrap; gap: 16px; }
+    .offices-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div>
+    <span class="nav-brand">⚖️ THE EALDENMOT</span>
+    <span class="nav-motto"> · Regnavit Deus, et res bonae sunt.</span>
+  </div>
+  <a href="ealdenmot.html" class="nav-btn">▸ Enter the Assembly</a>
+</nav>
+
+<main>
+  <div class="hero">
+    <h1>The Ealdenmot</h1>
+    <div class="era" id="eraDisplay">Founding Era</div>
+    <div class="stats">
+      <div class="stat"><span id="statYear">Year 1 AE</span>Current Year</div>
+      <div class="stat"><span id="statTurn">Turn 0</span>Session</div>
+      <div class="stat"><span id="statReps">3</span>Reps</div>
+      <div class="stat"><span id="statPop">4,872</span>Population</div>
+    </div>
+    <a href="ealdenmot.html" class="enter-btn">Convene the Ealdenmot</a>
+  </div>
+
+  <div class="panel" id="officesPanel">
+    <div class="panel-title">Offices of the Bay</div>
+    <div class="offices-grid" id="officesGrid"></div>
+  </div>
+
+  <div class="panel" id="metersPanel">
+    <div class="panel-title">Meters of the Realm</div>
+    <div id="metersList"></div>
+  </div>
+
+  <div class="panel" id="factionsPanel">
+    <div class="panel-title">Factions</div>
+    <div id="factionsList"><div class="empty-state">No factions have formed. The Assembly speaks with one voice.</div></div>
+  </div>
+
+  <div class="panel" id="crisisPanel">
+    <div class="panel-title">Crises</div>
+    <div id="crisisList"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Chronicle</div>
+    <div class="chronicle" id="chronicleList">
+      <div class="empty-state">The chronicle awaits the first session.</div>
+    </div>
+  </div>
+
+  <a class="reset-link" onclick="if(confirm('Reset the chronicle? All history will be lost.')){localStorage.removeItem('ealdenmot_state_v3');location.reload();}">↺ Reset Chronicle</a>
+</main>
+
+<script>
+  async function renderLobby() {
+    let S;
+    try {
+      const saved = localStorage.getItem('ealdenmot_state_v3');
+      if (saved) {
+        S = JSON.parse(saved);
+      } else {
+        const res = await fetch('state.json');
+        S = await res.json();
+      }
+    } catch(e) {
+      console.error('Failed to load state:', e);
+      document.body.innerHTML = '<div style="text-align:center;padding:80px;font-style:italic;">Could not load the chronicle. Is state.json in the root directory?</div>';
+      return;
+    }
+
+    if (!S || !S.meta) {
+      document.body.innerHTML = '<div style="text-align:center;padding:80px;font-style:italic;">State file is corrupted. Reset the chronicle.</div>';
+      return;
+    }
+
+    // Hero stats
+    document.getElementById('statYear').textContent = `Year ${S.meta.year} AE`;
+    document.getElementById('statTurn').textContent = `Turn ${S.meta.turn}`;
+    document.getElementById('statReps').textContent = S.reps?.count || 3;
+    document.getElementById('statPop').textContent = (S.meta.population || 4872).toLocaleString();
+    document.getElementById('eraDisplay').textContent = S.meta.era || 'Founding Era';
+
+    // Offices
+    const offices = S.offices?.roster || [];
+    const grid = document.getElementById('officesGrid');
+    if (offices.length === 0) {
+      // Fallback for old state format
+      grid.innerHTML = `
+        <div class="office-card"><div class="office-latin">Consul</div><div class="office-spoken">Ealdorman</div><div class="office-holder">Hrolfr</div></div>
+        <div class="office-card"><div class="office-latin">Quaestor</div><div class="office-spoken">Berend</div><div class="office-holder">Thorvald</div></div>
+        <div class="office-card"><div class="office-latin">Censor</div><div class="office-spoken">Sceawere</div><div class="office-holder">Sigrid</div></div>
+      `;
+    } else {
+      grid.innerHTML = offices.map(o => `
+        <div class="office-card ${o.active ? '' : 'office-inactive'}">
+          <div class="office-latin">${o.latin || ''}</div>
+          <div class="office-spoken">${o.spoken || ''}</div>
+          <div class="office-holder">${o.first_holder || 'Vacant'}</div>
+        </div>
+      `).join('');
+    }
+
+    // Meters
+    const meters = S.meters || {};
+    document.getElementById('metersList').innerHTML = Object.entries(meters).map(([k, v]) => {
+      const val = typeof v === 'object' ? v.value : v;
+      const label = typeof v === 'object' ? v.label : k;
+      const pct = Math.max(0, Math.min(100, ((val + 10) / 30) * 100));
+      return `
+        <div class="meter-bar">
+          <span class="meter-label">${label}</span>
+          <div class="meter-track"><div class="meter-fill ${k}" style="width:${pct}%"></div></div>
+          <span class="meter-value">${val > 0 ? '+' : ''}${val}</span>
+        </div>
+      `;
+    }).join('');
+
+    // Factions
+    const factions = S.factions?.active || [];
+    if (factions.length === 0) {
+      document.getElementById('factionsList').innerHTML = '<div class="empty-state">No factions have formed. The Assembly speaks with one voice.</div>';
+    } else {
+      document.getElementById('factionsList').innerHTML = factions.map(f => `
+        <div class="faction-row">
+          <span class="faction-name">${f.name}</span>
+          <span>Founded Year ${f.founded_year} AE</span>
+          <span class="faction-seats">${f.seats} seats</span>
+          ${f.leader ? `<span style="color:var(--gold-dark);font-size:12px;">${f.leader}</span>` : ''}
+        </div>
+      `).join('');
+    }
+
+    // Crises
+    const crises = S.crisis_queue || [];
+    if (crises.length === 0) {
+      document.getElementById('crisisList').innerHTML = '<div class="empty-state">No crises on the horizon.</div>';
+    } else {
+      document.getElementById('crisisList').innerHTML = crises.map(c => {
+        const resolved = c.resolution !== null && c.resolution !== undefined;
+        return `
+          <div class="crisis-row ${resolved ? 'crisis-resolved' : 'crisis-active'}">
+            <div>
+              <strong>${c.title}</strong>
+              <div style="font-size:12px;color:var(--ink-light);">${c.description || ''}</div>
+            </div>
+            <span>${resolved ? `✓ Resolved Year ${c.resolved_year} AE` : `Triggers Turn ${c.trigger_turn}`}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Chronicle
+    const log = S.meta?.turn_log || [];
+    if (log.length === 0) {
+      document.getElementById('chronicleList').innerHTML = '<div class="empty-state">The chronicle awaits the first session.</div>';
+    } else {
+      document.getElementById('chronicleList').innerHTML = log.slice(-20).reverse().map(entry =>
+        `<div class="chronicle-entry">${entry}</div>`
+      ).join('');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', renderLobby);
+</script>
+
+</body>
+</html>

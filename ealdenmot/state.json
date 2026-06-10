@@ -1,0 +1,394 @@
+{
+  "meta": {
+    "version": "3.2",
+    "turn": 0,
+    "year": 1,
+    "era": "Founding",
+    "era_description": "The Bay is young. The Assembly is new. The founders still live. Every institution must be built from stone and precedent. The people speak Ealdforn. The scribes write Latin. The observer reads the gloss.",
+    "realm": "Bay of Ealdforn",
+    "motto": "Regnavit Deus, et res bonae sunt.",
+    "motto_gloss": "God reigned, and things were good.",
+    "population": 4872,
+    "turn_log": []
+  },
+
+  "language": {
+    "spoken": "Ealdforn (Old Saxon derivative)",
+    "written": "Latin (frozen legal tongue)",
+    "gloss": "Modern English (observer's key)",
+    "note": "The people speak Saxon. The law is written in Latin. The gloss exists only for you."
+  },
+
+  "populationMatrix": {
+    "total": 4872,
+    "distribution": {
+      "body_mean": 65, "body_std": 15,
+      "mind_mean": 60, "mind_std": 18,
+      "spirit_mean": 70, "spirit_std": 12,
+      "craft_mean": 55, "craft_std": 20,
+      "gods_mean": 68, "gods_std": 14
+    },
+    "class_distribution": {
+      "fishers": 0.25,
+      "farmers": 0.30,
+      "craftsmen": 0.20,
+      "merchants": 0.10,
+      "scribes": 0.05,
+      "clergy": 0.05,
+      "nobility": 0.05
+    },
+    "settlements": {
+      "caepton": { "population": 1800, "matrix_shift": [2, 2, 1, 3, 1] },
+      "helms_ford": { "population": 1200, "matrix_shift": [1, 1, 2, 2, 2] },
+      "salt_rise": { "population": 800, "matrix_shift": [3, 1, 1, 2, 1] },
+      "east_harbor": { "population": 600, "matrix_shift": [2, 2, 1, 4, 1] },
+      "west_hollow": { "population": 472, "matrix_shift": [1, 3, 2, 1, 2] }
+    }
+  },
+
+  "founding_tablet": {
+    "latin": "ANNO I AEDIFICANDI\nCONSULES PRIMI\nHROLFRUS FILIUS NEMO\nTHORVALDUS FILIUS NEMO\nSIGRIDA FILIA NEMO\nCENSUS POPULI: IV DCCCLXXII",
+    "gloss": "In the first year of the building. The first Consuls. Hrolfr, son of no one. Thorvald, son of no one. Sigrid, daughter of no one. The census of the people: 4,872.",
+    "significance": "The founders are the filius nemo generation — children of no one. The Bay has no lineages yet. They came from nowhere and built a city.",
+    "year_carved": 6
+  },
+
+  "cantica": {
+    "description": "The Cantica Ealdfornicus — legal formulae spoken aloud in the Assembly. Spoken in Ealdforn, written in Latin, understood through the gloss.",
+    "formulae": {
+      "opening": {
+        "ealdforn": "Hlyst! Hlyst! Hlyst! Þa Ealdormenn samniaþ. Lagu weorþe. Endebyrdnes healde.",
+        "latin": "Audite, audite, audite. Consules conveniunt. Lex fiat. Ordo servetur.",
+        "gloss": "Hear, hear, hear. The Consuls convene. Let law be made. Let order be kept."
+      },
+      "closing": {
+        "ealdforn": "Gecweden is. Gewriten is. Lagu is.",
+        "latin": "Dictum est. Scriptum est. Lex est.",
+        "gloss": "It is spoken. It is written. It is law."
+      },
+      "dictator_appointment": {
+        "ealdforn": "Seo gemænscip is on frecennysse. Witan-heretogan we nemnaþ. Anweald hæbbe. Dædum gedonum, anweald alecge.",
+        "latin": "Res publica in periculo est. Dictatorem appellamus. Imperium habeto. Rebus gestis, imperium deponeto.",
+        "gloss": "The republic is in danger. We name a Dictator. Let them have command. When the deeds are done, let them lay command down."
+      },
+      "census": {
+        "ealdforn": "We geteliaþ. We namiaþ. Nænne we forgietaþ.",
+        "latin": "Numeramus. Nominamus. Neminem obliviscimur.",
+        "gloss": "We count. We name. We forget no one."
+      },
+      "status_freeze": {
+        "ealdforn": "Ne nahþor. Ne nu. We healdaþ þis þing on freose.",
+        "latin": "Neuter. Nec nunc. Hanc rem in congelatione tenemus.",
+        "gloss": "Neither party. Not now. We hold this matter in freeze."
+      },
+      "imperator_inauguration": {
+        "ealdforn": "Se Ealdorman stigeþ to þæm heahsetle. Anweald hæbbe. Gemyndig beo þæt he eft cymeþ.",
+        "latin": "Consul ad solium ascendit. Imperium habeto. Memento te rediturum esse.",
+        "gloss": "The Consul ascends to the high seat. Let them have command. Remember that you shall return."
+      }
+    }
+  },
+
+  "government": {
+    "type": "unicameral",
+    "chambers": {
+      "assembly": {
+        "name": "The Ealdenmot",
+        "name_latin": "Comitia Ealdfornica",
+        "seats": 3,
+        "seats_capped": false,
+        "growth_model": "fibonacci",
+        "growth_interval": 1
+      }
+    },
+    "executive": {
+      "type": "chairman",
+      "office_name": "Chairman of the Ealdenmot",
+      "office_name_latin": "Consul Praeses",
+      "officeholder": "hrolfr",
+      "term_length": null,
+      "term_limit": null,
+      "powers": ["preside_over_assembly", "break_ties", "command_harbor_watch", "veto"],
+      "veto_active": true,
+      "succession": null
+    },
+    "judiciary": {
+      "exists": false,
+      "court_name": null,
+      "court_name_latin": null,
+      "justices": 0,
+      "powers": [],
+      "status_freeze_enabled": false
+    }
+  },
+
+  "offices": {
+    "description": "Offices of the Bay. Spoken in Ealdforn by the people. Written in Latin in the Scriptorium. Glossed in English for the observer.",
+    "roster": [
+      {
+        "id": "ealdorman",
+        "spoken": "Ealdorman",
+        "latin": "Consul",
+        "gloss": "President / Chief Magistrate",
+        "duty": "Presides over the Assembly. First among equals. Temporary singular authority when elected Imperator.",
+        "first_holder": "Hrolfr",
+        "seat": "The Harbor Watch",
+        "active": true
+      },
+      {
+        "id": "berend",
+        "spoken": "Berend",
+        "latin": "Quaestor",
+        "gloss": "Treasurer / Grain Commissioner",
+        "duty": "Carries the harvest. Manages the grain tithe, the common stores, and the treasury.",
+        "first_holder": "Thorvald",
+        "seat": "The Grange-hall",
+        "active": true
+      },
+      {
+        "id": "sceawere",
+        "spoken": "Sceawere",
+        "latin": "Censor",
+        "gloss": "Census-Taker / Registrar",
+        "duty": "Counts the people. Registers ships, births, deaths. Knows what the Bay actually is.",
+        "first_holder": "Sigrid",
+        "seat": "The Scriptorium",
+        "active": true
+      },
+      {
+        "id": "dema_weard",
+        "spoken": "Dema-weard",
+        "latin": "Praetor",
+        "gloss": "Judge / Justice",
+        "duty": "Deems disputes. Freezes conflicts. Guards the judgment until it is enforced.",
+        "first_holder": "Hrolfr (concurrent with Ealdorman)",
+        "seat": "The Codex Court (when established)",
+        "active": false,
+        "note": "Activated upon establishment of judiciary."
+      },
+      {
+        "id": "witan_heretoga",
+        "spoken": "Witan-heretoga",
+        "latin": "Dictator",
+        "gloss": "Emergency Commander",
+        "duty": "Appointed only in crisis. Absolute command of the harbor watch and militia. Fixed term. Must step down when the crisis ends.",
+        "first_holder": null,
+        "seat": "Field command. No fixed hall.",
+        "active": false,
+        "note": "Activated by crisis resolution. First appointment expected: Hrolfr."
+      },
+      {
+        "id": "tidsceal",
+        "spoken": "Tidsceal",
+        "latin": "Pontifex",
+        "gloss": "Calendar-Keeper / Chief Timekeeper",
+        "duty": "Maintains the calendar. Announces solstices, equinoxes, feast days, and election cycles.",
+        "first_holder": null,
+        "seat": "The sunrise room in the Assembly hall",
+        "active": false,
+        "note": "Appointed after The Setting of Days (Year 1). Expected first holder: Thorvald's nephew."
+      },
+      {
+        "id": "weard",
+        "spoken": "Weard",
+        "latin": "Aedilis",
+        "gloss": "Public Works Commissioner",
+        "duty": "Inspects and maintains public works: aqueducts, granaries, watchtowers, harbor pilings, market squares.",
+        "first_holder": null,
+        "seat": "No fixed hall. The Weard walks the walls.",
+        "active": false,
+        "note": "Appointed after the Aqueduct Commission (Year 5-6)."
+      },
+      {
+        "id": "writere",
+        "spoken": "Writere",
+        "latin": "Scriba",
+        "gloss": "Scribe / Archivist",
+        "duty": "Writes the laws. Copies the records. Maintains the Scriptorium archives.",
+        "first_holder": "Sigrid (concurrent with Sceawere)",
+        "seat": "The Scriptorium",
+        "active": true
+      },
+      {
+        "id": "cydere",
+        "spoken": "Cydere",
+        "latin": "Praeco",
+        "gloss": "Herald / Town Crier",
+        "duty": "Announces the Assembly's resolutions in the public square. The voice of the law before it is read.",
+        "first_holder": null,
+        "seat": "The harbor square. No fixed hall.",
+        "active": false,
+        "note": "Appointed as needed for public proclamations."
+      }
+    ]
+  },
+
+  "factions": {
+    "active": [],
+    "formation_threshold": 8,
+    "formation_rules": "factions_form_at_fibonacci_thresholds",
+    "max_factions": 6,
+    "history": []
+  },
+
+  "reps": {
+    "count": 3,
+    "leadership": ["hrolfr", "thorvald", "sigrid"],
+    "pool": "data/deck/reps.json",
+    "fibonacci_sequence": [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89],
+    "fibonacci_index": 2,
+    "capped_at": null,
+    "matrix_aggregation": true
+  },
+
+  "meters": {
+    "authority": { "value": 0, "label": "Authority", "latin": "Auctoritas", "description": "Command, law, order, institutional strength" },
+    "commerce": { "value": 0, "label": "Commerce", "latin": "Commercium", "description": "Trade, wealth, flow, prosperity" },
+    "militarism": { "value": 0, "label": "Militarism", "latin": "Militia", "description": "Defense, aggression, readiness for conflict" },
+    "tradition": { "value": 0, "label": "Tradition", "latin": "Traditio", "description": "Old ways, ritual, covenant, continuity" },
+    "sovereignty": { "value": 5, "label": "Sovereignty", "latin": "Maiestas", "description": "Independence, self-rule, the Bay's identity" },
+    "piety": { "value": 3, "label": "Piety", "latin": "Pietas", "description": "Faith, divine covenant, sacred obligation" }
+  },
+
+  "constitution": {
+    "amendments": [],
+    "doctrines": [
+      {
+        "name": "Filius Nemo",
+        "latin": "Filius Nemo",
+        "gloss": "Child of No One",
+        "year": 1,
+        "description": "The founders are the first generation. They inherit no names. Their children will inherit what they build.",
+        "tablet": "HROLFRUS FILIUS NEMO / THORVALDUS FILIUS NEMO / SIGRIDA FILIA NEMO"
+      }
+    ],
+    "precedents": [],
+    "founding_documents": [
+      "The Ealdenmot Charter (Year 1 AE)",
+      "The Setting of Days (Year 1 AE)",
+      "The Founding Tablet (Year 6 AE)"
+    ],
+    "amendment_threshold": {
+      "unicameral": 0.67,
+      "elders": 0.67,
+      "thanes": 0.67
+    }
+  },
+
+  "classification": {
+    "system": "none",
+    "ladder": [],
+    "tessera_enabled": false,
+    "scriptorium_exists": false,
+    "foreign_policy": "ad_hoc"
+  },
+
+  "military": {
+    "harbor_watch": {
+      "exists": true,
+      "commander": "hrolfr",
+      "loyalty": "chairman",
+      "size": "small",
+      "doctrine": "defense_only"
+    },
+    "praetorian_order": {
+      "exists": false,
+      "role": null,
+      "constitutional_status": null
+    }
+  },
+
+  "city": {
+    "name": "Caepton",
+    "tiles": [
+      {
+        "type": "assembly_hall",
+        "placed_turn": 0,
+        "district": "civic",
+        "label": "Assembly Hall",
+        "matrix_influence": { "authority": 2, "sovereignty": 1, "tradition": 1 }
+      },
+      {
+        "type": "harbor",
+        "placed_turn": 0,
+        "district": "harbor",
+        "label": "The Harbor",
+        "matrix_influence": { "commerce": 3, "sovereignty": 1, "militarism": 1 }
+      },
+      {
+        "type": "wells",
+        "placed_turn": 0,
+        "district": "civic",
+        "label": "The Wells",
+        "matrix_influence": { "piety": 2, "tradition": 1 }
+      }
+    ],
+    "districts": ["civic", "harbor"],
+    "buildings": 3,
+    "district_matrices": {
+      "civic": { "authority": 1, "sovereignty": 1, "tradition": 1 },
+      "harbor": { "commerce": 2, "militarism": 1 },
+      "grange": { "commerce": 1, "tradition": 2 },
+      "scriptorium": { "authority": 1, "sovereignty": 2 }
+    }
+  },
+
+  "crisis_queue": [
+    {
+      "id": "crisis_grain_rot",
+      "trigger_turn": 7,
+      "trigger_condition": "year >= 7",
+      "title": "The Grain Rot Crisis",
+      "description": "The granaries, built cheaply in the early years, have failed. A third of the winter stores are rotten. Thorvald demands an emergency tithe. Sigrid demands compensation by the ledger. Hrolfr demands an investigation before either can act. The Bay faces hunger by spring.",
+      "choices": [
+        {
+          "id": "grain_a",
+          "text": "Thorvald prevails — emergency tithe, rebuild the granaries, compensate later.",
+          "doctrine": "The Purse Answers Crisis",
+          "meter_effects": { "commerce": 2, "authority": 1 }
+        },
+        {
+          "id": "grain_b",
+          "text": "Sigrid prevails — compensate victims first, then rebuild, tithe only if needed.",
+          "doctrine": "The Ledger Answers Crisis",
+          "meter_effects": { "sovereignty": 2, "tradition": 1 }
+        },
+        {
+          "id": "grain_c",
+          "text": "Hrolfr takes emergency command — distribute grain, rebuild granaries, return authority when done.",
+          "doctrine": "Captain's Authority",
+          "motto": "In crisis, the Bay is under one commander — the Witan-heretoga.",
+          "meter_effects": { "authority": 3, "militarism": 1 },
+          "precedent": "emergency_dictatorship",
+          "unlocks": ["witan_heretoga"],
+          "cantica_triggered": "dictator_appointment"
+        }
+      ],
+      "resolution": null,
+      "resolved_turn": null,
+      "resolved_year": null
+    }
+  ],
+
+  "events": {
+    "policy_cards": "data/deck/policy_cards.json",
+    "crisis_cards": "data/deck/crisis_cards.json",
+    "constitutional_choices": "data/deck/constitutional_choices.json",
+    "faction_events": "data/deck/faction_events.json"
+  },
+
+  "display": {
+    "theme": "parchment",
+    "layout": "single_chamber",
+    "show_meters": true,
+    "show_factions": true,
+    "show_offices": true,
+    "show_cantica": false,
+    "show_court": false,
+    "show_classification": false,
+    "show_latin": true,
+    "show_gloss": true,
+    "cascade_enabled": false,
+    "show_matrix": false
+  }
+}
