@@ -1,0 +1,61 @@
+{
+  "deck_name": "Judicial Cards — The Codex Court",
+  "description": "Court cases and precedents. These cards fire when the judiciary exists and a legal dispute requires resolution.",
+  "cards": [
+    {
+      "id": "judicial_001",
+      "trigger_condition": "codex_court_exists",
+      "title": "The First Case — Personhood and Property",
+      "description": "A merchant claims his ship has legal personhood. The Treasury wants to tax it as an actor. The Scriptorium wants to classify it as property. The new Codex Court must rule.",
+      "choices": [
+        { "id": "a", "text": "The ship is property. Personhood requires birth or naturalization.", "effects": { "tradition": 2, "authority": 1 }, "precedent": "property_not_person" },
+        { "id": "b", "text": "Derivative standing — rights through the owner's contracts.", "effects": { "commerce": 2, "sovereignty": 1 }, "precedent": "derivative_standing" },
+        { "id": "c", "text": "The Court cannot rule. The Assembly must legislate.", "effects": { "sovereignty": 2, "authority": -1 } }
+      ]
+    },
+    {
+      "id": "judicial_002",
+      "trigger_condition": "codex_court_exists",
+      "title": "The Status Freeze Doctrine",
+      "description": "The Court formalizes its power to freeze disputes. How broad should the freeze be?",
+      "choices": [
+        { "id": "a", "text": "Broad freeze — any matter, indefinitely.", "effects": { "authority": 3, "sovereignty": -1 }, "precedent": "broad_freeze" },
+        { "id": "b", "text": "Limited freeze — one year, renewable by Assembly.", "effects": { "sovereignty": 2, "authority": 1 }, "precedent": "limited_freeze" },
+        { "id": "c", "text": "No freeze power. Court advises; Assembly decides.", "effects": { "sovereignty": 3, "authority": -2 } }
+      ]
+    },
+    {
+      "id": "judicial_003",
+      "trigger_condition": "imperator_exists",
+      "title": "The Imperator Compromise Ruling",
+      "description": "The Court must rule on whether the legislature can create an executive office with temporary emergency powers.",
+      "choices": [
+        { "id": "a", "text": "Yes. The Imperator is constitutional. Limited term, defined powers.", "effects": { "authority": 2, "sovereignty": 2 }, "precedent": "imperator_constitutional" },
+        { "id": "b", "text": "Yes, but only during declared emergencies.", "effects": { "authority": 1, "sovereignty": 3 } },
+        { "id": "c", "text": "No. The Assembly cannot delegate its sovereignty.", "effects": { "sovereignty": 4, "authority": -2 } }
+      ]
+    },
+    {
+      "id": "judicial_004",
+      "trigger_condition": "federalist_majority AND court_size >= 5",
+      "title": "The Judicial Review Question",
+      "description": "A Federalist proposal would grant the Court power to strike down any legislation it finds 'legally incoherent.' Corwin's dream — or nightmare.",
+      "choices": [
+        { "id": "a", "text": "Grant judicial review. The Court is supreme.", "effects": { "authority": 5, "sovereignty": -3 }, "precedent": "judicial_supremacy" },
+        { "id": "b", "text": "Limited review. Only on constitutional questions.", "effects": { "authority": 2, "sovereignty": 1 } },
+        { "id": "c", "text": "Reject. Ipso facto oreo — the Court cannot expand itself.", "effects": { "sovereignty": 3, "authority": -1 }, "precedent": "ipso_facto_oreo" }
+      ]
+    },
+    {
+      "id": "judicial_005",
+      "trigger_condition": "tessera_system_exists AND crisis_tessera_collapse_resolved",
+      "title": "The Rights of the Unclassified",
+      "description": "A class-action suit argues that processing delays violate the principle that no person within the Bay may be legally invisible.",
+      "choices": [
+        { "id": "a", "text": "The Civitas Act is constitutional. Delays must be resolved by the Assembly.", "effects": { "authority": 2, "tradition": 1 } },
+        { "id": "b", "text": "Delays are unconstitutional. The Assembly must act within 60 days.", "effects": { "sovereignty": 3, "authority": 1 }, "precedent": "classification_clock" },
+        { "id": "c", "text": "All unclassified persons are granted provisional status immediately.", "effects": { "sovereignty": 4, "authority": -1 } }
+      ]
+    }
+  ]
+}

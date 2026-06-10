@@ -1,0 +1,126 @@
+{
+  "deck_name": "Factions of the Ealdforn Republic",
+  "factions": [
+    {
+      "id": "grain_keepers",
+      "name": "Grain-Keepers",
+      "founded_at_reps": 5,
+      "era": "early_republic",
+      "values": ["commerce", "tradition"],
+      "base_family": "thorvalding",
+      "evolves_into": "the_grange",
+      "evolution_turn": 25,
+      "evolution_condition": "bicameral_legislature_passed",
+      "description": "The first faction. Farmers and shepherds who believe the harvest is the soul of the Bay. Evolves into The Grange at the bicameral split."
+    },
+    {
+      "id": "harbor_league",
+      "name": "Harbor League",
+      "founded_at_reps": 13,
+      "era": "early_republic",
+      "values": ["commerce", "authority"],
+      "base_family": "hrolfing",
+      "merges_with": "threshold_guard",
+      "merge_result": "stone_bench",
+      "merge_condition": "codex_court_founded AND bicameral_debate",
+      "description": "Merchants and watch officers who believe commerce is the Bay's lifeblood. Merges with the Threshold Guard to form the Stone Bench during the bicameral crisis."
+    },
+    {
+      "id": "threshold_guard",
+      "name": "Threshold Guard",
+      "founded_at_reps": 13,
+      "era": "early_republic",
+      "values": ["sovereignty", "tradition"],
+      "base_family": "sigriding",
+      "merges_with": "harbor_league",
+      "merge_result": "stone_bench",
+      "merge_condition": "codex_court_founded AND bicameral_debate",
+      "description": "Legalists and archivists who believe classification must precede action. Merges with the Harbor League to form the Stone Bench."
+    },
+    {
+      "id": "old_way",
+      "name": "The Old Way",
+      "founded_at_reps": 21,
+      "era": "early_republic",
+      "values": ["piety", "tradition"],
+      "merges_with": "clerics",
+      "merge_result": "binding_fold",
+      "merge_condition": "scriptorium_archive_built",
+      "description": "Pious traditionalists who believe the gods precede the Assembly. Merges with the Clerics to form the Binding Fold."
+    },
+    {
+      "id": "binding_fold",
+      "name": "The Binding Fold",
+      "founded_by_merge": true,
+      "parents": ["old_way", "clerics"],
+      "era": "late_republic",
+      "values": ["piety", "tradition", "sovereignty"],
+      "evolves_into": "docket_order",
+      "evolution_condition": "codex_court_captured",
+      "description": "The merged faction of the Old Way and the Clerics. Captures the Codex Court through legal strategy. Evolves into the Docket Order."
+    },
+    {
+      "id": "docket_order",
+      "name": "The Docket Order",
+      "founded_by_evolution": true,
+      "parent": "binding_fold",
+      "era": "bicameral_era",
+      "values": ["authority", "tradition", "sovereignty"],
+      "evolves_into": "federalist_union",
+      "evolution_condition": "imperator_compromise_passed",
+      "description": "The legalist faction that captured the Court. Rebrands as the Federalist Union after the Imperator Compromise."
+    },
+    {
+      "id": "federalist_union",
+      "name": "Federalist Union",
+      "founded_by_evolution": true,
+      "parent": "docket_order",
+      "era": "imperial_era",
+      "values": ["authority", "sovereignty", "tradition"],
+      "splinters_into": ["lucianites", "reformists", "davianites"],
+      "splinter_condition": "lucian_death",
+      "description": "The party of Lucian. Dominates the Imperial Era. Splinters after Lucian's death into the Lucianites, the Reformists, and the Davianites."
+    },
+    {
+      "id": "the_grange",
+      "name": "The Grange",
+      "founded_by_evolution": true,
+      "parent": "grain_keepers",
+      "era": "bicameral_era",
+      "values": ["commerce", "tradition", "sovereignty"],
+      "produces_leader": "dreson",
+      "leader_condition": "aldric_dies_in_office",
+      "description": "The party of farmers and shepherds. Produces Dreson, the Cincinnatus of the hills. The conscience of the Republic."
+    },
+    {
+      "id": "judicialist_league",
+      "name": "Judicialist League",
+      "founded_by_split": true,
+      "split_from": "federalist_union",
+      "era": "imperial_era",
+      "values": ["authority", "sovereignty"],
+      "leader": "corwin",
+      "description": "Corwin's breakaway faction. Argues for judicial supremacy. A permanent minority until Cassia and Darius make them contenders."
+    },
+    {
+      "id": "praetorian_order",
+      "name": "Praetorian Order",
+      "founded_by_event": true,
+      "trigger": "lucian_packs_court",
+      "era": "imperial_era",
+      "values": ["authority", "militarism"],
+      "is_institution": true,
+      "description": "Not a faction but an institution. The permanent administrative and military corps. Bound constitutionally to the Imperator."
+    },
+    {
+      "id": "the_silence",
+      "name": "The Silence",
+      "founded_by_event": true,
+      "trigger": "orm_dies",
+      "era": "any",
+      "values": ["balance"],
+      "is_caucus": true,
+      "description": "The caucus that abstains. Votes only on war and constitutional crisis. Orm's legacy."
+    }
+  ]
+}

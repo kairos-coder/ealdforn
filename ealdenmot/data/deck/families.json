@@ -1,0 +1,101 @@
+{
+  "deck_name": "Families of the Ealdforn Republic",
+  "description": "The senatorial class. Founding families, cadet branches, and player lineages. Families rise and fall across generations. Marriages create alliances. Feuds create rivalries. Influence determines who sits in the Assembly, the Court, and the Imperator's seat.",
+  "families": [
+    {
+      "id": "family_hrolfing",
+      "name": "Hrolfing",
+      "motto": "We guard the Bay.",
+      "founder": "rep_hrolfr",
+      "founded_turn": 0,
+      "seat": "The Harbor Watch",
+      "tradition": "military",
+      "values": { "authority": 8, "commerce": 2, "militarism": 8, "tradition": 4, "sovereignty": 6, "piety": 3 },
+      "influence": 10,
+      "current_head": "rep_hrolfr",
+      "members": ["rep_hrolfr"],
+      "alliances": [],
+      "feuds": [],
+      "branches": []
+    },
+    {
+      "id": "family_thorvalding",
+      "name": "Thorvalding",
+      "motto": "The grain must flow.",
+      "founder": "rep_thorvald",
+      "founded_turn": 0,
+      "seat": "The Grange-hall",
+      "tradition": "agricultural",
+      "values": { "authority": 3, "commerce": 8, "militarism": 1, "tradition": 8, "sovereignty": 4, "piety": 7 },
+      "influence": 10,
+      "current_head": "rep_thorvald",
+      "members": ["rep_thorvald"],
+      "alliances": [],
+      "feuds": [],
+      "branches": []
+    },
+    {
+      "id": "family_sigriding",
+      "name": "Sigriding",
+      "motto": "We count. We name. We forget no one.",
+      "founder": "rep_sigrid",
+      "founded_turn": 0,
+      "seat": "The Scriptorium",
+      "tradition": "administrative",
+      "values": { "authority": 6, "commerce": 4, "militarism": 2, "tradition": 7, "sovereignty": 8, "piety": 5 },
+      "influence": 10,
+      "current_head": "rep_sigrid",
+      "members": ["rep_sigrid"],
+      "alliances": [],
+      "feuds": [],
+      "branches": []
+    },
+    {
+      "id": "family_orming",
+      "name": "Orming",
+      "motto": "Most votes do not matter.",
+      "founder": "rep_orm",
+      "founded_turn": 5,
+      "seat": "No fixed hall",
+      "tradition": "independent",
+      "values": { "authority": 5, "commerce": 5, "militarism": 5, "tradition": 5, "sovereignty": 5, "piety": 5 },
+      "influence": 5,
+      "current_head": "rep_orm",
+      "members": ["rep_orm"],
+      "alliances": [],
+      "feuds": [],
+      "branches": []
+    },
+    {
+      "id": "family_player",
+      "name": "[Player Name]",
+      "motto": "[Player's maxim]",
+      "founder": "rep_player",
+      "founded_turn": 0,
+      "seat": "TBD by player choices",
+      "tradition": "player_defined",
+      "values": { "authority": 5, "commerce": 5, "militarism": 5, "tradition": 5, "sovereignty": 5, "piety": 5 },
+      "influence": 3,
+      "current_head": "rep_player",
+      "members": ["rep_player"],
+      "alliances": [],
+      "feuds": [],
+      "branches": []
+    }
+  ],
+  "marriage_rules": {
+    "description": "When two family members marry, a cadet branch may form. Compound names reflect the alliance.",
+    "compound_format": "{family1}-{family2}",
+    "influence_boost": 2,
+    "value_blend": "average of both families with slight drift"
+  },
+  "feud_rules": {
+    "description": "Feuds form when families vote against each other on high-stakes cards, or when a marriage alliance is rejected.",
+    "effects": "Feuding families never vote together. Their influence scores are locked in opposition.",
+    "resolution": "A feud ends when a member of one family saves a member of the other, or when both families lose a generation."
+  },
+  "succession_rules": {
+    "description": "When a family head dies, the heir inherits. If no heir exists, the family influence drops by half and a distant relative is found — or the family fades.",
+    "heir_search": "children first, then siblings, then cousins, then the family seat becomes vacant"
+  }
+}

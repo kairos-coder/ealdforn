@@ -1,0 +1,61 @@
+{
+  "deck_name": "Crisis Cards — The Ealdforn Republic",
+  "description": "Major crisis events that trigger at specific turns. Each crisis tests the institutions built in the preceding turns.",
+  "crises": [
+    {
+      "id": "crisis_grain_rot",
+      "trigger_turn": 7,
+      "title": "The Grain Rot Crisis",
+      "description": "The granaries, built cheaply in the early years, have failed. A third of the winter stores are rotten. Thorvald demands an emergency tithe. Sigrid demands compensation by the ledger. Hrolfr demands an investigation before either can act. The Bay faces hunger by spring.",
+      "choices": [
+        { "id": "a", "text": "Thorvald prevails — emergency tithe, rebuild, compensate later.", "effects": { "commerce": 2, "authority": 1 }, "doctrine": "The Purse Answers Crisis" },
+        { "id": "b", "text": "Sigrid prevails — compensate first, rebuild, tithe only if needed.", "effects": { "sovereignty": 2, "tradition": 1 }, "doctrine": "The Ledger Answers Crisis" },
+        { "id": "c", "text": "Hrolfr takes emergency command — distribute grain, rebuild, return authority.", "effects": { "authority": 3, "militarism": 1 }, "precedent": "captains_authority", "unlocks": "witan_heretoga", "doctrine": "Captain's Authority" }
+      ]
+    },
+    {
+      "id": "crisis_foreign_fleet",
+      "trigger_turn": 30,
+      "title": "The Foreign Fleet Crisis",
+      "description": "A war fleet from a rival port city anchors off the Bay. They claim a trade dispute. They demand tribute. The harbor watch is outnumbered. The Assembly must decide: negotiate, fight, or call for a Dictator.",
+      "choices": [
+        { "id": "a", "text": "Negotiate. Offer trade concessions.", "effects": { "commerce": 2, "sovereignty": -2, "militarism": -1 } },
+        { "id": "b", "text": "Fight. The harbor watch engages.", "effects": { "militarism": 3, "authority": 2, "commerce": -2 } },
+        { "id": "c", "text": "Appoint a Witan-heretoga. Emergency command.", "effects": { "authority": 4, "militarism": 2, "sovereignty": -2 }, "requires": "witan_heretoga_unlocked" }
+      ]
+    },
+    {
+      "id": "crisis_plague",
+      "trigger_turn": 45,
+      "title": "The Plague Year",
+      "description": "Sickness spreads through the harbor district. Trade stops. The Assembly is decimated. The Tidsceal declares a year of mourning. Who governs when the governors are dying?",
+      "choices": [
+        { "id": "a", "text": "The Imperator rules by decree until the plague passes.", "effects": { "authority": 3, "sovereignty": -1 } },
+        { "id": "b", "text": "The Court assumes emergency oversight.", "effects": { "sovereignty": 2, "authority": 1 } },
+        { "id": "c", "text": "The Assembly meets in smaller numbers. No special powers.", "effects": { "sovereignty": 3, "authority": -2 } }
+      ]
+    },
+    {
+      "id": "crisis_tessera_collapse",
+      "trigger_turn": 80,
+      "title": "The Tessera Collapse",
+      "description": "A fire destroys the Scriptorium's central archive. Tessera records for thousands of foreign-born residents are lost. No one can prove their status. The classification system is broken.",
+      "choices": [
+        { "id": "a", "text": "Presumptive citizenship. All residents granted provisional status.", "effects": { "sovereignty": 3, "authority": -1 } },
+        { "id": "b", "text": "Re-register everyone. Immigration frozen until resolved.", "effects": { "authority": 3, "commerce": -3 } },
+        { "id": "c", "text": "The Court rules on each case individually.", "effects": { "authority": 2, "sovereignty": 1 } }
+      ]
+    },
+    {
+      "id": "crisis_harbor_secession",
+      "trigger_turn": 90,
+      "title": "The Harbor Secession Crisis",
+      "description": "The Southern Guilds, four generations in the Bay, petition for political autonomy — a self-governing Free Port within the Bay. They control 40% of trade. Their children are citizens. This is not a threat. It's a negotiation.",
+      "choices": [
+        { "id": "a", "text": "Grant the Free Port Charter.", "effects": { "commerce": 3, "sovereignty": -2, "authority": -1 } },
+        { "id": "b", "text": "Reject. The Bay is one realm, indivisible.", "effects": { "authority": 3, "commerce": -2, "sovereignty": 1 } },
+        { "id": "c", "text": "Federal compromise. Limited autonomy.", "effects": { "sovereignty": 1, "commerce": 1, "authority": 1 } }
+      ]
+    }
+  ]
+}

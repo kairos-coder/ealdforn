@@ -1,0 +1,118 @@
+{
+  "deck_name": "Offices of the Ealdforn Republic",
+  "description": "The nine offices of the Bay. Spoken in Ealdforn, written in Latin, understood in modern English. Each office has an activation condition, succession rules, and duties.",
+  "offices": [
+    {
+      "id": "ealdorman",
+      "spoken": "Ealdorman",
+      "latin": "Consul",
+      "gloss": "President / Chief Magistrate",
+      "duty": "Presides over the Assembly. First among equals. In later eras, may be elected Imperator with temporary singular authority.",
+      "first_holder": "Hrolfr",
+      "seat": "The Harbor Watch",
+      "active_from_turn": 0,
+      "term": "Life (founding era) / 3 years renewable (post-reform)",
+      "succession": "Elected by the Assembly"
+    },
+    {
+      "id": "berend",
+      "spoken": "Berend",
+      "latin": "Quaestor",
+      "gloss": "Treasurer / Grain Commissioner",
+      "duty": "Carries the harvest. Manages the grain tithe, the common stores, and the treasury. Audits public accounts.",
+      "first_holder": "Thorvald",
+      "seat": "The Grange-hall",
+      "active_from_turn": 0,
+      "term": "Life (founding) / Appointed by Assembly (post-reform)",
+      "succession": "Appointed by the Assembly; Grange-hall traditionally nominates"
+    },
+    {
+      "id": "sceawere",
+      "spoken": "Sceawere",
+      "latin": "Censor",
+      "gloss": "Census-Taker / Registrar",
+      "duty": "Counts the people. Registers ships, births, deaths, and property. Conducts the census every five years. Knows what the Bay actually is.",
+      "first_holder": "Sigrid",
+      "seat": "The Scriptorium",
+      "active_from_turn": 0,
+      "term": "Life (founding) / 5-year term (post-reform)",
+      "succession": "Appointed by the Assembly"
+    },
+    {
+      "id": "dema_weard",
+      "spoken": "Dema-weard",
+      "latin": "Praetor",
+      "gloss": "Judge / Justice",
+      "duty": "Deems disputes. Freezes conflicts when the Assembly cannot resolve them. Guards the judgment until it is enforced. Serves on the Codex Court when established.",
+      "first_holder": "Hrolfr (concurrent with Ealdorman)",
+      "seat": "The Codex Court",
+      "active_from_turn": 15,
+      "activation_condition": "codex_court_founded",
+      "term": "Life (judicial independence)",
+      "succession": "Nominated by Imperator, confirmed by Elders (post-Imperator reform)"
+    },
+    {
+      "id": "witan_heretoga",
+      "spoken": "Witan-heretoga",
+      "latin": "Dictator",
+      "gloss": "Emergency Commander",
+      "duty": "Appointed only in crisis. Commands the harbor watch and all military forces. Absolute authority for a fixed term. Must step down when the crisis ends. The Cantica is spoken at their appointment: 'Res publica in periculo est.'",
+      "first_holder": null,
+      "seat": "Field command. No fixed hall.",
+      "active_from_turn": "crisis_triggered",
+      "activation_condition": "grain_rot_crisis_choice_c OR equivalent crisis",
+      "term": "Duration of crisis. Maximum one year unless renewed by Assembly.",
+      "succession": "Appointed by the Assembly in crisis session"
+    },
+    {
+      "id": "tidsceal",
+      "spoken": "Tidsceal",
+      "latin": "Pontifex",
+      "gloss": "Calendar-Keeper / Chief Timekeeper",
+      "duty": "Maintains the calendar. Announces solstices, equinoxes, feast days, election cycles, and watch rotations. Controls the dates — and dates control everything.",
+      "first_holder": "Aldwin (Thorvald's nephew)",
+      "seat": "The sunrise room in the Assembly hall",
+      "active_from_turn": 1,
+      "activation_condition": "setting_of_days_resolved",
+      "term": "Life (founding tradition) / Varies by reform",
+      "succession": "Appointed by the Assembly; traditionally a neutral figure"
+    },
+    {
+      "id": "weard",
+      "spoken": "Weard",
+      "latin": "Aedilis",
+      "gloss": "Public Works Commissioner",
+      "duty": "Inspects and maintains public works: aqueducts, granaries, watchtowers, harbor pilings, market squares. Knows every loose stone in the Bay.",
+      "first_holder": "Brunhild (builder's daughter)",
+      "seat": "No fixed hall. The Weard walks the walls.",
+      "active_from_turn": 5,
+      "activation_condition": "aqueduct_commission_resolved_choice_a",
+      "term": "5-year term, renewable",
+      "succession": "Appointed by the Assembly"
+    },
+    {
+      "id": "writere",
+      "spoken": "Writere",
+      "latin": "Scriba",
+      "gloss": "Scribe / Archivist",
+      "duty": "Writes the laws. Copies the records. Maintains the Scriptorium archives. The most numerous office in the Bay — hundreds by Year 100.",
+      "first_holder": "Sigrid (concurrent with Sceawere)",
+      "seat": "The Scriptorium",
+      "active_from_turn": 0,
+      "term": "Indefinite. Serve at pleasure of the Sceawere.",
+      "succession": "Trained through apprenticeship in the Scriptorium"
+    },
+    {
+      "id": "cydere",
+      "spoken": "Cydere",
+      "latin": "Praeco",
+      "gloss": "Herald / Town Crier",
+      "duty": "Announces the Assembly's resolutions in the public square. The voice of the law before it is read. Speaks the Cantica at public ceremonies.",
+      "first_holder": null,
+      "seat": "The harbor square. No fixed hall.",
+      "active_from_turn": "as_needed",
+      "term": "Appointed per session",
+      "succession": "Appointed by the Assembly as needed"
+    }
+  ]
+}

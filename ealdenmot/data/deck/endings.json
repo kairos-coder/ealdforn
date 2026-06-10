@@ -1,0 +1,39 @@
+{
+  "deck_name": "Endings of the Ealdforn Republic",
+  "description": "At Turn 100, the simulation evaluates the accumulated state and presents the player with the endings they have earned. The Republic, the Empire, or the Ruin.",
+  "endings": [
+    {
+      "id": "ending_republic",
+      "title": "The Republic Endures",
+      "condition": "sovereignty >= 20 AND authority <= 15 AND no_faction_holds_majority AND imperator_term_limited",
+      "description": "The Bay enters its second century as a republic. The institutions hold. The Imperator steps down. The Court is balanced. The factions compromise. The founding tablet still stands in the Assembly hall. The filius nemo generation would recognize what you built.",
+      "variations": [
+        { "id": "republic_grange", "condition": "grange_holds_imperator", "text": "The Grange-hall leads the Republic into its second century. The Dreson Doctrine is taught in schools. The shepherd who didn't want to rule is remembered as the ideal." },
+        { "id": "republic_judicialist", "condition": "judicialist_holds_imperator", "text": "A Judicialist Imperator governs — but under the law, not above it. Cassia's shadow constitution is studied, not enacted. The Court is strong but restrained." },
+        { "id": "republic_player_family", "condition": "player_family_influence >= 15", "text": "Your family sits among the great houses. Your name is spoken in the Assembly. Your ancestors' choices shaped the Republic. Your descendants will carry it forward." }
+      ]
+    },
+    {
+      "id": "ending_empire",
+      "title": "The Ealdforn Empire",
+      "condition": "authority >= 25 AND sovereignty <= 10 AND imperator_term_unlimited AND court_packed",
+      "description": "The Republic is gone. The Imperator rules for life. The Court is packed with loyalists. The Assembly is a formality. The Praetorian Order is the Imperator's personal guard. The Bay is stable. The Bay is silent. The founding tablet is in a museum — or a vault.",
+      "variations": [
+        { "id": "empire_lucianite", "condition": "praetorian_order_strong", "text": "Lucian's heirs rule. The Imperium he built has become the Empire he never declared. The Praetorian Order salutes the throne." },
+        { "id": "empire_player_dynasty", "condition": "player_family_holds_imperator", "text": "Your family sits on the throne. You are the Imperial house. The Republic is gone because you replaced it. History will remember your name — with reverence or resentment." },
+        { "id": "empire_resistance", "condition": "grange_influence >= 10", "text": "The Grange-hall is a site of quiet resistance. Farmers whisper Dreson's name. The hills remember what the harbor forgot. The Empire rules — but it does not sleep easily." }
+      ]
+    },
+    {
+      "id": "ending_ruin",
+      "title": "The Ruin of the Bay",
+      "condition": "sovereignty <= 5 AND authority <= 5 AND commerce <= 0 AND multiple_crises_unresolved",
+      "description": "The Bay has failed. The harbor is empty. The Guilds have sailed for better ports. The Court is ignored. The Tessera system is a memory. The Assembly meets in a crumbling hall and votes on nothing. The founding tablet is cracked. The filius nemo generation would not recognize what you lost.",
+      "variations": [
+        { "id": "ruin_fire", "condition": "militarism >= 15", "text": "The harbor burned. Whether by foreign fleet or civil riot, the Bay's docks are ash. The watch abandoned its posts. The Imperator fled." },
+        { "id": "ruin_exodus", "condition": "commerce <= -5", "text": "The people left. Generation by generation, ship by ship. The Bay is a village again. The Assembly is three elders in a stone room above an empty harbor. They still call it the Ealdenmot." },
+        { "id": "ruin_player_extinction", "condition": "player_family_influence <= 1", "text": "Your family is gone. No heirs. No name. The line you built over a century ended in silence. The other families do not speak of you. The Scriptorium has no record of what you tried to build." }
+      ]
+    }
+  ]
+}

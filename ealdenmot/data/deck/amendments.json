@@ -1,0 +1,65 @@
+{
+  "deck_name": "Constitutional Amendments",
+  "amendments": [
+    {
+      "id": "amend_bicameral",
+      "title": "The Bicameral Legislature Act",
+      "trigger_turn": 25,
+      "trigger_condition": "reps >= 34 AND factions >= 3",
+      "description": "Split the Ealdenmot into the Council of Elders (21 seats) and the Council of Thanes (all other reps).",
+      "choices": [
+        { "id": "a", "text": "Split now.", "effects": { "government_type": "bicameral" } },
+        { "id": "b", "text": "Delay.", "effects": { "tradition": 2 } },
+        { "id": "c", "text": "Never.", "effects": { "sovereignty": 3 } }
+      ]
+    },
+    {
+      "id": "amend_imperator",
+      "title": "The Imperator Compromise",
+      "trigger_turn": 40,
+      "trigger_condition": "government_type == 'bicameral' AND crisis_resolved",
+      "description": "Create the office of Imperator — a temporary executive with defined powers and term limits.",
+      "choices": [
+        { "id": "a", "text": "Three-year term, non-renewable.", "effects": { "sovereignty": 3 }, "unlocks": "imperator_limited" },
+        { "id": "b", "text": "Six-year term, renewable once.", "effects": { "authority": 2, "sovereignty": 1 } },
+        { "id": "c", "text": "No Imperator. The Assembly governs collectively.", "effects": { "sovereignty": 4, "authority": -2 } }
+      ]
+    },
+    {
+      "id": "amend_term_limits",
+      "title": "The Imperatorial Continuity Amendment",
+      "trigger_turn": 57,
+      "trigger_condition": "imperator_exists AND lucian_in_office",
+      "description": "Extend the Imperator's term to six years with no renewal limit. Lucian's power grab.",
+      "choices": [
+        { "id": "a", "text": "Pass. Six-year terms, no limits.", "effects": { "authority": 4, "sovereignty": -3 } },
+        { "id": "b", "text": "Compromise. Six-year terms, one renewal.", "effects": { "authority": 1, "sovereignty": 1 } },
+        { "id": "c", "text": "Reject. Preserve the original limits.", "effects": { "sovereignty": 3, "authority": -1 } }
+      ]
+    },
+    {
+      "id": "amend_court_packing",
+      "title": "The Judicial Expansion Act",
+      "trigger_turn": 57,
+      "trigger_condition": "imperator_term_extended AND federalist_majority",
+      "description": "Expand the Codex Court from 3 to 7 justices. Lucian packs the Court.",
+      "choices": [
+        { "id": "a", "text": "Expand to 7. Imperator appoints all.", "effects": { "authority": 5, "sovereignty": -3 } },
+        { "id": "b", "text": "Expand to 5. Compromise.", "effects": { "authority": 2, "sovereignty": -1 } },
+        { "id": "c", "text": "Keep the Court at 3.", "effects": { "sovereignty": 2 } }
+      ]
+    },
+    {
+      "id": "amend_civilian_oversight",
+      "title": "The Civilian Oversight Act",
+      "trigger_turn": 101,
+      "trigger_condition": "praetorian_order_exists",
+      "description": "Strip the Praetorian Order of military command and place the harbor watch under civilian control.",
+      "choices": [
+        { "id": "a", "text": "Pass. The Order is civilian only.", "effects": { "sovereignty": 3, "authority": -2 } },
+        { "id": "b", "text": "Compromise. Shared command.", "effects": { "authority": 1, "sovereignty": 1 } },
+        { "id": "c", "text": "Reject. The Order keeps the watch.", "effects": { "authority": 3, "sovereignty": -2 } }
+      ]
+    }
+  ]
+}

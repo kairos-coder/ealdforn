@@ -1,0 +1,215 @@
+{
+  "deck_name": "Policy Cards — The Ealdforn Republic",
+  "description": "Legislative cards for Turns 1-25. Founding and Early Republic eras.",
+  "cards": [
+    {
+      "turn": 1, "era": "founding", "type": "legislative",
+      "id": "card_001",
+      "title": "The Setting of Days",
+      "description": "When does the year begin? The founders must establish the calendar.",
+      "choices": [
+        { "id": "a", "text": "Spring Equinox — Thorvald's way.", "effects": { "tradition": 2, "commerce": 1 } },
+        { "id": "b", "text": "Autumn Equinox — Hrolfr's way.", "effects": { "authority": 2, "militarism": 1 } },
+        { "id": "c", "text": "Founding Anniversary — Sigrid's way.", "effects": { "sovereignty": 2, "tradition": 1 } }
+      ]
+    },
+    {
+      "turn": 2, "era": "founding", "type": "legislative",
+      "id": "card_002",
+      "title": "The Harbor Registry",
+      "description": "Must every ship entering the harbor be registered?",
+      "choices": [
+        { "id": "a", "text": "All ships, no exceptions.", "effects": { "authority": 2, "commerce": -1 } },
+        { "id": "b", "text": "Foreign ships only.", "effects": { "commerce": 2, "sovereignty": 1 } },
+        { "id": "c", "text": "No registry. The harbor is free.", "effects": { "commerce": 3, "authority": -2 } }
+      ]
+    },
+    {
+      "turn": 3, "era": "founding", "type": "legislative",
+      "id": "card_003",
+      "title": "The Grain Tithing",
+      "description": "Berend Thorvald proposes a mandatory grain tithe.",
+      "choices": [
+        { "id": "a", "text": "Mandatory tithe from all households.", "effects": { "tradition": 2, "authority": 1 } },
+        { "id": "b", "text": "Voluntary tithe with incentives.", "effects": { "commerce": 2, "sovereignty": 1 } },
+        { "id": "c", "text": "No tithe. Free people cannot be compelled.", "effects": { "sovereignty": 3, "tradition": -2 } }
+      ]
+    },
+    {
+      "turn": 4, "era": "founding", "type": "legislative",
+      "id": "card_004",
+      "title": "The Watchtower Construction",
+      "description": "Hrolfr requests permanent watchtowers.",
+      "choices": [
+        { "id": "a", "text": "Funded by tithe, commanded by Hrolfr.", "effects": { "militarism": 2, "authority": 1 } },
+        { "id": "b", "text": "Funded by harbor fees, civilian command.", "effects": { "commerce": 2, "sovereignty": 1 } },
+        { "id": "c", "text": "No watchtowers. Mobile patrols only.", "effects": { "militarism": -1, "commerce": 1 } }
+      ]
+    },
+    {
+      "turn": 5, "era": "founding", "type": "legislative",
+      "id": "card_005",
+      "title": "The Aqueduct Commission",
+      "description": "The wells run brackish. Fresh water is needed.",
+      "choices": [
+        { "id": "a", "text": "Public Commission builds it.", "effects": { "authority": 2, "tradition": 1 } },
+        { "id": "b", "text": "Private contractors, Berend oversees.", "effects": { "commerce": 2, "authority": -1 } },
+        { "id": "c", "text": "The wells are sufficient.", "effects": { "tradition": 2, "commerce": -1 } }
+      ]
+    },
+    {
+      "turn": 6, "era": "founding", "type": "legislative",
+      "id": "card_006",
+      "title": "The First Census",
+      "description": "Sceawere Sigrid proposes counting every soul.",
+      "choices": [
+        { "id": "a", "text": "Count every soul. Citizens and foreigners alike.", "effects": { "sovereignty": 2, "tradition": 1 } },
+        { "id": "b", "text": "Count citizens only.", "effects": { "authority": 2, "sovereignty": -1 } },
+        { "id": "c", "text": "No census. Govern without counting.", "effects": { "commerce": 1, "sovereignty": -1 } }
+      ]
+    },
+    {
+      "turn": 8, "era": "founding", "type": "legislative",
+      "id": "card_007",
+      "title": "The Aftermath Doctrine",
+      "description": "What precedent does the Grain Rot Crisis establish?",
+      "choices": [
+        { "id": "a", "text": "Emergency ends when Assembly declares it.", "effects": { "sovereignty": 2, "authority": -1 } },
+        { "id": "b", "text": "Emergency ends when commander declares it.", "effects": { "authority": 2, "sovereignty": -1 } },
+        { "id": "c", "text": "Assembly may appoint successor if crisis outlasts commander.", "effects": { "authority": 1, "sovereignty": 1 } }
+      ]
+    },
+    {
+      "turn": 9, "era": "founding", "type": "legislative",
+      "id": "card_008",
+      "title": "The Tidsceal Reform",
+      "description": "Should the timekeeper's office be reformed?",
+      "choices": [
+        { "id": "a", "text": "Tidsceal serves for life, independent.", "effects": { "tradition": 2, "piety": 1 } },
+        { "id": "b", "text": "Serves at pleasure of the Assembly.", "effects": { "authority": 2, "sovereignty": 1 } },
+        { "id": "c", "text": "Abolish the office. Assembly sets dates.", "effects": { "sovereignty": 2, "tradition": -1 } }
+      ]
+    },
+    {
+      "turn": 10, "era": "founding", "type": "legislative",
+      "id": "card_009",
+      "title": "The First Election Law",
+      "description": "Should reps be elected by the people or appointed?",
+      "choices": [
+        { "id": "a", "text": "Popular election by district.", "effects": { "sovereignty": 3, "authority": -1 } },
+        { "id": "b", "text": "Appointment by the Assembly.", "effects": { "authority": 3, "sovereignty": -1 } },
+        { "id": "c", "text": "Mixed system.", "effects": { "sovereignty": 1, "authority": 1 } }
+      ]
+    },
+    {
+      "turn": 11, "era": "early_republic", "type": "legislative",
+      "id": "card_010",
+      "title": "The Trade Charter",
+      "description": "Open formal trade with the Southern Guilds?",
+      "choices": [
+        { "id": "a", "text": "Full charter. Open the harbor.", "effects": { "commerce": 3, "sovereignty": 1 } },
+        { "id": "b", "text": "Limited charter. Trade under license.", "effects": { "commerce": 1, "authority": 2 } },
+        { "id": "c", "text": "No charter. Trade with our own.", "effects": { "sovereignty": 2, "commerce": -1 } }
+      ]
+    },
+    {
+      "turn": 12, "era": "early_republic", "type": "legislative",
+      "id": "card_011",
+      "title": "The Oath of Binding",
+      "description": "Reaffirm the old covenant with the gods?",
+      "choices": [
+        { "id": "a", "text": "Grand ceremony. The Bay reaffirms.", "effects": { "piety": 3, "tradition": 2 } },
+        { "id": "b", "text": "Modest rite. Acknowledged.", "effects": { "piety": 1, "sovereignty": 1 } },
+        { "id": "c", "text": "No state ceremony. Faith is private.", "effects": { "sovereignty": 2, "piety": -1 } }
+      ]
+    },
+    {
+      "turn": 13, "era": "early_republic", "type": "legislative",
+      "id": "card_012",
+      "title": "The Refugee Clause",
+      "description": "Foreign ships carry refugees. How shall the Bay receive them?",
+      "choices": [
+        { "id": "a", "text": "Accept as Supplicants — temporary, protected.", "effects": { "piety": 2, "sovereignty": 1 } },
+        { "id": "b", "text": "Accept as laborers. Work for residency.", "effects": { "commerce": 2, "piety": 1 } },
+        { "id": "c", "text": "Turn them away.", "effects": { "authority": 2, "piety": -2 } }
+      ]
+    },
+    {
+      "turn": 14, "era": "early_republic", "type": "legislative",
+      "id": "card_013",
+      "title": "The Harbor Dues",
+      "description": "Raise harbor fees on foreign merchants?",
+      "choices": [
+        { "id": "a", "text": "Raise on all foreign ships.", "effects": { "commerce": 1, "authority": 2 } },
+        { "id": "b", "text": "Raise on Guild ships only.", "effects": { "commerce": 2, "sovereignty": 1 } },
+        { "id": "c", "text": "No increase. Trade flows free.", "effects": { "commerce": 3, "militarism": -1 } }
+      ]
+    },
+    {
+      "turn": 16, "era": "early_republic", "type": "legislative",
+      "id": "card_014",
+      "title": "The Scriptorium Archive",
+      "description": "Sigrid proposes a permanent archive building.",
+      "choices": [
+        { "id": "a", "text": "Build it. Fund it permanently.", "effects": { "tradition": 2, "sovereignty": 2 } },
+        { "id": "b", "text": "Small archive. Stay in the Assembly hall.", "effects": { "tradition": 1, "authority": 1 } },
+        { "id": "c", "text": "No archive. Records stay personal.", "effects": { "authority": -1, "sovereignty": -1 } }
+      ]
+    },
+    {
+      "turn": 17, "era": "early_republic", "type": "legislative",
+      "id": "card_015",
+      "title": "The Grange-hall Charter",
+      "description": "Farming families petition for formal recognition.",
+      "choices": [
+        { "id": "a", "text": "Recognize the Grange-hall as civic institution.", "effects": { "tradition": 2, "commerce": 1 } },
+        { "id": "b", "text": "Recognize as private association only.", "effects": { "commerce": 1, "sovereignty": 1 } },
+        { "id": "c", "text": "Deny recognition.", "effects": { "authority": 2, "tradition": -1 } }
+      ]
+    },
+    {
+      "turn": 19, "era": "early_republic", "type": "legislative",
+      "id": "card_016",
+      "title": "The Foreign Quarter",
+      "description": "Foreign merchants request a designated district.",
+      "choices": [
+        { "id": "a", "text": "Grant the district.", "effects": { "commerce": 3, "sovereignty": -1 } },
+        { "id": "b", "text": "Limited residency. Warehouse only.", "effects": { "commerce": 2, "authority": 1 } },
+        { "id": "c", "text": "Deny. Bay land for Bay people.", "effects": { "sovereignty": 2, "commerce": -2 } }
+      ]
+    },
+    {
+      "turn": 21, "era": "early_republic", "type": "legislative",
+      "id": "card_017",
+      "title": "The Census Dispute",
+      "description": "Foreign-born population has tripled. Should they vote?",
+      "choices": [
+        { "id": "a", "text": "Local elections only.", "effects": { "sovereignty": 1, "commerce": 2 } },
+        { "id": "b", "text": "Citizens only. No foreign vote.", "effects": { "authority": 2, "sovereignty": 1 } },
+        { "id": "c", "text": "Create Resident Foreign status.", "effects": { "authority": 1, "commerce": 1 } }
+      ]
+    },
+    {
+      "turn": 23, "era": "early_republic", "type": "legislative",
+      "id": "card_018",
+      "title": "The Naval Expansion",
+      "description": "Foreign piracy threatens shipping. Build a fleet?",
+      "choices": [
+        { "id": "a", "text": "Build the fleet. Special levy funds it.", "effects": { "militarism": 3, "commerce": -1 } },
+        { "id": "b", "text": "Arm merchant vessels. No standing navy.", "effects": { "commerce": 2, "militarism": 1 } },
+        { "id": "c", "text": "Pay tribute to the pirates.", "effects": { "commerce": 1, "sovereignty": -2 } }
+      ]
+    },
+    {
+      "turn": 25, "era": "early_republic", "type": "legislative",
+      "id": "card_019",
+      "title": "The Bicameral Question",
+      "description": "The Assembly has grown unwieldy. Split into two chambers?",
+      "choices": [
+        { "id": "a", "text": "Split now. Elders (21) and Thanes.", "effects": { "authority": 2, "sovereignty": 2 } },
+        { "id": "b", "text": "Delay. One body for now.", "effects": { "tradition": 2, "authority": -1 } },
+        { "id": "c", "text": "Never split. One body, one voice.", "effects": { "sovereignty": 3, "authority": -2 } }
+      ]
+    }
+  ]
+}

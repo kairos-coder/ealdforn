@@ -1,0 +1,61 @@
+{
+  "deck_name": "Executive Cards — The Imperator's Office",
+  "description": "Executive actions, elections, and power struggles. These cards fire when the Imperator exists.",
+  "cards": [
+    {
+      "id": "exec_001",
+      "trigger_condition": "imperator_office_created",
+      "title": "The First Imperator Election",
+      "description": "The Imperator's office has been created. The Assembly must now elect the first holder. Who shall command the Bay?",
+      "choices": [
+        { "id": "a", "text": "A Grange-haller — govern least, go home.", "effects": { "sovereignty": 2, "tradition": 1 } },
+        { "id": "b", "text": "A Federalist — the law must be guarded.", "effects": { "authority": 2, "sovereignty": 1 } },
+        { "id": "c", "text": "A compromise candidate — neither faction's first choice.", "effects": { "sovereignty": 1, "authority": 1 } }
+      ]
+    },
+    {
+      "id": "exec_002",
+      "trigger_condition": "imperator_in_office AND crisis_active",
+      "title": "The Emergency Decree",
+      "description": "A crisis threatens the Bay. The Imperator may issue an emergency decree with the force of law for 90 days. Should they?",
+      "choices": [
+        { "id": "a", "text": "Issue the decree. Act now, justify later.", "effects": { "authority": 3, "sovereignty": -2 } },
+        { "id": "b", "text": "Convene the Assembly. No decree.", "effects": { "sovereignty": 2, "authority": -1 } },
+        { "id": "c", "text": "Issue a limited decree with Assembly review in 30 days.", "effects": { "authority": 1, "sovereignty": 1 } }
+      ]
+    },
+    {
+      "id": "exec_003",
+      "trigger_condition": "imperator_term_ending",
+      "title": "The Succession Question",
+      "description": "The Imperator's term is ending. Should they seek a second term? The constitution may require a 2/3 vote.",
+      "choices": [
+        { "id": "a", "text": "Step down. Honor the term limit.", "effects": { "sovereignty": 3, "tradition": 1 } },
+        { "id": "b", "text": "Seek a second term. Call the vote.", "effects": { "authority": 2, "sovereignty": -1 } },
+        { "id": "c", "text": "Amend the constitution to allow unlimited terms.", "effects": { "authority": 4, "sovereignty": -3 } }
+      ]
+    },
+    {
+      "id": "exec_004",
+      "trigger_condition": "court_vacancy",
+      "title": "The Court Appointment",
+      "description": "A justice has died or retired. The Imperator must nominate a replacement. Who shall sit on the Codex Court?",
+      "choices": [
+        { "id": "a", "text": "A moderate institutionalist.", "effects": { "authority": 1, "sovereignty": 1 } },
+        { "id": "b", "text": "A radical reformer.", "effects": { "authority": 2, "sovereignty": -1 } },
+        { "id": "c", "text": "A loyalist who will support the Imperator.", "effects": { "authority": 3, "sovereignty": -2 } }
+      ]
+    },
+    {
+      "id": "exec_005",
+      "trigger_condition": "praetorian_order_exists AND civilian_oversight_proposed",
+      "title": "The Civilian Oversight Decision",
+      "description": "The Assembly proposes stripping the Praetorian Order of military command. The Imperator must sign or veto.",
+      "choices": [
+        { "id": "a", "text": "Sign. The Order is civilian only.", "effects": { "sovereignty": 3, "authority": -2 } },
+        { "id": "b", "text": "Veto. The Order keeps the watch.", "effects": { "authority": 3, "sovereignty": -2 } },
+        { "id": "c", "text": "Compromise. Shared command.", "effects": { "authority": 1, "sovereignty": 1 } }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,618 @@
+{
+  "deck_name": "Representatives of the Ealdenmot",
+  "description": "The voting public. As the Assembly grows by Fibonacci sequence, new reps are drawn from this pool. Each has values that determine how they vote on policy cards. Some are pre-aligned to factions that will form later. Most begin unaligned and find their way.",
+  "reps": [
+    {
+      "id": "rep_hrolfr",
+      "name": "Captain Hrolfr",
+      "role": "founder",
+      "office": "Ealdorman / Dema-weard",
+      "faction_lean": "none (founder)",
+      "values": { "authority": 9, "commerce": 2, "militarism": 7, "tradition": 4, "sovereignty": 8, "piety": 3 },
+      "dispositionMatrix": {
+        "body": [85, 72, 68, 91, 77],
+        "mind": [78, 88, 82, 65, 91],
+        "spirit": [65, 70, 88, 72, 95],
+        "craft": [45, 32, 88, 91, 67],
+        "gods": [70, 65, 60, 75, 80]
+      },
+      "note": "Chairman. Commands the harbor watch. Speaks rarely. Acts decisively."
+    },
+    {
+      "id": "rep_thorvald",
+      "name": "Berend Thorvald",
+      "role": "founder",
+      "office": "Berend / Quaestor",
+      "faction_lean": "Grange-hall",
+      "values": { "authority": 4, "commerce": 9, "militarism": 1, "tradition": 8, "sovereignty": 4, "piety": 7 },
+      "dispositionMatrix": {
+        "body": [55, 62, 48, 71, 57],
+        "mind": [88, 92, 85, 78, 89],
+        "spirit": [75, 80, 72, 85, 78],
+        "craft": [65, 88, 92, 85, 79],
+        "gods": [80, 75, 70, 85, 82]
+      },
+      "note": "Treasurer. Carries the grain. Argues for the spring equinox. The Grange-hall will trace its lineage to him."
+    },
+    {
+      "id": "rep_sigrid",
+      "name": "Sceawere Sigrid",
+      "role": "founder",
+      "office": "Sceawere / Censor / Writere",
+      "faction_lean": "Scriptorium",
+      "values": { "authority": 5, "commerce": 6, "militarism": 3, "tradition": 5, "sovereignty": 7, "piety": 5 },
+      "dispositionMatrix": {
+        "body": [45, 52, 48, 61, 47],
+        "mind": [92, 95, 88, 85, 94],
+        "spirit": [70, 75, 68, 82, 72],
+        "craft": [55, 78, 82, 88, 75],
+        "gods": [65, 70, 60, 75, 68]
+      },
+      "note": "Secretary. Counts the people. Keeps the records. The Scriptorium will trace its lineage to her."
+    },
+    {
+      "id": "rep_orm",
+      "name": "Alderman Orm",
+      "faction_lean": "unaligned",
+      "values": { "authority": 5, "commerce": 5, "militarism": 4, "tradition": 6, "sovereignty": 5, "piety": 5 },
+      "dispositionMatrix": {
+        "body": [65, 60, 55, 70, 62],
+        "mind": [70, 72, 68, 65, 71],
+        "spirit": [60, 55, 65, 58, 62],
+        "craft": [50, 55, 60, 65, 58],
+        "gods": [55, 60, 50, 65, 58]
+      },
+      "note": "The eternal swing vote. Never joins a faction. Never explains himself. Votes, then leaves. Will become the first Silence."
+    },
+    {
+      "id": "rep_astrid",
+      "name": "Goodwife Astrid",
+      "faction_lean": "Grange-hall",
+      "values": { "authority": 3, "commerce": 7, "militarism": 2, "tradition": 8, "sovereignty": 3, "piety": 7 },
+      "dispositionMatrix": {
+        "body": [52, 48, 55, 60, 58],
+        "mind": [75, 78, 72, 80, 76],
+        "spirit": [85, 88, 82, 90, 85],
+        "craft": [70, 85, 88, 82, 75],
+        "gods": [88, 85, 80, 90, 86]
+      },
+      "note": "The first Grain-Keeper. Patient. Pious. Will lead the Grange for decades. Halvor's grandmother."
+    },
+    {
+      "id": "rep_kjell",
+      "name": "Shipmaster Kjell",
+      "faction_lean": "Harbor League",
+      "values": { "authority": 6, "commerce": 9, "militarism": 5, "tradition": 2, "sovereignty": 6, "piety": 3 },
+      "dispositionMatrix": {
+        "body": [72, 78, 68, 85, 75],
+        "mind": [85, 88, 82, 90, 86],
+        "spirit": [45, 50, 42, 55, 48],
+        "craft": [88, 92, 85, 90, 87],
+        "gods": [35, 40, 30, 45, 38]
+      },
+      "note": "Merchant captain. Thorvald's natural ally on trade. Will become leader of the Harbor League and later the Free Harbor Party."
+    },
+    {
+      "id": "rep_runa",
+      "name": "Elder Runa",
+      "faction_lean": "Scriptorium / Pure Register",
+      "values": { "authority": 7, "commerce": 2, "militarism": 1, "tradition": 9, "sovereignty": 8, "piety": 7 },
+      "dispositionMatrix": {
+        "body": [25, 30, 22, 35, 28],
+        "mind": [98, 99, 95, 96, 98],
+        "spirit": [88, 92, 85, 90, 87],
+        "craft": [45, 50, 88, 92, 85],
+        "gods": [85, 88, 82, 90, 86]
+      },
+      "note": "Legal architect. Blind in old age. Dictates briefs from memory. The sharpest legal mind the Bay will ever produce. Trains Aldric. Founds the Pure Register. The Docket Order traces its lineage to her."
+    },
+    {
+      "id": "rep_ingrid",
+      "name": "Archivist Ingrid",
+      "faction_lean": "Scriptorium / Free Harbor moderate",
+      "values": { "authority": 6, "commerce": 5, "militarism": 2, "tradition": 7, "sovereignty": 6, "piety": 4 },
+      "dispositionMatrix": {
+        "body": [48, 52, 45, 55, 50],
+        "mind": [88, 85, 82, 90, 86],
+        "spirit": [72, 75, 68, 78, 73],
+        "craft": [65, 70, 75, 80, 72],
+        "gods": [60, 65, 55, 70, 62]
+      },
+      "note": "Sigrid's successor at the Scriptorium. Institutionalist. Will become Imperator during the Flourishing. Governs quietly. Returns to the archives."
+    },
+    {
+      "id": "rep_halvor",
+      "name": "Halvor",
+      "faction_lean": "Grange-hall",
+      "values": { "authority": 5, "commerce": 6, "militarism": 3, "tradition": 6, "sovereignty": 5, "piety": 5 },
+      "dispositionMatrix": {
+        "body": [62, 68, 58, 72, 65],
+        "mind": [70, 72, 68, 75, 71],
+        "spirit": [65, 68, 60, 72, 66],
+        "craft": [60, 75, 78, 72, 68],
+        "gods": [70, 65, 60, 75, 68]
+      },
+      "note": "Astrid's grandson. Ambitious. Wants a Grange Imperator. Minister of Provisions under Revik. Will be overshadowed by Dreson."
+    },
+    {
+      "id": "rep_dreson",
+      "name": "Torvald Dreson",
+      "faction_lean": "Grange-hall",
+      "values": { "authority": 7, "commerce": 4, "militarism": 5, "tradition": 8, "sovereignty": 6, "piety": 6 },
+      "dispositionMatrix": {
+        "body": [78, 82, 75, 88, 80],
+        "mind": [75, 78, 72, 80, 76],
+        "spirit": [80, 82, 78, 85, 81],
+        "craft": [70, 85, 88, 82, 75],
+        "gods": [75, 80, 70, 85, 78]
+      },
+      "note": "Sheep farmer. The Cincinnatus of the hills. Wins Orm's old seat. Becomes Vice-Imperator to Aldric. Serves one term. Goes home to his sheep. The ideal Grange-haller."
+    },
+    {
+      "id": "rep_aldric",
+      "name": "Justiciar Aldric",
+      "faction_lean": "Federalist Union",
+      "values": { "authority": 8, "commerce": 3, "militarism": 2, "tradition": 7, "sovereignty": 6, "piety": 5 },
+      "dispositionMatrix": {
+        "body": [55, 58, 52, 65, 60],
+        "mind": [92, 94, 88, 90, 93],
+        "spirit": [75, 78, 72, 80, 76],
+        "craft": [50, 55, 60, 65, 58],
+        "gods": [65, 70, 60, 75, 68]
+      },
+      "note": "Runa's protégé. First Cleric-trained justice. Writes the Imperator Compromise ruling. Crushes Corwin's Judicial Review Act. Becomes Imperator in old age. Dies in office."
+    },
+    {
+      "id": "rep_corwin",
+      "name": "Scribe-Master Corwin",
+      "faction_lean": "Judicialist League",
+      "values": { "authority": 6, "commerce": 2, "militarism": 1, "tradition": 4, "sovereignty": 5, "piety": 3 },
+      "dispositionMatrix": {
+        "body": [42, 45, 38, 50, 44],
+        "mind": [96, 98, 94, 95, 97],
+        "spirit": [60, 55, 50, 65, 58],
+        "craft": [45, 50, 55, 60, 52],
+        "gods": [40, 35, 30, 45, 38]
+      },
+      "note": "Radical. Brilliant. Wrong at a higher level than most are right. Argues for judicial supremacy for 40 years. Lucian appoints him to the Court. Dies writing a dissent."
+    },
+    {
+      "id": "rep_elara",
+      "name": "Justiciar Elara",
+      "faction_lean": "Federalist Union",
+      "values": { "authority": 8, "commerce": 4, "militarism": 2, "tradition": 7, "sovereignty": 7, "piety": 4 },
+      "dispositionMatrix": {
+        "body": [58, 62, 55, 68, 60],
+        "mind": [90, 92, 88, 94, 91],
+        "spirit": [78, 80, 75, 85, 80],
+        "craft": [55, 60, 65, 70, 62],
+        "gods": [60, 65, 55, 70, 62]
+      },
+      "note": "Federalist leader after Runa. Author of the Citizenship Act and the Civitas Ealdfornicus. Her final speech coins 'ipso facto oreo.' Lucian's mentor."
+    },
+    {
+      "id": "rep_lucian",
+      "name": "Imperator Lucian",
+      "faction_lean": "Federalist Union",
+      "values": { "authority": 9, "commerce": 5, "militarism": 6, "tradition": 3, "sovereignty": 8, "piety": 2 },
+      "dispositionMatrix": {
+        "body": [72, 78, 68, 85, 75],
+        "mind": [95, 96, 92, 94, 95],
+        "spirit": [50, 55, 45, 60, 52],
+        "craft": [60, 65, 70, 75, 68],
+        "gods": [30, 25, 20, 35, 28]
+      },
+      "note": "The Bay's first real dictator in the Roman sense. Packs the Court. Breaks the term limits. Serves 18 years. Builds the Imperium that becomes the Praetorian Order. Dies in office."
+    },
+    {
+      "id": "rep_oswin",
+      "name": "Ealdorman Oswin",
+      "faction_lean": "Binding Fold",
+      "values": { "authority": 4, "commerce": 2, "militarism": 1, "tradition": 9, "sovereignty": 5, "piety": 9 },
+      "dispositionMatrix": {
+        "body": [48, 52, 45, 55, 50],
+        "mind": [75, 78, 72, 80, 76],
+        "spirit": [95, 98, 92, 96, 94],
+        "craft": [35, 40, 45, 50, 42],
+        "gods": [95, 96, 92, 98, 95]
+      },
+      "note": "Cleric leader. Merges the Old Way and the Clerics into the Binding Fold. Spiritual voice of the Trad-Cleric coalition."
+    },
+    {
+      "id": "rep_cassia",
+      "name": "Justiciar Cassia",
+      "faction_lean": "Judicialist League",
+      "values": { "authority": 7, "commerce": 2, "militarism": 1, "tradition": 3, "sovereignty": 6, "piety": 2 },
+      "dispositionMatrix": {
+        "body": [52, 55, 48, 60, 54],
+        "mind": [94, 95, 90, 92, 94],
+        "spirit": [55, 60, 50, 65, 58],
+        "craft": [40, 45, 50, 55, 48],
+        "gods": [35, 40, 30, 45, 38]
+      },
+      "note": "Corwin's successor. Builds the Judicialist League into a real party. Fights the Praetorian Order. Drafts the Shadow Constitution."
+    },
+    {
+      "id": "rep_darius",
+      "name": "Imperator Darius",
+      "faction_lean": "Judicialist League",
+      "values": { "authority": 7, "commerce": 4, "militarism": 2, "tradition": 5, "sovereignty": 7, "piety": 3 },
+      "dispositionMatrix": {
+        "body": [62, 68, 58, 72, 65],
+        "mind": [85, 88, 82, 90, 86],
+        "spirit": [65, 68, 60, 72, 66],
+        "craft": [50, 55, 60, 65, 58],
+        "gods": [45, 50, 40, 55, 48]
+      },
+      "note": "Cassia's protégé. First Judicialist Imperator. Moderate. Wants the Imperator to answer to the Court, not abolished. Elected Year 118."
+    },
+    {
+      "id": "rep_torvin",
+      "name": "Imperator Torvin",
+      "faction_lean": "Grange-hall",
+      "values": { "authority": 6, "commerce": 4, "militarism": 4, "tradition": 7, "sovereignty": 6, "piety": 5 },
+      "dispositionMatrix": {
+        "body": [68, 72, 65, 78, 70],
+        "mind": [72, 75, 68, 78, 73],
+        "spirit": [75, 78, 72, 80, 76],
+        "craft": [65, 70, 75, 80, 72],
+        "gods": [70, 75, 65, 80, 72]
+      },
+      "note": "Firebrand. Elected after Lucian's collapse. Unpacks the Court. Restores the Dreson Doctrine. Forms the Compact with the Praetorian Order."
+    },
+    {
+      "id": "rep_valerius",
+      "name": "General Valerius",
+      "faction_lean": "Praetorian Order",
+      "values": { "authority": 8, "commerce": 3, "militarism": 9, "tradition": 5, "sovereignty": 4, "piety": 3 },
+      "dispositionMatrix": {
+        "body": [92, 95, 88, 96, 91],
+        "mind": [78, 82, 75, 85, 80],
+        "spirit": [55, 60, 50, 65, 58],
+        "craft": [85, 88, 82, 90, 86],
+        "gods": [40, 45, 35, 50, 42]
+      },
+      "note": "Commander of the harbor watch. Order-trained. Publicly apolitical. Privately ensures the watch remains loyal to Lucian's memory. Accepts constitutional subordination under the Civilian Oversight Act."
+    },
+    {
+      "id": "rep_seren",
+      "name": "Ealdorman Seren",
+      "faction_lean": "Grange-hall",
+      "values": { "authority": 4, "commerce": 5, "militarism": 2, "tradition": 8, "sovereignty": 5, "piety": 7 },
+      "dispositionMatrix": {
+        "body": [55, 58, 52, 62, 56],
+        "mind": [80, 82, 78, 85, 81],
+        "spirit": [82, 85, 78, 88, 83],
+        "craft": [60, 65, 70, 75, 68],
+        "gods": [80, 85, 75, 88, 82]
+      },
+      "note": "Halvor's successor. A Dresonite. Opposes Lucian. Her speech — 'The Court was captured, not constituted' — is quoted for fifty years."
+    },
+    {
+      "id": "rep_mirek",
+      "name": "Justiciar Mirek",
+      "faction_lean": "Federalist Union / Praetorian Order",
+      "values": { "authority": 9, "commerce": 3, "militarism": 2, "tradition": 6, "sovereignty": 5, "piety": 3 },
+      "dispositionMatrix": {
+        "body": [65, 68, 62, 72, 66],
+        "mind": [88, 90, 85, 92, 89],
+        "spirit": [60, 65, 55, 68, 62],
+        "craft": [55, 60, 65, 70, 62],
+        "gods": [50, 55, 45, 60, 52]
+      },
+      "note": "Senior justice appointed by Lucian. Imperium founder. Trains the Order's legal wing. Dies in Year 78, still on the bench."
+    },
+    {
+      "id": "rep_edda",
+      "name": "Imperator Edda",
+      "faction_lean": "Grange-hall",
+      "values": { "authority": 3, "commerce": 5, "militarism": 2, "tradition": 8, "sovereignty": 4, "piety": 8 },
+      "dispositionMatrix": {
+        "body": [52, 55, 48, 60, 54],
+        "mind": [70, 72, 68, 75, 71],
+        "spirit": [85, 88, 82, 90, 86],
+        "craft": [65, 70, 75, 80, 72],
+        "gods": [85, 88, 80, 90, 86]
+      },
+      "note": "Quiet farmer. Elected Imperator after Torvin. Does nothing of consequence. This is widely regarded as her greatest achievement."
+    },
+    {
+      "id": "rep_selia",
+      "name": "Imperator Selia",
+      "faction_lean": "Grange-hall",
+      "values": { "authority": 5, "commerce": 4, "militarism": 3, "tradition": 7, "sovereignty": 6, "piety": 6 },
+      "dispositionMatrix": {
+        "body": [58, 62, 55, 68, 60],
+        "mind": [75, 78, 72, 80, 76],
+        "spirit": [78, 80, 75, 85, 80],
+        "craft": [60, 65, 70, 75, 68],
+        "gods": [70, 75, 65, 80, 72]
+      },
+      "note": "Dresonite purist. Distrusts the Praetorian Order but commands it constitutionally. Summons Valerius. Tells him she needs him despite her distrust. The system holds."
+    },
+    {
+      "id": "rep_corax",
+      "name": "General Corax",
+      "faction_lean": "Praetorian Order",
+      "values": { "authority": 8, "commerce": 2, "militarism": 9, "tradition": 4, "sovereignty": 3, "piety": 2 },
+      "dispositionMatrix": {
+        "body": [88, 92, 85, 95, 89],
+        "mind": [72, 75, 68, 78, 73],
+        "spirit": [45, 50, 40, 55, 48],
+        "craft": [80, 85, 88, 90, 86],
+        "gods": [30, 35, 25, 40, 32]
+      },
+      "note": "First Imperium-trained commander of the harbor watch. Lucian appointee. Trains a generation of officers loyal to the Order. Retires peacefully. The watch remains apolitical."
+    },
+    {
+      "id": "rep_varek",
+      "name": "Senator-Marshal Varek",
+      "faction_lean": "Federalist Remnant",
+      "values": { "authority": 8, "commerce": 4, "militarism": 6, "tradition": 5, "sovereignty": 7, "piety": 3 },
+      "dispositionMatrix": {
+        "body": [70, 75, 68, 80, 72],
+        "mind": [88, 90, 85, 92, 89],
+        "spirit": [65, 68, 60, 72, 66],
+        "craft": [70, 75, 80, 85, 78],
+        "gods": [45, 50, 40, 55, 48]
+      },
+      "note": "Last living member of Lucian's inner circle. Authors the Civilian Oversight Act that constitutionalizes the Praetorian Order. Dies three months after it passes. 'I built the Order. I unmade it.'"
+    },
+    {
+      "id": "rep_tidsceal_1",
+      "name": "Tidsceal Aldwin",
+      "role": "officer",
+      "office": "Tidsceal / Pontifex",
+      "faction_lean": "none (officer)",
+      "values": { "authority": 3, "commerce": 4, "militarism": 1, "tradition": 8, "sovereignty": 4, "piety": 7 },
+      "dispositionMatrix": {
+        "body": [48, 52, 45, 55, 50],
+        "mind": [85, 88, 82, 90, 86],
+        "spirit": [80, 82, 78, 85, 81],
+        "craft": [55, 60, 65, 70, 62],
+        "gods": [85, 88, 80, 90, 86]
+      },
+      "note": "Thorvald's nephew. First Tidsceal. Good with numbers. Maintains the calendar from a small room with a sunrise window. Never seeks higher office."
+    },
+    {
+      "id": "rep_weard_1",
+      "name": "Weard Brunhild",
+      "role": "officer",
+      "office": "Weard / Aedilis",
+      "faction_lean": "none (officer)",
+      "values": { "authority": 5, "commerce": 3, "militarism": 2, "tradition": 6, "sovereignty": 4, "piety": 4 },
+      "dispositionMatrix": {
+        "body": [62, 68, 58, 72, 65],
+        "mind": [72, 75, 68, 78, 73],
+        "spirit": [65, 68, 60, 72, 66],
+        "craft": [85, 88, 82, 90, 86],
+        "gods": [55, 60, 50, 65, 58]
+      },
+      "note": "First Weard. A builder's daughter. Appointed after the Aqueduct Commission. Walks the walls. Knows every loose stone in the Bay."
+    },
+    {
+      "id": "rep_grain_1",
+      "name": "Farmer Oswin",
+      "faction_lean": "Grange-hall",
+      "values": { "authority": 2, "commerce": 6, "militarism": 1, "tradition": 7, "sovereignty": 3, "piety": 6 },
+      "dispositionMatrix": {
+        "body": [68, 72, 65, 78, 70],
+        "mind": [60, 62, 58, 65, 61],
+        "spirit": [70, 72, 68, 75, 71],
+        "craft": [75, 80, 82, 85, 80],
+        "gods": [75, 78, 70, 80, 76]
+      },
+      "note": "Early Grain-Keeper. Quiet. Votes on harvest issues. Says almost nothing in session."
+    },
+    {
+      "id": "rep_grain_2",
+      "name": "Goodman Eadric",
+      "faction_lean": "Grange-hall",
+      "values": { "authority": 3, "commerce": 5, "militarism": 2, "tradition": 8, "sovereignty": 4, "piety": 7 },
+      "dispositionMatrix": {
+        "body": [65, 68, 62, 72, 66],
+        "mind": [65, 68, 62, 70, 66],
+        "spirit": [80, 82, 78, 85, 81],
+        "craft": [70, 75, 78, 80, 76],
+        "gods": [80, 82, 78, 85, 81]
+      },
+      "note": "Astrid's neighbor. Follows her lead on every vote."
+    },
+    {
+      "id": "rep_harbor_1",
+      "name": "Shipmaster Aldric",
+      "faction_lean": "Harbor League",
+      "values": { "authority": 5, "commerce": 8, "militarism": 4, "tradition": 3, "sovereignty": 5, "piety": 3 },
+      "dispositionMatrix": {
+        "body": [72, 75, 68, 80, 73],
+        "mind": [80, 82, 78, 85, 81],
+        "spirit": [50, 55, 45, 60, 52],
+        "craft": [85, 88, 82, 90, 86],
+        "gods": [40, 45, 35, 50, 42]
+      },
+      "note": "Merchant. Kjell's rival and eventual ally. Wants lower harbor fees."
+    },
+    {
+      "id": "rep_harbor_2",
+      "name": "Captain Sigurd",
+      "faction_lean": "Harbor League",
+      "values": { "authority": 6, "commerce": 7, "militarism": 6, "tradition": 2, "sovereignty": 5, "piety": 2 },
+      "dispositionMatrix": {
+        "body": [78, 82, 75, 88, 80],
+        "mind": [72, 75, 68, 78, 73],
+        "spirit": [45, 50, 40, 55, 48],
+        "craft": [80, 85, 82, 88, 84],
+        "gods": [35, 40, 30, 45, 38]
+      },
+      "note": "Former watch officer turned merchant. Hrolfr's old subordinate. Votes with the Harbor League but respects the Chairman."
+    },
+    {
+      "id": "rep_oldway_1",
+      "name": "Elder Mildred",
+      "faction_lean": "The Old Way",
+      "values": { "authority": 4, "commerce": 2, "militarism": 1, "tradition": 9, "sovereignty": 5, "piety": 9 },
+      "dispositionMatrix": {
+        "body": [42, 45, 38, 50, 44],
+        "mind": [78, 80, 75, 82, 79],
+        "spirit": [92, 94, 88, 95, 93],
+        "craft": [45, 50, 55, 60, 52],
+        "gods": [95, 96, 92, 98, 95]
+      },
+      "note": "Remembers the Bay before the Assembly. Votes on covenant matters. Distrusts Thorvald's commerce."
+    },
+    {
+      "id": "rep_oldway_2",
+      "name": "Cleric Godric",
+      "faction_lean": "The Old Way / Binding Fold",
+      "values": { "authority": 3, "commerce": 1, "militarism": 1, "tradition": 9, "sovereignty": 4, "piety": 10 },
+      "dispositionMatrix": {
+        "body": [48, 52, 45, 55, 50],
+        "mind": [82, 85, 78, 88, 83],
+        "spirit": [95, 98, 92, 96, 94],
+        "craft": [35, 40, 45, 50, 42],
+        "gods": [98, 99, 95, 100, 97]
+      },
+      "note": "Priest of the old covenant. Oswin's predecessor. Believes the gods precede the Assembly."
+    },
+    {
+      "id": "rep_register_1",
+      "name": "Scribe Eadwyn",
+      "faction_lean": "Pure Register",
+      "values": { "authority": 7, "commerce": 2, "militarism": 1, "tradition": 6, "sovereignty": 9, "piety": 5 },
+      "dispositionMatrix": {
+        "body": [45, 48, 42, 52, 46],
+        "mind": [90, 92, 88, 94, 91],
+        "spirit": [70, 72, 68, 75, 71],
+        "craft": [55, 60, 65, 70, 62],
+        "gods": [65, 70, 60, 75, 68]
+      },
+      "note": "Trained by Runa. Believes unnamed things do not exist in law. No compromises."
+    },
+    {
+      "id": "rep_register_2",
+      "name": "Registrar Hilda",
+      "faction_lean": "Pure Register",
+      "values": { "authority": 6, "commerce": 3, "militarism": 1, "tradition": 7, "sovereignty": 8, "piety": 4 },
+      "dispositionMatrix": {
+        "body": [48, 52, 45, 55, 50],
+        "mind": [85, 88, 82, 90, 86],
+        "spirit": [72, 75, 68, 78, 73],
+        "craft": [65, 70, 75, 80, 72],
+        "gods": [60, 65, 55, 70, 62]
+      },
+      "note": "Scriptorium archivist. Follows Runa's doctrines. Will train the next generation of Federalists."
+    },
+    {
+      "id": "rep_unaligned_1",
+      "name": "Fisherwoman Yrsa",
+      "faction_lean": "unaligned",
+      "values": { "authority": 3, "commerce": 5, "militarism": 3, "tradition": 5, "sovereignty": 4, "piety": 6 },
+      "dispositionMatrix": {
+        "body": [72, 75, 68, 80, 73],
+        "mind": [65, 68, 62, 70, 66],
+        "spirit": [70, 72, 68, 75, 71],
+        "craft": [85, 88, 82, 90, 86],
+        "gods": [75, 78, 70, 80, 76]
+      },
+      "note": "Represents the fishing families. Votes on harbor issues, abstains on everything else."
+    },
+    {
+      "id": "rep_unaligned_2",
+      "name": "Smith Geir",
+      "faction_lean": "unaligned",
+      "values": { "authority": 4, "commerce": 6, "militarism": 4, "tradition": 4, "sovereignty": 4, "piety": 3 },
+      "dispositionMatrix": {
+        "body": [82, 85, 78, 88, 83],
+        "mind": [70, 72, 68, 75, 71],
+        "spirit": [55, 58, 52, 60, 56],
+        "craft": [88, 92, 85, 90, 87],
+        "gods": [45, 50, 40, 55, 48]
+      },
+      "note": "Blacksmith. Votes on trade policy. Otherwise silent."
+    },
+    {
+      "id": "rep_unaligned_3",
+      "name": "Tanner Ulf",
+      "faction_lean": "unaligned",
+      "values": { "authority": 3, "commerce": 5, "militarism": 2, "tradition": 4, "sovereignty": 5, "piety": 4 },
+      "dispositionMatrix": {
+        "body": [68, 72, 65, 75, 70],
+        "mind": [65, 68, 62, 70, 66],
+        "spirit": [60, 62, 58, 65, 61],
+        "craft": [75, 80, 78, 82, 79],
+        "gods": [55, 60, 50, 65, 58]
+      },
+      "note": "Leatherworker. Pragmatic. Votes with whoever offers the best trade deal for hides."
+    },
+    {
+      "id": "rep_unaligned_4",
+      "name": "Brewer Halla",
+      "faction_lean": "unaligned",
+      "values": { "authority": 2, "commerce": 7, "militarism": 1, "tradition": 5, "sovereignty": 3, "piety": 4 },
+      "dispositionMatrix": {
+        "body": [62, 65, 58, 68, 63],
+        "mind": [72, 75, 68, 78, 73],
+        "spirit": [65, 68, 60, 72, 66],
+        "craft": [80, 85, 82, 88, 84],
+        "gods": [50, 55, 45, 60, 52]
+      },
+      "note": "Alewife. Popular in the harbor. Votes for whatever keeps the grain flowing."
+    },
+    {
+      "id": "rep_unaligned_5",
+      "name": "Weaver Freydis",
+      "faction_lean": "unaligned",
+      "values": { "authority": 2, "commerce": 6, "militarism": 1, "tradition": 7, "sovereignty": 4, "piety": 5 },
+      "dispositionMatrix": {
+        "body": [52, 55, 48, 60, 54],
+        "mind": [68, 72, 65, 75, 70],
+        "spirit": [72, 75, 68, 78, 73],
+        "craft": [85, 88, 82, 90, 86],
+        "gods": [65, 70, 60, 75, 68]
+      },
+      "note": "Textile worker. Quiet. Watches the Assembly with detached interest."
+    },
+    {
+      "id": "rep_guild_1",
+      "name": "Merchant Corin",
+      "faction_lean": "Southern Guilds / Free Harbor",
+      "values": { "authority": 5, "commerce": 9, "militarism": 2, "tradition": 2, "sovereignty": 4, "piety": 2 },
+      "dispositionMatrix": {
+        "body": [58, 62, 55, 65, 60],
+        "mind": [88, 90, 85, 92, 89],
+        "spirit": [45, 48, 42, 50, 46],
+        "craft": [90, 92, 88, 95, 91],
+        "gods": [30, 35, 25, 40, 32]
+      },
+      "note": "First Guild-born rep to hold a Thane seat. Votes for trade. His grandchildren will be citizens."
+    },
+    {
+      "id": "rep_silence_1",
+      "name": "The Watchman",
+      "faction_lean": "The Silence",
+      "values": { "authority": 5, "commerce": 5, "militarism": 5, "tradition": 5, "sovereignty": 5, "piety": 5 },
+      "dispositionMatrix": {
+        "body": [70, 70, 70, 70, 70],
+        "mind": [70, 70, 70, 70, 70],
+        "spirit": [70, 70, 70, 70, 70],
+        "craft": [70, 70, 70, 70, 70],
+        "gods": [70, 70, 70, 70, 70]
+      },
+      "note": "Orm's successor. Does not speak in session. Votes only on war and constitutional crisis. The Silence endures."
+    },
+    {
+      "id": "rep_silence_2",
+      "name": "The Scribe",
+      "faction_lean": "The Silence",
+      "values": { "authority": 5, "commerce": 5, "militarism": 5, "tradition": 5, "sovereignty": 5, "piety": 5 },
+      "dispositionMatrix": {
+        "body": [65, 65, 65, 65, 65],
+        "mind": [85, 85, 85, 85, 85],
+        "spirit": [65, 65, 65, 65, 65],
+        "craft": [65, 65, 65, 65, 65],
+        "gods": [65, 65, 65, 65, 65]
+      },
+      "note": "Second Silent seat in the Elders. Communicates by written note. Has not spoken aloud in twenty years."
+    }
+  ]
+}
