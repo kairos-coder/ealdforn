@@ -514,11 +514,11 @@ body::before {
 
 <!-- ═══ NAVIGATION BAR (REFACTORED) ═══ -->
     <div class="nav-bar">
-      <a href="show.html">The Show</a>
-      <a href="stage.html">The Stage</a>
-      <a href="studio.html">The Studio</a>
-      <a href="./republic/house/">The Houses</a> <!-- Added House Access -->
-      <a href="./republic/senate.html">Senate</a>
+      <a href="stage.html">Stage</a>
+      <a href="studio.html">Studio</a>
+      <a href="./ealdenmot/index.html">Ealdenmot</a>
+      <a href="./republic/house/">Gens Stellarum</a> 
+      <a href="./republic/senate.html">Senatus</a>
       <a href="./republic/comitia.html">Comitia</a>
       <a href="#gallery">Gallery</a>
     </div>
@@ -761,31 +761,50 @@ function closeLightbox() {
 }
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
 
-/* ── Smooth scroll ── */
+/* ── NAVIGATION: Smooth scroll for anchors ONLY ── */
 document.querySelectorAll('.nav-bar a').forEach(function(a) {
-  a.addEventListener('click', function(e) {
-    e.preventDefault();
-    var target = document.querySelector(this.getAttribute('href'));
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
+  var href = a.getAttribute('href');
+  
+  // Only intercept internal anchor links (those starting with #)
+  if (href && href.startsWith('#')) {
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
+  // All other links (studio.html, ./ealdenmot/, etc.) are left alone
+  // so the browser handles them natively.
 });
 
-/* ── Active nav highlight ── */
+/* ── Active nav highlight (anchor links only) ── */
 window.addEventListener('scroll', function() {
-  var sections = ['gate', 'altar', 'bastard-cycle', 'tales', 'horror', 'gallery'];
-  var navLinks = document.querySelectorAll('.nav-bar a');
-  sections.forEach(function(id, i) {
-    var el = document.getElementById(id);
+  // Only highlight nav items that are anchor links
+  var anchorSections = ['#gate', '#bastard-cycle', '#tales', '#horror', '#gallery'];
+  var navLinks = document.querySelectorAll('.nav-bar a[href^="#"]');
+  
+  var currentSection = null;
+  
+  anchorSections.forEach(function(selector) {
+    var el = document.querySelector(selector);
     if (el) {
       var rect = el.getBoundingClientRect();
-      if (rect.top < 200 && rect.bottom > 0) {
-        navLinks.forEach(function(l) { l.classList.remove('active'); });
-        if (navLinks[i]) navLinks[i].classList.add('active');
+      // Section is "active" if its top is near the top of the viewport
+      if (rect.top < 250 && rect.bottom > 0) {
+        currentSection = selector;
       }
+    }
+  });
+  
+  navLinks.forEach(function(link) {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === currentSection) {
+      link.classList.add('active');
     }
   });
 });
 </script>
-
 </body>
 </html>
