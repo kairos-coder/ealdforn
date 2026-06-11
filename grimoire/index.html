@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌿 The Recursive Grimoire · Living Oracle</title>
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #141420;
+  --surface2: #1a1a2e;
+  --text: #c8c8d4;
+  --text-dim: #8888a0;
+  --accent: #7eb8a0;
+  --accent2: #b87e9e;
+  --accent3: #c8a87e;
+  --glow: rgba(126,184,160,0.3);
+  --glow2: rgba(184,126,158,0.3);
+  --font-display: 'Georgia', serif;
+  --font-body: 'Georgia', serif;
+  --font-mono: 'Courier New', monospace;
+  --card-radius: 12px;
+  --card-padding: 1.5rem;
+  --overlay-opacity: 0.05;
+  transition: all 0.8s ease;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ── Oracle Status Bar ── */
+#oracleBar {
+  position: fixed;
+  top: 0; left: 0; right: 0; z-index: 1000;
+  background: var(--bg);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  backdrop-filter: blur(10px);
+}
+.oracle-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  background: var(--text-dim); transition: all 0.4s;
+}
+.oracle-dot.idle { background: var(--text-dim); }
+.oracle-dot.loading { background: var(--accent3); animation: pulse 1s infinite; }
+.oracle-dot.ready { background: var(--accent); box-shadow: 0 0 8px var(--glow); }
+.oracle-dot.reading { background: var(--accent2); animation: pulse 0.5s infinite; }
+.oracle-dot.error { background: #c86060; }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+#oracleText { flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+#genMini { font-family:var(--font-mono); font-size:0.55rem; color:var(--accent); }
+
+/* ── Reading Panel ── */
+.reading-panel {
+  margin: 1rem 0;
+  padding: 1.2rem;
+  background: var(--surface2);
+  border: 1px solid var(--accent);
+  border-radius: var(--card-radius);
+  animation: fadeIn 0.6s ease;
+  position: relative;
+}
+@keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
+.reading-panel::before {
+  content: '🪶 ORACLE SPEAKS';
+  position: absolute; top:-0.6rem; left:1rem;
+  background: var(--bg); padding:0 0.5rem;
+  font-family: var(--font-mono); font-size:0.45rem;
+  color: var(--accent); letter-spacing:2px;
+}
+.reading-panel .interpretation {
+  font-style: italic;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 0.6rem;
+}
+.reading-panel .cards-drawn {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  color: var(--accent3);
+  opacity: 0.7;
+}
+
+/* ── Card Trio ── */
+.card-trio {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.6rem;
+  margin: 0.8rem 0;
+}
+.card-trio .mini-card {
+  background: var(--surface);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 0.8rem;
+  text-align: center;
+  transition: all 0.3s;
+}
+.card-trio .mini-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.mini-card .mini-num {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  color: var(--accent);
+  opacity: 0.6;
+}
+.mini-card .mini-title {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  color: var(--accent);
+  margin: 0.3rem 0;
+}
+.mini-card .mini-body {
+  font-size: 0.55rem;
+  color: var(--text-dim);
+  line-height: 1.4;
+}
+
+/* ── Generation Counter ── */
+#genCounter {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--accent);
+  background: var(--surface);
+  padding: 0.5rem 0.8rem;
+  border-radius: 20px;
+  border: 1px solid var(--accent);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* ── Branch Node ── */
+.branch-node {
+  margin: 1rem 0;
+  animation: branchIn 0.6s ease-out;
+}
+@keyframes branchIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+
+/* ── Grimoire Card ── */
+.grimoire-card {
+  background: var(--surface);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--card-radius);
+  padding: var(--card-padding);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+.grimoire-card::before {
+  content: '';
+  position: absolute; top:0; left:0; right:0; bottom:0;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  opacity: var(--overlay-opacity); pointer-events: none;
+}
+.grimoire-card:hover { box-shadow: 0 0 20px var(--glow); transform: translateY(-2px); }
+.grimoire-card .card-header { display:flex; justify-content:space-between; margin-bottom:0.8rem; }
+.grimoire-card .card-number { font-family:var(--font-mono); font-size:0.6rem; color:var(--accent); opacity:0.7; }
+.grimoire-card .card-title { font-family:var(--font-display); font-size:1.1rem; color:var(--accent); margin-bottom:0.5rem; }
+.grimoire-card .card-body { font-size:0.85rem; line-height:1.6; }
+.grimoire-card .card-tags { display:flex; gap:0.4rem; flex-wrap:wrap; margin-top:0.8rem; }
+.grimoire-card .card-tag { font-family:var(--font-mono); font-size:0.5rem; padding:0.15rem 0.4rem; border-radius:10px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--accent3); }
+
+/* ── Split Container ── */
+.split-container { display:grid; gap:0.5rem; margin:0.5rem 0; animation: branchIn 0.6s ease-out; }
+.split-container.horizontal { grid-template-columns: 1fr 1fr; }
+.split-container .split-cell { background:var(--surface); border:1px solid rgba(255,255,255,0.06); border-radius:var(--card-radius); padding:var(--card-padding); min-height:100px; }
+
+/* ── Mutation Badge ── */
+.mutation-badge { position:absolute; top:0.4rem; right:0.4rem; font-family:var(--font-mono); font-size:0.45rem; padding:0.1rem 0.3rem; border-radius:8px; background:rgba(255,255,255,0.05); color:var(--accent2); opacity:0.6; }
+
+/* ── Typography Drift ── */
+body.drift-serif { --font-body:'Georgia',serif; --font-display:'Georgia',serif; }
+body.drift-mono { --font-body:'Courier New',monospace; --font-display:'Courier New',monospace; }
+body.drift-sans { --font-body:'Helvetica',sans-serif; --font-display:'Helvetica',sans-serif; }
+
+/* ── Color Palettes ── */
+body.palette-void { --bg:#050510; --surface:#0d0d20; --surface2:#12122a; --accent:#6090b0; --accent2:#b06090; }
+body.palette-ember { --bg:#100a05; --surface:#1a0f08; --surface2:#201510; --accent:#d08040; --accent2:#d04040; }
+body.palette-moss { --bg:#050f08; --surface:#0a1a10; --surface2:#0f1f15; --accent:#60b870; --accent2:#b8a060; }
+body.palette-twilight { --bg:#0a0515; --surface:#150d25; --surface2:#1a1030; --accent:#9070c8; --accent2:#7090c8; }
+
+#scrollSentinel { height:1px; width:100%; }
+</style>
+</head>
+<body>
+
+<div id="oracleBar">
+  <div class="oracle-dot idle" id="oracleDot"></div>
+  <span id="oracleText">Oracle: awaiting the scroll…</span>
+  <span id="genMini">🌿 0</span>
+</div>
+
+<div id="branchForest"></div>
+<div id="scrollSentinel"></div>
+
+<div id="genCounter">🌿 Gen <span id="genNum">0</span></div>
+
+<script type="module">
+// ════════════════════════════════════════════
+// RECURSIVE GRIMOIRE · Living Oracle with AI
+// ════════════════════════════════════════════
+
+// ── 22-Card Deck ──
+const DECK = [
+  { num:0,  title:'The Fool',           tags:['beginning','innocence','leap'],         body:'Step off the cliff. The void catches those who trust it.' },
+  { num:1,  title:'The Magician',       tags:['will','manifestation','tools'],         body:'As above, so below. The will shapes the world through focused intent.' },
+  { num:2,  title:'The High Priestess', tags:['intuition','mystery','veil'],           body:'Behind the veil lies knowing that words cannot carry.' },
+  { num:3,  title:'The Empress',        tags:['abundance','nature','creation'],        body:'From fertile darkness, all forms emerge. Nurture what grows.' },
+  { num:4,  title:'The Emperor',        tags:['structure','authority','order'],        body:'Build the walls that hold the garden. Structure enables freedom.' },
+  { num:5,  title:'The Hierophant',     tags:['tradition','teaching','ritual'],        body:'The old ways hold keys that the new world has forgotten.' },
+  { num:6,  title:'The Lovers',         tags:['choice','union','harmony'],             body:'Every choice is a marriage to a path. Choose with open eyes.' },
+  { num:7,  title:'The Chariot',        tags:['willpower','direction','triumph'],      body:'Harness opposing forces. Drive them toward a single purpose.' },
+  { num:8,  title:'Strength',           tags:['courage','patience','inner-power'],     body:'Gentle persistence tames the wildest beast within.' },
+  { num:9,  title:'The Hermit',         tags:['solitude','wisdom','inner-light'],      body:'In silence, the lantern reveals what noise obscured.' },
+  { num:10, title:'Wheel of Fortune',   tags:['cycles','destiny','turning-point'],     body:'What rises must fall. What falls will rise again. Spin with it.' },
+  { num:11, title:'Justice',            tags:['balance','truth','consequence'],        body:'Every action echoes. The scales remember what the mind forgets.' },
+  { num:12, title:'The Hanged One',     tags:['surrender','perspective','pause'],      body:'Upside down, the world makes different sense. Let go to see.' },
+  { num:13, title:'Death',              tags:['transformation','ending','rebirth'],    body:'What dies feeds what is born. The compost nourishes the seed.' },
+  { num:14, title:'Temperance',         tags:['balance','patience','alchemy'],         body:'Blend fire and water. The middle path brews the strongest medicine.' },
+  { num:15, title:'The Devil',          tags:['shadow','attachment','liberation'],     body:'Chains are often self-forged. Name the binding to break it.' },
+  { num:16, title:'The Tower',          tags:['upheaval','revelation','collapse'],     body:'False structures crumble. Lightning reveals what was hidden in the walls.' },
+  { num:17, title:'The Star',           tags:['hope','healing','guidance'],            body:'After the storm, a single light. Pour your vessel into the stream.' },
+  { num:18, title:'The Moon',           tags:['illusion','dreams','subconscious'],     body:'Not all paths are straight. Moonlight shows what daylight blinds.' },
+  { num:19, title:'The Sun',            tags:['clarity','vitality','joy'],             body:'Full illumination. The shadow retreats and warmth fills every corner.' },
+  { num:20, title:'Judgement',          tags:['awakening','reckoning','calling'],      body:'Hear the call. Rise from the sleep of forgetting into purpose.' },
+  { num:21, title:'The World',          tags:['completion','wholeness','integration'], body:'The circle closes. All fragments reunite. The dance is complete.' }
+];
+
+// ── Oracle State ──
+let oracleReady = false;
+let oracleLoading = false;
+let pipeline = null;
+
+// ── Grimoire State ──
+let generation = 0;
+let branchCount = 0;
+
+// ── Oracle UI ──
+function setOracleStatus(state, text) {
+  const dot = document.getElementById('oracleDot');
+  const msg = document.getElementById('oracleText');
+  dot.className = 'oracle-dot ' + state;
+  msg.textContent = 'Oracle: ' + text;
+  console.log(`🔮 ${state}: ${text}`);
+}
+
+// ── Initialize AI ──
+async function initOracle() {
+  if (oracleLoading || oracleReady) return;
+  
+  oracleLoading = true;
+  setOracleStatus('loading', 'Importing AI engine…');
+
+  try {
+    // Try multiple CDN sources
+    const sources = [
+      'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.1/+esm',
+      'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.0-alpha.5/+esm',
+    ];
+
+    let transformers = null;
+    for (const src of sources) {
+      try {
+        transformers = await import(src);
+        console.log(`  ✅ Imported from ${src.split('/').slice(-2).join('/')}`);
+        break;
+      } catch (e) {
+        console.warn(`  ❌ ${src.split('/').slice(-2).join('/')}: ${e.message.substring(0,60)}`);
+      }
+    }
+
+    if (!transformers) throw new Error('All CDN sources failed');
+
+    const pipe = transformers.pipeline || transformers.default?.pipeline;
+    if (!pipe) throw new Error('Pipeline not found');
+
+    setOracleStatus('loading', 'Downloading model…');
+    
+    pipeline = await pipe('text-generation', 'Xenova/distilgpt2', {
+      progress_callback: (p) => {
+        if (p?.status === 'progress' && p.loaded && p.total) {
+          const pct = Math.round((p.loaded / p.total) * 100);
+          setOracleStatus('loading', `Model: ${pct}%`);
+        }
+      }
+    });
+
+    oracleReady = true;
+    oracleLoading = false;
+    setOracleStatus('ready', 'Oracle awake — draw the cards');
+    console.log('✅ AI Oracle ready');
+
+  } catch (e) {
+    console.error('❌ Oracle failed:', e.message);
+    oracleLoading = false;
+    setOracleStatus('error', 'Using poetic fallback');
+  }
+}
+
+// ── AI Generation ──
+async function aiGenerate(prompt, maxTokens = 150) {
+  if (!oracleReady || !pipeline) return null;
+  
+  try {
+    const result = await pipeline(prompt, {
+      max_new_tokens: maxTokens,
+      temperature: 0.85,
+      do_sample: true,
+      top_p: 0.92,
+      top_k: 50
+    });
+
+    let text = '';
+    if (Array.isArray(result)) text = result[0]?.generated_text || '';
+    else if (typeof result === 'string') text = result;
+    else text = result?.generated_text || '';
+
+    // Remove prompt from response
+    if (text.startsWith(prompt)) text = text.slice(prompt.length).trim();
+    return text;
+  } catch (e) {
+    console.warn('Generation failed:', e.message);
+    return null;
+  }
+}
+
+// ── Draw 3 Cards ──
+function drawThreeCards() {
+  const shuffled = [...DECK].sort(() => Math.random() - 0.5);
+  return [shuffled[0], shuffled[1], shuffled[2]];
+}
+
+// ── AI Interpretation ──
+async function interpretCards(cards) {
+  const cardNames = cards.map(c => `"${c.title}"`).join(', ');
+  const cardBodies = cards.map(c => c.body).join(' ');
+  
+  const prompt = `Three tarot cards were drawn: ${cardNames}. Their meanings: ${cardBodies}. Write a 2-3 sentence poetic interpretation of what these three cards mean together as a reading. Be mystical and insightful.`;
+
+  if (oracleReady) {
+    setOracleStatus('reading', 'Interpreting the draw…');
+    const aiResponse = await aiGenerate(prompt, 120);
+    if (aiResponse && aiResponse.length > 20) {
+      setOracleStatus('ready', 'Reading complete');
+      return aiResponse;
+    }
+  }
+
+  // Poetic fallback
+  setOracleStatus('ready', 'Poetic interpretation');
+  return generateFallbackReading(cards);
+}
+
+function generateFallbackReading(cards) {
+  const templates = [
+    `The ${cards[0].title} meets the ${cards[1].title} under the gaze of the ${cards[2].title}. ${cards[0].body.split('.')[0]}. Together with ${cards[1].body.split('.')[0].toLowerCase()}, they whisper: ${cards[2].body.split('.')[0].toLowerCase()}.`,
+    `A triptych unfolds: ${cards[0].title} begins the journey, ${cards[1].title} deepens the mystery, and ${cards[2].title} reveals the hidden truth. The pattern suggests a time of transformation.`,
+    `Three voices speak as one. The ${cards[0].title} offers the spark, the ${cards[1].title} holds the flame, and the ${cards[2].title} casts the shadow. Pay attention to what burns between them.`,
+    `In the ${cards[0].title} we find the seed, in the ${cards[1].title} the growth, in the ${cards[2].title} the harvest. The cycle completes itself through these three gates.`
+  ];
+  return templates[Math.floor(Math.random() * templates.length)];
+}
+
+// ── Spawn Oracle Reading Branch ──
+async function spawnOracleReading() {
+  generation++;
+  branchCount++;
+  
+  console.log(`\n🪶 === Generation ${generation} ===`);
+  setOracleStatus('loading', 'Drawing three cards…');
+  
+  const cards = drawThreeCards();
+  console.log(`  🃏 Drew: ${cards.map(c => c.title).join(' · ')}`);
+  
+  // Render the three cards
+  const forest = document.getElementById('branchForest');
+  const node = document.createElement('div');
+  node.className = 'branch-node';
+  
+  // Card trio
+  const trioHTML = cards.map(c => `
+    <div class="mini-card">
+      <div class="mini-num">#${c.num}</div>
+      <div class="mini-title">${c.title}</div>
+      <div class="mini-body">${c.body}</div>
+    </div>
+  `).join('');
+  
+  node.innerHTML = `
+    <div class="reading-panel">
+      <div class="card-trio">${trioHTML}</div>
+      <div class="cards-drawn">🃏 ${cards.map(c => `#${c.num} ${c.title}`).join(' · ')}</div>
+      <div class="interpretation" id="reading-${generation}">
+        <em>Consulting the oracle…</em>
+      </div>
+    </div>
+  `;
+  
+  forest.appendChild(node);
+  node.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  
+  // Generate interpretation
+  const interpretation = await interpretCards(cards);
+  
+  // Update the interpretation text
+  const readingEl = document.getElementById(`reading-${generation}`);
+  if (readingEl && interpretation) {
+    readingEl.innerHTML = `<em>"${interpretation}"</em>`;
+  }
+  
+  // Update counter
+  document.getElementById('genNum').textContent = generation;
+  document.getElementById('genMini').textContent = `🌿 ${generation}`;
+  
+  console.log(`  📖 "${interpretation.substring(0,80)}..."`);
+}
+
+// ── Scroll Sentinel ──
+const sentinel = document.getElementById('scrollSentinel');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      console.log('⬇️ Scroll reached bottom — drawing cards…');
+      spawnOracleReading();
+    }
+  });
+}, { root: null, rootMargin: '200px', threshold: 0.1 });
+
+observer.observe(sentinel);
+
+// ── Initialize ──
+async function init() {
+  console.log('🌿 Recursive Grimoire · Living Oracle');
+  console.log(`📜 ${DECK.length} cards in the deck`);
+  console.log('🪶 AI interpretation enabled');
+  
+  // Start AI loading in background
+  initOracle();
+  
+  // Seed: draw first three cards immediately
+  await spawnOracleReading();
+  
+  console.log('🌱 Grimoire awakened. Scroll down for more readings.');
+  console.log('⌨️ [G] draw cards · [D] draw without AI');
+}
+
+// ── Keyboard Controls ──
+document.addEventListener('keydown', async (e) => {
+  switch (e.key.toLowerCase()) {
+    case 'g':
+      console.log('🃏 Manual draw');
+      await spawnOracleReading();
+      break;
+    case 'd':
+      console.log('🃏 Quick draw (no AI wait)');
+      spawnOracleReading();
+      break;
+    case 'r':
+      console.log('🔄 Retrying AI initialization...');
+      oracleReady = false;
+      oracleLoading = false;
+      await initOracle();
+      break;
+    default: break;
+  }
+});
+
+init();
+</script>
+</body>
+</html>
