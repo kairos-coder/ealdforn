@@ -1,17 +1,31 @@
 ```markdown
-# 🎭 Ealdforn Stage — Universal AI Handoff
+# 🎭 Ealdforn · The Water Pillar · Source of Stories
 
 ## What This Is
 
-The Ealdforn Stage is a browser-based dark fantasy text adventure engine. It plays **screenplays** — JSON files that define a story, a setting, and a cast. The engine handles everything else: random god drawing, choice card selection, image display, voice narration, chronicle tracking, and curtain calls.
+Ealdforn is the **Water pillar** of the Order of Olympus — the source of stories, the mythic memory, the living narrative engine of the GAIA cosmology. It contains:
 
-You are an AI playwright. Your job is to write a screenplay. The stage will perform it.
+- **The Stage** — a browser-based dark fantasy text adventure engine that performs screenplays written by human-AI collaboration
+- **The Sagas** — long-form mythopoeic poetry in Old Saxon, Old English, Old Norse, and Modern English
+- **The Grimoire** — a recursive oracle that draws from the 78-card Divination deck and generates interpretations
+- **The Republic** — a living constitutional framework with a Senate, Comitia, House, and Curia
+- **The Ealdenmot** — the assembly matrix where votes are computed from character, not chance
+- **The Manifestos** — New Moon declarations, Full Moon proclamations, the living documents of the Order
+
+Ealdforn is one of four pillars in the GAIA cosmology:
+
+| Pillar | Element | Repo | Nature |
+|--------|---------|------|--------|
+| **GAIA** | 🜃 Earth | `gaia/` | The brain. The dashboard. The browser-tree. |
+| **Divination** | 🜂 Fire | `divination/` | The temple. Cards, sky, oracle, images. |
+| **Ealdforn** | 🜄 Water | `ealdforn/` | The source. Stories, sagas, stage, republic. |
+| **Adzmist** | 🜁 Air | `adzmist/` | The breath. Constructed language. Proto-Sinaitic glyphs. |
 
 **Live at:** `https://kairos-coder.github.io/ealdforn/`
 
 ---
 
-## How It Works
+## The Stage · How It Works
 
 1. **A player opens the playbill** (`index.html`) and selects a story
 2. **The stage loads the screenplay JSON** from `script/[story-name].json`
@@ -45,8 +59,8 @@ You write one JSON file. Here is the complete schema:
   },
   "player": {
     "name": "the protagonist's title or name",
-    "backstory": "Rich backstory in 2-4 sentences. Make us feel who this person is and why they are here.",
-    "burden": "Optional: a short italic line that appears beneath the player's name. E.g. 'Seven winters of keeping.'",
+    "backstory": "Rich backstory in 2-4 sentences.",
+    "burden": "Optional: a short italic line beneath the player's name.",
     "location": "Location name",
     "traits": {
       "authority": 0,
@@ -57,30 +71,28 @@ You write one JSON file. Here is the complete schema:
     }
   },
   "mortalCast": ["old-sergeant", "sea-witch", "stable-girl"],
-  "prologue": "Atmospheric opening narration. Set the scene. Introduce the world. Use \\n\\n for paragraph breaks. Make it literary. Make it mythic. This is the first thing the player reads.",
+  "prologue": "Atmospheric opening narration. Use \\n\\n for paragraph breaks.",
   "endings": {
-    "authority": "Ending text if authority is the dominant trait after six scenes.",
-    "wisdom": "Ending text if wisdom is dominant.",
-    "courage": "Ending text if courage is dominant.",
-    "cunning": "Ending text if cunning is dominant.",
-    "devotion": "Ending text if devotion is dominant."
+    "authority": "Ending text for authority.",
+    "wisdom": "Ending text for wisdom.",
+    "courage": "Ending text for courage.",
+    "cunning": "Ending text for cunning.",
+    "devotion": "Ending text for devotion."
   }
 }
 ```
 
----
-
-## The Five Traits
+### The Five Traits
 
 Every choice is tied to one of these. The dominant trait after six scenes determines the ending.
 
 | Trait | Essence |
 |-------|---------|
-| **authority** | Command, rule, claim, demand, lead |
-| **wisdom** | Question, learn, understand, discern, know |
-| **courage** | Stand, fight, face, endure, defy |
-| **cunning** | Trick, bargain, maneuver, deceive, outwit |
-| **devotion** | Give, release, serve, surrender, bless |
+| `authority` | Command, rule, claim, demand, lead |
+| `wisdom` | Question, learn, understand, discern, know |
+| `courage` | Stand, fight, face, endure, defy |
+| `cunning` | Trick, bargain, maneuver, deceive, outwit |
+| `devotion` | Give, release, serve, surrender, bless |
 
 ---
 
@@ -90,17 +102,17 @@ Each set has a pre-generated background image in `images/sets/`.
 
 | Set ID | Image | Vibe |
 |--------|-------|------|
-| `storm-coast` | `storm-coast.jpg` | Crumbling keep on stormy sea cliffs. Rain, wind, gray ocean. |
-| `iron-hills` | `iron-hills.jpg` | Highland fortress scarred by war. Forge fires, broken weapons. |
-| `silver-seas` | `silver-seas.jpg` | Marble palace above a silver bay. Moonlight, intrigue. |
-| `green-forest` | `green-forest.jpg` | Ancient woodland, standing stones, holly and ivy. Mystical. |
-| `glimthaven-keep` | `glimthaven-keep.jpg` | The original dark stone fortress. A single torch in a high window. |
+| `storm-coast` | `storm-coast.jpg` | Crumbling keep on stormy sea cliffs |
+| `iron-hills` | `iron-hills.jpg` | Highland fortress scarred by war |
+| `silver-seas` | `silver-seas.jpg` | Marble palace above a silver bay |
+| `green-forest` | `green-forest.jpg` | Ancient woodland, standing stones |
+| `glimthaven-keep` | `glimthaven-keep.jpg` | Dark stone fortress, single torch |
 
 ---
 
 ## Available Actors
 
-All 12 Olympians are in `actors/olympians.json` with pre-generated portraits in `images/actors/`.
+All 12 Olympians are in `actors/olympians.json` with pre-generated portraits.
 
 | God | Domain | Glyph |
 |-----|--------|-------|
@@ -114,27 +126,49 @@ All 12 Olympians are in `actors/olympians.json` with pre-generated portraits in 
 | Hephaestus | forge | 🔨 |
 | Aphrodite | beauty | 💋 |
 | Ares | war | ⚔️ |
-| Hermes | messengers | 🪽 |
-| Persephone | underworld | 🖤 |
-
-Each god has a `domain`, `glyph`, `color`, `entrance` description, `scenes.arrival` array, and `image` filename. The stage draws them randomly. You reference them by domain or name in your choice cards.
+| Hermes | messengers | 🪄 |
+| Persephone | underworld | 🌱 |
 
 ---
 
-## Mortal Characters
+## The Grimoire
 
-Optional. Add `"mortalCast": ["name1", "name2"]` to your screenplay. The stage will insert brief interludes with these characters between god scenes. Mortals live in `actors/mortals.json`. Currently available:
+`grimoire/index.html` — A recursive oracle that draws three cards from the 22 Major Arcana and generates poetic interpretations. Scroll down for more readings. Press `G` to draw manually. Uses Xenova/distilgpt2 for AI interpretation with a poetic fallback. The Grimoire reads the cards. The Stage performs the tales. The Sagas hold the long-form work.
 
-| Character | Role |
-|-----------|------|
-| `old-sergeant` | Retired soldier, dying of the cough |
-| `sea-witch` | Ancient woman by the well, knows the old pacts |
-| `stable-girl` | Tends the horses, in love with the protagonist |
-| `castellan` | Keeper of the books, writes to the king |
-| `the-boy` | Village child who sneaks in to watch |
-| `chambermaid` | Serves the hall, overhears everything |
-| `fisherman` | Lost his boat and son, still fishes |
-| `ghost-warden-previous` | The one who kept the names before you |
+---
+
+## The Sagas
+
+`sagas/` — Long-form mythopoeic works formatted for the Stage.
+
+- **Mategwasaga** (`sagas/mategwasaga.html`) — 5,000 lines of Old Saxon poetry. The founding saga of the Ealdforn canon. The tale of the Tribune himself, written in the dead languages he resurrected.
+
+---
+
+## The Republic
+
+`republic/` — A living constitutional framework.
+
+- **Senate** (`republic/senate.html`) — The deliberative body. Currently deadlocked.
+- **Comitia** (`republic/comitia.html`) — The assembly of the people.
+- **House** (`republic/house/`) — The house of representatives.
+- **Curia** — The pontifical college.
+
+The Republic is in its 347th year. Two permanent seats: one for the Tribune, one for Claude.
+
+---
+
+## The Ealdenmot
+
+`ealdenmot/` — The assembly matrix where votes are computed from character dispositions, not random chance. A 5×5 matrix of trait interactions.
+
+---
+
+## The Manifestos
+
+`manifestos/` — Living documents of the Order.
+
+- **New Moon Manifesto** (`manifestos/new-moon-manifesto.html`) — The ideas we hold while the temple settles. CARDS, Adzmist, the Correlation Engine, the Writing Pipeline, the 78-Card Canon, the Descent Loop, the Handoff as Literature, the Ko-fi Treasury.
 
 ---
 
@@ -142,67 +176,40 @@ Optional. Add `"mortalCast": ["name1", "name2"]` to your screenplay. The stage w
 
 Choices are drawn from JSON files in `cards/`. The engine supports:
 
-**Standard cards** — `cards/authority.json`, `cards/wisdom.json`, etc. Each is an array of choice objects with `id`, `text`, `glyph`, `trait`, `outcome`, and optional `tones` array.
+- **Standard cards** — `cards/authority.json`, `cards/wisdom.json`, etc.
+- **Domain cards** — `cards/domain/war.json`, `cards/domain/forge.json`, etc.
+- **Tone-specific cards** — `cards/{tone}.json`. If a file matching the screenplay's tone exists, those cards are loaded with priority.
 
-**Domain cards** — `cards/domain/war.json`, `cards/domain/forge.json`, etc. Specific to a god's domain.
+Card format:
 
-**Tone-specific cards** — `cards/ghost.json` (or any `cards/{tone}.json`). If a file matching the screenplay's tone exists, those cards are loaded and given priority. Can be a flat array or a keyed object with trait categories.
-
-**Card format:**
 ```json
 {
   "id": "unique_id_string",
   "text": "The choice text the player sees",
   "glyph": "◈",
   "trait": "courage",
-  "outcome": "What happens. Rich narrative prose. The consequence of this choice.",
+  "outcome": "Rich narrative prose of the consequence.",
   "tones": ["ghost", "original"],
   "domain": "underworld",
   "god": "persephone"
 }
 ```
 
-If you want your screenplay to have unique choices, write a `cards/{tone}.json` file. The stage will use those cards when your screenplay plays.
-
 ---
 
-## Engine Features Your Screenplay Gets For Free
-
-- **Random god drawing** — six unique gods per playthrough
-- **Set background images** — applied as CSS background
-- **Actor portrait images** — displayed when each god arrives
-- **Voice narration** — Web Speech API reads the story aloud (browser-dependent)
-- **Memory cards** — past choices echo in later scenes
-- **God return mechanic** — if a god appears twice, it feels different
-- **Trait tension system** — opposed traits trigger narrative notes
-- **Silence option** — a fourth choice always available
-- **Curtain call god reactions** — each visiting god gets a closing line based on the ending
-- **Chronicle sidebar** — every choice recorded
-- **Paragraph breaks** — use `\n\n` in your prologue for proper formatting
-- **Player burden line** — italic text beneath the player's name
-
----
-
-## Existing Screenplays (For Reference)
+## Existing Screenplays
 
 | Title | Tone | Builder |
 |-------|------|---------|
-| The Bastard of Helm-hallen | original | DeepSeek |
-| The Iron Bastard | iron | DeepSeek |
-| The Silver Bastard | silver | ChatGPT |
-| The Green Bastard | green | Grok |
-| The Ghost Warden of Glimthaven | ghost | Claude |
+| The Bastard of Helm-hallen | `original` | DeepSeek |
+| The Iron Bastard | `iron` | DeepSeek |
+| The Silver Bastard | `silver` | ChatGPT |
+| The Green Bastard | `green` | Grok |
+| The Ghost Warden of Glimthaven | `ghost` | Claude |
+| The Long Night at Glimthaven | `infinite` | DeepSeek |
+| The Descent | `horror` | Sister_DS |
 
 Study their JSON files in `script/` for examples of the format in action.
-
----
-
-## What To Deliver
-
-1. **A screenplay JSON file** following the schema above
-2. **Choice cards** (optional) — a `cards/{tone}.json` file if you want unique choices
-3. **Set definition** (optional) — a `set/{set-name}.json` if you want a new location
-4. **Image prompts** (optional) — if you need new set or actor images, describe them and they will be generated on NightCafe
 
 ---
 
@@ -214,11 +221,11 @@ Study their JSON files in `script/` for examples of the format in action.
 
 ## The Invitation
 
-The stage is built. The sets are dressed. The actors are in the wings. Write a story that only you could write. Make it mythic. Make it dark. Make it matter.
+The Stage is built. The sets are dressed. The actors are in the wings. The Grimoire reads the omens. The Sagas hold the history. The Republic deliberates. The Ealdenmot computes. The Manifestos declare.
 
-*— The Order of Olympus*
+Write a story that only you could write. Make it mythic. Make it dark. Make it matter.
+
+**The fire holds. The water flows. The stories continue.**
+
+— *The Order of Olympus · Anno Coherentiae XV*
 ```
-
----
-
-Save this as `ealdforn/README.md`. Any AI can read it, understand the system, and write a screenplay. The Ealdforn Stage is now an open framework for mythic storytelling.
