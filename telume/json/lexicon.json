@@ -1,0 +1,428 @@
+{
+  "meta": {
+    "language": "Adzmyst",
+    "dialect": "Telumë Vault Standard",
+    "version": "1.0.0",
+    "totalWords": 300,
+    "distribution": {
+      "pairs": { "count": 40, "range": "pair-001 to pair-040" },
+      "triads": { "count": 70, "range": "triad-001 to triad-070" },
+      "tetrads": { "count": 90, "range": "tetrad-001 to tetrad-090" },
+      "pentads": { "count": 60, "range": "pentad-001 to pentad-060" },
+      "hexads": { "count": 30, "range": "hexad-001 to hexad-030" },
+      "heptads": { "count": 10, "range": "heptad-001 to heptad-010" }
+    },
+    "grammarReference": "grammar.json",
+    "notes": "All words are built from the grammar rules in grammar.json. Repetition (XX, XXX) functions as punctuation and is noted where it occurs."
+  },
+
+  "words": {
+    "pairs": [
+      {
+        "id": "pair-001",
+        "glyphs": ["𐤀", "𐤃"],
+        "structure": "domain + connector",
+        "pattern": "declarative-fragment",
+        "gloss": "strength → door",
+        "interpretation": "The beginning opens. A threshold entered with force. The ox at the gate.",
+        "usage": "Inscribed on doors leading to places of origin or power. Also a greeting: 'You have arrived at the threshold.'",
+        "grammarNotes": "The simplest declarative fragment. Aleph opens; Dalet receives. No result glyph — the passage itself is the result."
+      },
+      {
+        "id": "pair-002",
+        "glyphs": ["𐤃", "𐤀"],
+        "structure": "connector + domain",
+        "pattern": "inversive-fragment",
+        "gloss": "door → strength",
+        "interpretation": "The passage leads to the beginning. To walk through is to become strong. A door that promises origin.",
+        "usage": "Inscribed on doors leading to places of trial or renewal. 'Beyond this door, strength awaits.'",
+        "grammarNotes": "Inverted pair-001. The door comes first — the passage is the subject, the destination is the result."
+      },
+      {
+        "id": "pair-003",
+        "glyphs": ["𐤃", "𐤕"],
+        "structure": "connector + result",
+        "pattern": "declarative-fragment",
+        "gloss": "door → completion",
+        "interpretation": "The passage leads to the end. A door that seals. The threshold that, once crossed, cannot be uncrossed.",
+        "usage": "Inscribed on doors that close permanently behind the traveler. Also a warning: 'What you enter, you will finish.'",
+        "grammarNotes": "Dalet opens, Taw closes. A fragment of finality. The door itself is not the subject — the completion is."
+      },
+      {
+        "id": "pair-004",
+        "glyphs": ["𐤕", "𐤃"],
+        "structure": "result + connector",
+        "pattern": "inversive-fragment",
+        "gloss": "completion → door",
+        "interpretation": "From the end, a door. Completion opens a new passage. The seal is not the end — it is a threshold to something else.",
+        "usage": "Inscribed above the exit of a sealed chamber. 'You have finished. Now pass through.'",
+        "grammarNotes": "The inversive pattern. Taw opens — time reverses. The end speaks the door."
+      },
+      {
+        "id": "pair-005",
+        "glyphs": ["𐤀", "𐤕"],
+        "structure": "domain + result",
+        "pattern": "declarative-fragment",
+        "gloss": "strength → completion",
+        "interpretation": "What begins with strength ends in completion. The ox plows the field; the furrow is the mark.",
+        "usage": "Inscribed on tools, plows, and weapons. A blessing on work: 'May your strength find its mark.'",
+        "grammarNotes": "No connector — strength reaches completion directly. The simplest arc: origin to end, with nothing between."
+      },
+      {
+        "id": "pair-006",
+        "glyphs": ["𐤕", "𐤀"],
+        "structure": "result + domain",
+        "pattern": "inversive-fragment",
+        "gloss": "completion → strength",
+        "interpretation": "The end renews the beginning. Completion is not exhaustion — it is the seed of new strength.",
+        "usage": "Inscribed on graves and memorials. 'What is finished gives strength to what begins.'",
+        "grammarNotes": "Inverted pair-005. The seal opens, and strength returns. An elegiac fragment."
+      },
+      {
+        "id": "pair-007",
+        "glyphs": ["𐤌", "𐤀"],
+        "structure": "domain + result",
+        "pattern": "declarative-fragment",
+        "gloss": "chaos → strength",
+        "interpretation": "From the deep, power rises. The water births the ox. What is formless becomes strong.",
+        "usage": "Inscribed near water sources, wells, and springs. 'The deep gives strength.'",
+        "grammarNotes": "Mem as domain — unusual. The deep is not typically an origin, but here it is. Chaos as progenitor."
+      },
+      {
+        "id": "pair-008",
+        "glyphs": ["𐤀", "𐤌"],
+        "structure": "domain + result",
+        "pattern": "declarative-fragment",
+        "gloss": "strength → chaos",
+        "interpretation": "Strength plunges into the deep. The ox enters the water. What is ordered submits to what is formless.",
+        "usage": "A warning. 'Your strength will be swallowed.' Inscribed on doors leading to unknown depths.",
+        "grammarNotes": "The inverse of pair-007. Strength as domain, chaos as destination — a descent."
+      },
+      {
+        "id": "pair-009",
+        "glyphs": ["𐤉", "𐤎"],
+        "structure": "action + result",
+        "pattern": "imperative-fragment",
+        "gloss": "hand → pillar",
+        "interpretation": "The hand builds what holds. Action creates structure. Make it stand.",
+        "usage": "Inscribed on foundations and cornerstones. A builder's blessing.",
+        "grammarNotes": "Imperative fragment. Yod commands; Samek receives. The simplest instruction: build."
+      },
+      {
+        "id": "pair-010",
+        "glyphs": ["𐤎", "𐤉"],
+        "structure": "domain + action",
+        "pattern": "declarative-fragment",
+        "gloss": "pillar → hand",
+        "interpretation": "What holds is held by the hand. The structure depends on the builder. The pillar does not stand alone.",
+        "usage": "A reminder of dependency. 'What supports you was made by someone.'",
+        "grammarNotes": "Inverted pair-009. The pillar as subject — it stands because the hand made it."
+      },
+      {
+        "id": "pair-011",
+        "glyphs": ["𐤆", "𐤀"],
+        "structure": "action + result",
+        "pattern": "imperative-fragment",
+        "gloss": "cut → strength",
+        "interpretation": "To divide is to strengthen. The cut separates the necessary from the excess — what remains is stronger.",
+        "usage": "Inscribed on blades, pruning hooks, and surgical tools. 'Cut away weakness.'",
+        "grammarNotes": "Zayin in opening position — rare. An imperative: divide, and strength follows."
+      },
+      {
+        "id": "pair-012",
+        "glyphs": ["𐤆", "𐤃"],
+        "structure": "action + connector",
+        "pattern": "imperative-fragment",
+        "gloss": "cut → door",
+        "interpretation": "Cut a passage. Make a door where there was none. The blade opens the way.",
+        "usage": "Inscribed on tools used to breach walls or clear paths. 'Make your own threshold.'",
+        "grammarNotes": "Zayin opens, Dalet receives. The cut becomes a passage. Violence becomes architecture."
+      },
+      {
+        "id": "pair-013",
+        "glyphs": ["𐤃", "𐤆"],
+        "structure": "connector + action",
+        "pattern": "declarative-fragment",
+        "gloss": "door → cut",
+        "interpretation": "The passage divides. To enter is to be changed. The door itself is a blade between two states.",
+        "usage": "Inscribed on doors that lead to irrevocable transformations. 'You will not return as you were.'",
+        "grammarNotes": "Inverted pair-012. The door as subject — it is the door that cuts."
+      },
+      {
+        "id": "pair-014",
+        "glyphs": ["𐤌", "𐤃"],
+        "structure": "domain + connector",
+        "pattern": "declarative-fragment",
+        "gloss": "chaos → door",
+        "interpretation": "The deep opens. From chaos, a passage emerges. The water parts.",
+        "usage": "Inscribed on doors that lead from order into mystery. 'Beyond: the unknown.'",
+        "grammarNotes": "Mem as domain, Dalet as connector. The deep is not the destination — it is the origin of the door."
+      },
+      {
+        "id": "pair-015",
+        "glyphs": ["𐤃", "𐤌"],
+        "structure": "connector + result",
+        "pattern": "declarative-fragment",
+        "gloss": "door → chaos",
+        "interpretation": "The passage leads to the deep. To cross is to enter the unknown. The door opens onto water.",
+        "usage": "Inscribed on doors leading to the sea, to wells, to the unconscious. 'What lies beyond is not solid.'",
+        "grammarNotes": "Dalet opens, Mem receives. A door to chaos — one of the most feared inscriptions."
+      },
+      {
+        "id": "pair-016",
+        "glyphs": ["𐤉", "𐤃"],
+        "structure": "action + connector",
+        "pattern": "imperative-fragment",
+        "gloss": "hand → door",
+        "interpretation": "Make a passage. The hand opens the way. Build the door, then walk through it.",
+        "usage": "Inscribed on workshops and craft-halls. 'What you make opens the way.'",
+        "grammarNotes": "Imperative: Yod commands the making; Dalet is what is made. Action produces passage."
+      },
+      {
+        "id": "pair-017",
+        "glyphs": ["𐤃", "𐤉"],
+        "structure": "connector + action",
+        "pattern": "declarative-fragment",
+        "gloss": "door → hand",
+        "interpretation": "The passage acts. The door itself reaches out. The threshold is not passive — it shapes those who cross it.",
+        "usage": "Inscribed on doors believed to change those who pass through. 'The door will work on you.'",
+        "grammarNotes": "Inverted pair-016. The door as agent — it is the door that makes."
+      },
+      {
+        "id": "pair-018",
+        "glyphs": ["𐤎", "𐤃"],
+        "structure": "domain + connector",
+        "pattern": "declarative-fragment",
+        "gloss": "pillar → door",
+        "interpretation": "What holds opens. The structure contains a passage. Even the pillar has a threshold.",
+        "usage": "Inscribed on load-bearing walls that contain a door. 'The support does not block the way.'",
+        "grammarNotes": "Samek as domain — the structure that also permits passage."
+      },
+      {
+        "id": "pair-019",
+        "glyphs": ["𐤃", "𐤎"],
+        "structure": "connector + result",
+        "pattern": "declarative-fragment",
+        "gloss": "door → pillar",
+        "interpretation": "The passage leads to support. To cross is to find what holds. The door opens onto stability.",
+        "usage": "Inscribed on doors leading to sanctuaries, safe rooms, and places of refuge.",
+        "grammarNotes": "Dalet opens, Samek receives. A door to safety — one of the most comforting inscriptions."
+      },
+      {
+        "id": "pair-020",
+        "glyphs": ["𐤌", "𐤕"],
+        "structure": "domain + result",
+        "pattern": "declarative-fragment",
+        "gloss": "chaos → completion",
+        "interpretation": "The deep finds its seal. Chaos is completed. The water stills. The formless takes form.",
+        "usage": "Inscribed on sealed vessels, tombs, and containers. 'What was chaotic is now contained.'",
+        "grammarNotes": "Mem opens, Taw closes. A fragment of containment — the deep, sealed."
+      },
+      {
+        "id": "pair-021",
+        "glyphs": ["𐤕", "𐤌"],
+        "structure": "result + domain",
+        "pattern": "inversive-fragment",
+        "gloss": "completion → chaos",
+        "interpretation": "The seal breaks. What was finished returns to the deep. Completion unmakes itself.",
+        "usage": "A warning. 'What is sealed will not stay sealed.' Inscribed on tombs that should not be opened.",
+        "grammarNotes": "Inverted pair-020. Taw opens — the seal is broken. Mem receives — chaos returns."
+      },
+      {
+        "id": "pair-022",
+        "glyphs": ["𐤉", "𐤕"],
+        "structure": "action + result",
+        "pattern": "imperative-fragment",
+        "gloss": "hand → completion",
+        "interpretation": "Make the mark. The hand seals. Complete the work. Sign your name.",
+        "usage": "Inscribed on finished works, signatures, and final statements. 'I made this. It is done.'",
+        "grammarNotes": "Yod commands; Taw receives. The hand that seals — a maker's mark."
+      },
+      {
+        "id": "pair-023",
+        "glyphs": ["𐤕", "𐤉"],
+        "structure": "result + action",
+        "pattern": "inversive-fragment",
+        "gloss": "completion → hand",
+        "interpretation": "The mark makes. Completion acts. What is finished continues to shape the world.",
+        "usage": "Inscribed on legacies, testaments, and works that outlive their makers. 'The done thing still does.'",
+        "grammarNotes": "Inverted pair-022. The seal as agent — the mark itself has hands."
+      },
+      {
+        "id": "pair-024",
+        "glyphs": ["𐤆", "𐤌"],
+        "structure": "action + result",
+        "pattern": "imperative-fragment",
+        "gloss": "cut → chaos",
+        "interpretation": "Cut the deep. Divide the waters. Bring form to the formless by separation.",
+        "usage": "A creation fragment. 'Separate the waters.' Inscribed on tools of division used in ritual.",
+        "grammarNotes": "Zayin opens, Mem receives. The cut that creates by dividing chaos."
+      },
+      {
+        "id": "pair-025",
+        "glyphs": ["𐤌", "𐤆"],
+        "structure": "domain + action",
+        "pattern": "declarative-fragment",
+        "gloss": "chaos → cut",
+        "interpretation": "The deep divides. Chaos cuts itself. What is formless separates into what is.",
+        "usage": "A cosmological fragment. 'The waters parted themselves.' Inscribed on creation texts.",
+        "grammarNotes": "Inverted pair-024. The deep as agent of its own division."
+      },
+      {
+        "id": "pair-026",
+        "glyphs": ["𐤎", "𐤕"],
+        "structure": "domain + result",
+        "pattern": "declarative-fragment",
+        "gloss": "pillar → completion",
+        "interpretation": "What holds is finished. The structure stands complete. The pillar reaches its mark.",
+        "usage": "Inscribed on completed buildings, bridges, and monuments. 'It stands. It is done.'",
+        "grammarNotes": "Samek opens, Taw closes. The pillar, sealed — a declaration of permanence."
+      },
+      {
+        "id": "pair-027",
+        "glyphs": ["𐤕", "𐤎"],
+        "structure": "result + domain",
+        "pattern": "inversive-fragment",
+        "gloss": "completion → pillar",
+        "interpretation": "The mark supports. Completion becomes structure. What is finished holds up what comes next.",
+        "usage": "Inscribed on foundations built on older ruins. 'The past holds the present.'",
+        "grammarNotes": "Inverted pair-026. The seal as support — what is finished becomes the pillar."
+      },
+      {
+        "id": "pair-028",
+        "glyphs": ["𐤉", "𐤆"],
+        "structure": "action + action",
+        "pattern": "imperative-fragment",
+        "gloss": "hand → cut",
+        "interpretation": "Take up the blade. The hand that divides. Make the cut.",
+        "usage": "Inscribed on weapons and ritual knives. 'Your hand must do the cutting.'",
+        "grammarNotes": "Two action glyphs — a rare structure. The hand commands; the cut executes. No result glyph — the cut is the result."
+      },
+      {
+        "id": "pair-029",
+        "glyphs": ["𐤆", "𐤉"],
+        "structure": "action + action",
+        "pattern": "imperative-fragment",
+        "gloss": "cut → hand",
+        "interpretation": "The blade makes the hand. Division creates the doer. You become what you cut with.",
+        "usage": "A warning about tools. 'The weapon shapes the wielder.'",
+        "grammarNotes": "Inverted pair-028. The cut as agent — the blade that makes the hand."
+      },
+      {
+        "id": "pair-030",
+        "glyphs": ["𐤀", "𐤆"],
+        "structure": "domain + action",
+        "pattern": "declarative-fragment",
+        "gloss": "strength → cut",
+        "interpretation": "Power divides. Strength is not gentle — it separates, it cuts, it distinguishes.",
+        "usage": "Inscribed on thrones, judges' seats, and places of authority. 'To rule is to divide.'",
+        "grammarNotes": "Aleph opens, Zayin acts. Strength expressed as division."
+      },
+      {
+        "id": "pair-031",
+        "glyphs": ["𐤆", "𐤎"],
+        "structure": "action + result",
+        "pattern": "imperative-fragment",
+        "gloss": "cut → pillar",
+        "interpretation": "Carve the pillar. Shape the support. What is cut from the stone becomes what holds.",
+        "usage": "Inscribed on quarried stone and carved columns. 'From the cut comes the support.'",
+        "grammarNotes": "Zayin opens, Samek receives. The cut that produces structure."
+      },
+      {
+        "id": "pair-032",
+        "glyphs": ["𐤎", "𐤆"],
+        "structure": "domain + action",
+        "pattern": "declarative-fragment",
+        "gloss": "pillar → cut",
+        "interpretation": "The structure divides. What holds also separates. The pillar is a boundary between one side and another.",
+        "usage": "Inscribed on boundary markers and border stones. 'This pillar divides.'",
+        "grammarNotes": "Inverted pair-031. The pillar as divider — what supports also separates."
+      },
+      {
+        "id": "pair-033",
+        "glyphs": ["𐤀", "𐤉"],
+        "structure": "domain + action",
+        "pattern": "declarative-fragment",
+        "gloss": "strength → hand",
+        "interpretation": "Power reaches out. Strength becomes action. The ox is yoked — it pulls.",
+        "usage": "Inscribed on yokes, harnesses, and tools of labor. 'Strength, put to work.'",
+        "grammarNotes": "Aleph opens, Yod acts. Strength channeled into making."
+      },
+      {
+        "id": "pair-034",
+        "glyphs": ["𐤉", "𐤀"],
+        "structure": "action + result",
+        "pattern": "imperative-fragment",
+        "gloss": "hand → strength",
+        "interpretation": "The hand creates power. Making produces strength. Build, and become strong.",
+        "usage": "Inscribed on forges and workshops. 'What you make makes you.'",
+        "grammarNotes": "Inverted pair-033. The hand as origin of strength."
+      },
+      {
+        "id": "pair-035",
+        "glyphs": ["𐤌", "𐤉"],
+        "structure": "domain + action",
+        "pattern": "declarative-fragment",
+        "gloss": "chaos → hand",
+        "interpretation": "The deep acts. Chaos reaches out. What is formless shapes something.",
+        "usage": "Inscribed on places of inspiration and madness. 'The deep has hands.'",
+        "grammarNotes": "Mem as domain, Yod as action. A rare and troubling fragment — chaos with agency."
+      },
+      {
+        "id": "pair-036",
+        "glyphs": ["𐤉", "𐤌"],
+        "structure": "action + result",
+        "pattern": "imperative-fragment",
+        "gloss": "hand → chaos",
+        "interpretation": "Make the deep. Shape chaos. The hand that stirs the water — creation as disturbance.",
+        "usage": "Inscribed on potters' wheels, painters' palettes, and artists' tools. 'Create from the formless.'",
+        "grammarNotes": "Inverted pair-035. The hand that enters chaos to shape it."
+      },
+      {
+        "id": "pair-037",
+        "glyphs": ["𐤀", "𐤎"],
+        "structure": "domain + result",
+        "pattern": "declarative-fragment",
+        "gloss": "strength → pillar",
+        "interpretation": "Power becomes structure. The ox supports the roof. What is strong becomes what holds.",
+        "usage": "Inscribed on load-bearing columns and structural supports. 'Strength, made to stand.'",
+        "grammarNotes": "Aleph opens, Samek receives. The transformation of force into form."
+      },
+      {
+        "id": "pair-038",
+        "glyphs": ["𐤎", "𐤀"],
+        "structure": "domain + result",
+        "pattern": "declarative-fragment",
+        "gloss": "pillar → strength",
+        "interpretation": "The structure empowers. What holds also strengthens. The pillar does not just stand — it enables.",
+        "usage": "Inscribed on places of rest and recovery. 'What holds you makes you strong.'",
+        "grammarNotes": "Inverted pair-037. The pillar as source of strength."
+      },
+      {
+        "id": "pair-039",
+        "glyphs": ["𐤆", "𐤕"],
+        "structure": "action + result",
+        "pattern": "imperative-fragment",
+        "gloss": "cut → completion",
+        "interpretation": "Finish the cut. Complete the division. The final separation — what is cut away does not return.",
+        "usage": "Inscribed on final judgments, exiles, and partings. 'It is severed. It is done.'",
+        "grammarNotes": "Zayin opens, Taw closes. The cut that seals — a fragment of finality."
+      },
+      {
+        "id": "pair-040",
+        "glyphs": ["𐤕", "𐤆"],
+        "structure": "result + action",
+        "pattern": "inversive-fragment",
+        "gloss": "completion → cut",
+        "interpretation": "The seal divides. Completion is not the end — it is a blade that separates what was from what will be.",
+        "usage": "Inscribed on endings that are also beginnings. 'What is finished cuts you free.'",
+        "grammarNotes": "Inverted pair-039. The seal as divider — completion that liberates."
+      }
+    ],
+    "triads": [],
+    "tetrads": [],
+    "pentads": [],
+    "hexads": [],
+    "heptads": []
+  }
+}
