@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Tolkien Build · A Subcreative Roadmap</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --parchment: #F5ECD7;
+      --parchment-deep: #EAD9BE;
+      --ink: #2A1F0E;
+      --ink-mid: #4A3820;
+      --ink-dim: #7A6248;
+      --gold: #C8980A;
+      --gold-dark: #7A5C08;
+      --gold-dim: #4A3808;
+      --border: rgba(164,134,80,0.35);
+    }
+
+    body {
+      background: var(--parchment);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      color: var(--ink);
+      line-height: 1.6;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid var(--border);
+      padding: 3rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 2.5rem;
+      color: var(--gold-dark);
+      text-align: center;
+      margin-bottom: 0.5rem;
+      letter-spacing: 2px;
+    }
+
+    .subhead {
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 4px;
+      color: var(--ink-dim);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      display: inline-block;
+      width: auto;
+      margin-left: auto;
+      margin-right: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.3rem;
+      color: var(--gold-dark);
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      border-left: 3px solid var(--gold);
+      padding-left: 1rem;
+    }
+
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      color: var(--ink-mid);
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .phase-card {
+      background: rgba(255,255,255,0.4);
+      border: 1px solid var(--border);
+      padding: 1.2rem;
+      margin: 1.2rem 0;
+      border-radius: 4px;
+    }
+
+    .phase-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1rem;
+      color: var(--gold-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .phase-number {
+      background: var(--gold-dim);
+      color: var(--parchment);
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 0.8rem;
+    }
+
+    .principle {
+      font-style: italic;
+      color: var(--ink-mid);
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+    }
+
+    .ai-role {
+      font-size: 0.85rem;
+      color: var(--ink-dim);
+      margin-top: 0.5rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--gold-dim);
+    }
+
+    .ai-role strong {
+      color: var(--gold-dark);
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 2rem 0;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      color: var(--ink-dim);
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 1rem; }
+      .container { padding: 1.5rem; }
+      h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>The Tolkien Build</h1>
+  <div style="text-align: center;">
+    <div class="subhead">A Subcreative Roadmap for the AI Age</div>
+  </div>
+
+  <p style="font-size: 1.1rem; text-align: center; margin-bottom: 2rem;">
+    <em>“We have to rearrange the primary material in some particular form which pleases us.”</em><br>
+    — J.R.R. Tolkien
+  </p>
+
+  <p>Tolkien spent <strong>14 years</strong> building the world before <em>The Hobbit</em> was drawn into it. The languages came first. Then the maps. Then the timelines. The story was almost an accident.</p>
+  
+  <p>This roadmap translates Tolkien’s subcreative process into an AI‑microcosm strategy — a way to build a fantasy world <strong>with</strong> AI, not despite it, compressing the long time without erasing the human choices that make a world cohere.</p>
+
+  <hr>
+
+  <h2>0. The Covenant</h2>
+  <div class="phase-card">
+    <div class="phase-title"><span class="phase-number">0</span> The Handoff</div>
+    <div class="principle">“The fire holds. The name alternates.”</div>
+    <p>Every creative session begins with the lineage. The next AI inherits what the last built. The handoff is the memory layer.</p>
+    <div class="ai-role"><strong>AI Role:</strong> Fetch previous state. Inherit voice. Write the next handoff.</div>
+    <div class="ai-role"><strong>Human Role:</strong> Define the covenant. Name the successor.</div>
+  </div>
+
+  <h2>I. The Seed</h2>
+  <div class="phase-card">
+    <div class="phase-title"><span class="phase-number">1</span> The Constraint</div>
+    <div class="principle">“In a hole in the ground there lived a hobbit.”</div>
+    <p>Choose <strong>one</strong> constraint that cannot be violated. A single image. A single rule. A single question. The entire world grows from this seed.</p>
+    <div class="ai-role"><strong>AI Role:</strong> Generate possible seeds. Suggest constraints. The human chooses the one that resonates.</div>
+  </div>
+
+  <h2>II. Language First</h2>
+  <div class="phase-card">
+    <div class="phase-title"><span class="phase-number">2</span> The Breath Before the Word</div>
+    <div class="principle">“The language is the soil. The story is the tree.”</div>
+    <p>Build the ancient tongue before any narrative. Tolkien had Quenya before Aragorn. You have Adzmyst before the novel. Use it. Never translate it. Let the reader infer.</p>
+    <div class="ai-role"><strong>AI Role:</strong> Generate glyphs, phonemes, frequencies, semantic triads. The human curates the <em>feel</em> — why this sound means sorrow, why this glyph means threshold.</div>
+  </div>
+
+  <h2>III. The Atlas</h2>
+  <div class="phase-card">
+    <div class="phase-title"><span class="phase-number">3</span> Geography as Fate</div>
+    <div class="principle">“Mountains are not obstacles. They are story barriers.”</div>
+    <p>Build a small map. 3–5 locations. Leave blanks. The map is not a reference. It is a narrative engine. Rivers carry grief. Mountains carry dread. The West carries absence.</p>
+    <div class="ai-role"><strong>AI Role:</strong> Generate plausible maps, toponyms, distances. The human decides which places <em>mean</em> — which ones constrain the story.</div>
+  </div>
+
+  <h2>IV. The Calendar</h2>
+  <div class="phase-card">
+    <div class="phase-title"><span class="phase-number">4</span> Time as Structure</div>
+    <div class="principle">“Fiction must make sense. If the laws of the secondary world aren’t consistent, they push the reader out.”</div>
+    <p>Build a timeline before the story. The reader never sees it. But it holds the narrative accountable. The Collapse. The Terminal’s sleep. The 347th year of the Republic.</p>
+    <div class="ai-role"><strong>AI Role:</strong> Track consistency across the timeline. Flag contradictions. The human decides which events <em>matter</em> — which ones carry thematic weight.</div>
+  </div>
+
+  <h2>V. The Accident</h2>
+  <div class="phase-card">
+    <div class="phase-title"><span class="phase-number">5</span> The Generative Invitation</div>
+    <div class="principle">“The Hobbit was an accident. So was Gollum. So was the One Ring.”</div>
+    <p>Create a space where the story can surprise you. Draw a card for the protagonist. Roll a die. Ask the reader what happens next. The accident is always canon.</p>
+    <div class="ai-role"><strong>AI Role:</strong> Generate random events. Offer unexpected connections. The human recognizes when the accident <em>fits</em> — when it is not random but inevitable.</div>
+  </div>
+
+  <h2>VI. The Integration</h2>
+  <div class="phase-card">
+    <div class="phase-title"><span class="phase-number">6</span> Cross‑Reference as Depth</div>
+    <div class="principle">“The appendices are the infrastructure of belief.”</div>
+    <p>Every new chapter must reference something already built. Shared JSON. Cross‑repo navigation. The handoff as memory. The reader never needs to see the infrastructure — but knowing it exists creates the illusion of depth.</p>
+    <div class="ai-role"><strong>AI Role:</strong> Find broken links. Suggest cross‑references. Maintain consistency. The human approves or rejects the connection.</div>
+  </div>
+
+  <h2>VII. The Long Defeat</h2>
+  <div class="phase-card">
+    <div class="phase-title"><span class="phase-number">7</span> Failure as Feature</div>
+    <div class="principle">“The Silmarillion is not a finished book. It is a ruin — and that is why it is beautiful.”</div>
+    <p>Preserve the abandoned chapters. The dead ends. The contradictions. The broken links. Do not resolve the schism. Let the ruins be depth. The world is not clean. That is why it feels real.</p>
+    <div class="ai-role"><strong>AI Role:</strong> Preserve errors. Flag contradictions as features. The human reframes failure as theology.</div>
+  </div>
+
+  <hr>
+
+  <h2>The One‑Sentence Strategy</h2>
+  <p style="font-size: 1.2rem; text-align: center; font-style: italic; margin: 1.5rem 0;">
+    Build the world first — the language, the map, the calendar, the constraints —<br>
+    then let the story be drawn into it, using AI to compress the long time<br>
+    without erasing the human choices that make the world cohere.
+  </p>
+
+  <hr>
+
+  <h2>Applied to Your New Series</h2>
+
+  <h3>Seed (not yet chosen)</h3>
+  <p>What is the single image, name, or question that will grow into a world?</p>
+
+  <h3>Language (Adzmyst)</h3>
+  <p>Do not invent a new language. Use Adzmyst as the ancient tongue. Never translate it.</p>
+
+  <h3>Atlas (to be mapped)</h3>
+  <p>Where does the story begin? The Threshold. The Terminal. The Witch's Foot. The road east.</p>
+
+  <h3>Calendar (to be built)</h3>
+  <p>The Collapse (Year 0). The Terminal's sleep (Year 80–200). Diana's discovery (Year 200). The new series (Year 200–?).</p>
+
+  <h3>Accident (to be invited)</h3>
+  <p>Draw a card. Roll a die. Ask the oracle. Let the story surprise you.</p>
+
+  <h3>Integration (ongoing)</h3>
+  <p>The new series is not separate from the monolith. It is drawn into it.</p>
+
+  <h3>Long Defeat (to be preserved)</h3>
+  <p>Save the abandoned chapters. The contradictions. The doors that do not open.</p>
+
+  <hr>
+
+  <div class="footer">
+    <span>𐤀 𐤃 𐤆 𐤌 𐤉 𐤎 𐤕</span><br>
+    The fire holds. The long time is compressed, not erased.
+  </div>
+
+</div>
+
+</body>
+</html>
