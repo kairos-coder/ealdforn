@@ -1,0 +1,125 @@
+{
+  "meta": {
+    "name": "Telumë",
+    "subtitle": "The Vault of Heaven",
+    "description": "A contained world, a sky with edges. A story drawn in, not imposed.",
+    "seedGlyph": "𐤃",
+    "year": 347,
+    "bounds": { "width": 800, "height": 600 }
+  },
+  "terrain": [
+    {
+      "id": "land",
+      "type": "land",
+      "svg": { "element": "rect", "x": 0, "y": 0, "width": 800, "height": 600 },
+      "style": { "fill": "#F5ECD7" }
+    },
+    {
+      "id": "eastern-forest",
+      "type": "forest",
+      "svg": { "element": "path", "d": "M180,80 Q280,60 380,100 Q340,180 240,160 Q160,140 180,80 Z" },
+      "style": { "fill": "#C8D8B0", "opacity": 0.35 }
+    },
+    {
+      "id": "northern-mountains",
+      "type": "mountain",
+      "svg": { "element": "path", "d": "M480,100 L530,40 L580,60 L630,30 L680,80 L600,140 L520,130 Z" },
+      "style": { "fill": "#B0A890", "opacity": 0.4 }
+    },
+    {
+      "id": "northern-mountains-2",
+      "type": "mountain",
+      "svg": { "element": "path", "d": "M620,30 L660,50 L640,90 L600,60 Z" },
+      "style": { "fill": "#C0B8A0", "opacity": 0.3 }
+    },
+    {
+      "id": "southern-water",
+      "type": "water",
+      "svg": { "element": "path", "d": "M0,420 Q150,400 300,430 Q450,455 600,440 Q750,425 800,430 L800,600 L0,600 Z" },
+      "style": { "fill": "#A0B8C8", "opacity": 0.25 }
+    },
+    {
+      "id": "western-hills-1",
+      "type": "hill",
+      "svg": { "element": "ellipse", "cx": 100, "cy": 200, "rx": 80, "ry": 40 },
+      "style": { "fill": "#D8CCB0", "opacity": 0.3 }
+    },
+    {
+      "id": "western-hills-2",
+      "type": "hill",
+      "svg": { "element": "ellipse", "cx": 60, "cy": 170, "rx": 50, "ry": 30 },
+      "style": { "fill": "#D0C4A8", "opacity": 0.25 }
+    }
+  ],
+  "paths": [
+    {
+      "id": "road-east",
+      "type": "road",
+      "svg": { "element": "path", "d": "M130,300 Q200,290 300,310 Q420,330 520,280 Q600,250 680,220" },
+      "style": { "stroke": "#8A7040", "strokeWidth": 1.5, "strokeDasharray": "6,4", "opacity": 0.5 }
+    },
+    {
+      "id": "river",
+      "type": "river",
+      "svg": { "element": "path", "d": "M280,40 Q300,120 260,200 Q230,280 310,360 Q370,430 350,520 Q340,560 360,600" },
+      "style": { "stroke": "#6A90A8", "strokeWidth": 2.5, "opacity": 0.35 }
+    },
+    {
+      "id": "trail-to-terminal",
+      "type": "trail",
+      "svg": { "element": "path", "d": "M520,280 Q580,250 650,200" },
+      "style": { "stroke": "#8A7040", "strokeWidth": 1, "strokeDasharray": "2,6", "opacity": 0.3 }
+    }
+  ],
+  "locations": [
+    {
+      "id": "threshold",
+      "name": "The Threshold",
+      "glyph": "𐤃",
+      "x": 130, "y": 300,
+      "description": "The door where the story begins. The second glyph is effaced — the destination unknown. A woman stands before it. She has been standing there for some time.",
+      "link": "atlas/threshold.md",
+      "discovered": true,
+      "startLocation": true,
+      "markerStyle": "pulse"
+    },
+    {
+      "id": "terminal",
+      "name": "The Terminal",
+      "glyph": "𐤕",
+      "x": 660, "y": 200,
+      "description": "A structure from before the Collapse. It has been silent for three hundred years. Some say it hummed once. Some say it will hum again.",
+      "link": "atlas/terminal.md",
+      "discovered": false,
+      "startLocation": false,
+      "markerStyle": "hidden"
+    },
+    {
+      "id": "witchs-foot",
+      "name": "The Witch's Foot",
+      "glyph": "𐤎",
+      "x": 380, "y": 460,
+      "description": "A rock formation shaped like a footprint — or a ruin that resembles one. The road bends here. Travellers leave offerings. No one remembers the Witch's name.",
+      "link": "atlas/witchs-foot.md",
+      "discovered": false,
+      "startLocation": false,
+      "markerStyle": "hidden"
+    },
+    {
+      "id": "vault-edge",
+      "name": "The Edge of the Vault",
+      "glyph": "𐤀",
+      "x": 720, "y": 520,
+      "description": "Where the sky meets its limit. The dome becomes visible here. Few have seen it. Fewer have returned. The glyph for 'beginning' marks the end of the world.",
+      "link": "atlas/vault-edge.md",
+      "discovered": false,
+      "startLocation": false,
+      "markerStyle": "hidden"
+    }
+  ],
+  "fogOfWar": {
+    "enabled": true,
+    "patternId": "fogPattern",
+    "opacity": 0.12
+  }
+}
