@@ -1,145 +1,126 @@
 // ═══════════════════════════════════════════════════════════════
 // TELUMË · ATLAS ENGINE
-// Renders the SVG map from json/map.json
+// Interactivity layer for the hardcoded SVG map
+// Geography is in atlas.html. This handles tooltips, info panel,
+// and city-state data from telume.json.
 // ═══════════════════════════════════════════════════════════════
 
-let MAP_DATA = null;
+let TELUME_DATA = null;
 
-// ── LOAD MAP DATA ────────────────────────────────────────────
-async function loadMapData() {
+// ── CITY-STATE DATA (fallback if telume.json unavailable) ─────
+const FALLBACK_CITIES = {
+  nesatta: {
+    name: 'Nešatta',
+    tier: 'Hittite · Pankus Fire-Keeper',
+    description: 'Oldest of the seven. Archive city. Nearly abandoned. Holds the glyph archive that could break every other kingdom\'s origin story. The Pankus assembly meets here every seven years.',
+    realm: 'haldorian'
+  },
+  tihomir: {
+    name: 'Tihomir',
+    tier: 'Old Church Slavonic · Witness City',
+    description: 'Monastery on the Mingan Archipelago. Does not vote in the Pankus. Keeps the written record. Bogumil\'s home. Where the Nešatta Codex was transcribed.',
+    realm: 'haldorian'
+  },
+  tsarnigrad: {
+    name: 'Tsarnigrad',
+    tier: 'Old East Slavic · Dark Fortress',
+    description: 'The almost-monarchy. Greatest internal threat to the Pankus covenant. The city that effaced and recarved the "no king" inscription. Stockpiling grain as the ice advances.',
+    realm: 'haldorian'
+  },
+  radogost: {
+    name: 'Radogost',
+    tier: 'Old West Slavic · Trade Heart',
+    description: 'Glad host at the Miramichi river mouth. Inland gateway to the river routes. Where the Pankus gets its grain. The most welcoming of the seven — and the most vulnerable.',
+    realm: 'haldorian'
+  },
+  aristopol: {
+    name: 'Aristopol',
+    tier: 'Macedonian Greek · Empire-Builder',
+    description: '"The city of the best" — named themselves after a quality they assigned to themselves. Perpetually proposes a hegemon for the Pankus. Exhausting and indispensable. Building ships faster than anyone else.',
+    realm: 'haldorian'
+  },
+  gordeon: {
+    name: 'Gordéon',
+    tier: 'Phrygian · The Unsolvable City',
+    description: 'Old money. Old gods. Arrived with wealth nobody can account for. The Gordian knot as political theology. Doesn\'t explain itself. Buying fuel at unusual rates.',
+    realm: 'haldorian'
+  },
+  pescassa: {
+    name: 'Pescassa',
+    tier: 'Epic Latin · Maritime Fishing City',
+    description: 'The language of the net and the oar, not the sword and the senate. Arrived in boats. Never left. Latin fishing root + Anatolian suffix from centuries of trading with Nešatta.',
+    realm: 'haldorian'
+  },
+  ealdenburg: {
+    name: 'Ealdenburg',
+    tier: 'Capital of Ealdor',
+    description: 'The Old Fort. Hillfort of timber halls and standing stones. Where the Witenagemot meets to choose the king. The Ring lies to the north.',
+    realm: 'ealdor'
+  },
+  suryapura: {
+    name: 'Sūryapura',
+    tier: 'Capital of Sūrya Samrājya · Sun City',
+    description: 'Temple complex of golden spires and observatories. The Sun-King resides here. The Trilingual Codex is kept in the Agnihotra temple. The Terminal hums on solstices.',
+    realm: 'surya'
+  },
+  ring: {
+    name: 'The Ring',
+    tier: 'Sacred Site · Manicouagan Crater',
+    description: 'Where Hengist swore the first oath. Where Ymir hit the ground. Where the oldest ogham circle stands. Three traditions, one site, a religious order that serves all three.',
+    realm: 'ealdor'
+  }
+};
+
+// ── LOAD TELUME DATA ─────────────────────────────────────────
+async function loadTelumeData() {
   try {
-    const res = await fetch('json/map.json');
-    if (!res.ok) throw new Error(`Failed to load map.json: ${res.status}`);
-    MAP_DATA = await res.json();
+    const res = await fetch('json/telume.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    TELUME_DATA = await res.json();
     return true;
   } catch (err) {
-    console.error('[Atlas] Failed to load map data:', err);
+    console.warn('[Atlas] Could not load telume.json, using fallback:', err.message);
     return false;
   }
 }
 
-// ── BUILD SVG ────────────────────────────────────────────────
-function buildSvg() {
-  const svg = document.getElementById('mapSvg');
-  if (!svg || !MAP_DATA) return;
-
-  // Clear existing
-  svg.innerHTML = '';
-
-  // Build defs (patterns, filters)
-  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-  const fogPattern = document.createElementNS('http://www.w3.org/2000/svg', 'pattern');
-  fogPattern.setAttribute('id', 'fogPattern');
-  fogPattern.setAttribute('width', '20');
-  fogPattern.setAttribute('height', '20');
-  fogPattern.setAttribute('patternUnits', 'userSpaceOnUse');
-  const fogDot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-  fogDot.setAttribute('cx', '10');
-  fogDot.setAttribute('cy', '10');
-  fogDot.setAttribute('r', '1');
-  fogDot.setAttribute('fill', '#6A5030');
-  fogDot.setAttribute('opacity', '0.3');
-  fogPattern.appendChild(fogDot);
-  defs.appendChild(fogPattern);
-  svg.appendChild(defs);
-
-  // Terrain
-  MAP_DATA.terrain.forEach(t => {
-    const el = document.createElementNS('http://www.w3.org/2000/svg', t.svg.element);
-    Object.entries(t.svg).forEach(([key, val]) => {
-      if (key !== 'element') el.setAttribute(key, val);
-    });
-    Object.entries(t.style).forEach(([key, val]) => {
-      el.setAttribute(key, val);
-    });
-    svg.appendChild(el);
-  });
-
-  // Paths
-  MAP_DATA.paths.forEach(p => {
-    const el = document.createElementNS('http://www.w3.org/2000/svg', p.svg.element);
-    Object.entries(p.svg).forEach(([key, val]) => {
-      if (key !== 'element') el.setAttribute(key, val);
-    });
-    Object.entries(p.style).forEach(([key, val]) => {
-      el.setAttribute(key, val);
-    });
-    el.setAttribute('fill', 'none');
-    svg.appendChild(el);
-  });
-
-  // Locations
-  MAP_DATA.locations.forEach(loc => {
-    const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    group.setAttribute('class', 'location-marker');
-    group.setAttribute('data-id', loc.id);
-    group.addEventListener('click', () => showLocation(loc.id));
-
-    // Glow circle
-    const glow = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    glow.setAttribute('cx', loc.x);
-    glow.setAttribute('cy', loc.y);
-    glow.setAttribute('r', loc.startLocation ? '14' : '12');
-    glow.setAttribute('fill', 'none');
-    glow.setAttribute('stroke', '#8A6008');
-    glow.setAttribute('stroke-width', '0.5');
-    glow.setAttribute('class', 'marker-glow');
-    glow.setAttribute('opacity', loc.discovered ? '0.3' : '0.1');
-    group.appendChild(glow);
-
-    // Dot
-    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    dot.setAttribute('cx', loc.x);
-    dot.setAttribute('cy', loc.y);
-    dot.setAttribute('r', loc.startLocation ? '5' : loc.discovered ? '4' : '3.5');
-    dot.setAttribute('fill', loc.discovered ? '#C8980A' : '#6A5030');
-    dot.setAttribute('opacity', loc.discovered ? '1' : '0.5');
-    dot.setAttribute('class', loc.startLocation ? 'marker-dot marker-pulse' : 'marker-dot');
-    group.appendChild(dot);
-
-    // Glyph label
-    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text.setAttribute('x', loc.x);
-    text.setAttribute('y', loc.y - 14);
-    text.setAttribute('text-anchor', 'middle');
-    text.setAttribute('font-family', "'Cinzel', serif");
-    text.setAttribute('font-size', loc.startLocation ? '10' : '9');
-    text.setAttribute('fill', loc.discovered ? '#8A6008' : '#6A5030');
-    text.setAttribute('opacity', loc.discovered ? '0.7' : '0.4');
-    text.textContent = loc.discovered ? loc.glyph : '?';
-    group.appendChild(text);
-
-    // Hover events
-    group.addEventListener('mouseenter', (e) => showTooltip(e, loc));
-    group.addEventListener('mousemove', (e) => moveTooltip(e));
-    group.addEventListener('mouseleave', hideTooltip);
-
-    svg.appendChild(group);
-  });
-
-  // Fog of war overlay
-  if (MAP_DATA.fogOfWar && MAP_DATA.fogOfWar.enabled) {
-    const fog = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-    fog.setAttribute('x', '0');
-    fog.setAttribute('y', '0');
-    fog.setAttribute('width', MAP_DATA.meta.bounds.width);
-    fog.setAttribute('height', MAP_DATA.meta.bounds.height);
-    fog.setAttribute('fill', 'url(#fogPattern)');
-    fog.setAttribute('opacity', MAP_DATA.fogOfWar.opacity);
-    fog.setAttribute('pointer-events', 'none');
-    svg.appendChild(fog);
+// ── GET CITY INFO ────────────────────────────────────────────
+function getCityInfo(id) {
+  // Try telume.json first
+  if (TELUME_DATA) {
+    for (const realm of TELUME_DATA.realms) {
+      if (realm.id === 'haldorian' && realm.cityStates) {
+        const city = realm.cityStates.find(c => c.id === id);
+        if (city) {
+          return {
+            name: city.name,
+            tier: `${city.tier} · ${city.character.split('.')[0]}`,
+            description: city.character,
+            realm: 'haldorian'
+          };
+        }
+      }
+      // Check capitals
+      if (realm.capital && realm.id === id.replace('pura', '').replace('burg', '')) {
+        // fuzzy match for suryapura / ealdenburg
+      }
+    }
   }
+  // Fallback
+  return FALLBACK_CITIES[id] || {
+    name: id,
+    tier: 'Unknown',
+    description: 'Location data not yet recorded.',
+    realm: 'unknown'
+  };
 }
 
 // ── TOOLTIP ──────────────────────────────────────────────────
 const tooltip = document.getElementById('tooltip');
 
-function showTooltip(e, loc) {
-  if (!loc.discovered) {
-    tooltip.textContent = 'Unknown Location';
-  } else {
-    tooltip.textContent = loc.name;
-  }
+function showTooltip(e, cityId) {
+  const info = getCityInfo(cityId);
+  tooltip.textContent = info.name;
   tooltip.style.opacity = '1';
 }
 
@@ -156,22 +137,12 @@ function hideTooltip() {
 
 // ── INFO PANEL ───────────────────────────────────────────────
 function showLocation(id) {
-  const loc = MAP_DATA.locations.find(l => l.id === id);
-  if (!loc) return;
-
+  const info = getCityInfo(id);
   const panel = document.getElementById('info-panel');
-  document.getElementById('panelGlyph').textContent = loc.discovered ? loc.glyph : '?';
-  document.getElementById('panelName').textContent = loc.name;
-  document.getElementById('panelDesc').textContent = loc.description;
-  document.getElementById('panelLink').href = loc.link;
 
-  if (!loc.discovered) {
-    document.getElementById('panelDesc').textContent =
-      'This location has not yet been discovered. Its name is unknown. Its glyph is unread.';
-    document.getElementById('panelLink').style.display = 'none';
-  } else {
-    document.getElementById('panelLink').style.display = 'block';
-  }
+  document.getElementById('panelName').textContent = info.name;
+  document.getElementById('panelTier').textContent = info.tier;
+  document.getElementById('panelDesc').textContent = info.description;
 
   panel.classList.add('visible');
 }
@@ -179,7 +150,7 @@ function showLocation(id) {
 // Close panel on click outside
 document.addEventListener('click', (e) => {
   const panel = document.getElementById('info-panel');
-  if (!panel.contains(e.target) && !e.target.closest('.location-marker')) {
+  if (!panel.contains(e.target) && !e.target.closest('.city-marker')) {
     panel.classList.remove('visible');
   }
 });
@@ -191,20 +162,32 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// ── ATTACH INTERACTIVITY TO CITY MARKERS ─────────────────────
+function attachCityEvents() {
+  document.querySelectorAll('.city-marker').forEach(marker => {
+    const id = marker.getAttribute('data-id');
+    if (!id) return;
+
+    marker.addEventListener('click', () => showLocation(id));
+
+    marker.addEventListener('mouseenter', (e) => {
+      showTooltip(e, id);
+    });
+
+    marker.addEventListener('mousemove', (e) => {
+      moveTooltip(e);
+    });
+
+    marker.addEventListener('mouseleave', () => {
+      hideTooltip();
+    });
+  });
+}
+
 // ── INIT ─────────────────────────────────────────────────────
 async function initAtlas() {
-  const ok = await loadMapData();
-  if (!ok) {
-    document.getElementById('mapSvg').innerHTML =
-      '<text x="400" y="300" text-anchor="middle" font-family="Cinzel,serif" font-size="14" fill="#8A6008">𐤆 Failed to load map data</text>';
-    return;
-  }
-  buildSvg();
-
-  // Update title
-  document.querySelector('.map-title').textContent = MAP_DATA.meta.name;
-  document.querySelector('.map-subtitle').textContent =
-    `${MAP_DATA.meta.subtitle} · Year ${MAP_DATA.meta.year}`;
+  await loadTelumeData();
+  attachCityEvents();
 }
 
 initAtlas();
