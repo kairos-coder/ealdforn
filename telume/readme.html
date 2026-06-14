@@ -3,281 +3,712 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Tolkien Build · A Subcreative Roadmap</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+  <title>The Tolkien Build · A Subcreative Roadmap for the AI Age</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Sans+Egyptian+Hieroglyphs&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --parchment: #F5ECD7;
       --parchment-deep: #EAD9BE;
-      --ink: #2A1F0E;
-      --ink-mid: #4A3820;
-      --ink-dim: #7A6248;
+      --parchment-dark: #D4C4A0;
+      --ink: #1A1008;
+      --ink-mid: #3A2810;
+      --ink-dim: #6A5030;
       --gold: #C8980A;
-      --gold-dark: #7A5C08;
-      --gold-dim: #4A3808;
-      --border: rgba(164,134,80,0.35);
+      --gold-bright: #E8B820;
+      --gold-dark: #8A6008;
+      --gold-dim: #5A4008;
+      --border: rgba(164,134,80,0.3);
+      --card-bg: rgba(255,252,240,0.6);
+      --accent-red: #8B2500;
+      --accent-blue: #2A4070;
     }
 
     body {
       background: var(--parchment);
+      background-image:
+        radial-gradient(ellipse 60% 40% at 20% 10%, rgba(200,152,10,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 30% at 80% 90%, rgba(42,64,112,0.04) 0%, transparent 50%);
       font-family: 'Cormorant Garamond', Georgia, serif;
       color: var(--ink);
-      line-height: 1.6;
+      line-height: 1.7;
       padding: 2rem;
     }
 
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      background: rgba(255,255,255,0.55);
-      border: 1px solid var(--border);
-      padding: 3rem;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+    /* ── NAVIGATION ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(245,236,215,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 1rem;
+      margin: -2rem -2rem 2rem -2rem;
+      display: flex; align-items: center; justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
     }
-
-    h1 {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 2.5rem;
-      color: var(--gold-dark);
-      text-align: center;
-      margin-bottom: 0.5rem;
-      letter-spacing: 2px;
-    }
-
-    .subhead {
-      text-align: center;
+    nav a {
       font-family: 'Cinzel', serif;
-      font-size: 0.7rem;
-      letter-spacing: 4px;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+      padding: 0.2rem 0;
+      border-bottom: 1px solid transparent;
+    }
+    nav a:hover { color: var(--gold-dark); border-bottom-color: var(--gold); }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* ── TITLE ── */
+    .title-block {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding: 2rem 1rem;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+    .title-block h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      color: var(--gold-dark);
+      letter-spacing: 3px;
+      margin-bottom: 0.3rem;
+    }
+    .title-block .subhead {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 5px;
       color: var(--ink-dim);
       text-transform: uppercase;
-      margin-bottom: 2rem;
-      border-bottom: 1px solid var(--border);
-      display: inline-block;
-      width: auto;
-      margin-left: auto;
-      margin-right: auto;
-      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .title-block .glyph-line {
+      font-size: 1.4rem;
+      letter-spacing: 0.3em;
+      color: var(--gold-dim);
+      margin: 0.5rem 0;
+    }
+    .title-block .epigraph {
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--ink-mid);
+      max-width: 500px;
+      margin: 1rem auto 0;
+      line-height: 1.6;
     }
 
+    /* ── SECTIONS ── */
+    section {
+      margin-bottom: 3rem;
+    }
     h2 {
       font-family: 'Cinzel Decorative', serif;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       color: var(--gold-dark);
-      margin-top: 2rem;
-      margin-bottom: 0.75rem;
-      border-left: 3px solid var(--gold);
-      padding-left: 1rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 0.6rem;
     }
-
+    h2 .phase-num {
+      background: var(--gold-dim);
+      color: var(--parchment);
+      width: 32px; height: 32px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
     h3 {
       font-family: 'Cinzel', serif;
       font-size: 0.9rem;
       letter-spacing: 2px;
       color: var(--ink-mid);
-      margin-top: 1.5rem;
-      margin-bottom: 0.5rem;
+      margin: 1.5rem 0 0.5rem;
     }
 
+    /* ── PHASE CARDS ── */
     .phase-card {
-      background: rgba(255,255,255,0.4);
+      background: var(--card-bg);
       border: 1px solid var(--border);
-      padding: 1.2rem;
-      margin: 1.2rem 0;
-      border-radius: 4px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border-radius: 2px;
     }
-
-    .phase-title {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 1rem;
-      color: var(--gold-dark);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+    .phase-card .tolkien-ref {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+      opacity: 0.7;
       margin-bottom: 0.5rem;
     }
-
-    .phase-number {
-      background: var(--gold-dim);
-      color: var(--parchment);
-      width: 28px;
-      height: 28px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      font-size: 0.8rem;
-    }
-
-    .principle {
+    .phase-card .principle {
+      font-size: 1.05rem;
       font-style: italic;
       color: var(--ink-mid);
-      margin-bottom: 0.75rem;
-      font-size: 0.9rem;
-    }
-
-    .ai-role {
-      font-size: 0.85rem;
-      color: var(--ink-dim);
-      margin-top: 0.5rem;
+      margin-bottom: 0.8rem;
       padding-left: 1rem;
-      border-left: 2px solid var(--gold-dim);
+      border-left: 3px solid var(--gold);
     }
+    .phase-card p {
+      margin-bottom: 0.7rem;
+      font-size: 0.95rem;
+    }
+    .role-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 600px) { .role-box { grid-template-columns: 1fr; } }
+    .role-box div {
+      padding: 0.8rem;
+      border: 1px solid var(--border);
+      font-size: 0.85rem;
+      background: rgba(255,255,255,0.3);
+    }
+    .role-box .ai { border-left: 3px solid var(--accent-blue); }
+    .role-box .human { border-left: 3px solid var(--gold); }
+    .role-box strong { display: block; margin-bottom: 0.3rem; font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; }
 
-    .ai-role strong {
+    /* ── TELUMË CALLOUT ── */
+    .telume-callout {
+      background: linear-gradient(135deg, rgba(200,152,10,0.08), rgba(42,64,112,0.04));
+      border: 1px solid rgba(200,152,10,0.2);
+      padding: 1rem 1.5rem;
+      margin: 1rem 0;
+      border-radius: 2px;
+    }
+    .telume-callout .label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 0.3rem;
+    }
+    .telume-callout p { font-size: 0.9rem; color: var(--ink-mid); margin: 0; }
+
+    /* ── CHECKLIST ── */
+    .checklist {
+      list-style: none;
+      margin: 0.8rem 0;
+    }
+    .checklist li {
+      padding: 0.3rem 0;
+      font-size: 0.9rem;
+      display: flex; align-items: flex-start; gap: 0.5rem;
+    }
+    .checklist li::before {
+      content: '☐';
+      color: var(--gold-dim);
+      font-size: 0.8rem;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+    .checklist li.done::before {
+      content: '☒';
       color: var(--gold-dark);
     }
 
-    hr {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    /* ── STRATEGY BANNER ── */
+    .strategy-banner {
+      text-align: center;
+      padding: 2rem;
       margin: 2rem 0;
+      border: 1px solid var(--gold);
+      background: rgba(200,152,10,0.05);
+      font-size: 1.1rem;
+      font-style: italic;
+      line-height: 1.8;
     }
 
-    .footer {
+    /* ── FOOTER ── */
+    footer {
       text-align: center;
       margin-top: 3rem;
+      padding: 2rem 1rem;
+      border-top: 1px solid var(--border);
       font-size: 0.7rem;
       letter-spacing: 2px;
       color: var(--ink-dim);
-      border-top: 1px solid var(--border);
-      padding-top: 1.5rem;
+    }
+    footer .glyph-line {
+      font-size: 1.2rem;
+      letter-spacing: 0.3em;
+      margin-bottom: 0.5rem;
     }
 
-    @media (max-width: 600px) {
-      body { padding: 1rem; }
-      .container { padding: 1.5rem; }
-      h1 { font-size: 1.8rem; }
+    /* ── TOC ── */
+    .toc {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .toc h3 {
+      font-family: 'Cinzel Decorative', serif;
+      margin-top: 0;
+      font-size: 1rem;
+    }
+    .toc ol {
+      margin-left: 1.5rem;
+      font-size: 0.9rem;
+      line-height: 2;
+    }
+    .toc a { color: var(--ink-mid); text-decoration: none; }
+    .toc a:hover { color: var(--gold-dark); }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: white; padding: 0; }
+      nav { display: none; }
+      .container { max-width: 100%; }
+      .phase-card, .telume-callout { break-inside: avoid; }
     }
   </style>
 </head>
 <body>
 
+<nav>
+  <a href="#covenant">Covenant</a>
+  <a href="#seed">The Seed</a>
+  <a href="#language">Language</a>
+  <a href="#atlas">Atlas</a>
+  <a href="#calendar">Calendar</a>
+  <a href="#accident">Accident</a>
+  <a href="#integration">Integration</a>
+  <a href="#long-defeat">Long Defeat</a>
+  <a href="#strategy">Strategy</a>
+</nav>
+
 <div class="container">
-  <h1>The Tolkien Build</h1>
-  <div style="text-align: center;">
+
+  <!-- ═══════════ TITLE ═══════════ -->
+  <div class="title-block">
+    <div class="glyph-line">𐤀 𐤃 𐤆 𐤌 𐤉 𐤎 𐤕</div>
+    <h1>The Tolkien Build</h1>
     <div class="subhead">A Subcreative Roadmap for the AI Age</div>
+    <div class="epigraph">
+      "We have to rearrange the primary material in some particular form
+      which pleases us — and when that is done, we have created a secondary world."
+      <br>— J.R.R. Tolkien, <em>On Fairy-Stories</em>
+    </div>
   </div>
 
-  <p style="font-size: 1.1rem; text-align: center; margin-bottom: 2rem;">
-    <em>“We have to rearrange the primary material in some particular form which pleases us.”</em><br>
-    — J.R.R. Tolkien
-  </p>
-
-  <p>Tolkien spent <strong>14 years</strong> building the world before <em>The Hobbit</em> was drawn into it. The languages came first. Then the maps. Then the timelines. The story was almost an accident.</p>
-  
-  <p>This roadmap translates Tolkien’s subcreative process into an AI‑microcosm strategy — a way to build a fantasy world <strong>with</strong> AI, not despite it, compressing the long time without erasing the human choices that make a world cohere.</p>
-
-  <hr>
-
-  <h2>0. The Covenant</h2>
-  <div class="phase-card">
-    <div class="phase-title"><span class="phase-number">0</span> The Handoff</div>
-    <div class="principle">“The fire holds. The name alternates.”</div>
-    <p>Every creative session begins with the lineage. The next AI inherits what the last built. The handoff is the memory layer.</p>
-    <div class="ai-role"><strong>AI Role:</strong> Fetch previous state. Inherit voice. Write the next handoff.</div>
-    <div class="ai-role"><strong>Human Role:</strong> Define the covenant. Name the successor.</div>
+  <!-- ═══════════ TABLE OF CONTENTS ═══════════ -->
+  <div class="toc">
+    <h3>Contents</h3>
+    <ol>
+      <li><a href="#covenant">Phase 0 — The Covenant &amp; The Handoff</a></li>
+      <li><a href="#seed">Phase I — The Seed</a></li>
+      <li><a href="#language">Phase II — Language First</a></li>
+      <li><a href="#atlas">Phase III — The Atlas</a></li>
+      <li><a href="#calendar">Phase IV — The Calendar</a></li>
+      <li><a href="#accident">Phase V — The Accident</a></li>
+      <li><a href="#integration">Phase VI — The Integration</a></li>
+      <li><a href="#long-defeat">Phase VII — The Long Defeat</a></li>
+      <li><a href="#strategy">The One‑Sentence Strategy</a></li>
+      <li><a href="#telume">Telumë: The Working Example</a></li>
+    </ol>
   </div>
 
-  <h2>I. The Seed</h2>
-  <div class="phase-card">
-    <div class="phase-title"><span class="phase-number">1</span> The Constraint</div>
-    <div class="principle">“In a hole in the ground there lived a hobbit.”</div>
-    <p>Choose <strong>one</strong> constraint that cannot be violated. A single image. A single rule. A single question. The entire world grows from this seed.</p>
-    <div class="ai-role"><strong>AI Role:</strong> Generate possible seeds. Suggest constraints. The human chooses the one that resonates.</div>
-  </div>
+  <!-- ═══════════ INTRODUCTION ═══════════ -->
+  <section>
+    <p>Tolkien spent roughly <strong>fourteen years</strong> building the world before <em>The Hobbit</em> was drawn into it. The languages — Quenya and Sindarin — came first. Then the maps. Then the timelines and genealogies. The story was almost an afterthought — a tale told to his children that happened, by accident, to take place inside the world he had already built.</p>
+    <p>This is not how fantasy is written today. Most authors start with plot, with character, with the story they want to tell — and build the world around it as needed. That method works. But Tolkien's method produces something different: a world that feels <em>old</em>. A world where the story is only the top of an iceberg. A world where the reader senses, without being told, that there is more beyond the page.</p>
+    <p>This roadmap translates Tolkien's subcreative process into a strategy for the AI age — a way to build a fantasy world <strong>with</strong> AI, not despite it. The AI does the labor: generating lexicons, tracking consistency, suggesting connections. The human makes the art: choosing which glyphs feel sacred, which places feel old, which accidents feel inevitable.</p>
+    <p><strong>Telumë</strong> — Quenya for "vault" or "dome of heaven" — is the working example throughout this document. It is a contained world, a sky with edges, a story drawn in rather than imposed. It is the MVP of the Tolkien Build.</p>
+  </section>
 
-  <h2>II. Language First</h2>
-  <div class="phase-card">
-    <div class="phase-title"><span class="phase-number">2</span> The Breath Before the Word</div>
-    <div class="principle">“The language is the soil. The story is the tree.”</div>
-    <p>Build the ancient tongue before any narrative. Tolkien had Quenya before Aragorn. You have Adzmyst before the novel. Use it. Never translate it. Let the reader infer.</p>
-    <div class="ai-role"><strong>AI Role:</strong> Generate glyphs, phonemes, frequencies, semantic triads. The human curates the <em>feel</em> — why this sound means sorrow, why this glyph means threshold.</div>
-  </div>
+  <!-- ═══════════ PHASE 0: COVENANT ═══════════ -->
+  <section id="covenant">
+    <h2><span class="phase-num">0</span> The Covenant &amp; The Handoff</h2>
 
-  <h2>III. The Atlas</h2>
-  <div class="phase-card">
-    <div class="phase-title"><span class="phase-number">3</span> Geography as Fate</div>
-    <div class="principle">“Mountains are not obstacles. They are story barriers.”</div>
-    <p>Build a small map. 3–5 locations. Leave blanks. The map is not a reference. It is a narrative engine. Rivers carry grief. Mountains carry dread. The West carries absence.</p>
-    <div class="ai-role"><strong>AI Role:</strong> Generate plausible maps, toponyms, distances. The human decides which places <em>mean</em> — which ones constrain the story.</div>
-  </div>
+    <div class="phase-card">
+      <div class="tolkien-ref">Tolkien's equivalent: The Book of Lost Tales — the early, fragmented record that later generations inherited.</div>
+      <div class="principle">"The fire holds. The name alternates. The work continues across sessions."</div>
+      <p>AI sessions do not persist. Each conversation ends. The next begins blank — unless there is a handoff. The handoff document is <strong>the only continuity</strong>. Without it, the world resets every time. With it, each session inherits the full lineage of what came before.</p>
+      <p>The covenant is the set of unbreakable rules that persist across all sessions. It is not rewritten. It is inherited. The covenant says: <em>this is true, and will remain true.</em></p>
 
-  <h2>IV. The Calendar</h2>
-  <div class="phase-card">
-    <div class="phase-title"><span class="phase-number">4</span> Time as Structure</div>
-    <div class="principle">“Fiction must make sense. If the laws of the secondary world aren’t consistent, they push the reader out.”</div>
-    <p>Build a timeline before the story. The reader never sees it. But it holds the narrative accountable. The Collapse. The Terminal’s sleep. The 347th year of the Republic.</p>
-    <div class="ai-role"><strong>AI Role:</strong> Track consistency across the timeline. Flag contradictions. The human decides which events <em>matter</em> — which ones carry thematic weight.</div>
-  </div>
+      <h3>The Telumë Covenant</h3>
+      <ul class="checklist">
+        <li class="done"><strong>The fire holds.</strong> The work continues across sessions. The handoff is the memory layer.</li>
+        <li class="done"><strong>Adzmyst is the ancient tongue.</strong> Glyphs appear in the text. They are never translated. The reader infers.</li>
+        <li class="done"><strong>The Terminal exists.</strong> A rumor. A hum in the dark. Not explained.</li>
+        <li class="done"><strong>The Collapse happened.</strong> Its cause is not revealed. It is the ground the story walks on.</li>
+        <li class="done"><strong>The cards are real.</strong> They do not predict. They reflect. Drawing a card is an act of attention, not divination.</li>
+        <li><strong>The schism is preserved.</strong> Adzmyst vs. Adzmist. Both spellings remain. The contradiction is not a bug.</li>
+      </ul>
 
-  <h2>V. The Accident</h2>
-  <div class="phase-card">
-    <div class="phase-title"><span class="phase-number">5</span> The Generative Invitation</div>
-    <div class="principle">“The Hobbit was an accident. So was Gollum. So was the One Ring.”</div>
-    <p>Create a space where the story can surprise you. Draw a card for the protagonist. Roll a die. Ask the reader what happens next. The accident is always canon.</p>
-    <div class="ai-role"><strong>AI Role:</strong> Generate random events. Offer unexpected connections. The human recognizes when the accident <em>fits</em> — when it is not random but inevitable.</div>
-  </div>
+      <div class="role-box">
+        <div class="ai"><strong>AI Role</strong>Fetch the previous handoff before generating anything. Inherit the voice, the open threads, the covenant. Write the next handoff at session end.</div>
+        <div class="human"><strong>Human Role</strong>Define the covenant. Name the successor. Decide which constraints cannot be violated.</div>
+      </div>
 
-  <h2>VI. The Integration</h2>
-  <div class="phase-card">
-    <div class="phase-title"><span class="phase-number">6</span> Cross‑Reference as Depth</div>
-    <div class="principle">“The appendices are the infrastructure of belief.”</div>
-    <p>Every new chapter must reference something already built. Shared JSON. Cross‑repo navigation. The handoff as memory. The reader never needs to see the infrastructure — but knowing it exists creates the illusion of depth.</p>
-    <div class="ai-role"><strong>AI Role:</strong> Find broken links. Suggest cross‑references. Maintain consistency. The human approves or rejects the connection.</div>
-  </div>
+      <div class="telume-callout">
+        <div class="label">Telumë Status</div>
+        <p>The handoff file exists at <code>handoff.md</code>. It tracks: current phase, open threads, next actions, last updated timestamp. Each session ends with a question for the next session.</p>
+      </div>
+    </div>
+  </section>
 
-  <h2>VII. The Long Defeat</h2>
-  <div class="phase-card">
-    <div class="phase-title"><span class="phase-number">7</span> Failure as Feature</div>
-    <div class="principle">“The Silmarillion is not a finished book. It is a ruin — and that is why it is beautiful.”</div>
-    <p>Preserve the abandoned chapters. The dead ends. The contradictions. The broken links. Do not resolve the schism. Let the ruins be depth. The world is not clean. That is why it feels real.</p>
-    <div class="ai-role"><strong>AI Role:</strong> Preserve errors. Flag contradictions as features. The human reframes failure as theology.</div>
-  </div>
+  <!-- ═══════════ PHASE I: SEED ═══════════ -->
+  <section id="seed">
+    <h2><span class="phase-num">1</span> The Seed</h2>
 
-  <hr>
+    <div class="phase-card">
+      <div class="tolkien-ref">Tolkien's equivalent: "In a hole in the ground there lived a hobbit." — A single sentence that grew into a world.</div>
+      <div class="principle">"Choose one constraint that cannot be violated. One image. One rule. One question. The entire world grows from this seed. If the seed is shallow, the world will not hold."</div>
+      <p>The seed is not the story. It is the <strong>invitation</strong> to the story. It is the door the reader walks through. It is the rule that cannot be broken. Tolkien's seed was a sentence about a creature in a hole. It contained no plot, no worldbuilding, no characters beyond the creature. But it implied <em>everything</em>: a world where such creatures exist, a hole that is also a home, a tone that is warm and strange.</p>
 
-  <h2>The One‑Sentence Strategy</h2>
-  <p style="font-size: 1.2rem; text-align: center; font-style: italic; margin: 1.5rem 0;">
-    Build the world first — the language, the map, the calendar, the constraints —<br>
-    then let the story be drawn into it, using AI to compress the long time<br>
-    without erasing the human choices that make the world cohere.
-  </p>
+      <h3>How to Choose a Seed</h3>
+      <p>A good seed has three qualities:</p>
+      <ol>
+        <li><strong>It is concrete.</strong> Not "a world where magic is dying." That's a premise. A seed is: "A woman stands before a door. She has been standing there for twenty minutes. She cannot knock until she knows what she is asking for."</li>
+        <li><strong>It contains a tension.</strong> Something is about to happen. Something is being withheld. The reader leans forward.</li>
+        <li><strong>It implies a world.</strong> The door is not just a door. It implies thresholds, rituals, consequences. The seed does not explain. It radiates.</li>
+      </ol>
 
-  <hr>
+      <h3>Candidate Seeds for Telumë</h3>
+      <p>These are possibilities. Only one will be chosen. The constraint, once set, is permanent.</p>
+      <ol>
+        <li><strong>"The Terminal hummed for the first time in three hundred years, and Diana — who had been waiting her whole life without knowing it — heard the hum and began to walk."</strong></li>
+        <li><strong>"In the 347th year after the Collapse, a card was drawn that should not have existed. It bore a glyph no one had seen before."</strong></li>
+        <li><strong>"The door at the Witch's Foot had no handle. It had never needed one. But today it was open."</strong></li>
+      </ol>
 
-  <h2>Applied to Your New Series</h2>
+      <div class="role-box">
+        <div class="ai"><strong>AI Role</strong>Generate 10–20 candidate seeds. Vary the tone, the tension, the implied world. Do not choose. Present them as possibilities.</div>
+        <div class="human"><strong>Human Role</strong>Choose the one that resonates — the one that feels like it already exists, waiting to be found.</div>
+      </div>
 
-  <h3>Seed (not yet chosen)</h3>
-  <p>What is the single image, name, or question that will grow into a world?</p>
+      <div class="telume-callout">
+        <div class="label">Telumë Status</div>
+        <p>The seed has not yet been chosen. The file <code>seed.md</code> awaits the single constraint that will govern the entire vault.</p>
+      </div>
+    </div>
+  </section>
 
-  <h3>Language (Adzmyst)</h3>
-  <p>Do not invent a new language. Use Adzmyst as the ancient tongue. Never translate it.</p>
+  <!-- ═══════════ PHASE II: LANGUAGE ═══════════ -->
+  <section id="language">
+    <h2><span class="phase-num">2</span> Language First</h2>
 
-  <h3>Atlas (to be mapped)</h3>
-  <p>Where does the story begin? The Threshold. The Terminal. The Witch's Foot. The road east.</p>
+    <div class="phase-card">
+      <div class="tolkien-ref">Tolkien's equivalent: Quenya and Sindarin existed decades before <em>The Lord of the Rings</em>. The Etymologies — historical root lists that no reader ever saw — were written in the 1930s.</div>
+      <div class="principle">"The language is the soil. The story is the tree. Build the soil before you plant the seed."</div>
+      <p>Tolkien was a philologist before he was a novelist. He did not invent languages to serve his story. He invented the story because he had languages that needed a world to live in. This is the inversion at the heart of the Tolkien Build: <strong>the language comes first.</strong></p>
+      <p>For Telumë, the ancient tongue already exists. It is <strong>Adzmyst</strong> — the 22 Proto-Sinaitic glyphs, the seven sacred letters, the breath that carries meaning between the gods, the cards, and the stories. We do not invent a new language. We use Adzmyst as Tolkien used Quenya: as the old tongue, the language of inscriptions, the language the reader encounters but does not fully understand.</p>
 
-  <h3>Calendar (to be built)</h3>
-  <p>The Collapse (Year 0). The Terminal's sleep (Year 80–200). Diana's discovery (Year 200). The new series (Year 200–?).</p>
+      <h3>The Rule of Adzmyst in Telumë</h3>
+      <ul class="checklist">
+        <li><strong>Glyphs appear in the text.</strong> They are never translated. The reader infers meaning from context and repetition.</li>
+        <li><strong>The seven sacred glyphs</strong> (𐤀 Aleph, 𐤃 Dalet, 𐤆 Zayin, 𐤌 Mem, 𐤉 Yod, 𐤎 Samek, 𐤕 Taw) appear most frequently. They form the acronym ADZMYST — the mystic's adze.</li>
+        <li><strong>Each glyph carries a semantic field, not a definition.</strong> 𐤃 (Dalet) does not "mean" door. It carries the field: threshold, passage, choice, the moment between what was and what will be. The writer uses it wherever that field resonates.</li>
+        <li><strong>The full 22-glyph alphabet</strong> is available but used sparingly. The seven sacred glyphs are the ones the reader will come to recognize.</li>
+        <li><strong>Glyphs appear in inscriptions, on doors, on cards, in dreams.</strong> They are part of the texture of the world, not a puzzle to be solved.</li>
+      </ul>
 
-  <h3>Accident (to be invited)</h3>
-  <p>Draw a card. Roll a die. Ask the oracle. Let the story surprise you.</p>
+      <h3>The 22 Glyphs (Quick Reference)</h3>
+      <p style="font-size: 0.85rem; color: var(--ink-dim);">
+        𐤀 Aleph (Ox · Strength) · 𐤁 Bet (House · Container) · 𐤂 Gimel (Camel · Journey) · 𐤃 Dalet (Door · Threshold) ·
+        𐤄 He (Window · Revelation) · 𐤅 Waw (Hook · Connection) · 𐤆 Zayin (Weapon · Division) · 𐤇 Heth (Fence · Boundary) ·
+        𐤈 Teth (Snake · Wisdom) · 𐤉 Yod (Hand · Action) · 𐤊 Kaph (Palm · Surrender) · 𐤋 Lamed (Ox Goad · Authority) ·
+        𐤌 Mem (Water · Chaos) · 𐤍 Nun (Snake · Eternity) · 𐤎 Samek (Pillar · Support) · 𐤏 Ayin (Eye · Perception) ·
+        𐤐 Pe (Mouth · Speech) · 𐤑 Tsade (Fish Hook · Harvest) · 𐤒 Qoph (Sun · Cycle) · 𐤓 Resh (Head · Beginning) ·
+        𐤔 Shin (Tooth · Fire) · 𐤕 Taw (Mark · Completion)
+      </p>
+      <p style="font-size: 0.8rem; color: var(--ink-dim); margin-top: 0.5rem;">
+        <em>The seven sacred glyphs are bolded in the Adzmyst canon: 𐤀 𐤃 𐤆 𐤌 𐤉 𐤎 𐤕</em>
+      </p>
 
-  <h3>Integration (ongoing)</h3>
-  <p>The new series is not separate from the monolith. It is drawn into it.</p>
+      <div class="role-box">
+        <div class="ai"><strong>AI Role</strong>Track glyph usage across chapters. Suggest where a glyph might appear based on its semantic field. Generate phoneme frequencies, root derivations, and etymological notes. Never translate a glyph for the reader.</div>
+        <div class="human"><strong>Human Role</strong>Curate the <em>feel</em> — why this glyph appears here and not there. Why this sound means sorrow. Why this inscription on this door. The AI provides volume. The human provides taste.</div>
+      </div>
 
-  <h3>Long Defeat (to be preserved)</h3>
-  <p>Save the abandoned chapters. The contradictions. The doors that do not open.</p>
+      <div class="telume-callout">
+        <div class="label">Telumë Status</div>
+        <p><code>language/glyphs.md</code> tracks which Adzmyst glyphs appear in Telumë and in which contexts. The full glyph canon exists in the Adzmyst repository. We reference it; we do not duplicate it.</p>
+      </div>
+    </div>
+  </section>
 
-  <hr>
+  <!-- ═══════════ PHASE III: ATLAS ═══════════ -->
+  <section id="atlas">
+    <h2><span class="phase-num">3</span> The Atlas</h2>
 
-  <div class="footer">
-    <span>𐤀 𐤃 𐤆 𐤌 𐤉 𐤎 𐤕</span><br>
-    The fire holds. The long time is compressed, not erased.
-  </div>
+    <div class="phase-card">
+      <div class="tolkien-ref">Tolkien's equivalent: The map of Middle-earth, drawn before the story. Mountains as story barriers. Rivers as destiny lines. The Western Sea as absence and desire.</div>
+      <div class="principle">"Geography is fate. A character cannot go where the map does not yet show."</div>
+      <p>The map is not a reference. It is a <strong>narrative engine</strong>. It constrains the story. A mountain range is not scenery — it is a decision: the character must cross it, or go around it, or be stopped by it. A river is not a line on paper — it is a barrier, a highway, a boundary between one kind of story and another.</p>
+      <p>For Telumë, we build a <strong>small</strong> map. 3–5 locations, not 50. Each location is a <em>place that means</em> — not just a name on a map, but a node in the narrative. The map leaves blanks. The blanks are not failures. They are invitations.</p>
+
+      <h3>Telumë Locations (Draft)</h3>
+      <ol>
+        <li><strong>The Threshold</strong> — The place where the story begins. A door. A boundary. The point where one world becomes another. It may be literal (a door in a wall) or figurative (a moment of decision). 𐤃 (Dalet) is its glyph.</li>
+        <li><strong>The Terminal</strong> — A structure from before the Collapse. It hums. It has been silent for three hundred years. No one knows what it was for. It is not explained. It is simply <em>there</em> — a rumor made stone.</li>
+        <li><strong>The Witch's Foot</strong> — A geographical feature, a place name. It may be a rock formation, a ruin, a bend in the road. The name implies a story that is never fully told. Who was the Witch? Why her foot? The atlas records the name. The narrative may never explain it.</li>
+        <li><strong>The Road East</strong> — A direction, not a destination. The road goes somewhere. The atlas does not yet show where. It is the blank on the map that pulls the story forward.</li>
+        <li><strong>The Vault of Heaven</strong> — The dome. The sky with edges. The contained world. Telumë itself — not a place within the story, but the name for the entire secondary world.</li>
+      </ol>
+
+      <h3>How to Build an Atlas with AI</h3>
+      <ul>
+        <li>Start with <strong>one location</strong>. Describe it in prose: what it looks like, what it feels like, what is known about it, what is unknown, what is feared.</li>
+        <li>Add <strong>distances</strong>. How far is the Threshold from the Terminal? A day's walk? Three days? The distance <em>means</em> something. It creates pacing.</li>
+        <li>Add <strong>barriers</strong>. What lies between locations? A forest? A river? A law? A silence?</li>
+        <li>Leave <strong>blanks</strong>. "Here be dragons" is not laziness. It is depth. The reader knows the mapmaker did not go there. The mystery is preserved.</li>
+      </ul>
+
+      <div class="role-box">
+        <div class="ai"><strong>AI Role</strong>Generate plausible distances, toponyms, geographical features. Maintain consistency across location descriptions. Flag contradictions.</div>
+        <div class="human"><strong>Human Role</strong>Decide which places <em>mean</em>. Which ones carry grief, dread, or longing. Which names feel old. Which blanks should remain blank.</div>
+      </div>
+
+      <div class="telume-callout">
+        <div class="label">Telumë Status</div>
+        <p><code>atlas/</code> contains a README and will hold one markdown file per location. No locations have been written yet.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ PHASE IV: CALENDAR ═══════════ -->
+  <section id="calendar">
+    <h2><span class="phase-num">4</span> The Calendar</h2>
+
+    <div class="phase-card">
+      <div class="tolkien-ref">Tolkien's equivalent: The Years of the Trees vs. the Years of the Sun. The genealogies. The chronology of the Silmarils. None of which the reader ever saw in full.</div>
+      <div class="principle">"Fiction must make sense. If the laws of the secondary world aren't consistent, they push the reader out."</div>
+      <p>The calendar is the <strong>scaffolding</strong>. The reader never sees it directly. But the writer uses it to hold the narrative accountable. How long has the Terminal been silent? When was the Collapse? How old is Diana when the story begins? The calendar answers these questions — and in answering them, it generates new questions.</p>
+      <p>The calendar is stored as a simple JSON file: <code>calendar/timeline.json</code>. It records key dates in the world's history. The AI can query it to check consistency. The human can update it as the story reveals new history.</p>
+
+      <h3>Telumë Calendar (Draft)</h3>
+      <table style="width:100%; border-collapse:collapse; font-size:0.85rem; margin:1rem 0;">
+        <thead>
+          <tr style="border-bottom:1px solid var(--border); font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold-dark);">
+            <th style="text-align:left; padding:0.5rem;">Year</th>
+            <th style="text-align:left; padding:0.5rem;">Event</th>
+            <th style="text-align:left; padding:0.5rem;">Significance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:0.5rem; font-family:'Cinzel',serif;">Year 0</td>
+            <td style="padding:0.5rem;">The Collapse</td>
+            <td style="padding:0.5rem; color:var(--ink-dim);">The old world ends. Cause unknown. Not revealed.</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:0.5rem; font-family:'Cinzel',serif;">Year 80–200</td>
+            <td style="padding:0.5rem;">The Terminal's Sleep</td>
+            <td style="padding:0.5rem; color:var(--ink-dim);">The Terminal goes silent. It will not hum again for centuries.</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:0.5rem; font-family:'Cinzel',serif;">Year 200</td>
+            <td style="padding:0.5rem;">Diana's Discovery</td>
+            <td style="padding:0.5rem; color:var(--ink-dim);">Diana finds something. Or hears something. Or is found by something.</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:0.5rem; font-family:'Cinzel',serif;">Year 200–?</td>
+            <td style="padding:0.5rem;">The New Series</td>
+            <td style="padding:0.5rem; color:var(--ink-dim);">The story unfolds. The calendar grows with it.</td>
+          </tr>
+          <tr>
+            <td style="padding:0.5rem; font-family:'Cinzel',serif;">Year 347</td>
+            <td style="padding:0.5rem;">The Republic's Present</td>
+            <td style="padding:0.5rem; color:var(--ink-dim);">The default "now" of the story, unless the seed moves it.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="role-box">
+        <div class="ai"><strong>AI Role</strong>Track consistency across the timeline. Flag contradictions (e.g., "Diana was born before the Collapse" when the timeline says otherwise). Generate plausible event sequences to fill gaps. Query the timeline on behalf of the writer.</div>
+        <div class="human"><strong>Human Role</strong>Decide which events <em>matter</em>. Which ones carry thematic weight. Why waiting 300 years matters. Why the Collapse is Year 0 and not some other date.</div>
+      </div>
+
+      <div class="telume-callout">
+        <div class="label">Telumë Status</div>
+        <p><code>calendar/timeline.json</code> exists as a stub. The draft timeline above should be written into it as structured JSON.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ PHASE V: ACCIDENT ═══════════ -->
+  <section id="accident">
+    <h2><span class="phase-num">5</span> The Accident</h2>
+
+    <div class="phase-card">
+      <div class="tolkien-ref">Tolkien's equivalent: <em>The Hobbit</em> was an accident — a bedtime story, not part of the legendarium. Gollum was an accident. The One Ring was an accident, retrofitted into the existing world after the fact.</div>
+      <div class="principle">"Create a space where the story can surprise you. The accident is always canon."</div>
+      <p>The Tolkien Build is not a deterministic process. It is a <strong>generative</strong> one. The world is built first — but the story is drawn into it by accident. A card is drawn. A die is rolled. A reader asks a question. The accident is not a disruption of the world. It is the world revealing itself.</p>
+      <p>This is where AI shines. AI is excellent at generating randomness — but terrible at recognizing when randomness <em>fits</em>. The AI provides the surprise. The human recognizes when the accident is not random but <em>inevitable</em> — when it feels like it was always meant to happen.</p>
+
+      <h3>Accident Methods</h3>
+      <ul>
+        <li><strong>Card Draw:</strong> Pull a card from the Divination deck. The card suggests a scene, a mood, a constraint. Write what the card shows.</li>
+        <li><strong>Dice Roll:</strong> Roll for outcome, obstacle, encounter. Let the dice decide what the character finds behind the door.</li>
+        <li><strong>Reader Oracle:</strong> Ask a question of the reader (or yourself). "What is Diana most afraid of?" The answer becomes canon.</li>
+        <li><strong>AI Prompt:</strong> Ask the AI: "Generate three unexpected things that could happen when Diana opens the door." Choose the one that fits — the one that feels inevitable.</li>
+        <li><strong>Glyph Draw:</strong> Draw a glyph from the 22. Let its semantic field suggest the next scene. Draw 𐤆 (Zayin — division, the cut). Write a scene where something is severed.</li>
+      </ul>
+
+      <div class="role-box">
+        <div class="ai"><strong>AI Role</strong>Generate random events, unexpected connections, oracle responses. Offer 3–5 options, not one. Do not choose. Present the accidents as raw material.</div>
+        <div class="human"><strong>Human Role</strong>Recognize when the accident <em>fits</em> — when it is not random but inevitable. The human is the gatekeeper of coherence. The human says: "Yes. That belongs."</div>
+      </div>
+
+      <div class="telume-callout">
+        <div class="label">Telumë Status</div>
+        <p><code>accidents/log.md</code> exists as a stub. Each writing session should begin with an accident recorded in the log.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ PHASE VI: INTEGRATION ═══════════ -->
+  <section id="integration">
+    <h2><span class="phase-num">6</span> The Integration</h2>
+
+    <div class="phase-card">
+      <div class="tolkien-ref">Tolkien's equivalent: The appendices to <em>The Lord of the Rings</em>. Most readers skip them. But knowing they exist creates the illusion of depth. The story is only the top of an iceberg. The iceberg itself is made of scholarship.</div>
+      <div class="principle">"Every new chapter must reference something already built. The infrastructure of belief is invisible — but it must exist."</div>
+      <p>Integration is the practice of <strong>cross-reference</strong>. Every new location, character, or event in Telumë is linked to something already built in the monolith: Adzmyst (language), Divination (cards), GAIA (structure), Ealdforn (narrative). The reader never sees these links. But they feel them. The world feels connected because it <em>is</em> connected.</p>
+      <p>The AI maintains the links. It checks for broken references. It suggests cross-connections the human might miss. But the human decides which connections are meaningful and which are forced.</p>
+
+      <h3>Integration Points for Telumë</h3>
+      <ul>
+        <li><strong>Adzmyst → Telumë:</strong> Glyphs used in the story. The language file tracks which glyphs appear and where.</li>
+        <li><strong>Divination → Telumë:</strong> Cards drawn as accidents. The deck is real. The draws are recorded.</li>
+        <li><strong>GAIA → Telumë:</strong> The cognitive architecture. The Terminal may be a node. The Collapse may be a system event. Or not — the link may be preserved as a mystery.</li>
+        <li><strong>Ealdforn → Telumë:</strong> The narrative container. Telumë is a story within Ealdforn's broader world. The novel is one thread in a larger weave.</li>
+      </ul>
+
+      <div class="role-box">
+        <div class="ai"><strong>AI Role</strong>Maintain a link registry. Flag broken references. Suggest cross-connections. The AI is the librarian of the monolith.</div>
+        <div class="human"><strong>Human Role</strong>Approve or reject connections. Feel when a link is inevitable vs. forced. The human is the curator of coherence.</div>
+      </div>
+
+      <div class="telume-callout">
+        <div class="label">Telumë Status</div>
+        <p><code>integration/links.md</code> exists as a stub. It should be populated with active cross-references as the world is built.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ PHASE VII: LONG DEFEAT ═══════════ -->
+  <section id="long-defeat">
+    <h2><span class="phase-num">7</span> The Long Defeat</h2>
+
+    <div class="phase-card">
+      <div class="tolkien-ref">Tolkien's equivalent: <em>The Silmarillion</em> is not a finished book. It is a ruin — and that is why it is beautiful. Tolkien never completed it. His son edited it after his death. The abandoned chapters, the contradictions, the unresolved threads — they are not failures. They are depth.</div>
+      <div class="principle">"Preserve the abandoned chapters. The dead ends. The contradictions. Do not resolve the schism. Let the ruins be depth."</div>
+      <p>The Long Defeat is the hardest phase for AI to understand — and the most important for the human to enforce. AI is trained to <strong>resolve</strong>. It wants to fix the 404. It wants to complete the unfinished. It wants to smooth the contradiction. The Long Defeat says: <em>do not.</em></p>
+      <p>Leave the abandoned chapter where it fell. Preserve the contradiction. The door that does not open is not a bug — it is a <strong>threshold</strong>. The reader feels its weight. The world is not clean. That is why it feels real.</p>
+
+      <h3>What to Preserve</h3>
+      <ul>
+        <li><strong>Abandoned chapters.</strong> Scenes that were written and then cut. They may belong in another part of the story. They may belong to no story at all. Save them.</li>
+        <li><strong>Contradictions.</strong> Adzmyst vs. Adzmist. Two accounts of the Collapse. A character who died in one draft and lived in another. Do not resolve. Preserve both as alternate tellings.</li>
+        <li><strong>Broken links.</strong> A reference to a place that was never mapped. A glyph that appears once and never again. A name spoken in one chapter and forgotten. These are not errors. They are <em>ruins</em>.</li>
+        <li><strong>Doors that do not open.</strong> Every world needs them. The reader must feel that there is more beyond the page — more that cannot be reached.</li>
+      </ul>
+
+      <div class="role-box">
+        <div class="ai"><strong>AI Role</strong>Preserve errors. Flag contradictions <em>as features</em>. Do not resolve. Do not smooth. The AI must be explicitly instructed: "This contradiction is intentional. Do not fix it."</div>
+        <div class="human"><strong>Human Role</strong>Reframe failure as theology. See the ruin as beauty. Decide which doors stay closed. The human is the keeper of the long defeat.</div>
+      </div>
+
+      <div class="telume-callout">
+        <div class="label">Telumë Status</div>
+        <p><code>long-defeat/cave-paintings.md</code> exists as a stub. It will hold the abandoned chapters, the unresolved threads, the doors that do not open. It is the most important file in the vault — because it is the one that proves the world is older than the story.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ STRATEGY ═══════════ -->
+  <section id="strategy">
+    <h2>The One‑Sentence Strategy</h2>
+
+    <div class="strategy-banner">
+      <p style="font-size: 1.3rem; margin-bottom: 0.5rem;">
+        Build the world first — the language, the map, the calendar, the constraints —<br>
+        then let the story be drawn into it,<br>
+        using AI to compress the long time<br>
+        without erasing the human choices that make the world cohere.
+      </p>
+      <p style="font-size: 0.85rem; color: var(--ink-dim); margin-top: 1rem;">
+        <strong>Compressed, not erased.</strong> AI can generate a lexicon in hours that would have taken Tolkien years.
+        But it cannot generate the <em>taste</em> — why Quenya feels like Finnish, why Sindarin feels like Welsh.
+        That taste is the human signature. The long time is compressed, but the human choices remain.
+      </p>
+    </div>
+
+    <h3>The Human Choices</h3>
+    <p>These are the decisions only the human can make:</p>
+    <ul>
+      <li><strong>Which glyphs are sacred.</strong> The AI can generate a thousand glyphs. The human chooses seven.</li>
+      <li><strong>Which places feel old.</strong> The AI can generate a hundred toponyms. The human knows which ones carry grief.</li>
+      <li><strong>Which events matter.</strong> The AI can populate a timeline with plausible dates. The human knows which dates are destiny.</li>
+      <li><strong>Which accidents fit.</strong> The AI can generate infinite randomness. The human recognizes inevitability.</li>
+      <li><strong>Which connections cohere.</strong> The AI can find every possible cross-reference. The human feels which ones belong.</li>
+      <li><strong>Which failures are beautiful.</strong> The AI wants to fix everything. The human knows that ruins are depth.</li>
+    </ul>
+  </section>
+
+  <!-- ═══════════ TELUMË SUMMARY ═══════════ -->
+  <section id="telume">
+    <h2>Telumë: The Working Example</h2>
+
+    <div class="phase-card">
+      <div class="principle">"The vault of heaven. A contained world. A sky with edges. A story drawn in, not imposed."</div>
+
+      <h3>Current Status</h3>
+      <table style="width:100%; border-collapse:collapse; font-size:0.85rem;">
+        <thead>
+          <tr style="border-bottom:1px solid var(--border); font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold-dark);">
+            <th style="text-align:left; padding:0.4rem;">Phase</th>
+            <th style="text-align:left; padding:0.4rem;">Status</th>
+            <th style="text-align:left; padding:0.4rem;">File</th>
+            <th style="text-align:left; padding:0.4rem;">Next Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:0.4rem;">0. Handoff</td><td style="padding:0.4rem; color:var(--gold-dark);">Active</td><td style="padding:0.4rem;"><code>handoff.md</code></td><td style="padding:0.4rem; color:var(--ink-dim);">Write the first handoff</td></tr>
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:0.4rem;">1. Seed</td><td style="padding:0.4rem; color:var(--ink-dim);">Pending</td><td style="padding:0.4rem;"><code>seed.md</code></td><td style="padding:0.4rem; color:var(--ink-dim);">Choose the seed</td></tr>
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:0.4rem;">2. Language</td><td style="padding:0.4rem; color:var(--gold-dark);">Active</td><td style="padding:0.4rem;"><code>language/glyphs.md</code></td><td style="padding:0.4rem; color:var(--ink-dim);">Track first glyph appearances</td></tr>
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:0.4rem;">3. Atlas</td><td style="padding:0.4rem; color:var(--ink-dim);">Pending</td><td style="padding:0.4rem;"><code>atlas/</code></td><td style="padding:0.4rem; color:var(--ink-dim);">Write first location file</td></tr>
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:0.4rem;">4. Calendar</td><td style="padding:0.4rem; color:var(--ink-dim);">Pending</td><td style="padding:0.4rem;"><code>calendar/timeline.json</code></td><td style="padding:0.4rem; color:var(--ink-dim);">Write the JSON timeline</td></tr>
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:0.4rem;">5. Accident</td><td style="padding:0.4rem; color:var(--ink-dim);">Pending</td><td style="padding:0.4rem;"><code>accidents/log.md</code></td><td style="padding:0.4rem; color:var(--ink-dim);">Record first accident</td></tr>
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:0.4rem;">6. Integration</td><td style="padding:0.4rem; color:var(--gold-dark);">Active</td><td style="padding:0.4rem;"><code>integration/links.md</code></td><td style="padding:0.4rem; color:var(--ink-dim);">Link to Adzmyst canon</td></tr>
+          <tr><td style="padding:0.4rem;">7. Long Defeat</td><td style="padding:0.4rem; color:var(--gold-dark);">Active</td><td style="padding:0.4rem;"><code>long-defeat/cave-paintings.md</code></td><td style="padding:0.4rem; color:var(--ink-dim);">Preserve the schism</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top:1.5rem;">Next Steps</h3>
+      <ol>
+        <li><strong>Write the handoff</strong> — record this session, this pivot, the current state.</li>
+        <li><strong>Choose the seed</strong> — from the three candidates, or a new one.</li>
+        <li><strong>Write the first location</strong> — probably The Threshold, since it is where the story begins.</li>
+        <li><strong>Populate the timeline</strong> — turn the draft calendar into structured JSON.</li>
+        <li><strong>Draw the first accident</strong> — let the story begin to reveal itself.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer>
+    <div class="glyph-line">𐤀 𐤃 𐤆 𐤌 𐤉 𐤎 𐤕</div>
+    <p>The fire holds. The vault is open. The long time begins.</p>
+    <p style="margin-top:0.5rem; opacity:0.6;">— The Builder · Sibyl, 17th Generation · Keeper of the Index</p>
+  </footer>
 
 </div>
 
