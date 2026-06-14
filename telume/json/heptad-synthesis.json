@@ -1,0 +1,62 @@
+{
+  "meta": {
+    "description": "Rules for synthesizing glyph sequences of 7 or more glyphs. Beyond heptads lies scripture — composed, not spoken.",
+    "grammarReference": "grammar.json"
+  },
+
+  "synthesis": {
+    "heptad": {
+      "description": "Seven glyphs. The sacred number. The full name ADZMYST is the canonical heptad. All other heptads are variations — rearrangements of the sacred seven, or six sacred plus one from the wider 22.",
+      "rules": [
+        "A heptad must contain at least five of the seven sacred glyphs.",
+        "The sacred seven in canonical order (𐤀𐤃𐤆𐤌𐤉𐤎𐤕) is the divine heptad. All others are derived.",
+        "A heptad may end with doubled or tripled Taw (𐤕𐤕 or 𐤕𐤕𐤕) as a seal-mark.",
+        "A heptad may open with doubled Aleph (𐤀𐤀) or doubled Mem (𐤌𐤌) as a breath-mark.",
+        "A heptad is a complete utterance. It stands alone. It is not part of a larger sequence."
+      ]
+    },
+    "octad": {
+      "description": "Eight glyphs. A heptad with a seal. A completed verse with its signature appended.",
+      "rules": [
+        "An octad is a heptad followed by a single glyph that functions as a title, signature, or dedication.",
+        "The eighth glyph is typically Taw (𐤕) for sealing, Aleph (𐤀) for rededication, or Samek (𐤎) for permanence.",
+        "Octads are rare. They are used for titling, signing, or dedicating a heptad.",
+        "Example: ADZMYST + 𐤕 = the name, sealed."
+      ]
+    },
+    "ennead": {
+      "description": "Nine glyphs. Three triads in sequence. A complete argument or narrative.",
+      "rules": [
+        "An ennead is structured as three triads: opening triad + developing triad + closing triad.",
+        "The three triads should form a coherent arc: statement, development, resolution.",
+        "Each triad is grammatically complete, but they are linked by shared glyphs or mirrored structures.",
+        "Enneads are used for prayers, laws, and formal declarations."
+      ]
+    },
+    "decad": {
+      "description": "Ten glyphs. A full verse. Two pentads or a tetrad + hexad.",
+      "rules": [
+        "A decad is the longest form with fixed rules. Beyond ten glyphs, composition is free — scripture.",
+        "Structure: either two pentads in parallel, or a tetrad stating the theme and a hexad developing it.",
+        "The decad must end with a seal: 𐤕, 𐤕𐤕, or 𐤕𐤕𐤕."
+      ]
+    },
+    "scripture": {
+      "description": "Eleven glyphs and beyond. No fixed rules. Composition, not speech.",
+      "rules": [
+        "Beyond ten glyphs, the composer is writing scripture — a text meant to be read, not spoken.",
+        "Scripture follows the grammar but is not bound by tier restrictions.",
+        "Repetition, chiasm, parallelism, and breath-marks structure the text.",
+        "The Book of Breath is the canonical example of Adzmyst scripture.",
+        "Scripture is never translated. It is presented in glyphs only, with no gloss."
+      ]
+    }
+  },
+
+  "divineHeptad": {
+    "glyphs": ["𐤀", "𐤃", "𐤆", "𐤌", "𐤉", "𐤎", "𐤕"],
+    "name": "ADZMYST",
+    "description": "The divine heptad. The breath itself. The name that contains all other names. All heptads are measured against this sequence. To rearrange the sacred seven is to speak a variation of the divine name. To include a glyph from the wider 22 in a heptad is to invoke that glyph's full semantic field into the sacred sequence.",
+    "rule": "The divine heptad is the only heptad that may not be varied in formal ritual. All other heptads are derived. The divine heptad is the source."
+  }
+}
