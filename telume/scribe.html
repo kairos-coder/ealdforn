@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telumë · The Scribe · Adzmyst Scripture</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --parchment: #F5ECD7;
+      --parchment-deep: #EAD9BE;
+      --ink: #1A1008;
+      --ink-mid: #3A2810;
+      --ink-dim: #6A5030;
+      --gold: #C8980A;
+      --gold-bright: #E8B820;
+      --gold-dark: #8A6008;
+      --gold-dim: #5A4008;
+      --border: rgba(164,134,80,0.35);
+      --card-bg: rgba(255,252,240,0.55);
+      --gloss-color: #4A6A8A;
+    }
+
+    body {
+      background: var(--parchment);
+      background-image:
+        radial-gradient(ellipse 50% 30% at 20% 10%, rgba(200,152,10,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse 40% 30% at 80% 90%, rgba(42,64,112,0.04) 0%, transparent 50%);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(245,236,215,0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 0.5rem;
+    }
+    .nav-brand {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1rem; letter-spacing: 3px;
+      color: var(--gold-dark);
+    }
+    .nav-links {
+      display: flex; gap: 1rem; list-style: none; flex-wrap: wrap;
+    }
+    .nav-links a, .nav-links button {
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem; letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink-dim); text-decoration: none;
+      background: none; border: none; cursor: pointer;
+      transition: color 0.2s; padding: 0.2rem 0;
+    }
+    .nav-links a:hover, .nav-links button:hover { color: var(--gold-dark); }
+
+    /* ── TIER NAV ── */
+    .tier-nav {
+      display: flex; gap: 0.6rem; flex-wrap: wrap;
+      padding: 0.6rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(245,236,215,0.5);
+    }
+    .tier-nav-link {
+      font-family: 'Cinzel', serif;
+      font-size: 0.5rem; letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink-dim); text-decoration: none;
+      cursor: pointer; transition: color 0.2s;
+      padding: 0.2rem 0.4rem;
+      border: 1px solid transparent;
+    }
+    .tier-nav-link:hover {
+      color: var(--gold-dark);
+      border-bottom-color: var(--gold);
+    }
+
+    /* ── HEADER ── */
+    .header {
+      text-align: center;
+      padding: 3rem 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .header .glyph-line {
+      font-size: 1.6rem; letter-spacing: 0.3em;
+      color: var(--gold-dim); margin-bottom: 0.5rem;
+    }
+    .header h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      color: var(--gold-dark); letter-spacing: 4px;
+      margin-bottom: 0.3rem;
+    }
+    .header .subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem; letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--ink-dim); margin-bottom: 0.5rem;
+    }
+    .header .stats {
+      display: flex; justify-content: center; gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.4rem; color: var(--gold-dark);
+    }
+    .stat-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.5rem; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--ink-dim);
+    }
+
+    /* ── BOOK CONTAINER ── */
+    .book-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* ── TIER SECTIONS ── */
+    .tier {
+      margin-bottom: 3rem;
+      padding-top: 1rem;
+    }
+    .tier h2 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.1rem; color: var(--gold-dark);
+      letter-spacing: 2px;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: baseline; gap: 0.5rem;
+    }
+    .tier-count {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem; letter-spacing: 1px;
+      color: var(--ink-dim); opacity: 0.6;
+    }
+
+    /* ── GLYPH LINES ── */
+    .tier-entries {
+      display: flex; flex-direction: column; gap: 0.3rem;
+    }
+    .glyph-line {
+      padding: 0.5rem 0.8rem;
+      border-left: 2px solid transparent;
+      transition: all 0.2s;
+      cursor: default;
+      line-height: 1.8;
+    }
+    .glyph-line:hover {
+      border-left-color: var(--gold);
+      background: rgba(200,152,10,0.04);
+    }
+    .glyph-line .glyphs {
+      font-size: 1.3rem;
+      letter-spacing: 0.25em;
+      color: var(--ink);
+    }
+    .glyph-line .glyph-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem; letter-spacing: 2px;
+      color: var(--gold-dark);
+      margin-left: 0.8rem;
+    }
+    .glyph-line .gloss {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--gloss-color);
+      font-style: italic;
+      margin-top: 0.2rem;
+      padding-left: 0.5rem;
+      border-left: 1px solid rgba(74,106,138,0.2);
+    }
+    .glyph-line .interpretation {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--ink-dim);
+      margin-top: 0.2rem;
+      padding-left: 0.5rem;
+      border-left: 1px solid rgba(106,80,48,0.15);
+    }
+
+    /* Heptads get special styling */
+    .tier.heptads .glyph-line .glyphs {
+      font-size: 1.6rem;
+      color: var(--gold-dark);
+    }
+    .tier.heptads .glyph-line {
+      padding: 0.8rem 1rem;
+    }
+    .tier.heptads .glyph-line:hover {
+      border-left-color: var(--gold-bright);
+      background: rgba(200,152,10,0.08);
+    }
+
+    /* Synthesis section */
+    .tier.synthesis h2 {
+      color: var(--gold);
+    }
+    .synthesis-rule {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .synthesis-rule h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem; letter-spacing: 2px;
+      color: var(--gold-dark); margin-bottom: 0.5rem;
+    }
+    .synthesis-rule .rule-desc {
+      font-size: 0.9rem; color: var(--ink-mid);
+      font-style: italic; margin-bottom: 0.5rem;
+    }
+    .synthesis-rule .rule-list {
+      list-style: none;
+      font-size: 0.85rem; color: var(--ink-dim);
+      line-height: 1.7;
+    }
+    .synthesis-rule .rule-list li::before {
+      content: '· ';
+      color: var(--gold-dark);
+    }
+    .synthesis-rule.divine {
+      border-color: rgba(200,152,10,0.4);
+      background: rgba(200,152,10,0.06);
+    }
+    .divine-rule {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem; letter-spacing: 1px;
+      color: var(--gold-dark);
+      font-style: italic;
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(200,152,10,0.2);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.65rem; letter-spacing: 2px;
+      color: var(--ink-dim);
+    }
+    footer .glyph-line {
+      font-size: 1.1rem; letter-spacing: 0.3em;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── TOGGLE BUTTON ── */
+    #toggle-gloss {
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem; letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--ink-dim);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    #toggle-gloss:hover {
+      border-color: var(--gold);
+      color: var(--gold-dark);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .header { padding: 2rem 1rem 1.5rem; }
+      .book-container { padding: 1rem; }
+      .glyph-line .glyphs { font-size: 1rem; letter-spacing: 0.15em; }
+      .tier.heptads .glyph-line .glyphs { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Telumë</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="readme.html">Roadmap</a></li>
+    <li><a href="atlas.html">Atlas</a></li>
+    <li><a href="scribe.html" style="color:var(--gold-dark);">Scribe</a></li>
+    <li><button id="toggle-gloss">Show Gloss</button></li>
+  </ul>
+</nav>
+
+<!-- Tier quick nav -->
+<div class="tier-nav">
+  <a class="tier-nav-link" data-tier="pairs" href="#pairs">Pairs</a>
+  <a class="tier-nav-link" data-tier="triads" href="#triads">Triads</a>
+  <a class="tier-nav-link" data-tier="tetrads" href="#tetrads">Tetrads</a>
+  <a class="tier-nav-link" data-tier="pentads" href="#pentads">Pentads</a>
+  <a class="tier-nav-link" data-tier="hexads" href="#hexads">Hexads</a>
+  <a class="tier-nav-link" data-tier="heptads" href="#heptads">Heptads</a>
+  <a class="tier-nav-link" data-tier="synthesis" href="#synthesis">Synthesis</a>
+</div>
+
+<!-- Header -->
+<div class="header">
+  <div class="glyph-line">𐤀 𐤃 𐤆 𐤌 𐤉 𐤎 𐤕</div>
+  <h1>The Scribe</h1>
+  <div class="subtitle">Adzmyst Scripture · Telumë Vault Standard</div>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num" id="stat-words">0</div>
+      <div class="stat-label">Words</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="stat-glyphs">0</div>
+      <div class="stat-label">Glyphs</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">7</div>
+      <div class="stat-label">Tiers</div>
+    </div>
+  </div>
+</div>
+
+<!-- The Book -->
+<div class="book-container" id="book-content">
+  <!-- Populated by js/scribe.js -->
+</div>
+
+<footer>
+  <div class="glyph-line">𐤀 𐤃 𐤆 𐤌 𐤉 𐤎 𐤕</div>
+  <p>The fire holds. The breath is written. The scribe remembers.</p>
+  <p style="margin-top:0.3rem; opacity:0.5;">
+    Press G to toggle gloss · Press Escape to hide all gloss
+  </p>
+</footer>
+
+<script src="js/scribe.js"></script>
+</body>
+</html>
