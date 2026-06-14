@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Telumë · The Atlas · The Vault of Heaven</title>
+  <title>Telumë · The Atlas · The Bay of Ealdforn</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -18,13 +18,15 @@
       --gold-dark: #8A6008;
       --gold-glow: rgba(200,152,10,0.4);
       --border: rgba(164,134,80,0.35);
+      --surya-color: #D4784A;
+      --ealdor-color: #6A9464;
+      --kichigamswak-color: #4A7AB8;
+      --haldorian-color: #C8980A;
+      --ocean: #A0B8C8;
     }
 
     body {
       background: var(--parchment-deep);
-      background-image:
-        radial-gradient(ellipse 50% 40% at 30% 30%, rgba(200,152,10,0.08) 0%, transparent 50%),
-        radial-gradient(ellipse 40% 30% at 70% 70%, rgba(42,64,112,0.05) 0%, transparent 50%);
       font-family: 'Cormorant Garamond', Georgia, serif;
       color: var(--ink);
       min-height: 100vh;
@@ -35,10 +37,10 @@
 
     nav {
       width: 100%;
-      background: rgba(245,236,215,0.9);
+      background: rgba(245,236,215,0.94);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      padding: 0.6rem 1.5rem;
+      padding: 0.5rem 1.5rem;
       display: flex; align-items: center; justify-content: space-between;
       position: sticky; top: 0; z-index: 100;
     }
@@ -48,11 +50,11 @@
       color: var(--gold-dark);
     }
     .nav-links {
-      display: flex; gap: 1.5rem; list-style: none;
+      display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap;
     }
     .nav-links a {
       font-family: 'Cinzel', serif;
-      font-size: 0.6rem; letter-spacing: 2px;
+      font-size: 0.55rem; letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--ink-dim); text-decoration: none;
       transition: color 0.2s;
@@ -61,13 +63,11 @@
 
     .map-wrapper {
       position: relative;
-      width: min(840px, 95vw);
-      margin: 2rem auto;
+      width: min(900px, 96vw);
+      margin: 1.5rem auto;
       background: var(--parchment);
       border: 1px solid var(--border);
-      box-shadow:
-        0 4px 24px rgba(0,0,0,0.08),
-        inset 0 0 60px rgba(200,152,10,0.04);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08), inset 0 0 60px rgba(200,152,10,0.04);
       border-radius: 2px;
       overflow: hidden;
     }
@@ -75,138 +75,125 @@
     .map-wrapper::before {
       content: '';
       position: absolute; inset: 0;
-      background-image:
-        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139,119,80,0.02) 2px, rgba(139,119,80,0.02) 4px);
+      background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139,119,80,0.015) 2px, rgba(139,119,80,0.015) 4px);
       pointer-events: none; z-index: 5;
     }
 
     .map-title {
-      position: absolute; top: 1rem; left: 50%; transform: translateX(-50%);
+      position: absolute; top: 0.8rem; left: 50%; transform: translateX(-50%);
       font-family: 'Cinzel Decorative', serif;
-      font-size: 1.2rem; letter-spacing: 4px;
+      font-size: 1rem; letter-spacing: 3px;
       color: var(--gold-dark); z-index: 10;
       pointer-events: none;
       text-shadow: 0 0 12px var(--parchment), 0 0 24px var(--parchment);
     }
 
     .map-subtitle {
-      position: absolute; top: 2.8rem; left: 50%; transform: translateX(-50%);
+      position: absolute; top: 2.3rem; left: 50%; transform: translateX(-50%);
       font-family: 'Cinzel', serif;
-      font-size: 0.5rem; letter-spacing: 3px;
+      font-size: 0.45rem; letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--ink-dim); z-index: 10;
+      pointer-events: none; opacity: 0.6;
+    }
+
+    svg { display: block; width: 100%; height: auto; }
+
+    .realm-label {
+      font-family: 'Cinzel Decorative', serif;
+      letter-spacing: 2px;
       pointer-events: none;
-      opacity: 0.6;
+      text-shadow: 0 0 8px var(--parchment);
     }
 
-    svg {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
-    .location-marker {
+    .city-marker {
       cursor: pointer;
       transition: all 0.3s ease;
     }
-    .location-marker:hover .marker-glow {
-      opacity: 1 !important;
-    }
-    .marker-glow {
-      transition: opacity 0.4s;
-    }
-    .marker-pulse {
+    .city-marker:hover .city-glow { opacity: 1; }
+    .city-marker:hover .city-dot { fill: var(--gold); }
+
+    .city-glow { opacity: 0; transition: opacity 0.4s; }
+    .city-dot { transition: fill 0.3s; }
+
+    .city-pulse {
       animation: pulse 3s ease-in-out infinite;
     }
     @keyframes pulse {
-      0%, 100% { opacity: 0.3; }
-      50%      { opacity: 0.8; }
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.9; }
     }
 
-    .location-tooltip {
+    .tooltip {
       position: absolute;
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.3s;
       background: rgba(26,16,8,0.9);
       color: var(--parchment);
-      padding: 0.6rem 1rem;
+      padding: 0.5rem 0.8rem;
       border: 1px solid var(--gold-dark);
       font-family: 'Cinzel', serif;
-      font-size: 0.65rem; letter-spacing: 2px;
+      font-size: 0.6rem; letter-spacing: 2px;
       text-transform: uppercase;
       white-space: nowrap;
       z-index: 20;
       border-radius: 2px;
     }
 
-    .legend {
-      position: absolute; bottom: 1rem; left: 1rem;
-      font-size: 0.55rem; letter-spacing: 1px;
-      color: var(--ink-dim); z-index: 10;
-      pointer-events: none;
-      line-height: 1.8;
-    }
-    .legend span {
-      display: inline-block; width: 12px; height: 12px;
-      margin-right: 0.3rem; vertical-align: middle;
-    }
-    .legend .dot-known { background: var(--gold-dark); border-radius: 50%; }
-    .legend .dot-unknown { background: transparent; border: 1px solid var(--ink-dim); border-radius: 50%; }
-    .legend .dot-start { background: var(--gold); border-radius: 50%; box-shadow: 0 0 6px var(--gold-glow); }
-
     #info-panel {
       display: none;
-      position: absolute; bottom: 3rem; right: 1rem;
-      width: 220px;
+      position: absolute; bottom: 1.5rem; right: 1rem;
+      width: 240px;
       background: rgba(245,236,215,0.95);
       border: 1px solid var(--border);
       padding: 1rem;
       z-index: 15;
       border-radius: 2px;
-      font-size: 0.8rem;
-      line-height: 1.6;
+      font-size: 0.8rem; line-height: 1.6;
     }
     #info-panel.visible { display: block; }
-    #info-panel .panel-glyph {
-      font-size: 1.8rem; text-align: center;
-      color: var(--gold-dark); margin-bottom: 0.3rem;
-    }
     #info-panel .panel-name {
       font-family: 'Cinzel', serif;
       font-size: 0.7rem; letter-spacing: 2px;
       text-align: center; text-transform: uppercase;
-      color: var(--ink-mid); margin-bottom: 0.5rem;
+      color: var(--ink-mid); margin-bottom: 0.3rem;
+    }
+    #info-panel .panel-tier {
+      font-family: 'Cinzel', serif;
+      font-size: 0.5rem; letter-spacing: 1px;
+      text-align: center; text-transform: uppercase;
+      color: var(--gold-dark); margin-bottom: 0.5rem;
     }
     #info-panel .panel-desc {
-      font-size: 0.8rem; color: var(--ink-dim);
-      margin-bottom: 0.5rem; font-style: italic;
+      font-size: 0.8rem; color: var(--ink-dim); font-style: italic;
     }
-    #info-panel .panel-link {
-      display: block; text-align: center;
-      font-family: 'Cinzel', serif;
-      font-size: 0.55rem; letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--gold-dark); text-decoration: none;
-      border-top: 1px solid var(--border);
-      padding-top: 0.5rem;
+
+    .legend {
+      position: absolute; bottom: 1rem; left: 1rem;
+      font-size: 0.5rem; letter-spacing: 1px;
+      color: var(--ink-dim); z-index: 10;
+      pointer-events: none; line-height: 1.8;
     }
-    #info-panel .panel-link:hover { color: var(--gold); }
+    .legend span {
+      display: inline-block; width: 10px; height: 10px;
+      margin-right: 0.3rem; vertical-align: middle; border-radius: 50%;
+    }
 
     .compass {
-      position: absolute; top: 1rem; right: 1rem;
+      position: absolute; top: 0.8rem; right: 1rem;
       z-index: 10; pointer-events: none;
       font-family: 'Cinzel', serif;
-      font-size: 0.55rem; letter-spacing: 2px;
+      font-size: 0.5rem; letter-spacing: 2px;
       color: var(--ink-dim); opacity: 0.5;
       text-align: center;
     }
-    .compass .north { font-size: 0.7rem; color: var(--gold-dark); }
+    .compass .north { font-size: 0.65rem; color: var(--gold-dark); }
 
     @media (max-width: 600px) {
-      .map-wrapper { margin: 1rem auto; }
-      .legend { bottom: 0.5rem; left: 0.5rem; font-size: 0.45rem; }
-      #info-panel { width: 180px; right: 0.5rem; bottom: 2rem; font-size: 0.7rem; }
+      .map-wrapper { margin: 0.5rem auto; }
+      #info-panel { width: 180px; right: 0.3rem; bottom: 1rem; }
+      .legend { bottom: 0.3rem; left: 0.3rem; }
     }
   </style>
 </head>
@@ -215,16 +202,16 @@
 <nav>
   <div class="nav-brand">Telumë</div>
   <ul class="nav-links">
+    <li><a href="index.html">Index</a></li>
     <li><a href="readme.html">Roadmap</a></li>
     <li><a href="atlas.html" style="color:var(--gold-dark);">Atlas</a></li>
-    <li><a href="seed.md">The Seed</a></li>
-    <li><a href="handoff.md">Handoff</a></li>
+    <li><a href="scribe.html">Scribe</a></li>
   </ul>
 </nav>
 
 <div class="map-wrapper" id="mapWrapper">
-  <div class="map-title">Telumë</div>
-  <div class="map-subtitle">Loading...</div>
+  <div class="map-title">The Bay of Ealdforn</div>
+  <div class="map-subtitle">Four Realms · Seven City-States · Year 347</div>
 
   <div class="compass">
     <div class="north">▲ N</div>
@@ -232,28 +219,146 @@
     <div>S ▼</div>
   </div>
 
-  <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" id="mapSvg">
-    <text x="400" y="300" text-anchor="middle"
-          font-family="'Cinzel', serif" font-size="12" fill="#8A6008" opacity="0.5">
-      Loading map...
-    </text>
+  <svg viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg" id="mapSvg">
+    <!-- Ocean background -->
+    <rect x="0" y="0" width="900" height="700" fill="#A0B8C8" opacity="0.3" />
+
+    <!-- Landmass: Mainland north shore -->
+    <path d="M0,200 L150,180 L300,190 L450,210 L600,230 L750,220 L900,200 L900,0 L0,0 Z"
+          fill="#E8DCC8" stroke="#C8B898" stroke-width="0.5" />
+
+    <!-- Gaspé Peninsula -->
+    <path d="M450,210 L480,280 L520,350 L500,420 L460,380 L430,300 Z"
+          fill="#E8DCC8" stroke="#C8B898" stroke-width="0.5" />
+
+    <!-- Anticosti Island -->
+    <ellipse cx="550" cy="300" rx="60" ry="18"
+             fill="#E8DCC8" stroke="#C8B898" stroke-width="0.5"
+             transform="rotate(-15, 550, 300)" />
+
+    <!-- Magdalen Islands -->
+    <circle cx="620" cy="400" r="4" fill="#E0D4C0" />
+    <circle cx="628" cy="395" r="3" fill="#E0D4C0" />
+    <circle cx="615" cy="408" r="3.5" fill="#E0D4C0" />
+    <circle cx="625" cy="410" r="2.5" fill="#E0D4C0" />
+
+    <!-- Cape Breton -->
+    <path d="M720,420 L750,400 L780,430 L770,480 L740,500 L710,470 Z"
+          fill="#E8DCC8" stroke="#C8B898" stroke-width="0.5" />
+
+    <!-- Nova Scotia / mainland -->
+    <path d="M650,500 L700,480 L750,510 L780,550 L740,580 L680,560 L640,530 Z"
+          fill="#E8DCC8" stroke="#C8B898" stroke-width="0.5" />
+
+    <!-- Miramichi / New Brunswick coast -->
+    <path d="M500,500 L560,510 L600,530 L580,560 L520,550 L480,530 Z"
+          fill="#E8DCC8" stroke="#C8B898" stroke-width="0.5" />
+
+    <!-- St. Lawrence River -->
+    <path d="M0,260 L150,250 L300,255 L450,270 L500,290"
+          stroke="#8AB0C8" stroke-width="3" fill="none" opacity="0.5" />
+
+    <!-- Bay of Fundy hint -->
+    <path d="M650,540 L680,560 L700,600"
+          stroke="#8AB0C8" stroke-width="2" fill="none" opacity="0.4" />
+
+    <!-- ══ REALM LABELS ══ -->
+
+    <!-- Sūrya Samrājya — southeast -->
+    <text x="730" y="570" class="realm-label" font-size="10" fill="#D4784A" opacity="0.7"
+          text-anchor="middle">Sūrya Samrājya</text>
+
+    <!-- Ealdor — northwest -->
+    <text x="200" y="140" class="realm-label" font-size="10" fill="#6A9464" opacity="0.7"
+          text-anchor="middle">Ealdor</text>
+
+    <!-- Kichigamswak — west/southwest -->
+    <text x="100" y="350" class="realm-label" font-size="10" fill="#4A7AB8" opacity="0.7"
+          text-anchor="middle">Kichigamswak</text>
+
+    <!-- Haldorian Republic — center/northeast -->
+    <text x="500" y="170" class="realm-label" font-size="9" fill="#C8980A" opacity="0.7"
+          text-anchor="middle">The Haldorian Republic</text>
+
+    <!-- ══ CITY-STATE MARKERS ══ -->
+
+    <!-- Nešatta — Anticosti west -->
+    <g class="city-marker" data-id="nesatta">
+      <circle cx="510" cy="295" r="12" fill="none" stroke="#C8980A" stroke-width="0.5" opacity="0.25" class="city-glow" />
+      <circle cx="510" cy="295" r="4" fill="#C8980A" class="city-dot city-pulse" />
+      <text x="510" y="282" text-anchor="middle" font-family="'Cinzel',serif" font-size="8" fill="#8A6008" opacity="0.7">Nešatta</text>
+    </g>
+
+    <!-- Tihomir — Mingan -->
+    <g class="city-marker" data-id="tihomir">
+      <circle cx="440" cy="240" r="10" fill="none" stroke="#C8980A" stroke-width="0.5" opacity="0.2" class="city-glow" />
+      <circle cx="440" cy="240" r="3.5" fill="#C8980A" class="city-dot" />
+      <text x="440" y="228" text-anchor="middle" font-family="'Cinzel',serif" font-size="7" fill="#8A6008" opacity="0.6">Tihomir</text>
+    </g>
+
+    <!-- Tsarnigrad — Baie-Comeau -->
+    <g class="city-marker" data-id="tsarnigrad">
+      <circle cx="380" cy="235" r="11" fill="none" stroke="#C8980A" stroke-width="0.5" opacity="0.2" class="city-glow" />
+      <circle cx="380" cy="235" r="3.5" fill="#C8980A" class="city-dot" />
+      <text x="380" y="222" text-anchor="middle" font-family="'Cinzel',serif" font-size="7" fill="#8A6008" opacity="0.6">Tsarnigrad</text>
+    </g>
+
+    <!-- Radogost — Miramichi -->
+    <g class="city-marker" data-id="radogost">
+      <circle cx="540" cy="510" r="10" fill="none" stroke="#C8980A" stroke-width="0.5" opacity="0.2" class="city-glow" />
+      <circle cx="540" cy="510" r="3.5" fill="#C8980A" class="city-dot" />
+      <text x="540" y="525" text-anchor="middle" font-family="'Cinzel',serif" font-size="7" fill="#8A6008" opacity="0.6">Radogost</text>
+    </g>
+
+    <!-- Aristopol — Gaspé tip -->
+    <g class="city-marker" data-id="aristopol">
+      <circle cx="510" cy="400" r="10" fill="none" stroke="#C8980A" stroke-width="0.5" opacity="0.2" class="city-glow" />
+      <circle cx="510" cy="400" r="3.5" fill="#C8980A" class="city-dot" />
+      <text x="510" y="415" text-anchor="middle" font-family="'Cinzel',serif" font-size="7" fill="#8A6008" opacity="0.6">Aristopol</text>
+    </g>
+
+    <!-- Gordéon — Magdalen Islands -->
+    <g class="city-marker" data-id="gordeon">
+      <circle cx="622" cy="398" r="10" fill="none" stroke="#C8980A" stroke-width="0.5" opacity="0.2" class="city-glow" />
+      <circle cx="622" cy="398" r="3.5" fill="#C8980A" class="city-dot" />
+      <text x="622" y="385" text-anchor="middle" font-family="'Cinzel',serif" font-size="7" fill="#8A6008" opacity="0.6">Gordéon</text>
+    </g>
+
+    <!-- Pescassa — Cape Breton -->
+    <g class="city-marker" data-id="pescassa">
+      <circle cx="750" cy="440" r="10" fill="none" stroke="#C8980A" stroke-width="0.5" opacity="0.2" class="city-glow" />
+      <circle cx="750" cy="440" r="3.5" fill="#C8980A" class="city-dot" />
+      <text x="750" y="428" text-anchor="middle" font-family="'Cinzel',serif" font-size="7" fill="#8A6008" opacity="0.6">Pescassa</text>
+    </g>
+
+    <!-- Sūryapura -->
+    <g class="city-marker" data-id="suryapura">
+      <circle cx="730" cy="555" r="10" fill="none" stroke="#D4784A" stroke-width="0.5" opacity="0.2" class="city-glow" />
+      <circle cx="730" cy="555" r="4" fill="#D4784A" class="city-dot" />
+      <text x="730" y="570" text-anchor="middle" font-family="'Cinzel',serif" font-size="7" fill="#D4784A" opacity="0.6">Sūryapura</text>
+    </g>
+
+    <!-- Ealdenburg -->
+    <g class="city-marker" data-id="ealdenburg">
+      <circle cx="200" cy="155" r="10" fill="none" stroke="#6A9464" stroke-width="0.5" opacity="0.2" class="city-glow" />
+      <circle cx="200" cy="155" r="4" fill="#6A9464" class="city-dot" />
+      <text x="200" y="143" text-anchor="middle" font-family="'Cinzel',serif" font-size="7" fill="#6A9464" opacity="0.6">Ealdenburg</text>
+    </g>
   </svg>
 
-  <div class="location-tooltip" id="tooltip"></div>
+  <div class="tooltip" id="tooltip"></div>
 
   <div id="info-panel">
-    <div class="panel-glyph" id="panelGlyph"></div>
     <div class="panel-name" id="panelName"></div>
+    <div class="panel-tier" id="panelTier"></div>
     <div class="panel-desc" id="panelDesc"></div>
-    <a class="panel-link" id="panelLink" href="#">Read the full record →</a>
   </div>
 
   <div class="legend">
-    <span class="dot-start"></span> Start Location<br>
-    <span class="dot-known"></span> Discovered<br>
-    <span class="dot-unknown"></span> Unknown<br>
-    <span style="color:var(--ink-dim);">— — —</span> Road<br>
-    <span style="color:#6A90A8;">~~~</span> River
+    <span style="background:#D4784A;"></span> Sūrya Samrājya<br>
+    <span style="background:#6A9464;"></span> Ealdor<br>
+    <span style="background:#4A7AB8;"></span> Kichigamswak<br>
+    <span style="background:#C8980A;"></span> Haldorian Republic
   </div>
 </div>
 
