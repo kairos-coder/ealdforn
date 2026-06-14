@@ -1,0 +1,403 @@
+{
+  "meta": {
+    "world": "Telumë",
+    "root": "Adzmyst",
+    "rootDescription": "The 22 Proto-Sinaitic glyphs. The hub language. Spoken before the Collapse. Now preserved only in the Trilingual Codex and the Babel Tablet.",
+    "collapseEvent": "The Tower of Babel · Genesis 11:1-9",
+    "collapseDescription": "The one language shattered into five families. Each kingdom inherited a fragment. The Sunfolk preserved the source. The other kingdoms translated it through their own temperaments.",
+    "totalKingdoms": 5,
+    "totalSubFamilies": 10,
+    "totalDialects": 3,
+    "version": "1.0.0"
+  },
+
+  "kingdoms": [
+    {
+      "id": "surya",
+      "name": "Sūrya Samrājya",
+      "nameEnglish": "Empire of the Eastern Sun",
+      "region": "Eastern river plains, dense jungles, snow-capped mountains to the east",
+      "capital": "Sūryapura",
+      "capitalMeaning": "Sun City",
+      "government": "Divine monarchy",
+      "governmentDescription": "The Sun-King is a living god, reincarnated each generation. He does not rule — he radiates.",
+      "people": "The Sunfolk",
+      "peopleDescription": "Dark-skinned, dark-eyed, black hair. Cotton, silk, gold. Philosophical, mathematical, ritual-bound.",
+      "glyphRelationship": "Glyphs are mantras — seed syllables chanted to align the chakras, open the doors of perception, communicate with the gods.",
+      "collapseTelling": "The Division of Peoples (Manuṣyāṇāṃ Vibhedaḥ). The tower was an act of reverence. Humanity wanted to return to heaven. The gods, threatened, scattered them. The Sunfolk preserved the original tablet.",
+      "primaryLanguage": {
+        "name": "Samskritan",
+        "family": "Indo-Aryan",
+        "stage": "Classical",
+        "script": "Devanāgarī",
+        "description": "The language of the Sun Court. The living tongue of the empire. Used for governance, poetry, diplomacy.",
+        "adzmystInheritance": "Preserved the full 22 glyphs. The semantic fields are intact. Phonetics were innovated after the Collapse.",
+        "samplePhrase": "सत्यमेव जयति। द्वारं विवृणोति यः पश्यति।",
+        "sampleGloss": "Truth alone triumphs. The door opens to the one who sees."
+      },
+      "subFamilies": [
+        {
+          "id": "prakrit",
+          "name": "Prākrit",
+          "altName": "Pali",
+          "people": "The Samaṇas",
+          "peopleDescription": "Wanderers, ascetics, monastics. Buddhist-influenced. Non-violent, renunciative. They do not believe in the Sun-King's divinity.",
+          "region": "Eastern forests, mountain monasteries, cave temples",
+          "script": "Brāhmī",
+          "scriptDescription": "Derived from Devanāgarī, but softer, rounded.",
+          "relationToKingdom": "Tolerated, but distrusted. The Samaṇas do not swear oaths to the Sun-King.",
+          "sampleName": "Samaṇa Ānanda (Joyful wanderer)",
+          "samplePhrase": "Sabbē sattā sukhitā hontu.",
+          "sampleGloss": "May all beings be happy."
+        },
+        {
+          "id": "apabhramsa",
+          "name": "Apabhraṃśa",
+          "people": "The Ādivāsī",
+          "peopleDescription": "Tribal peoples. Animist, oral. They do not write. Their knowledge is carried in song.",
+          "region": "Eastern hills, deep jungles, beyond the eastern rivers",
+          "script": null,
+          "scriptDescription": "None. Oral tradition only.",
+          "relationToKingdom": "Conquered, but not subdued. They pay tribute but keep their own gods.",
+          "sampleName": "Ādivāsī chief Dhūma (Smoke)",
+          "samplePhrase": "Bana ke devatā hamārī rakṣā karate haiṁ.",
+          "sampleGloss": "The gods of the forest protect us."
+        }
+      ]
+    },
+    {
+      "id": "ealdor",
+      "name": "Ealdenmarc",
+      "nameEnglish": "The Old March",
+      "region": "Central highlands, rolling hills, river valleys, ancient forests",
+      "capital": "Ealdenburg",
+      "capitalMeaning": "Old Fort",
+      "government": "Elected monarchy",
+      "governmentDescription": "The Witenagemot (meeting of wise men) chooses the king. The king rules until death or incompetence.",
+      "people": "The Markfolk",
+      "peopleDescription": "Fair-haired, grey-eyed, tall. Wool, linen, iron. Oath-bound, clan-based, legalistic.",
+      "glyphRelationship": "Glyphs are runes of law — carved on standing stones. Each glyph is an oath, a boundary, a covenant. Breaking a carved oath is breaking the world.",
+      "collapseTelling": "The Broken Covenant. The tower was an oath. One clan withheld their stone. The oath shattered. The language shattered with it. Language is a contract. When the contract is broken, the words break too.",
+      "primaryLanguage": {
+        "name": "Ēlþian",
+        "family": "West Germanic",
+        "stage": "Old",
+        "script": "Runic (Futhorc)",
+        "description": "The language of the Ealdenmot (the old assembly). Spoken by the King, the Witenagemot, carved on standing stones.",
+        "adzmystInheritance": "Preserved word-order patterns (declarative, inversive, imperative). Lost the glyph distinctions. Carved them as abstract signs.",
+        "samplePhrase": "Rūnā rēdaþ. Æt þæt fyr ne ādwæscaþ. Þæt geat is open.",
+        "sampleGloss": "The runes speak. And the fire does not go out. The gate is open."
+      },
+      "subFamilies": [
+        {
+          "id": "englisc",
+          "name": "Englisc",
+          "altName": "Old English · Anglian",
+          "people": "The Engle",
+          "peopleDescription": "Seafaring, trading, ship-building. The merchants of Ealdor who sail to Prūsia and Heloria.",
+          "region": "Eastern coasts, river estuaries, the North Sea",
+          "script": "Anglo-Saxon runes (Futhorc)",
+          "scriptDescription": "Different from the mainland runes. Developed independently for maritime records.",
+          "relationToKingdom": "Loyal, but independent. They pay taxes but keep their own laws.",
+          "sampleName": "Æthelwine (Noble friend)",
+          "samplePhrase": "Ic segle tō faran beorhtne sǣ.",
+          "sampleGloss": "I sail to cross the bright sea."
+        },
+        {
+          "id": "frankisk",
+          "name": "Frankisk",
+          "altName": "Old High German · Frankish",
+          "people": "The Franki",
+          "peopleDescription": "Imperial, legalistic, expansionist. Once conquered by Ealdor; now the empire's southern shield.",
+          "region": "Southern borders, river valleys near Heloria",
+          "script": "Latin alphabet",
+          "scriptDescription": "Derived from Helorian influence. Used for legal documents and border treaties.",
+          "relationToKingdom": "Ambivalent. They speak a different tongue, worship different gods, but serve the King.",
+          "sampleName": "Frankish Count Hrodbert (Famous-bright)",
+          "samplePhrase": "Wir skulen diu gisuntida thīn es hēr.",
+          "sampleGloss": "We shall bring your health to here."
+        }
+      ]
+    },
+    {
+      "id": "heloria",
+      "name": "Heloria",
+      "nameEnglish": "The Valefolk Republic",
+      "region": "Southern valleys, fertile plains, river deltas, islands",
+      "capital": "Nova Fora",
+      "capitalMeaning": "New Market",
+      "government": "Senatorial republic",
+      "governmentDescription": "Two consuls, a senate of old families, a commons assembly.",
+      "people": "The Valefolk",
+      "peopleDescription": "Dark-haired, olive-skinned, shorter than the Markfolk. Linen, leather, stone. Legalistic, mercantile, engineering.",
+      "glyphRelationship": "Glyphs are letters — adapted into an alphabet for contracts, laws, and trade. The Valefolk have forgotten that the letters were once doors. They use them for commerce, not covenant.",
+      "collapseTelling": "Natural Drift. The languages did not break. They grew apart, as rivers diverge. The tower was abandoned because the builders stopped understanding each other. No god. No punishment. Just time.",
+      "primaryLanguage": {
+        "name": "Khaldrian",
+        "family": "Italic",
+        "stage": "Classical",
+        "script": "Latin alphabet",
+        "description": "The language of the Senate, the law, the marketplace. The tongue of contracts and philosophy.",
+        "adzmystInheritance": "Preserved the alphabet. Lost the semantic fields. 𐤃 means 'D,' not 'door.'",
+        "samplePhrase": "Lex in saxō scripta est. Nēmō ante thūrām sine iūre stā.",
+        "sampleGloss": "The law is written in stone. No one stands before the door without right."
+      },
+      "subFamilies": [
+        {
+          "id": "doric",
+          "name": "Doric Greek",
+          "people": "The Dorians",
+          "peopleDescription": "Warrior culture, laconic, conservative. They supply the army and the bodyguards of the consuls.",
+          "region": "Western mountains, the highlands, the passes",
+          "script": "Greek alphabet (archaic Doric variant)",
+          "scriptDescription": "Older than the Koine script. Preserved in military inscriptions.",
+          "relationToKingdom": "Proud, resentful. They remember when they ruled Heloria, before the Koine speakers came.",
+          "sampleName": "Dorian general Lakon (Spartan)",
+          "samplePhrase": "Ḓā ḕ tān.",
+          "sampleGloss": "Either this or that. (The laconic phrase.)"
+        },
+        {
+          "id": "ionic",
+          "name": "Ionic Greek",
+          "people": "The Iones",
+          "peopleDescription": "Maritime, philosophical, wealthy. The shipbuilders, the philosophers, the bankers.",
+          "region": "Eastern coasts, the islands, the trade routes",
+          "script": "Greek alphabet (Ionic variant)",
+          "scriptDescription": "The basis of Koine. Used for philosophy, trade, and senatorial records.",
+          "relationToKingdom": "Influential, wealthy, but not militarily powerful. They speak the language of the Senate.",
+          "sampleName": "Ionian merchant Thales (To blossom)",
+          "samplePhrase": "Πάντα ῥεῖ.",
+          "sampleGloss": "Everything flows."
+        }
+      ]
+    },
+    {
+      "id": "cernun",
+      "name": "Cernun",
+      "nameEnglish": "The Western Kingdom",
+      "region": "Western coasts, misty islands, sacred groves, rocky highlands",
+      "capital": "Druinemetum",
+      "capitalMeaning": "Oak Sanctuary",
+      "government": "Tribal confederation",
+      "governmentDescription": "The Chieftain rules by acclamation of the clans. The Druids advise but do not rule.",
+      "people": "The Cernfolk",
+      "peopleDescription": "Red-haired, fair-skinned, freckled. Wool, leather, gold torcs. Warrior-poets, druidic, clan-loyal.",
+      "glyphRelationship": "Glyphs are sacred signs — carved on ogham stones, used for boundaries, memorials, and druidic ritual. Each glyph is a tree, each tree is a memory.",
+      "collapseTelling": "Not yet recorded. The Cernfolk tell their version orally. It has not been written down.",
+      "primaryLanguage": {
+        "name": "Gallac",
+        "family": "Continental Celtic",
+        "stage": "Old",
+        "script": "Ogham",
+        "description": "The language of the Chieftain, the warriors, the open plains. Spoken at council fires and battle musters.",
+        "adzmystInheritance": "Preserved the doubling and tripling as punctuation and ritual emphasis. Merged several glyph distinctions.",
+        "samplePhrase": "Bratu dēuoi. Dēuoi bratu.",
+        "sampleGloss": "The gods judge. The gods are judged."
+      },
+      "subFamilies": [
+        {
+          "id": "brythonic",
+          "name": "Brythonic",
+          "altName": "British Celtic",
+          "people": "The Britanni",
+          "peopleDescription": "Druidic, mystical, isolationist. They keep to the islands and preserve the old ways.",
+          "region": "Western islands, sacred groves, the misty isles",
+          "script": "Ogham",
+          "scriptDescription": "Carved on standing stones. Used for boundaries, memorials, and sacred inscriptions.",
+          "relationToKingdom": "Independent, but culturally aligned. They share gods, but not kings.",
+          "sampleName": "Druidess Brigantia (High one)",
+          "samplePhrase": "Is acher in gaíth innocht.",
+          "sampleGloss": "The wind is rough tonight."
+        },
+        {
+          "id": "goidelic",
+          "name": "Goidelic",
+          "altName": "Irish Celtic",
+          "people": "The Goidel",
+          "peopleDescription": "Tribal, clan-based, poetic. The bards, the genealogists, the keepers of oral history.",
+          "region": "Northwestern highlands, rocky coasts, clan territories",
+          "script": "Ogham",
+          "scriptDescription": "Same script as Brythonic, different pronunciation and symbol assignments.",
+          "relationToKingdom": "Restive, rebellious. They were conquered generations ago and still remember.",
+          "sampleName": "Goidelic chieftain Conall (Strong wolf)",
+          "samplePhrase": "Móra aige na cóig.",
+          "sampleGloss": "Great is the one of the five."
+        }
+      ]
+    },
+    {
+      "id": "prusia",
+      "name": "Prūsland",
+      "nameEnglish": "The Lake Kingdom",
+      "region": "Northeastern forests, deep lakes, amber-rich shores, vast steppes to the east",
+      "capital": "Kūnga Alna",
+      "capitalMeaning": "King's River",
+      "government": "Tribal confederation",
+      "governmentDescription": "The Elder Council chooses the Kunigs (King). The King rides with the army. The capital moves with the King — a tent-city of felt and gold.",
+      "people": "The Lakefolk",
+      "peopleDescription": "Fair-haired, grey-eyed, pale. Linen, fur, amber. Mysterious, reclusive, ancestral. Horse-lords of the eastern steppes.",
+      "glyphRelationship": "Glyphs are talismans — carved in amber, worn around the neck. Each glyph is a tree, each tree is a memory. The Lakefolk believe the glyphs were spoken by the first ancestor, Prūsus, who rose from the lake.",
+      "collapseTelling": "The Lightning and the Forest. The god Perkūnas struck the one great forest with lightning. The trees were scattered. Each tree grew alone. Each remembered only its own name. The lightning was not punishment. A forest too dense chokes itself.",
+      "primaryLanguage": {
+        "name": "Prūsisk",
+        "family": "Baltic",
+        "stage": "Old",
+        "script": "Latin-derived",
+        "description": "The language of the Kunigs, the Elder Council, the amber shrines.",
+        "adzmystInheritance": "Preserved the breath-marks (doubling and tripling as punctuation). Merged 𐤎 and 𐤔. Retained the consonantal roots.",
+        "samplePhrase": "Dewīs dūrai. Prūsiskas wīrst. Perkūnas perēit.",
+        "sampleGloss": "The door is opening. The Prussian becomes. Perkūnas passes over."
+      },
+      "subFamilies": [
+        {
+          "id": "lietuviai",
+          "name": "Lietuvių",
+          "altName": "Lithuanian",
+          "people": "The Lietuviai",
+          "peopleDescription": "Pagan, forest-dwelling, horse-riding. The last holdouts of the old religion.",
+          "region": "Northern forests, deep lakes, sacred groves",
+          "script": "Latin-derived",
+          "scriptDescription": "Adapted from Helorian trade contacts. Used for amber transactions and genealogies.",
+          "relationToKingdom": "Culturally dominant. The Kunigs speaks Lithuanian at court.",
+          "sampleName": "Kunigs Kęstutis (To endure)",
+          "samplePhrase": "Dievai duoda, dievai atima.",
+          "sampleGloss": "The gods give, the gods take away."
+        },
+        {
+          "id": "latvji",
+          "name": "Latvji",
+          "altName": "Latvian",
+          "people": "The Latvji",
+          "peopleDescription": "Seafaring, amber-trading, coastal. The merchants of Prūsia who trade with Heloria and Ealdor.",
+          "region": "Baltic coast, amber-rich shores, fishing villages",
+          "script": "Latin-derived",
+          "scriptDescription": "Same script as Lithuanian, different pronunciation and vocabulary.",
+          "relationToKingdom": "Economically vital, politically weak. They pay taxes but are not represented in the Elder Council.",
+          "sampleName": "Latvian merchant Juris (George)",
+          "samplePhrase": "Ūdens ir dzīvība.",
+          "sampleGloss": "Water is life."
+        }
+      ]
+    },
+    {
+      "id": "fellmark",
+      "name": "Fellmark",
+      "nameEnglish": "The Fellfolk",
+      "region": "Northern fjords, volcanic islands, sea ice, black sands",
+      "capital": "Valland",
+      "capitalMeaning": "Slain Field",
+      "government": "Jarls and Thing",
+      "governmentDescription": "The High Jarl is first among equals. The Thing is the annual assembly of free men.",
+      "people": "The Fellfolk",
+      "peopleDescription": "Pale-skinned, light-eyed, red or blond hair. Wool, leather, iron. Seafaring, adventurous, fatalistic.",
+      "glyphRelationship": "Glyphs are runes — carved on weapons, ships, standing stones. Cast for divination. Each rune is a fate.",
+      "collapseTelling": "The Liberation of Tongues. The tower was built by giants who enslaved the Fellfolk. The Fellfolk broke their own tongues so the giants could not command them. The scattering was not punishment. It was liberation.",
+      "primaryLanguage": {
+        "name": "Nordrune",
+        "family": "North Germanic",
+        "stage": "Old",
+        "script": "Younger Futhark",
+        "description": "The language of the Jarls, the Thing, the sagas. Spoken on the sea and at the forge.",
+        "adzmystInheritance": "Preserved the consonantal roots. Lost the vowel system entirely. Runes are consonants only.",
+        "samplePhrase": "Eldrinn heldr. Dyrr opnask.",
+        "sampleGloss": "The fire holds. The door opens."
+      },
+      "subFamilies": [],
+      "note": "Fellmark is linguistically isolated due to the northern ice. No sub-families have diverged. The Fellfolk are one people, one tongue, one fate."
+    }
+  ],
+
+  "adzmystComparativeTable": {
+    "description": "How the sacred seven glyphs are rendered in each kingdom's primary language.",
+    "glyphs": [
+      {
+        "glyph": "𐤀",
+        "name": "Aleph",
+        "meaning": "Beginning, strength, ox",
+        "surya": "अ (a), अग्नि (agni)",
+        "ealdor": "Ōs (god, mouth)",
+        "heloria": "A (alpha)",
+        "cernun": "Ailm (pine, strength)",
+        "prusia": "Ā (beginning)",
+        "fellmark": "Ōss (god, breath)"
+      },
+      {
+        "glyph": "𐤃",
+        "name": "Dalet",
+        "meaning": "Door, threshold, passage",
+        "surya": "द्वार (dvāra)",
+        "ealdor": "Duru (door)",
+        "heloria": "Thūra (door)",
+        "cernun": "Duir (oak, door)",
+        "prusia": "Dūrai (door)",
+        "fellmark": "Dyrr (door)"
+      },
+      {
+        "glyph": "𐤆",
+        "name": "Zayin",
+        "meaning": "Weapon, division, cut",
+        "surya": "ज (ja), युद्ध (yuddha)",
+        "ealdor": "Z → R (blade → counsel)",
+        "heloria": "Z → R (gladius → iūs)",
+        "cernun": "Z → S (sword → separation)",
+        "prusia": "Z → Ž (knife → boundary)",
+        "fellmark": "Z → R (axe → decision)"
+      },
+      {
+        "glyph": "𐤌",
+        "name": "Mem",
+        "meaning": "Water, chaos, deep",
+        "surya": "समुद्र (samudra)",
+        "ealdor": "Mere (sea, lake)",
+        "heloria": "Mare (sea)",
+        "cernun": "Muir (sea)",
+        "prusia": "Mari (sea, lagoon)",
+        "fellmark": "Marr (sea)"
+      },
+      {
+        "glyph": "𐤉",
+        "name": "Yod",
+        "meaning": "Hand, action, making",
+        "surya": "य (ya), हस्त (hasta)",
+        "ealdor": "G → Y (hand → geard)",
+        "heloria": "I (action, go)",
+        "cernun": "Idad (yew, hand)",
+        "prusia": "Jā (hand, reach)",
+        "fellmark": "Jā (hand, deed)"
+      },
+      {
+        "glyph": "𐤎",
+        "name": "Samek",
+        "meaning": "Pillar, support, truth",
+        "surya": "स (sa), सत्य (satya)",
+        "ealdor": "Sōd (truth, pillar)",
+        "heloria": "Sol (sun, truth)",
+        "cernun": "Saille (willow, support)",
+        "prusia": "Sākī (truth, resin)",
+        "fellmark": "Sōð (truth, standing stone)"
+      },
+      {
+        "glyph": "𐤕",
+        "name": "Taw",
+        "meaning": "Mark, completion, seal",
+        "surya": "त (ta), मृत्यु (mṛtyu)",
+        "ealdor": "Dēaþ (death, completion)",
+        "heloria": "Mors (death, seal)",
+        "cernun": "Tinne (holly, end)",
+        "prusia": "Gāllā (end, death)",
+        "fellmark": "Dauði (death, fate sealed)"
+      }
+    ]
+  },
+
+  "sharedIncantation": {
+    "description": "The fire holds. The door opens. — in all seven languages.",
+    "adzmyst": "𐤕𐤕𐤕 · 𐤀𐤃 𐤀𐤐𐤕𐤇",
+    "surya": "अग्निः धारयति। द्वारं विवृणोति।",
+    "ealdor": "Þæt fyr hæld. Þæt duru āþnaþ.",
+    "heloria": "Ignis tenet. Foris aperit.",
+    "cernun": "Tegnāt āras. Duro berāt.",
+    "prusia": "Ugni turri. Dūrais teinēi.",
+    "fellmark": "Eldrinn heldr. Dyrr opnask."
+  }
+}
