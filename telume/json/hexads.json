@@ -1,0 +1,224 @@
+{
+  "meta": {
+    "language": "Adzmyst",
+    "dialect": "Telumë Vault Standard",
+    "version": "1.0.0",
+    "tier": "hexad",
+    "count": 30,
+    "description": "Sentences. Laws. Declarations. A full statement — enough to be quoted, memorized, carved above a doorway. Hexads are the descending tail of the curve. They are formal, weighty, and rare.",
+    "grammarReference": "grammar.json"
+  },
+
+  "hexads": [
+    {
+      "id": "hexad-001",
+      "glyphs": ["𐤀", "𐤃", "𐤆", "𐤌", "𐤉", "𐤎"],
+      "gloss": "strength → door → cut → chaos → hand → pillar",
+      "interpretation": "Power opens, divides, enters the deep, is shaped, and stands. The full arc of creation before the seal. ADZMYST without the final Taw — the breath that has not yet finished speaking.",
+      "usage": "Inscribed on works in progress, on temples under construction, on the living. 'The work continues. The seal is not yet set.'"
+    },
+    {
+      "id": "hexad-002",
+      "glyphs": ["𐤕", "𐤎", "𐤉", "𐤌", "𐤆", "𐤃"],
+      "gloss": "completion → pillar → hand → chaos → cut → door",
+      "interpretation": "The seal stands, acts upon chaos, divides it, and opens a passage. The finished structure reaches into the deep, cuts it, and makes a door. The inversive full arc.",
+      "usage": "Inscribed on completed works that continue to act. 'It is finished. It stands. It reaches into the deep. It cuts. It opens.'"
+    },
+    {
+      "id": "hexad-003",
+      "glyphs": ["𐤌", "𐤌", "𐤃", "𐤀", "𐤉", "𐤕"],
+      "gloss": "chaos, deepens → door → strength → hand → completion",
+      "interpretation": "The deep, the deep — and then a door, and strength, and the hand, and the seal. Chaos fully felt, then passage, then power, then action, then completion.",
+      "usage": "A confession of emergence. 'I knew the deep. Then the door. Then the strength. Then my hands worked. Then it was done.'"
+    },
+    {
+      "id": "hexad-004",
+      "glyphs": ["𐤎", "𐤎", "𐤃", "𐤌", "𐤉", "𐤕"],
+      "gloss": "pillar, upheld → door → chaos → hand → completion",
+      "interpretation": "The pillar, the pillar — and it opens a door into chaos, chaos is shaped, and the shaping is sealed. Stability fully affirmed becomes passage, becomes deep, becomes work, becomes seal.",
+      "usage": "Inscribed on ancient structures that still produce new works. 'It held. It holds. It opens into the deep. The deep is worked. The work is sealed.'"
+    },
+    {
+      "id": "hexad-005",
+      "glyphs": ["𐤀", "𐤌", "𐤉", "𐤃", "𐤎", "𐤕"],
+      "gloss": "strength → chaos → hand → door → pillar → completion",
+      "interpretation": "Power enters the deep, is shaped, opens a passage, the passage stands, and is sealed. The ox wades in, is worked by the water, finds the door, the door becomes a pillar, and the pillar is finished.",
+      "usage": "Inscribed on works of transformation that become permanent. 'Strength went in. Was shaped. Found the door. The door stands. It is sealed.'"
+    },
+    {
+      "id": "hexad-006",
+      "glyphs": ["𐤉", "𐤆", "𐤌", "𐤀", "𐤃", "𐤎"],
+      "gloss": "hand → cut → chaos → strength → door → pillar",
+      "interpretation": "Take the blade, cut the deep, draw power, open a passage, and let it stand. The full pioneer's command.",
+      "usage": "Inscribed on tools of founding and settlement. 'Cut the water. Take the strength. Open the door. Let it stand.'"
+    },
+    {
+      "id": "hexad-007",
+      "glyphs": ["𐤃", "𐤀", "𐤌", "𐤆", "𐤉", "𐤕"],
+      "gloss": "door → strength → chaos → cut → hand → completion",
+      "interpretation": "The passage empowers, the power enters chaos, chaos is divided, the division is guided, and the guidance is sealed. The door that transforms the crosser into a judge.",
+      "usage": "Inscribed on thresholds of judgment. 'Cross here. You will be strong. You will enter the deep. You will cut. You will guide. You will seal.'"
+    },
+    {
+      "id": "hexad-008",
+      "glyphs": ["𐤕", "𐤌", "𐤉", "𐤎", "𐤃", "𐤀"],
+      "gloss": "completion → chaos → hand → pillar → door → strength",
+      "interpretation": "The seal contains chaos, chaos is shaped into structure, the structure opens, and the opening empowers. The inversive arc of containment becoming liberation.",
+      "usage": "Inscribed on vaults that train those who will open them. 'The seal holds the deep. The deep is shaped. The shape stands. It opens. It strengthens.'"
+    },
+    {
+      "id": "hexad-009",
+      "glyphs": ["𐤀", "𐤀", "𐤃", "𐤌", "𐤉", "𐤕"],
+      "gloss": "strength, renewed → door → chaos → hand → completion",
+      "interpretation": "Strength, strength — and then a door into chaos, chaos is shaped, and the shaping is sealed. Power fully gathered opens a passage, enters the deep, works it, and finishes.",
+      "usage": "Inscribed on places of final preparation before great works. 'Gather all strength. Then the door. Then the deep. Then the work. Then the seal.'"
+    },
+    {
+      "id": "hexad-010",
+      "glyphs": ["𐤌", "𐤆", "𐤉", "𐤎", "𐤀", "𐤃"],
+      "gloss": "chaos → cut → hand → pillar → strength → door",
+      "interpretation": "The deep divides the maker, the division stands, the standing empowers, and power opens a passage. The full teaching of wounding that becomes capability that becomes way.",
+      "usage": "A law of transformation through suffering. 'The deep cuts the hand. The cut is a pillar. The pillar strengthens. The strength opens the door.'"
+    },
+    {
+      "id": "hexad-011",
+      "glyphs": ["𐤎", "𐤌", "𐤀", "𐤃", "𐤉", "𐤕"],
+      "gloss": "pillar → chaos → strength → door → hand → completion",
+      "interpretation": "The structure stands in chaos, chaos empowers, power opens a passage, the passage acts, and the action is sealed. The pillar in the water draws strength, opens the way, reaches out, and finishes.",
+      "usage": "Inscribed on structures that channel natural forces into completed works. 'The pillar in the flood draws strength. The strength opens the door. The door reaches. The reach is sealed.'"
+    },
+    {
+      "id": "hexad-012",
+      "glyphs": ["𐤉", "𐤌", "𐤎", "𐤃", "𐤀", "𐤕"],
+      "gloss": "hand → chaos → pillar → door → strength → completion",
+      "interpretation": "Reach into the deep, find the structure, let it open, let it empower, and seal it. Put your hand in the water, grasp the pillar, it becomes a door, it strengthens, it finishes.",
+      "usage": "Inscribed on discoveries of ancient structures that become lasting passages. 'Reach. Find the old pillar. It opens. It strengthens. It seals.'"
+    },
+    {
+      "id": "hexad-013",
+      "glyphs": ["𐤀", "𐤕", "𐤌", "𐤉", "𐤎", "𐤃"],
+      "gloss": "strength → completion → chaos → hand → pillar → door",
+      "interpretation": "Power, sealed, enters the deep, is shaped, stands, and opens. The ox is finished, its ending stirs the water, the water works, the work stands, and the standing opens.",
+      "usage": "An elegiac law. Inscribed on tombs of founders. 'Their strength is sealed. It entered the deep. The deep shaped it. It stands. It opens.'"
+    },
+    {
+      "id": "hexad-014",
+      "glyphs": ["𐤆", "𐤕", "𐤀", "𐤌", "𐤉", "𐤎"],
+      "gloss": "cut → completion → strength → chaos → hand → pillar",
+      "interpretation": "Make the final cut, draw power, release it to chaos, let chaos shape, and let the shaping stand. The full ritual of release and transformation.",
+      "usage": "Inscribed on final ceremonies. 'Cut. Seal. Take the strength. Give it to the deep. Let the deep shape. Let the shape stand.'"
+    },
+    {
+      "id": "hexad-015",
+      "glyphs": ["𐤃", "𐤉", "𐤌", "𐤆", "𐤀", "𐤎"],
+      "gloss": "door → hand → chaos → cut → strength → pillar",
+      "interpretation": "The passage acts upon chaos, divides it, draws power, and the power stands. The door reaches into the deep, cuts it, takes strength, and the strength becomes structure.",
+      "usage": "Inscribed on passages that transform the deep into lasting works. 'The door reached into the flood. It cut. It took strength. The strength stands.'"
+    },
+    {
+      "id": "hexad-016",
+      "glyphs": ["𐤕", "𐤕", "𐤀", "𐤃", "𐤌", "𐤉"],
+      "gloss": "completion, sealed → strength → door → chaos → hand",
+      "interpretation": "It is finished, it is finished — and from this, strength opens a door into chaos, and chaos is shaped. The double seal empowers a passage into the unknown, and the unknown is worked.",
+      "usage": "Inscribed on endings that launch great works. 'It is done. It is done. Now strength opens the door to the deep. The deep will be shaped.'"
+    },
+    {
+      "id": "hexad-017",
+      "glyphs": ["𐤌", "𐤉", "𐤕", "𐤎", "𐤀", "𐤃"],
+      "gloss": "chaos → hand → completion → pillar → strength → door",
+      "interpretation": "The deep acts, seals the work, the seal stands, the standing empowers, and power opens. Chaos shapes, finishes, the finish endures, strengthens, and opens the way.",
+      "usage": "Inscribed on inspired works that become foundations. 'The deep made this. It is sealed. It stands. It strengthens. It opens.'"
+    },
+    {
+      "id": "hexad-018",
+      "glyphs": ["𐤎", "𐤉", "𐤆", "𐤌", "𐤀", "𐤕"],
+      "gloss": "pillar → hand → cut → chaos → strength → completion",
+      "interpretation": "The structure teaches the hand to divide the deep, draw power, and seal it. The pillar instructs, the hand cuts the water, takes strength, and finishes.",
+      "usage": "A law of discipline. 'The pillar will teach your hand to cut the flood, take its strength, and seal the work.'"
+    },
+    {
+      "id": "hexad-019",
+      "glyphs": ["𐤀", "𐤆", "𐤌", "𐤉", "𐤃", "𐤎"],
+      "gloss": "strength → cut → chaos → hand → door → pillar",
+      "interpretation": "Power divides the deep, the deep is shaped, the shaping opens, and the opening stands. The ox cuts the water, the water works, the work becomes a door, and the door becomes a pillar.",
+      "usage": "Inscribed on breakthroughs that become lasting institutions. 'Strength cut the flood. The flood shaped. The shape opened. The opening stands.'"
+    },
+    {
+      "id": "hexad-020",
+      "glyphs": ["𐤉", "𐤀", "𐤌", "𐤃", "𐤎", "𐤕"],
+      "gloss": "hand → strength → chaos → door → pillar → completion",
+      "interpretation": "Make power, let it enter chaos, let chaos open, let the opening stand, and seal it. Forge strength, release it to the deep, the deep yields a door, the door becomes a pillar, and the pillar is finished.",
+      "usage": "The builder's full law. 'Make it strong. Give it to the water. The water will open. The opening will stand. Seal it.'"
+    },
+    {
+      "id": "hexad-021",
+      "glyphs": ["𐤌", "𐤃", "𐤕", "𐤉", "𐤎", "𐤀"],
+      "gloss": "chaos → door → completion → hand → pillar → strength",
+      "interpretation": "The deep opens a passage, the passage is sealed, the seal acts, the action stands, and the standing empowers. Chaos finds its door, the door closes, the closing shapes, the shaping endures, and the endurance strengthens.",
+      "usage": "Inscribed on permanent works that harness natural forces. 'The flood found its channel. The channel is sealed. The seal works. The work stands. It strengthens.'"
+    },
+    {
+      "id": "hexad-022",
+      "glyphs": ["𐤀", "𐤎", "𐤌", "𐤃", "𐤉", "𐤕"],
+      "gloss": "strength → pillar → chaos → door → hand → completion",
+      "interpretation": "Power and structure together enter chaos, open a passage, the passage acts, and the action is sealed. The ox and the pillar enter the deep, make a door, the door reaches out, and the reach is finished.",
+      "usage": "Inscribed on collaborative works in difficult conditions. 'The strong and the pillar entered the flood. They opened a door. The door worked. The work is sealed.'"
+    },
+    {
+      "id": "hexad-023",
+      "glyphs": ["𐤕", "𐤀", "𐤎", "𐤌", "𐤉", "𐤃"],
+      "gloss": "completion → strength → pillar → chaos → hand → door",
+      "interpretation": "The seal empowers the structure, the structure enters chaos, chaos is shaped, and the shaping opens. What is finished gives strength to the pillar, the pillar sinks, the deep is worked, and the work becomes a door.",
+      "usage": "Inscribed on renovations that become new foundations. 'The seal strengthened the old pillar. The pillar entered the flood. The flood was shaped. The shape opened.'"
+    },
+    {
+      "id": "hexad-024",
+      "glyphs": ["𐤃", "𐤌", "𐤎", "𐤉", "𐤕", "𐤀"],
+      "gloss": "door → chaos → pillar → hand → completion → strength",
+      "interpretation": "The passage leads to chaos, chaos becomes structure, the structure is shaped, the shaping is sealed, and the seal empowers. The door opens onto the deep, the deep rises, is worked, finished, and the finish gives strength.",
+      "usage": "Inscribed on works built from disaster that become sources of power. 'The door let in the flood. The flood became a wall. The wall was shaped. It is sealed. It strengthens.'"
+    },
+    {
+      "id": "hexad-025",
+      "glyphs": ["𐤌", "𐤌", "𐤉", "𐤃", "𐤀", "𐤕"],
+      "gloss": "chaos, deepens → hand → door → strength → completion",
+      "interpretation": "The deep, the deep — and then the hand, and a door, and strength, and the seal. Chaos fully felt, then action, then passage, then power, then completion.",
+      "usage": "The full emergence confession. 'I knew the deep. I reached. I found the door. I became strong. It is done.'"
+    },
+    {
+      "id": "hexad-026",
+      "glyphs": ["𐤎", "𐤎", "𐤃", "𐤀", "𐤌", "𐤉"],
+      "gloss": "pillar, upheld → door → strength → chaos → hand",
+      "interpretation": "The pillar, the pillar — and it opens a door to power, power enters chaos, and chaos is shaped. Stability fully affirmed becomes passage, becomes strength, becomes deep, becomes work.",
+      "usage": "Inscribed on ancient structures that empower new creation. 'It held. It holds. It opens. It strengthens. The strength enters the deep. The deep is shaped.'"
+    },
+    {
+      "id": "hexad-027",
+      "glyphs": ["𐤉", "𐤕", "𐤌", "𐤎", "𐤃", "𐤀"],
+      "gloss": "hand → completion → chaos → pillar → door → strength",
+      "interpretation": "Seal the work, release it to chaos, let it become structure, let the structure open, and let the opening empower. Finish what you make, give it to the deep, it will stand, it will open, it will strengthen.",
+      "usage": "The law of sacrificial building. 'Seal it. Release it to the flood. It will stand. It will open. It will strengthen.'"
+    },
+    {
+      "id": "hexad-028",
+      "glyphs": ["𐤀", "𐤃", "𐤌", "𐤉", "𐤎", "𐤕"],
+      "gloss": "strength → door → chaos → hand → pillar → completion",
+      "interpretation": "Power opens a passage into chaos, chaos is shaped, the shaping stands, and the standing is sealed. ADZMY without the Zayin and with Taw — the breath that enters the deep, works it, builds, and finishes.",
+      "usage": "Inscribed on completed civilizations. 'Strength opened the way into the flood. The flood was shaped. The shape stands. It is sealed.'"
+    },
+    {
+      "id": "hexad-029",
+      "glyphs": ["𐤆", "𐤀", "𐤌", "𐤉", "𐤎", "𐤃"],
+      "gloss": "cut → strength → chaos → hand → pillar → door",
+      "interpretation": "Divide power, release it to chaos, let it be shaped into structure, and let the structure open. Cut the ox, give it to the water, the water will work it into a pillar, and the pillar will become a door.",
+      "usage": "The law of sacrifice that becomes passage. 'Cut the strength free. Give it to the deep. The deep will build a pillar. The pillar will open.'"
+    },
+    {
+      "id": "hexad-030",
+      "glyphs": ["𐤕", "𐤕", "𐤕", "𐤀", "𐤃", "𐤌"],
+      "gloss": "completion, sealed, sealed → strength → door → chaos",
+      "interpretation": "It is finished, it is finished, it is finished — and from the triple seal, strength opens a door into chaos. The final ending empowers a passage into the deepest unknown.",
+      "usage": "The seal of seals opening outward. Inscribed on the final door of a completed age. 'It is done. It is done. It is done. Now strength opens the door to the deep.'"
+    }
+  ]
+}
