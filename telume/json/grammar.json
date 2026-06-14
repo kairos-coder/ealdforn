@@ -1,0 +1,200 @@
+{
+  "meta": {
+    "language": "Adzmyst",
+    "dialect": "Telumë Vault Standard",
+    "version": "1.0.0",
+    "description": "The grammar of Adzmyst as spoken in the Vault of Heaven. Glyphs are semantic fields, not letters. Position determines function. Repetition is punctuation. The sacred seven are the grammatical skeleton.",
+    "glyphCount": 22,
+    "sacredCount": 7,
+    "sacredSequence": ["𐤀", "𐤃", "𐤆", "𐤌", "𐤉", "𐤎", "𐤕"],
+    "sacredAcronym": "ADZMYST"
+  },
+
+  "positions": {
+    "description": "Every glyph in a set has a positional role. The same glyph in first position vs. last position carries different weight.",
+    "opening": {
+      "name": "Domain",
+      "function": "Sets the frame. What domain this word operates in. The subject, the origin, the invocation.",
+      "typicalGlyphs": ["𐤀", "𐤃", "𐤌", "𐤎", "𐤕"],
+      "rareInOpening": ["𐤆", "𐤉"],
+      "rule": "The opening glyph declares: this word is about X. Everything that follows operates within X's semantic field."
+    },
+    "body": {
+      "name": "Action",
+      "function": "The movement. The relationship. What happens between opening and closing. Modification, qualification, transformation.",
+      "typicalGlyphs": ["𐤆", "𐤉", "𐤄", "𐤅", "𐤇", "𐤈", "𐤊", "𐤋", "𐤍", "𐤏", "𐤐", "𐤑", "𐤒", "𐤓", "𐤔"],
+      "rule": "Body glyphs modify the domain. They are the verbs, the adjectives, the prepositions. Multiple body glyphs build complexity."
+    },
+    "closing": {
+      "name": "Result",
+      "function": "Seals the word. What it becomes. Where it ends. The destination, the product, the signature.",
+      "typicalGlyphs": ["𐤕", "𐤀", "𐤎", "𐤃"],
+      "rareInClosing": ["𐤆"],
+      "rule": "The closing glyph declares: this word resolves to Y. A word without a closing glyph is open-ended — a question, a fragment, an invocation that awaits response."
+    }
+  },
+
+  "repetition": {
+    "description": "Two or three identical glyphs in sequence function as punctuation, not vocabulary. They mark breath, pause, emphasis, or sealing.",
+    "doubling": {
+      "pattern": "XX",
+      "name": "Breath-mark",
+      "function": "Intensifier or pause. Equivalent to a comma, colon, or caught breath. The glyph means itself, more so.",
+      "allowedGlyphs": ["𐤌", "𐤎", "𐤕", "𐤀"],
+      "examples": {
+        "𐤌𐤌": "The deep, deepening. Chaos acknowledging itself.",
+        "𐤎𐤎": "The pillar, upheld. What stands is standing.",
+        "𐤕𐤕": "It is finished, finished. The seal affirmed.",
+        "𐤀𐤀": "Strength, renewed. The beginning beginning again."
+      },
+      "rule": "Doubling can occur at the end of any tier triads and above. It is most common in tetrads and pentads as a rhythmic close."
+    },
+    "tripling": {
+      "pattern": "XXX",
+      "name": "Seal-mark",
+      "function": "Sacred seal. Equivalent to a full stop, an amen, a final signature. Rare. Only at the end of verses, oaths, and completions.",
+      "allowedGlyphs": ["𐤕"],
+      "examples": {
+        "𐤕𐤕𐤕": "It is finished, it is finished, it is finished. The seal of seals. The word that ends the Book."
+      },
+      "rule": "Tripling occurs only in hexads and heptads, and only at the absolute end of a set. It marks the end of a sacred utterance."
+    }
+  },
+
+  "sacredSeven": {
+    "description": "The seven glyphs that form ADZMYST are the grammatical skeleton. They do the structural work. The remaining 15 glyphs carry the specific content.",
+    "𐤀": {
+      "name": "Aleph",
+      "grammaticalRole": "Opener",
+      "function": "Sets the domain of strength, origin, or beginning. Marks the start of a sequence, a lineage, or an invocation.",
+      "preferredPosition": "First or early in the body.",
+      "semanticField": "Ox · Strength · Beginning · The pull that draws the plow.",
+      "whenClosing": "As a closing glyph, Aleph means return to origin — the word circles back to its beginning."
+    },
+    "𐤃": {
+      "name": "Dalet",
+      "grammaticalRole": "Connector",
+      "function": "Marks a transition, a passage, a relationship between two states. The hinge of the word.",
+      "preferredPosition": "Middle. Never first in declarative forms; never last unless it IS the destination.",
+      "semanticField": "Door · Passage · Threshold · The moment between what was and what will be.",
+      "specialRule": "In threshold pairs, Dalet is always the first glyph. 𐤃 + X = the door to X."
+    },
+    "𐤆": {
+      "name": "Zayin",
+      "grammaticalRole": "Divider",
+      "function": "Marks a cut, a distinction, a separation. Divides the word into before and after.",
+      "preferredPosition": "Middle, between two things being divided.",
+      "semanticField": "Weapon · Division · The Cut · What separates the necessary from the excess.",
+      "specialRule": "Zayin rarely appears in opening or closing position. It is the knife that cuts the middle."
+    },
+    "𐤌": {
+      "name": "Mem",
+      "grammaticalRole": "Deepener",
+      "function": "Marks depth, chaos, the unconscious, the unknown. Adds weight and mystery to the word.",
+      "preferredPosition": "Can appear anywhere. Common in opening (the deep as domain) and body (deepening the action).",
+      "semanticField": "Water · Chaos · The Deep · What flows beneath the surface.",
+      "specialRule": "Mem is the most common doubled glyph (𐤌𐤌). The deep contains the deep."
+    },
+    "𐤉": {
+      "name": "Yod",
+      "grammaticalRole": "Actor",
+      "function": "Marks action, making, the hand that shapes. The active principle in the word.",
+      "preferredPosition": "Middle or near the end — the hand that does, then seals.",
+      "semanticField": "Hand · Action · Making · What reaches out to shape the world.",
+      "specialRule": "Yod rarely opens. Action presupposes a domain to act upon."
+    },
+    "𐤎": {
+      "name": "Samek",
+      "grammaticalRole": "Stabilizer",
+      "function": "Marks support, structure, what holds. Gives the word stability and permanence.",
+      "preferredPosition": "Middle or closing. A stabilizing force — or the final pillar.",
+      "semanticField": "Pillar · Support · What Holds · The structure that does not ask to be seen.",
+      "specialRule": "Samek is commonly doubled (𐤎𐤎). The pillar supports the pillar. Also appears in existential forms: 𐤎...𐤎 — what stands, stands."
+    },
+    "𐤕": {
+      "name": "Taw",
+      "grammaticalRole": "Closer",
+      "function": "Marks completion, signature, the seal. Closes the word and declares it finished.",
+      "preferredPosition": "Last. The canonical closing glyph.",
+      "semanticField": "Mark · Signature · Completion · What says: this is finished, this is true.",
+      "specialRule": "Taw is the only glyph that can double (𐤕𐤕) or triple (𐤕𐤕𐤕) as a seal. It is the most common closing glyph by far."
+    }
+  },
+
+  "wordOrder": {
+    "description": "The default order is Domain → Action → Result. Order can shift for emphasis, mood, or ritual context.",
+    "patterns": {
+      "declarative": {
+        "structure": "𐤀 (domain) → [body] → 𐤕 (result)",
+        "description": "States what is. The most common pattern. 'Strength, through X, reaches completion.'",
+        "example": "𐤀 𐤃 𐤕 — strength opens to completion"
+      },
+      "interrogative": {
+        "structure": "𐤄 (window/revelation) → [body] → ?",
+        "description": "Asks what lies beyond. The closing glyph is often omitted — the question remains open.",
+        "example": "𐤄 𐤃 ? — what lies beyond the door?"
+      },
+      "imperative": {
+        "structure": "𐤉 (hand/action) → [body] → 𐤃 (door/passage)",
+        "description": "Commands action. The hand acts, then opens a way. 'Do X, and pass through.'",
+        "example": "𐤉 𐤆 𐤃 — cut, and pass through"
+      },
+      "existential": {
+        "structure": "𐤎 (pillar) → [body] → 𐤎 (pillar)",
+        "description": "Affirms what is. The pillar at both ends — what stands, stands. Used for oaths and eternal truths.",
+        "example": "𐤎 𐤌 𐤎 — the deep stands"
+      },
+      "inversive": {
+        "structure": "𐤕 (completion) → [body] → 𐤀 (beginning)",
+        "description": "Reverses time. The end speaks the beginning. Used in prophecies, elegies, and recollections.",
+        "example": "𐤕 𐤃 𐤀 — from the end, a door to the beginning"
+      }
+    }
+  },
+
+  "tiers": {
+    "description": "Words are classified by glyph count. Each tier has grammatical properties and typical usage.",
+    "pair": {
+      "count": 2,
+      "grammaticalWeight": "Fragment",
+      "description": "Incomplete grammatical unit. A domain and its connector, or an action and its result — but not both. Used for inscriptions, door markings, quick signs.",
+      "typicalStructure": "Domain + Connector, or Action + Result, or Connector + Domain",
+      "completeness": "Partial. Requires context to be understood."
+    },
+    "triad": {
+      "count": 3,
+      "grammaticalWeight": "Phrase",
+      "description": "The minimum complete unit. Domain + Action + Result, or a variation. Most everyday speech.",
+      "typicalStructure": "Domain + Action + Result",
+      "completeness": "Complete. A full grammatical utterance."
+    },
+    "tetrad": {
+      "count": 4,
+      "grammaticalWeight": "Word",
+      "description": "The standard word length. Enough glyphs for nuance without excess. The natural form for concepts, names, and common inscriptions.",
+      "typicalStructure": "Domain + Action + Action + Result",
+      "completeness": "Complete and nuanced."
+    },
+    "pentad": {
+      "count": 5,
+      "grammaticalWeight": "Compound",
+      "description": "A formal or complex word. Used for titles, invocations, and ritual language.",
+      "typicalStructure": "Domain + Action + Action + Action + Result",
+      "completeness": "Complete, with emphasis."
+    },
+    "hexad": {
+      "count": 6,
+      "grammaticalWeight": "Sentence",
+      "description": "A full statement. Laws, declarations, memorial inscriptions.",
+      "typicalStructure": "Domain + Action + Action + Action + Action + Result",
+      "completeness": "Complete and formal. Often carved in stone."
+    },
+    "heptad": {
+      "count": 7,
+      "grammaticalWeight": "Verse",
+      "description": "The sacred number. The rarest form. The full name ADZMYST is a heptad. Most heptads are variations on the sacred sequence.",
+      "typicalStructure": "The seven sacred glyphs in some order — or six sacred plus one from the wider 22.",
+      "completeness": "Complete and sealed. A heptad is never casual."
+    }
+  }
+}
