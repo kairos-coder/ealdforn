@@ -1,0 +1,916 @@
+{
+  "meta": {
+    "language": "Adzmyst",
+    "dialect": "Telumë Vault Standard",
+    "version": "1.0.0",
+    "tier": "tetrad",
+    "count": 90,
+    "description": "The standard word length. Enough glyphs for nuance without excess. The natural form for concepts, names, and common inscriptions. Tetrads are the peak of the distribution curve — most dictionary entries are tetrads.",
+    "grammarReference": "grammar.json",
+    "pairReference": "lexicon.json",
+    "triadReference": "triads.json"
+  },
+
+  "tetrads": [
+    {
+      "id": "tetrad-001",
+      "glyphs": ["𐤀", "𐤃", "𐤆", "𐤕"],
+      "structure": "domain + connector + action + result",
+      "pattern": "declarative",
+      "gloss": "strength → door → cut → completion",
+      "interpretation": "Power opens a passage, the passage divides, the division completes. The ox finds the door, the door is a blade, the blade finishes the work.",
+      "usage": "The most common tetrad. Inscribed on completed journeys that required struggle. 'I passed through and was cut, and the cutting made me whole.'",
+      "derivedFrom": "triad-001 + Zayin"
+    },
+    {
+      "id": "tetrad-002",
+      "glyphs": ["𐤕", "𐤆", "𐤃", "𐤀"],
+      "structure": "result + action + connector + domain",
+      "pattern": "inversive",
+      "gloss": "completion → cut → door → strength",
+      "interpretation": "The end divides the passage back to the beginning. What is finished cuts a door to origin. The seal is not final — it is a blade that opens the way home.",
+      "usage": "Inscribed on returns, restorations, and things recovered after they were thought lost. 'What was finished has cut its way back.'",
+      "derivedFrom": "triad-002 + Zayin"
+    },
+    {
+      "id": "tetrad-003",
+      "glyphs": ["𐤀", "𐤌", "𐤉", "𐤃"],
+      "structure": "domain + deepener + action + connector",
+      "pattern": "declarative",
+      "gloss": "strength → chaos → hand → door",
+      "interpretation": "Power enters the deep, shapes it with the hand, and opens a passage. The ox wades into the water, builds something, and the building becomes a door.",
+      "usage": "Inscribed on works of creation drawn from difficulty. 'I went into the flood and made a door from what I found there.'",
+      "derivedFrom": "triad-003 + Yod"
+    },
+    {
+      "id": "tetrad-004",
+      "glyphs": ["𐤃", "𐤉", "𐤌", "𐤀"],
+      "structure": "connector + action + domain + result",
+      "pattern": "inversive",
+      "gloss": "door → hand → chaos → strength",
+      "interpretation": "The passage is shaped by the hand from chaos into strength. The door makes the maker who makes from the deep. To cross is to become the one who creates.",
+      "usage": "Inscribed on thresholds of transformation. 'Pass through, and you will learn to shape the water.'",
+      "derivedFrom": "triad-004 + Yod"
+    },
+    {
+      "id": "tetrad-005",
+      "glyphs": ["𐤌", "𐤀", "𐤃", "𐤕"],
+      "structure": "domain + domain + connector + result",
+      "pattern": "declarative",
+      "gloss": "chaos → strength → door → completion",
+      "interpretation": "From the deep, power opens a passage to the end. Chaos births strength, strength makes the door, the door leads to completion. The full creation arc.",
+      "usage": "A creation text fragment. 'The deep gave strength. Strength made the door. The door led to the seal.'",
+      "derivedFrom": "triad-005 + Taw"
+    },
+    {
+      "id": "tetrad-006",
+      "glyphs": ["𐤕", "𐤃", "𐤀", "𐤌"],
+      "structure": "result + connector + domain + result",
+      "pattern": "inversive",
+      "gloss": "completion → door → strength → chaos",
+      "interpretation": "The seal opens a passage to power, and power returns to the deep. What is finished leads back to the beginning, and the beginning dissolves into chaos. The cycle completes.",
+      "usage": "Inscribed on endings that feed new beginnings. 'The seal opens. Strength passes through. The deep receives.'",
+      "derivedFrom": "triad-002 + Mem"
+    },
+    {
+      "id": "tetrad-007",
+      "glyphs": ["𐤉", "𐤎", "𐤃", "𐤕"],
+      "structure": "action + domain + connector + result",
+      "pattern": "imperative",
+      "gloss": "hand → pillar → door → completion",
+      "interpretation": "Build the pillar, open the door within it, and seal it. Make the structure, make the passage, finish the work. The builder's full command.",
+      "usage": "The canonical builder's tetrad. Inscribed on completed buildings. 'I made the pillar. I set the door. I sealed it.'",
+      "derivedFrom": "triad-025 + Dalet"
+    },
+    {
+      "id": "tetrad-008",
+      "glyphs": ["𐤕", "𐤃", "𐤎", "𐤉"],
+      "structure": "result + connector + domain + action",
+      "pattern": "inversive",
+      "gloss": "completion → door → pillar → hand",
+      "interpretation": "The seal opens a passage to the structure, and the structure shapes the builder. What is finished leads through the door to the pillar, and the pillar teaches the hand.",
+      "usage": "Inscribed on works that teach those who study them. 'The finished thing will open and instruct you.'",
+      "derivedFrom": "triad-026 + Dalet"
+    },
+    {
+      "id": "tetrad-009",
+      "glyphs": ["𐤀", "𐤃", "𐤌", "𐤕"],
+      "structure": "domain + connector + deepener + result",
+      "pattern": "declarative",
+      "gloss": "strength → door → chaos → completion",
+      "interpretation": "Power opens a passage, the passage leads into the deep, and the deep is sealed. The ox finds the door, the door enters water, the water is contained.",
+      "usage": "Inscribed on dams, levees, and works that tame chaos. 'Strength opened the way into the flood, and the flood was sealed.'",
+      "derivedFrom": "triad-042 + Taw"
+    },
+    {
+      "id": "tetrad-010",
+      "glyphs": ["𐤕", "𐤌", "𐤃", "𐤀"],
+      "structure": "result + deepener + connector + domain",
+      "pattern": "inversive",
+      "gloss": "completion → chaos → door → strength",
+      "interpretation": "The seal contains chaos, chaos opens a passage, the passage leads to power. What is finished holds the deep, and the deep, held, becomes a door to strength.",
+      "usage": "Inscribed on vessels and containers of power. 'The sealed chaos within will open the way to strength.'",
+      "derivedFrom": "triad-024 + Aleph"
+    },
+    {
+      "id": "tetrad-011",
+      "glyphs": ["𐤆", "𐤀", "𐤃", "𐤕"],
+      "structure": "action + domain + connector + result",
+      "pattern": "imperative",
+      "gloss": "cut → strength → door → completion",
+      "interpretation": "Cut away weakness. Let strength open the door. Let the door lead to the end. The full command of purification.",
+      "usage": "Inscribed on weapons of great purpose. 'Cleave the weak. Let the strong pass. Finish it.'",
+      "derivedFrom": "triad-010 + Taw"
+    },
+    {
+      "id": "tetrad-012",
+      "glyphs": ["𐤕", "𐤃", "𐤀", "𐤆"],
+      "structure": "result + connector + domain + action",
+      "pattern": "inversive",
+      "gloss": "completion → door → strength → cut",
+      "interpretation": "The seal opens a passage to power, and power divides. What is finished becomes a door, the door gives strength, and strength is used to cut.",
+      "usage": "Inscribed on armories and places of final preparation. 'The finished work opens the door to the blade.'",
+      "derivedFrom": "triad-011 + Taw"
+    },
+    {
+      "id": "tetrad-013",
+      "glyphs": ["𐤌", "𐤉", "𐤃", "𐤀"],
+      "structure": "domain + action + connector + result",
+      "pattern": "declarative",
+      "gloss": "chaos → hand → door → strength",
+      "interpretation": "The deep shapes a passage to power. Chaos acts, a door appears, and the door leads to strength. The water builds a threshold that empowers.",
+      "usage": "Inscribed on natural harbors, sea caves, and places where the water has carved a safe passage. 'The deep made this door. It leads to strength.'",
+      "derivedFrom": "triad-012 + Aleph"
+    },
+    {
+      "id": "tetrad-014",
+      "glyphs": ["𐤀", "𐤃", "𐤉", "𐤌"],
+      "structure": "domain + connector + action + result",
+      "pattern": "declarative",
+      "gloss": "strength → door → hand → chaos",
+      "interpretation": "Power opens a passage, the passage acts, and the action enters chaos. The ox finds the door, the door has hands, the hands stir the deep.",
+      "usage": "A warning. 'What passes through this door will disturb the waters.'",
+      "derivedFrom": "triad-042 + Yod"
+    },
+    {
+      "id": "tetrad-015",
+      "glyphs": ["𐤉", "𐤆", "𐤌", "𐤀"],
+      "structure": "action + action + domain + result",
+      "pattern": "imperative",
+      "gloss": "hand → cut → chaos → strength",
+      "interpretation": "Take up the blade, cut the deep, and draw out power. The hand wields the weapon against the water and pulls strength from the flood.",
+      "usage": "Inscribed on weapons of legendary purpose. 'Strike the water. Take what rises.'",
+      "derivedFrom": "triad-055 + Aleph"
+    },
+    {
+      "id": "tetrad-016",
+      "glyphs": ["𐤀", "𐤌", "𐤆", "𐤉"],
+      "structure": "domain + deepener + action + action",
+      "pattern": "declarative",
+      "gloss": "strength → chaos → cut → hand",
+      "interpretation": "Power enters the deep, the deep is cut, and the cut is guided by the hand. The ox wades in, the water is divided, and the division is shaped.",
+      "usage": "Inscribed on tools of precision used in difficult conditions. 'Strength entered the flood and cut with care.'",
+      "derivedFrom": "triad-028 + Zayin"
+    },
+    {
+      "id": "tetrad-017",
+      "glyphs": ["𐤎", "𐤌", "𐤃", "𐤕"],
+      "structure": "domain + deepener + connector + result",
+      "pattern": "declarative",
+      "gloss": "pillar → chaos → door → completion",
+      "interpretation": "The structure stands in chaos, opens a passage, and seals it. The pillar set in the flood makes a door, and the door is finished.",
+      "usage": "Inscribed on sea walls, lighthouses, and structures that stand in water. 'The pillar in the water made a passage, and the passage is sealed.'",
+      "derivedFrom": "triad-018 + Taw"
+    },
+    {
+      "id": "tetrad-018",
+      "glyphs": ["𐤕", "𐤃", "𐤌", "𐤎"],
+      "structure": "result + connector + deepener + result",
+      "pattern": "inversive",
+      "gloss": "completion → door → chaos → pillar",
+      "interpretation": "The seal opens a passage into chaos, and chaos becomes structure. What is finished leads through the door into the deep, and the deep rises as a pillar.",
+      "usage": "Inscribed on ruins rebuilt, orders restored, and stability recovered from disaster. 'From the seal, through the door, into the flood — and the flood became a pillar.'",
+      "derivedFrom": "triad-019 + Taw"
+    },
+    {
+      "id": "tetrad-019",
+      "glyphs": ["𐤀", "𐤉", "𐤎", "𐤕"],
+      "structure": "domain + action + result + result",
+      "pattern": "declarative",
+      "gloss": "strength → hand → pillar → completion",
+      "interpretation": "Power acts to build structure, and the structure is sealed. The ox puts its hand to the pillar, and the pillar is finished.",
+      "usage": "Inscribed on completed monuments and lasting works. 'Strength built this. It stands. It is done.'",
+      "derivedFrom": "triad-021 + Taw"
+    },
+    {
+      "id": "tetrad-020",
+      "glyphs": ["𐤕", "𐤎", "𐤉", "𐤀"],
+      "structure": "result + domain + action + result",
+      "pattern": "inversive",
+      "gloss": "completion → pillar → hand → strength",
+      "interpretation": "The sealed structure acts to empower. What is finished and standing shapes the hand, and the hand becomes strong.",
+      "usage": "Inscribed on works that train and strengthen. 'The finished pillar will teach your hands to be strong.'",
+      "derivedFrom": "triad-022 + Taw"
+    },
+    {
+      "id": "tetrad-021",
+      "glyphs": ["𐤌", "𐤃", "𐤕", "𐤀"],
+      "structure": "domain + connector + result + result",
+      "pattern": "declarative",
+      "gloss": "chaos → door → completion → strength",
+      "interpretation": "The deep opens a passage to the seal, and the seal produces power. Chaos finds its door, the door leads to completion, and completion yields strength.",
+      "usage": "Inscribed on works that harness natural forces. 'The flood found its channel. The channel is sealed. The seal gives power.'",
+      "derivedFrom": "triad-023 + Aleph"
+    },
+    {
+      "id": "tetrad-022",
+      "glyphs": ["𐤀", "𐤕", "𐤃", "𐤌"],
+      "structure": "domain + result + connector + result",
+      "pattern": "declarative",
+      "gloss": "strength → completion → door → chaos",
+      "interpretation": "Power, sealed, opens a passage to the deep. The ox is finished, and its ending becomes a door into the water. What exhausts itself returns to chaos.",
+      "usage": "An elegiac tetrad. Inscribed on graves of heroes. 'Their strength is spent. The door opens. The deep receives them.'",
+      "derivedFrom": "triad-050 + Mem"
+    },
+    {
+      "id": "tetrad-023",
+      "glyphs": ["𐤉", "𐤌", "𐤃", "𐤎"],
+      "structure": "action + domain + connector + result",
+      "pattern": "imperative",
+      "gloss": "hand → chaos → door → pillar",
+      "interpretation": "Reach into the deep, find the passage, and let it lead to stability. Put your hand in the water, find the door, and the door will take you to the pillar.",
+      "usage": "Inscribed on places of difficult passage that lead to sanctuary. 'Reach into the flood. Find the door. The pillar waits.'",
+      "derivedFrom": "triad-029 + Dalet + Samek"
+    },
+    {
+      "id": "tetrad-024",
+      "glyphs": ["𐤎", "𐤃", "𐤌", "𐤉"],
+      "structure": "domain + connector + deepener + action",
+      "pattern": "declarative",
+      "gloss": "pillar → door → chaos → hand",
+      "interpretation": "The structure opens a passage, the passage leads to chaos, and chaos has hands. The pillar contains a door, the door enters the deep, and the deep reaches back.",
+      "usage": "A warning on fortified doors. 'What holds contains a passage. The passage leads to chaos. Chaos will touch you.'",
+      "derivedFrom": "triad-018 + Yod"
+    },
+    {
+      "id": "tetrad-025",
+      "glyphs": ["𐤆", "𐤃", "𐤀", "𐤌"],
+      "structure": "action + connector + domain + result",
+      "pattern": "imperative",
+      "gloss": "cut → door → strength → chaos",
+      "interpretation": "Cut a passage. Let strength enter. Let it return to the deep. Open the way, let power pass through, and release it into the water.",
+      "usage": "Inscribed on ritual releases and sacrifices. 'Cut the door. Let the strength pass. Give it back to the deep.'",
+      "derivedFrom": "triad-010 + Mem"
+    },
+    {
+      "id": "tetrad-026",
+      "glyphs": ["𐤌", "𐤀", "𐤆", "𐤃"],
+      "structure": "domain + domain + action + connector",
+      "pattern": "declarative",
+      "gloss": "chaos → strength → cut → door",
+      "interpretation": "From the deep, power divides and opens a passage. Chaos and strength together cut, and the cut becomes a door. The water and the ox together make the threshold.",
+      "usage": "Inscribed on places where two forces combine to create passage. 'The deep and the strong cut together. The cut is the door.'",
+      "derivedFrom": "triad-005 + Zayin"
+    },
+    {
+      "id": "tetrad-027",
+      "glyphs": ["𐤎", "𐤀", "𐤃", "𐤕"],
+      "structure": "domain + domain + connector + result",
+      "pattern": "declarative",
+      "gloss": "pillar → strength → door → completion",
+      "interpretation": "The structure and the power together open a passage to the end. The pillar and the ox make the door, and the door is sealed.",
+      "usage": "Inscribed on great public works. 'The pillar and the strength together made this passage. It is finished.'",
+      "derivedFrom": "triad-030 + Dalet"
+    },
+    {
+      "id": "tetrad-028",
+      "glyphs": ["𐤕", "𐤀", "𐤎", "𐤃"],
+      "structure": "result + domain + domain + connector",
+      "pattern": "inversive",
+      "gloss": "completion → strength → pillar → door",
+      "interpretation": "The seal empowers the structure, and the structure opens a passage. What is finished gives strength to the pillar, and the pillar makes a door.",
+      "usage": "Inscribed on buildings raised on older foundations. 'The old seal strengthens the new pillar. The pillar opens the way.'",
+      "derivedFrom": "triad-031 + Dalet"
+    },
+    {
+      "id": "tetrad-029",
+      "glyphs": ["𐤉", "𐤀", "𐤃", "𐤎"],
+      "structure": "action + domain + connector + result",
+      "pattern": "imperative",
+      "gloss": "hand → strength → door → pillar",
+      "interpretation": "Make strength, let it open the door, and let the door lead to stability. Forge power, pass through, find what holds.",
+      "usage": "Inscribed on training sequences and paths of initiation. 'Build your strength. Pass through the door. Find the pillar.'",
+      "derivedFrom": "triad-035 + Samek"
+    },
+    {
+      "id": "tetrad-030",
+      "glyphs": ["𐤎", "𐤃", "𐤀", "𐤉"],
+      "structure": "domain + connector + domain + action",
+      "pattern": "declarative",
+      "gloss": "pillar → door → strength → hand",
+      "interpretation": "The structure opens a passage, the passage leads to power, and power acts. The pillar's door admits strength, and strength reaches out.",
+      "usage": "Inscribed on gates that lead to mustering grounds. 'The pillar's door lets strength pass. Strength will act.'",
+      "derivedFrom": "triad-008 + Yod"
+    },
+    {
+      "id": "tetrad-031",
+      "glyphs": ["𐤌", "𐤌", "𐤃", "𐤕"],
+      "structure": "domain + punctuation + connector + result",
+      "pattern": "declarative-with-breath",
+      "gloss": "chaos, deepens → door → completion",
+      "interpretation": "The deep, the deep — and then a door, and the door is sealed. Chaos fully felt, then a passage, then an ending.",
+      "usage": "Inscribed on doors that appear after long wandering. 'You have known the deep. Now the door. Now the seal.'",
+      "derivedFrom": "triad-051 + Taw"
+    },
+    {
+      "id": "tetrad-032",
+      "glyphs": ["𐤕", "𐤃", "𐤌", "𐤌"],
+      "structure": "result + connector + deepener + punctuation",
+      "pattern": "inversive-with-breath",
+      "gloss": "completion → door → chaos, deepens",
+      "interpretation": "The seal opens a passage, and the passage leads to the deep — the deep. What is finished becomes a door to chaos fully acknowledged.",
+      "usage": "Inscribed on endings that accept the return to chaos. 'It is done. The door opens. The deep, the deep.'",
+      "derivedFrom": "triad-024 + Mem doubling"
+    },
+    {
+      "id": "tetrad-033",
+      "glyphs": ["𐤎", "𐤎", "𐤃", "𐤀"],
+      "structure": "domain + punctuation + connector + result",
+      "pattern": "declarative-with-breath",
+      "gloss": "pillar, upheld → door → strength",
+      "interpretation": "The pillar, the pillar — and it opens a door to power. Stability fully affirmed becomes a passage to strength.",
+      "usage": "Inscribed on ancient structures that have stood for generations. 'It held. It holds. Its door leads to strength.'",
+      "derivedFrom": "triad-052 + Aleph"
+    },
+    {
+      "id": "tetrad-034",
+      "glyphs": ["𐤀", "𐤃", "𐤎", "𐤎"],
+      "structure": "domain + connector + result + punctuation",
+      "pattern": "declarative-with-breath",
+      "gloss": "strength → door → pillar, upheld",
+      "interpretation": "Power opens a passage, and the passage leads to the pillar — the pillar. Strength finds the door, and the door leads to stability fully affirmed.",
+      "usage": "Inscribed on sanctuaries reached by effort. 'Fight through. You will find the pillar. The pillar.'",
+      "derivedFrom": "triad-009 + Samek doubling"
+    },
+    {
+      "id": "tetrad-035",
+      "glyphs": ["𐤕", "𐤕", "𐤀", "𐤃"],
+      "structure": "result + punctuation + domain + connector",
+      "pattern": "inversive-with-breath",
+      "gloss": "completion, sealed → strength → door",
+      "interpretation": "It is finished, it is finished — and from this, strength opens a door. The double seal produces power, and power makes a passage.",
+      "usage": "Inscribed on endings that are celebrated as beginnings. 'It is done. It is done. Now strength opens the way.'",
+      "derivedFrom": "triad-054 + Dalet"
+    },
+    {
+      "id": "tetrad-036",
+      "glyphs": ["𐤃", "𐤀", "𐤕", "𐤕"],
+      "structure": "connector + domain + result + punctuation",
+      "pattern": "declarative-with-breath",
+      "gloss": "door → strength → completion, sealed",
+      "interpretation": "The passage empowers, and the empowerment completes — it is finished, it is finished. The door gives strength, and the strength reaches the double seal.",
+      "usage": "Inscribed on completed passages and finished journeys. 'The door gave strength. The strength is spent. It is done. It is done.'",
+      "derivedFrom": "triad-036 + Taw doubling"
+    },
+    {
+      "id": "tetrad-037",
+      "glyphs": ["𐤉", "𐤕", "𐤎", "𐤃"],
+      "structure": "action + result + domain + connector",
+      "pattern": "imperative",
+      "gloss": "hand → completion → pillar → door",
+      "interpretation": "Make the seal, let it stand as a pillar, and let the pillar open a door. Finish the work, let it hold, and let it open the way.",
+      "usage": "Inscribed on works that are both finished and functional. 'Seal it. Let it stand. Let it open.'",
+      "derivedFrom": "triad-043 + Dalet"
+    },
+    {
+      "id": "tetrad-038",
+      "glyphs": ["𐤃", "𐤎", "𐤕", "𐤉"],
+      "structure": "connector + domain + result + action",
+      "pattern": "declarative",
+      "gloss": "door → pillar → completion → hand",
+      "interpretation": "The passage leads to structure, the structure is sealed, and the seal acts. The door opens onto the pillar, the pillar is finished, and the finish continues to shape.",
+      "usage": "Inscribed on works that continue to influence after completion. 'The door leads to the pillar. The pillar is sealed. The seal still works.'",
+      "derivedFrom": "triad-039 + Yod"
+    },
+    {
+      "id": "tetrad-039",
+      "glyphs": ["𐤆", "𐤌", "𐤀", "𐤃"],
+      "structure": "action + domain + domain + connector",
+      "pattern": "imperative",
+      "gloss": "cut → chaos → strength → door",
+      "interpretation": "Cut the deep, find power, and open a passage. Divide the water, draw out the ox, and make it open the way.",
+      "usage": "A creation command. 'Cut the water. Take the strength. Open the door.'",
+      "derivedFrom": "triad-027 + Dalet"
+    },
+    {
+      "id": "tetrad-040",
+      "glyphs": ["𐤃", "𐤀", "𐤌", "𐤆"],
+      "structure": "connector + domain + deepener + action",
+      "pattern": "declarative",
+      "gloss": "door → strength → chaos → cut",
+      "interpretation": "The passage empowers, the empowerment enters the deep, and the deep is cut. The door gives strength, strength enters the water, and the water is divided.",
+      "usage": "Inscribed on passages that lead to decisive action. 'Cross here. You will be strong. You will enter the flood and cut it.'",
+      "derivedFrom": "triad-032 + Zayin"
+    },
+    {
+      "id": "tetrad-041",
+      "glyphs": ["𐤀", "𐤆", "𐤌", "𐤉"],
+      "structure": "domain + action + domain + action",
+      "pattern": "declarative",
+      "gloss": "strength → cut → chaos → hand",
+      "interpretation": "Power divides the deep, and the deep acts. The ox cuts the water, and the water reaches back with hands. Strength provokes chaos into agency.",
+      "usage": "A warning about action in dangerous places. 'When strength cuts the deep, the deep will cut back.'",
+      "derivedFrom": "triad-016 + Yod"
+    },
+    {
+      "id": "tetrad-042",
+      "glyphs": ["𐤉", "𐤌", "𐤆", "𐤀"],
+      "structure": "action + domain + action + result",
+      "pattern": "imperative",
+      "gloss": "hand → chaos → cut → strength",
+      "interpretation": "Reach into the deep, cut it, and draw out power. Put your hand in the water, divide it, and take what rises.",
+      "usage": "Inscribed on tools of extraction and discovery. 'Reach. Cut. Take.'",
+      "derivedFrom": "triad-029 + Zayin"
+    },
+    {
+      "id": "tetrad-043",
+      "glyphs": ["𐤎", "𐤉", "𐤌", "𐤃"],
+      "structure": "domain + action + domain + connector",
+      "pattern": "declarative",
+      "gloss": "pillar → hand → chaos → door",
+      "interpretation": "The structure shapes the deep and opens a passage. The pillar guides the hand, the hand enters chaos, and chaos yields a door.",
+      "usage": "Inscribed on bridges and causeways built through dangerous waters. 'The pillar guided the hand. The hand entered the flood. The flood opened.'",
+      "derivedFrom": "triad-046 + Mem + Dalet"
+    },
+    {
+      "id": "tetrad-044",
+      "glyphs": ["𐤃", "𐤌", "𐤉", "𐤎"],
+      "structure": "connector + domain + action + result",
+      "pattern": "declarative",
+      "gloss": "door → chaos → hand → pillar",
+      "interpretation": "The passage leads to chaos, chaos is shaped by the hand, and the shaping becomes structure. The door opens onto water, the water is worked, and the work stands.",
+      "usage": "Inscribed on works built from difficult materials. 'The door led to the flood. The flood was shaped. The shape stands.'",
+      "derivedFrom": "triad-013 + Samek"
+    },
+    {
+      "id": "tetrad-045",
+      "glyphs": ["𐤌", "𐤕", "𐤀", "𐤉"],
+      "structure": "domain + result + domain + action",
+      "pattern": "declarative",
+      "gloss": "chaos → completion → strength → hand",
+      "interpretation": "The deep, sealed, empowers action. Chaos contained becomes strength, and strength reaches out. The tamed water drives the hand.",
+      "usage": "Inscribed on water-powered works and mills. 'The flood is sealed. The seal gives strength. The strength moves the hand.'",
+      "derivedFrom": "triad-047 + Yod"
+    },
+    {
+      "id": "tetrad-046",
+      "glyphs": ["𐤉", "𐤀", "𐤕", "𐤌"],
+      "structure": "action + domain + result + result",
+      "pattern": "imperative",
+      "gloss": "hand → strength → completion → chaos",
+      "interpretation": "Make strength, complete it, and release it to the deep. Forge power, finish it, and give it back to the water.",
+      "usage": "Inscribed on ritual offerings and sacrifices. 'Make it strong. Finish it. Give it to the deep.'",
+      "derivedFrom": "triad-035 + Taw + Mem"
+    },
+    {
+      "id": "tetrad-047",
+      "glyphs": ["𐤆", "𐤎", "𐤌", "𐤃"],
+      "structure": "action + domain + domain + connector",
+      "pattern": "imperative",
+      "gloss": "cut → pillar → chaos → door",
+      "interpretation": "Carve the pillar from chaos, and let it open a passage. Cut the stone from the water, and let the stone become a door.",
+      "usage": "Inscribed on quarries and places where stone is cut from difficult ground. 'Cut the pillar from the flood. The pillar will open the way.'",
+      "derivedFrom": "triad-063 + Mem + Dalet"
+    },
+    {
+      "id": "tetrad-048",
+      "glyphs": ["𐤃", "𐤌", "𐤎", "𐤆"],
+      "structure": "connector + domain + domain + action",
+      "pattern": "declarative",
+      "gloss": "door → chaos → pillar → cut",
+      "interpretation": "The passage leads to chaos, chaos becomes structure, and the structure divides. The door opens onto water, the water rises as a pillar, and the pillar cuts.",
+      "usage": "Inscribed on breakwaters and sea defenses. 'The door let in the flood. The flood became a wall. The wall divides the sea.'",
+      "derivedFrom": "triad-019 + Zayin"
+    },
+    {
+      "id": "tetrad-049",
+      "glyphs": ["𐤀", "𐤃", "𐤕", "𐤌"],
+      "structure": "domain + connector + result + result",
+      "pattern": "declarative",
+      "gloss": "strength → door → completion → chaos",
+      "interpretation": "Power opens a passage, the passage is sealed, and the seal returns to chaos. The ox finds the door, the door is finished, and the finish dissolves.",
+      "usage": "An elegiac tetrad. Inscribed on things that were built and then lost. 'Strength opened the way. The way was sealed. The seal returned to the deep.'",
+      "derivedFrom": "triad-001 + Mem"
+    },
+    {
+      "id": "tetrad-050",
+      "glyphs": ["𐤌", "𐤕", "𐤃", "𐤀"],
+      "structure": "domain + result + connector + result",
+      "pattern": "declarative",
+      "gloss": "chaos → completion → door → strength",
+      "interpretation": "The deep, sealed, opens a passage to power. Chaos contained becomes a door, and the door leads to strength.",
+      "usage": "Inscribed on vessels of power, batteries, and sacred containers. 'The sealed deep is the door to strength.'",
+      "derivedFrom": "triad-047 + Dalet"
+    },
+    {
+      "id": "tetrad-051",
+      "glyphs": ["𐤉", "𐤆", "𐤃", "𐤎"],
+      "structure": "action + action + connector + result",
+      "pattern": "imperative",
+      "gloss": "hand → cut → door → pillar",
+      "interpretation": "Take the blade, cut a passage, and let the passage lead to stability. Make the weapon, open the way, find what holds.",
+      "usage": "Inscribed on tools of pioneering and settlement. 'Cut the door. Pass through. Build the pillar.'",
+      "derivedFrom": "triad-014 + Samek"
+    },
+    {
+      "id": "tetrad-052",
+      "glyphs": ["𐤎", "𐤃", "𐤆", "𐤉"],
+      "structure": "domain + connector + action + action",
+      "pattern": "declarative",
+      "gloss": "pillar → door → cut → hand",
+      "interpretation": "The structure opens a passage that divides the maker. The pillar's door is a blade that cuts the hand that opened it.",
+      "usage": "A warning on transformative thresholds. 'The pillar's door will cut the hand. You will not make as you made before.'",
+      "derivedFrom": "triad-046 + Dalet"
+    },
+    {
+      "id": "tetrad-053",
+      "glyphs": ["𐤀", "𐤀", "𐤃", "𐤕"],
+      "structure": "domain + punctuation + connector + result",
+      "pattern": "declarative-with-breath",
+      "gloss": "strength, renewed → door → completion",
+      "interpretation": "Strength, strength — and then a door, and the door is sealed. Power fully gathered, then passage, then completion.",
+      "usage": "Inscribed on places of final preparation. 'Gather your strength. Gather it. Then the door. Then the end.'",
+      "derivedFrom": "triad-060 + Taw"
+    },
+    {
+      "id": "tetrad-054",
+      "glyphs": ["𐤕", "𐤃", "𐤀", "𐤀"],
+      "structure": "result + connector + domain + punctuation",
+      "pattern": "inversive-with-breath",
+      "gloss": "completion → door → strength, renewed",
+      "interpretation": "The seal opens a passage, and the passage leads to strength — strength. What is finished becomes a door to power fully renewed.",
+      "usage": "Inscribed on places of return and recovery. 'It is done. The door opens. Strength, strength.'",
+      "derivedFrom": "triad-002 + Aleph doubling"
+    },
+    {
+      "id": "tetrad-055",
+      "glyphs": ["𐤌", "𐤉", "𐤕", "𐤎"],
+      "structure": "domain + action + result + result",
+      "pattern": "declarative",
+      "gloss": "chaos → hand → completion → pillar",
+      "interpretation": "The deep acts, seals the work, and the seal stands. Chaos reaches out, finishes what it makes, and the finished thing holds.",
+      "usage": "Inscribed on works of art and inspiration. 'The deep made this. It is sealed. It stands.'",
+      "derivedFrom": "triad-067 + Samek"
+    },
+    {
+      "id": "tetrad-056",
+      "glyphs": ["𐤎", "𐤕", "𐤉", "𐤌"],
+      "structure": "domain + result + action + result",
+      "pattern": "declarative",
+      "gloss": "pillar → completion → hand → chaos",
+      "interpretation": "The structure, sealed, acts upon the deep. What stands and is finished reaches into chaos. The monument stirs the water.",
+      "usage": "Inscribed on works that disturb the old order. 'The finished pillar will trouble the deep.'",
+      "derivedFrom": "triad-044 + Mem"
+    },
+    {
+      "id": "tetrad-057",
+      "glyphs": ["𐤆", "𐤕", "𐤀", "𐤌"],
+      "structure": "action + result + domain + result",
+      "pattern": "imperative",
+      "gloss": "cut → completion → strength → chaos",
+      "interpretation": "Make the final cut, find power, and release it to the deep. Sever completely, draw out strength, and give it to the water.",
+      "usage": "Inscribed on final rituals of release. 'Cut. Seal. Take the strength. Give it to the deep.'",
+      "derivedFrom": "triad-069 + Mem"
+    },
+    {
+      "id": "tetrad-058",
+      "glyphs": ["𐤌", "𐤀", "𐤕", "𐤆"],
+      "structure": "domain + domain + result + action",
+      "pattern": "declarative",
+      "gloss": "chaos → strength → completion → cut",
+      "interpretation": "From the deep, power is sealed, and the seal divides. Chaos and strength together finish, and the finish is a blade.",
+      "usage": "Inscribed on judgments and final decisions. 'The deep and the strong have sealed it. The seal cuts.'",
+      "derivedFrom": "triad-033 + Zayin"
+    },
+    {
+      "id": "tetrad-059",
+      "glyphs": ["𐤉", "𐤎", "𐤌", "𐤃"],
+      "structure": "action + domain + domain + connector",
+      "pattern": "imperative",
+      "gloss": "hand → pillar → chaos → door",
+      "interpretation": "Build the pillar in chaos, and let it open a passage. Set the structure in the water, and let the water part around it.",
+      "usage": "Inscribed on foundations set in difficult ground. 'Build the pillar in the flood. The flood will open.'",
+      "derivedFrom": "triad-025 + Mem + Dalet"
+    },
+    {
+      "id": "tetrad-060",
+      "glyphs": ["𐤃", "𐤌", "𐤉", "𐤕"],
+      "structure": "connector + domain + action + result",
+      "pattern": "declarative",
+      "gloss": "door → chaos → hand → completion",
+      "interpretation": "The passage leads to chaos, chaos is shaped, and the shaping is sealed. The door opens onto the deep, the deep is worked, and the work is finished.",
+      "usage": "Inscribed on works completed in difficult circumstances. 'The door led to the flood. The flood was shaped. The shape is sealed.'",
+      "derivedFrom": "triad-013 + Taw"
+    },
+    {
+      "id": "tetrad-061",
+      "glyphs": ["𐤀", "𐤌", "𐤃", "𐤉"],
+      "structure": "domain + deepener + connector + action",
+      "pattern": "declarative",
+      "gloss": "strength → chaos → door → hand",
+      "interpretation": "Power enters the deep, finds a passage, and the passage acts. The ox wades in, discovers a door, and the door has hands.",
+      "usage": "Inscribed on discoveries made in difficult places. 'Strength entered the flood. The flood had a door. The door reached out.'",
+      "derivedFrom": "triad-003 + Yod"
+    },
+    {
+      "id": "tetrad-062",
+      "glyphs": ["𐤉", "𐤃", "𐤀", "𐤌"],
+      "structure": "action + connector + domain + result",
+      "pattern": "imperative",
+      "gloss": "hand → door → strength → chaos",
+      "interpretation": "Make a passage. Let strength enter. Let it return to the deep. Open the way, let power pass through, and release it.",
+      "usage": "Inscribed on ritual passages and initiations. 'Open the door. Let the strength pass. Let it go to the water.'",
+      "derivedFrom": "triad-035 + Mem"
+    },
+    {
+      "id": "tetrad-063",
+      "glyphs": ["𐤎", "𐤆", "𐤌", "𐤀"],
+      "structure": "domain + action + domain + result",
+      "pattern": "declarative",
+      "gloss": "pillar → cut → chaos → strength",
+      "interpretation": "The structure divides the deep and produces power. The pillar cuts the water, and the water yields strength.",
+      "usage": "Inscribed on structures that harness natural forces. 'The pillar cuts the flood. The flood gives strength.'",
+      "derivedFrom": "triad-057 + Aleph"
+    },
+    {
+      "id": "tetrad-064",
+      "glyphs": ["𐤀", "𐤌", "𐤆", "𐤎"],
+      "structure": "domain + deepener + action + result",
+      "pattern": "declarative",
+      "gloss": "strength → chaos → cut → pillar",
+      "interpretation": "Power enters the deep, cuts it, and the cut becomes structure. The ox wades in, divides the water, and the division stands.",
+      "usage": "Inscribed on works that create order from chaos. 'Strength entered the flood. Strength cut the flood. The cut is a pillar.'",
+      "derivedFrom": "triad-016 + Samek"
+    },
+    {
+      "id": "tetrad-065",
+      "glyphs": ["𐤕", "𐤉", "𐤌", "𐤎"],
+      "structure": "result + action + domain + result",
+      "pattern": "inversive",
+      "gloss": "completion → hand → chaos → pillar",
+      "interpretation": "The seal acts upon the deep and produces structure. What is finished reaches into chaos and raises a pillar.",
+      "usage": "Inscribed on works that bring order after disaster. 'The finished thing reached into the flood. The flood became a pillar.'",
+      "derivedFrom": "triad-068 + Samek"
+    },
+    {
+      "id": "tetrad-066",
+      "glyphs": ["𐤎", "𐤌", "𐤉", "𐤕"],
+      "structure": "domain + deepener + action + result",
+      "pattern": "declarative",
+      "gloss": "pillar → chaos → hand → completion",
+      "interpretation": "The structure stands in chaos, chaos is shaped, and the shaping is sealed. The pillar in the water guides the hand, and the hand's work is finished.",
+      "usage": "Inscribed on works completed with the guidance of ancient structures. 'The pillar in the flood guided the hand. The hand's work is sealed.'",
+      "derivedFrom": "triad-018 + Yod + Taw"
+    },
+    {
+      "id": "tetrad-067",
+      "glyphs": ["𐤃", "𐤉", "𐤎", "𐤌"],
+      "structure": "connector + action + domain + result",
+      "pattern": "declarative",
+      "gloss": "door → hand → pillar → chaos",
+      "interpretation": "The passage shapes the structure, and the structure enters chaos. The door works upon the pillar, and the pillar descends into the deep.",
+      "usage": "A warning about structures that are undermined. 'The door will work on the pillar. The pillar will sink.'",
+      "derivedFrom": "triad-061 + Mem"
+    },
+    {
+      "id": "tetrad-068",
+      "glyphs": ["𐤉", "𐤌", "𐤎", "𐤃"],
+      "structure": "action + domain + domain + connector",
+      "pattern": "imperative",
+      "gloss": "hand → chaos → pillar → door",
+      "interpretation": "Reach into the deep, find the pillar, and let it open a passage. Put your hand in the water, grasp the structure, and let it become a door.",
+      "usage": "Inscribed on places where ancient structures are found in water. 'Reach into the flood. Find the pillar. It will open.'",
+      "derivedFrom": "triad-029 + Samek + Dalet"
+    },
+    {
+      "id": "tetrad-069",
+      "glyphs": ["𐤀", "𐤕", "𐤌", "𐤉"],
+      "structure": "domain + result + domain + action",
+      "pattern": "declarative",
+      "gloss": "strength → completion → chaos → hand",
+      "interpretation": "Power, sealed, enters the deep and acts. The ox is finished, and its ending stirs the water. What is spent still reaches.",
+      "usage": "An elegiac tetrad. Inscribed on the tombs of those whose work continued after death. 'Their strength is sealed. It entered the deep. It still moves.'",
+      "derivedFrom": "triad-048 + Yod"
+    },
+    {
+      "id": "tetrad-070",
+      "glyphs": ["𐤆", "𐤉", "𐤃", "𐤌"],
+      "structure": "action + action + connector + result",
+      "pattern": "imperative",
+      "gloss": "cut → hand → door → chaos",
+      "interpretation": "Cut with the hand, open a passage, and enter the deep. Carve with your own grip, make the door, and go into the water.",
+      "usage": "Inscribed on hand-tools for difficult work. 'Cut by hand. Open the door. Enter the flood.'",
+      "derivedFrom": "triad-045 + Dalet + Mem"
+    },
+    {
+      "id": "tetrad-071",
+      "glyphs": ["𐤌", "𐤃", "𐤉", "𐤎"],
+      "structure": "domain + connector + action + result",
+      "pattern": "declarative",
+      "gloss": "chaos → door → hand → pillar",
+      "interpretation": "The deep opens a passage, the passage acts, and the action becomes structure. Chaos contains a door, the door shapes, and the shaping stands.",
+      "usage": "Inscribed on natural formations that have been worked by hand. 'The deep opened. The opening shaped. The shape stands.'",
+      "derivedFrom": "triad-041 + Yod + Samek"
+    },
+    {
+      "id": "tetrad-072",
+      "glyphs": ["𐤎", "𐤉", "𐤃", "𐤕"],
+      "structure": "domain + action + connector + result",
+      "pattern": "declarative",
+      "gloss": "pillar → hand → door → completion",
+      "interpretation": "The structure shapes a passage, and the passage is sealed. The pillar guides the hand, the hand makes the door, and the door is finished.",
+      "usage": "Inscribed on doors built within ancient structures. 'The pillar taught the hand. The hand made the door. The door is sealed.'",
+      "derivedFrom": "triad-062 + Taw"
+    },
+    {
+      "id": "tetrad-073",
+      "glyphs": ["𐤕", "𐤌", "𐤉", "𐤃"],
+      "structure": "result + domain + action + connector",
+      "pattern": "inversive",
+      "gloss": "completion → chaos → hand → door",
+      "interpretation": "The seal contains chaos, chaos is shaped, and the shaping opens a passage. What is finished holds the deep, the deep is worked, and the work becomes a door.",
+      "usage": "Inscribed on sealed vessels that contain creative potential. 'The seal holds the deep. The deep is shaped. The shape opens.'",
+      "derivedFrom": "triad-034 + Yod + Dalet"
+    },
+    {
+      "id": "tetrad-074",
+      "glyphs": ["𐤃", "𐤕", "𐤌", "𐤀"],
+      "structure": "connector + result + domain + result",
+      "pattern": "declarative",
+      "gloss": "door → completion → chaos → strength",
+      "interpretation": "The passage is sealed, the seal contains chaos, and chaos yields power. The door closes, the close holds the deep, and the deep gives strength.",
+      "usage": "Inscribed on doors that seal dangerous things. 'The door is shut. The shut door holds the deep. The deep gives strength.'",
+      "derivedFrom": "triad-049 + Mem + Aleph"
+    },
+    {
+      "id": "tetrad-075",
+      "glyphs": ["𐤀", "𐤆", "𐤃", "𐤉"],
+      "structure": "domain + action + connector + action",
+      "pattern": "declarative",
+      "gloss": "strength → cut → door → hand",
+      "interpretation": "Power divides a passage, and the passage acts. The ox cuts the door, and the door reaches out. Strength makes a threshold by force, and the threshold shapes.",
+      "usage": "Inscribed on forced entries and breakthroughs. 'Strength cut the door. The door reached back.'",
+      "derivedFrom": "triad-016 + Dalet + Yod"
+    },
+    {
+      "id": "tetrad-076",
+      "glyphs": ["𐤉", "𐤃", "𐤆", "𐤀"],
+      "structure": "action + connector + action + result",
+      "pattern": "imperative",
+      "gloss": "hand → door → cut → strength",
+      "interpretation": "Make a passage, cut through it, and find power. Build the door, take the blade through it, and draw out strength.",
+      "usage": "Inscribed on weapons that must be carried through thresholds. 'Make the door. Carry the blade through. Take the strength.'",
+      "derivedFrom": "triad-014 + Aleph"
+    },
+    {
+      "id": "tetrad-077",
+      "glyphs": ["𐤌", "𐤆", "𐤉", "𐤎"],
+      "structure": "domain + action + action + result",
+      "pattern": "declarative",
+      "gloss": "chaos → cut → hand → pillar",
+      "interpretation": "The deep divides the maker, and the division stands. Chaos cuts the hand, and the cut becomes structure.",
+      "usage": "A difficult teaching. 'The deep cut the hand. The cut is a pillar.' Inscribed on places of wounding that became places of wisdom.",
+      "derivedFrom": "triad-058 + Yod"
+    },
+    {
+      "id": "tetrad-078",
+      "glyphs": ["𐤎", "𐤉", "𐤆", "𐤌"],
+      "structure": "domain + action + action + result",
+      "pattern": "declarative",
+      "gloss": "pillar → hand → cut → chaos",
+      "interpretation": "The structure guides the hand to cut the deep. The pillar teaches the hand, the hand divides, and what is divided is chaos.",
+      "usage": "Inscribed on places of training and precision. 'The pillar taught the hand. The hand cuts the flood.'",
+      "derivedFrom": "triad-046 + Mem"
+    },
+    {
+      "id": "tetrad-079",
+      "glyphs": ["𐤀", "𐤉", "𐤌", "𐤕"],
+      "structure": "domain + action + domain + result",
+      "pattern": "declarative",
+      "gloss": "strength → hand → chaos → completion",
+      "interpretation": "Power acts in the deep and seals it. The ox reaches into the water, and the water is finished. Strength shapes chaos into completion.",
+      "usage": "Inscribed on works that tame wild forces. 'Strength reached into the flood. The flood is sealed.'",
+      "derivedFrom": "triad-028 + Taw"
+    },
+    {
+      "id": "tetrad-080",
+      "glyphs": ["𐤕", "𐤌", "𐤀", "𐤉"],
+      "structure": "result + domain + domain + action",
+      "pattern": "inversive",
+      "gloss": "completion → chaos → strength → hand",
+      "interpretation": "The seal contains chaos, chaos empowers, and power acts. What is finished holds the deep, the deep gives strength, and strength reaches out.",
+      "usage": "Inscribed on sealed vessels of power. 'The seal holds the deep. The deep gives strength. The strength will act.'",
+      "derivedFrom": "triad-034 + Yod"
+    },
+    {
+      "id": "tetrad-081",
+      "glyphs": ["𐤃", "𐤀", "𐤎", "𐤌"],
+      "structure": "connector + domain + domain + result",
+      "pattern": "declarative",
+      "gloss": "door → strength → pillar → chaos",
+      "interpretation": "The passage empowers the structure, and the structure enters the deep. The door gives strength to the pillar, and the pillar sinks into water.",
+      "usage": "A warning about overconfidence. 'The door made the pillar strong. The pillar sank.'",
+      "derivedFrom": "triad-036 + Samek + Mem"
+    },
+    {
+      "id": "tetrad-082",
+      "glyphs": ["𐤆", "𐤀", "𐤌", "𐤉"],
+      "structure": "action + domain + domain + action",
+      "pattern": "imperative",
+      "gloss": "cut → strength → chaos → hand",
+      "interpretation": "Cut away power, let it enter the deep, and let the deep act. Divide the ox from itself, release it to the water, and let the water shape.",
+      "usage": "Inscribed on sacrifices and ritual releases. 'Cut the strength free. Give it to the deep. Let the deep work.'",
+      "derivedFrom": "triad-027 + Yod"
+    },
+    {
+      "id": "tetrad-083",
+      "glyphs": ["𐤉", "𐤕", "𐤌", "𐤎"],
+      "structure": "action + result + domain + result",
+      "pattern": "imperative",
+      "gloss": "hand → completion → chaos → pillar",
+      "interpretation": "Seal the work, let it enter the deep, and let it become structure. Finish what you make, release it to the water, and let it stand.",
+      "usage": "Inscribed on works that must survive immersion. 'Seal it. Sink it. Let it stand.'",
+      "derivedFrom": "triad-043 + Mem + Samek"
+    },
+    {
+      "id": "tetrad-084",
+      "glyphs": ["𐤎", "𐤌", "𐤕", "𐤉"],
+      "structure": "domain + deepener + result + action",
+      "pattern": "declarative",
+      "gloss": "pillar → chaos → completion → hand",
+      "interpretation": "The structure stands in chaos, is sealed, and continues to act. The pillar in the water is finished, and the finish still shapes.",
+      "usage": "Inscribed on ancient structures that still function. 'The pillar in the flood was sealed long ago. It still works.'",
+      "derivedFrom": "triad-066 + Mem"
+    },
+    {
+      "id": "tetrad-085",
+      "glyphs": ["𐤀", "𐤃", "𐤉", "𐤆"],
+      "structure": "domain + connector + action + action",
+      "pattern": "declarative",
+      "gloss": "strength → door → hand → cut",
+      "interpretation": "Power opens a passage, the passage acts, and the action divides. The ox finds the door, the door reaches out, and the reach is a blade.",
+      "usage": "Inscribed on doors that arm those who pass through. 'Pass here. The door will put a blade in your hand.'",
+      "derivedFrom": "triad-001 + Yod + Zayin"
+    },
+    {
+      "id": "tetrad-086",
+      "glyphs": ["𐤆", "𐤉", "𐤀", "𐤃"],
+      "structure": "action + action + domain + connector",
+      "pattern": "imperative",
+      "gloss": "cut → hand → strength → door",
+      "interpretation": "Cut with the hand, find power, and open a passage. Carve with your grip, draw strength, and make the door.",
+      "usage": "Inscribed on tools of self-reliance. 'Cut with your own hand. Take the strength. Open the way.'",
+      "derivedFrom": "triad-045 + Aleph + Dalet"
+    },
+    {
+      "id": "tetrad-087",
+      "glyphs": ["𐤌", "𐤉", "𐤎", "𐤃"],
+      "structure": "domain + action + domain + connector",
+      "pattern": "declarative",
+      "gloss": "chaos → hand → pillar → door",
+      "interpretation": "The deep shapes the structure, and the structure opens a passage. Chaos works upon the pillar, and the pillar becomes a door.",
+      "usage": "Inscribed on natural bridges and formations shaped by water. 'The deep carved the pillar. The pillar opened.'",
+      "derivedFrom": "triad-012 + Samek + Dalet"
+    },
+    {
+      "id": "tetrad-088",
+      "glyphs": ["𐤃", "𐤎", "𐤉", "𐤌"],
+      "structure": "connector + domain + action + result",
+      "pattern": "declarative",
+      "gloss": "door → pillar → hand → chaos",
+      "interpretation": "The passage leads to structure, the structure is shaped, and the shaping enters chaos. The door opens onto the pillar, the pillar is worked, and the work disturbs the deep.",
+      "usage": "A warning about renovation. 'The door leads to the old pillar. Work on it, and the deep will stir.'",
+      "derivedFrom": "triad-038 + Yod + Mem"
+    },
+    {
+      "id": "tetrad-089",
+      "glyphs": ["𐤕", "𐤕", "𐤃", "𐤀"],
+      "structure": "result + punctuation + connector + domain",
+      "pattern": "inversive-with-seal",
+      "gloss": "completion, sealed → door → strength",
+      "interpretation": "It is finished, it is finished — and from the double seal, a door to power. The end, fully acknowledged, becomes a passage to new strength.",
+      "usage": "The closing tetrad. Inscribed on endings that are truly beginnings. 'It is done. It is done. Now the door. Now the strength.'",
+      "derivedFrom": "triad-054 + Dalet"
+    },
+    {
+      "id": "tetrad-090",
+      "glyphs": ["𐤀", "𐤃", "𐤕", "𐤕"],
+      "structure": "domain + connector + result + punctuation",
+      "pattern": "declarative-with-seal",
+      "gloss": "strength → door → completion, sealed",
+      "interpretation": "Power opens a passage, and the passage completes — it is finished, it is finished. The full arc: origin, passage, completion, and the completion acknowledged twice.",
+      "usage": "The final tetrad. Inscribed on completions of great works. 'Strength opened the way. The way is done. It is done. It is done.'",
+      "derivedFrom": "tetrad-001 + Taw doubling"
+    }
+  ]
+}
