@@ -1,0 +1,256 @@
+{
+  "meta": {
+    "world": "Telumë",
+    "nameMeaning": "Vault, dome, roof of heaven (Quenya)",
+    "description": "A contained world. A sky with edges. A story drawn in, not imposed.",
+    "rootLanguage": "Adzmyst",
+    "rootDescription": "The 22 Proto-Sinaitic glyphs. The hub language spoken before the Collapse.",
+    "collapseEvent": "The Tower of Babel · Genesis 11:1-9",
+    "collapseDescription": "The one language shattered into pieces. The Pankus recorded it as a legal covenant. The storm god Tarḫunt departed and has not returned.",
+    "sourceText": "The Nešatta Codex · Pankuš Pittiyaš Ḫalki · The Assembly Covenant of the Grain/Foundation",
+    "totalRealms": 4,
+    "totalCityStates": 7,
+    "version": "2.0.0"
+  },
+
+  "realms": [
+    {
+      "id": "surya",
+      "name": "Sūrya Samrājya",
+      "nameEnglish": "Empire of the Dawnland Sun",
+      "territory": "Maine coast, New Brunswick, Nova Scotia — the eastern shore where the sun rises from the ocean before anywhere else in Telumë",
+      "capital": "Sūryapura",
+      "capitalRegion": "Bay of Fundy",
+      "people": "The Sunfolk · Wabanaki-rooted Dawnland peoples",
+      "founder": {
+        "name": "Enki",
+        "title": "First priest-king",
+        "description": "Listener. Heard the Tower hum before it fell.",
+        "tablet": "Tablet of Mantra — sound, chant, alignment"
+      },
+      "government": {
+        "type": "Divine monarchy",
+        "description": "The Sun-King is a living god, reincarnated each generation. He does not rule — he radiates."
+      },
+      "linguisticSpine": {
+        "court": { "name": "Sanskrit", "stage": "Classical", "script": "Devanāgarī" },
+        "opposition": { "name": "Avestan", "stage": "Old", "description": "Fire-Purist underground (Ātravan)" },
+        "ascetic": { "name": "Prākrit", "stage": "Middle", "description": "Wandering ascetics (Samaṇas)" },
+        "tribal": { "name": "Apabhraṃśa", "stage": "Late", "description": "Tribal, oral tradition only" }
+      },
+      "internalSchism": {
+        "faction1": "Imperial Sun-Cult (Sūrya Bhakta)",
+        "faction2": "Fire-Purists (Ātravan)",
+        "description": "The Sun-Court worships the king as divine. The Fire-Purists worship the flame itself and reject the monarchy."
+      },
+      "glyphReading": "Glyphs are mantras — seed syllables that align the chakras and open doors of perception.",
+      "collapseTelling": "The Division of Peoples (Manuṣyāṇāṃ Vibhedaḥ). Humanity tried to return to heaven. The gods scattered them. The Sunfolk preserved the original tablet.",
+      "sacredGeography": "Bay of Fundy tides — the ocean breathes here. The Sun-King appears at dawn on the water's edge."
+    },
+    {
+      "id": "ealdor",
+      "name": "Ealdor",
+      "nameEnglish": "The Old March",
+      "territory": "North of the St. Lawrence, Toronto-Montreal corridor, boreal Shield, Manicouagan enclave, western islands (Georgian Bay fringe), Labrador coast",
+      "capital": "Ealdenburg",
+      "people": "Three peoples — The Markfolk (highland core), The Fellfolk (northern coast), The Cernfolk (western islands)",
+      "founders": [
+        {
+          "name": "Hengist",
+          "title": "Oath-keeper",
+          "region": "Central kingdom",
+          "tablet": "Tablet of Oath"
+        },
+        {
+          "name": "Ymir",
+          "title": "Primordial screamer",
+          "region": "Fellfolk north",
+          "tablet": null,
+          "note": "No tablet — the Saga. Oral tradition only."
+        },
+        {
+          "name": "Cernunnos",
+          "title": "Horned shaman",
+          "region": "Western islands",
+          "tablet": "Tablet of Talisman"
+        }
+      ],
+      "government": {
+        "type": "Elected monarchy",
+        "description": "The Witenagemot (meeting of wise men) chooses the king. The king rules until death or incompetence."
+      },
+      "linguisticSpine": {
+        "court": { "name": "Ēlþian", "stage": "Old", "family": "Anglo-Saxon", "script": "Futhorc runes" },
+        "north": { "name": "Nordrune", "stage": "Old", "family": "Old Norse", "script": "Younger Futhark", "description": "Fellfolk oral saga tradition" },
+        "west": { "name": "Gallac", "stage": "Old", "family": "Continental Celtic", "script": "Ogham", "subFamilies": ["Brythonic", "Goidelic"], "description": "Cernun druidic islands" },
+        "south": { "name": "Frankish", "stage": "Old", "family": "Old High German", "script": "Latin-derived" }
+      },
+      "manicouaganEnclave": {
+        "name": "The Ring",
+        "description": "Meteor crater as sacred wound. Three traditions, one site, a religious order that serves all three.",
+        "fellfolkReading": "Where Ymir hit the ground",
+        "cernunReading": "The oldest ogham circle",
+        "ealdorReading": "Where Hengist's first oath was sworn"
+      },
+      "glyphReading": "Glyphs are oaths — carved on standing stones, binding reality.",
+      "collapseTelling": "The Broken Covenant. One clan withheld their stone. The oath shattered. Language shattered with it."
+    },
+    {
+      "id": "kichigamswak",
+      "name": "Kichigamswak Confederacy",
+      "nameEnglish": "The Great Lake Ones",
+      "nameBreakdown": "Kitchi/Kichi (great, sacred) + Gam (lake/sea) + -swak (Algonquian animate plural suffix)",
+      "nameMeaning": "We who *are* the great lake, plural, animate, alive. Not 'people who live near the great lake.' The political body and the geographic body are the same thing.",
+      "territory": "Great Lakes basin, Ottawa River valley, Montreal corridor",
+      "capital": null,
+      "capitalNote": "No fixed capital. The council fire moves between the seven clan-seats.",
+      "people": "Anishinaabe-rooted confederacy peoples",
+      "founder": {
+        "name": "Cadmus",
+        "title": "Outsider-translator",
+        "origin": "Phoenician merchant",
+        "description": "Arrived by river from the east. Found the Great Law already existing. Copied it the way he copied the letters — not as inventor, but as the first outsider to recognize its value.",
+        "tablet": "Tablet of Letter — not Cadmus's invention. His *translation* of the Kichigamswak Great Law into a script the outside world could read."
+      },
+      "government": {
+        "type": "Confederacy / Great Law",
+        "description": "Consensus council. No single ruler. Decisions require clan agreement."
+      },
+      "linguisticSpine": {
+        "core": { "name": "Algonquin", "stage": "Living", "script": "Cadmus-derived (external use only)" },
+        "trade": { "name": "Ottawa/Odawa", "stage": "Living" },
+        "north": { "name": "Ojibwe", "stage": "Living" },
+        "externalScript": { "name": "Cadmus layer", "description": "Phoenician-derived script used for external diplomacy only, never internal governance" }
+      },
+      "canonExplosive": "The Helorian Republic's entire legal tradition is a translation of the Kichigamswak Great Law filtered through Cadmus's hand. The Senate knows. They have never admitted it.",
+      "glyphReading": "Glyphs are living beings — animate, like the water. The Adzmyst sacred seven are not marks. They are presences.",
+      "collapseTelling": "The Great Law predates the Tower. The confederacy was governing itself before the Tower was built. The Collapse was not their event — it happened to other people, far away, and sent refugees to their shores."
+    },
+    {
+      "id": "haldorian",
+      "name": "The Haldorian Republic",
+      "nameEnglish": "The Bay of Ealdforn city-states",
+      "territory": "Gulf of St. Lawrence / Bay of Ealdforn — Gaspé Peninsula, Anticosti Island, Magdalen Islands, Cape Breton, Miramichi mouth, north shore Quebec, scattered archipelagos",
+      "capital": null,
+      "capitalNote": "None. The Pankus assembly meets at Nešatta every seven years.",
+      "people": "No single people — seven named city-states, each its own culture",
+      "founder": {
+        "name": null,
+        "description": "Refused one. The Pankus Accord was brokered by the last Hittite elder — not a founder, a facilitator."
+      },
+      "government": {
+        "type": "Non-governed assembly",
+        "body": "The Pankus",
+        "description": "Decisions advisory. Trade-binding clause is the only enforcement mechanism.",
+        "foundingDocument": "The Nešatta Codex · Pankuš Pittiyaš Ḫalki",
+        "foundingDocumentDescription": "Seven clay tablets. Three translatable (Hittite + Luwian). One missing (removed by Tsarnigrad). One unreadable. One sealed. One blank — the covenant is not finished.",
+        "meetingFrequency": "Every seven years at Nešatta"
+      },
+      "linguisticSpine": {
+        "oldestLayer": { "name": "Anatolian", "languages": ["Hittite", "Luwian"], "description": "Pre-Tower archive at Nešatta. The glyph claim." },
+        "middleLayer": { "name": "Slavic", "languages": ["Old West Slavic", "Old Church Slavonic", "Old East Slavic"] },
+        "aegeanLayer": { "name": "Macedonian Greek", "description": "Northern Greek, aggressive, looked down on by southern city-states" },
+        "anatolianGreekLayer": { "name": "Phrygian", "description": "Pre-classical Anatolian-Greek interface. Old money, old gods." },
+        "maritimeLayer": { "name": "Epic Latin", "description": "Pre-imperial maritime Latin. The language of the net and the oar, not the sword and the senate." },
+        "remnant": { "name": "Old Prussian", "status": "Nearly extinct", "description": "One city's heritage language" }
+      },
+      "canonExplosive": "The Hittite archive at Nešatta contains tablets predating the Tower with recognizable Adzmyst glyphs. If authentic — the glyphs didn't scatter at the Collapse. They were stolen from the Anatolian tradition to build the Tower. The Collapse was punishment for theft, not hubris.",
+      "glyphReading": "Glyphs are legal facts. The Nešatta archive treats them as evidence.",
+      "collapseTelling": "Recorded in the Nešatta Codex as a legal covenant between the gods and the assembly. The storm god Tarḫunt departed. The seventh tablet is blank. The Pankus waits.",
+
+      "cityStates": [
+        {
+          "id": "nesatta",
+          "name": "Nešatta",
+          "tier": "Hittite",
+          "location": "Anticosti Island, west",
+          "character": "Oldest. Archive city. Pankus fire-keeper. Nearly abandoned. Holds the glyph archive that could break every other kingdom's origin story.",
+          "population": "Skeleton crew of priests and archivists"
+        },
+        {
+          "id": "radogost",
+          "name": "Radogost",
+          "tier": "Old West Slavic",
+          "location": "Miramichi river mouth",
+          "character": "Trade heart. Glad host. Inland gateway to the river routes. Where the Pankus gets its grain.",
+          "population": "Thriving trade port"
+        },
+        {
+          "id": "tihomir",
+          "name": "Tihomir",
+          "tier": "Old Church Slavonic",
+          "location": "Mingan Archipelago",
+          "character": "Witness city. Monastery. Doesn't vote. Keeps the written record. Bogumil's home.",
+          "population": "Monastic community"
+        },
+        {
+          "id": "tsarnigrad",
+          "name": "Tsarnigrad",
+          "tier": "Old East Slavic",
+          "location": "Baie-Comeau",
+          "character": "Dark fortress. Almost-monarchy. Greatest internal threat to the Pankus covenant. The city that effaced and recarved the 'no king' inscription.",
+          "population": "Fortified garrison city"
+        },
+        {
+          "id": "aristopol",
+          "name": "Aristopol",
+          "tier": "Macedonian Greek",
+          "location": "Gaspé Peninsula tip",
+          "character": "The city of the best. Empire-builder. Perpetually proposes a hegemon. Exhausting and indispensable. Named themselves after a quality they assigned to themselves.",
+          "nameBreakdown": "Aristos (best/excellent) + polis (city)",
+          "population": "Ambitious and growing"
+        },
+        {
+          "id": "gordeon",
+          "name": "Gordéon",
+          "tier": "Phrygian",
+          "location": "Magdalen Islands",
+          "character": "Old money. Old gods. The unsolvable city. Arrived with wealth nobody can account for. Doesn't explain itself. The Gordian knot as political theology.",
+          "population": "Established, stable, opaque"
+        },
+        {
+          "id": "pescassa",
+          "name": "Pescassa",
+          "tier": "Epic Latin",
+          "location": "Cape Breton Island",
+          "character": "The fishing city. Maritime underclass Latin — the language of the net and the oar. Arrived in boats. Never left. Named with Latin root + Anatolian suffix from centuries of trading with Nešatta.",
+          "nameBreakdown": "Piscis (fish) + -assa (Anatolian place suffix)",
+          "population": "Coastal fishing community"
+        }
+      ]
+    }
+  ],
+
+  "nešattaCodex": {
+    "title": "Pankuš Pittiyaš Ḫalki",
+    "translation": "The Assembly Covenant of the Grain/Foundation",
+    "tablets": 7,
+    "survivingTablets": 3,
+    "scribe": "Bogumil, Tihomir monastery, Year 847 of the Haldorian Reckoning",
+    "oldestManuscript": "Tihomir archive",
+    "originals": "Clay tablets, now lost or sealed",
+    "tabletStatus": {
+      "1": { "name": "Ḫantezziš (The First Thing)", "language": "Hittite", "status": "Transcribed", "content": "The creation, the Tower, the prohibition of kings" },
+      "2": { "name": "Luwian Intrusion", "language": "Luwian", "status": "Transcribed", "content": "The sun god's triple position, the chiasm, the storm god's departure" },
+      "3": { "name": "Ḫalkiš (The Grain/The Foundation)", "language": "Hittite", "status": "Transcribed", "content": "The triple covenant, the assembly entrusted to the land, the closing seal" },
+      "4": { "status": "Missing", "note": "Removed by a delegation from Tsarnigrad who came in the night and left before morning" },
+      "5": { "status": "Unreadable", "note": "Script unknown to Bogumil — not Hittite, not Luwian, not any hand he was trained to read" },
+      "6": { "status": "Sealed", "note": "Intact but sealed with clay impressed with a glyph Bogumil refused to reproduce" },
+      "7": { "status": "Blank", "note": "Clay fired. Surface prepared. Nothing written. Bogumil: 'I do not know what this means. The abbot says it means the covenant is not finished. The storm god has not returned to write the final tablet.'" }
+    },
+    "centralLine": "LUGAL-uš lē ēšta — a king shall not be",
+    "centralWord": "Ḫalki — grain and foundation are the same word",
+    "closingSeal": "𒁹𒀭𒊏 𒁹𒋾𒀭 𒁹𒀭𒍪 · PITTIYA · PITTISSA · PITTAZU — The covenant was. The covenant broke. The covenant holds."
+  },
+
+  "sharedIncantation": {
+    "adzmyst": "𐤕𐤕𐤕 · 𐤀𐤃 𐤀𐤐𐤕𐤇",
+    "surya": "अग्निः धारयति। द्वारं विवृणोति।",
+    "ealdor": "Þæt fyr hæld. Þæt duru āþnaþ.",
+    "kichigamswak": "Ishkode ode. Shkwaandem teg.",
+    "haldorian": "Ignis tenet. Foris aperit.",
+    "haldorianEpicLatin": "Ignis tenet. Foris aperit.",
+    "haldorianHittite": "Paḫḫur ḫarkanzi. Āška āppan.",
+    "gloss": "The fire holds. The door opens."
+  }
+}
