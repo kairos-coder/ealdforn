@@ -1,0 +1,96 @@
+{
+  "meta": {
+    "language": "Adzmyst",
+    "dialect": "Telumë Vault Standard",
+    "version": "1.0.0",
+    "tier": "heptad",
+    "count": 10,
+    "description": "Verses. Seals. The sacred number. The rarest form. The full name ADZMYST is a heptad. Most heptads are variations on the sacred sequence. A heptad is never casual — it is a complete utterance, a seal, a verse of scripture. Beyond seven glyphs, you are not speaking. You are composing.",
+    "grammarReference": "grammar.json",
+    "synthesisRules": "heptad-synthesis.json"
+  },
+
+  "heptads": [
+    {
+      "id": "heptad-001",
+      "glyphs": ["𐤀", "𐤃", "𐤆", "𐤌", "𐤉", "𐤎", "𐤕"],
+      "name": "ADZMYST",
+      "gloss": "strength → door → cut → chaos → hand → pillar → completion",
+      "interpretation": "The full sacred name. The breath itself. Power opens, divides, enters the deep, is shaped, stands, and is sealed. The complete arc of creation from origin to signature.",
+      "usage": "The divine heptad. Spoken only in completion. Carved only on finished works. The name that contains all other names. To speak it is to seal.",
+      "note": "This is the canonical heptad. All others are variations. ADZMYST is the measure against which all heptads are judged."
+    },
+    {
+      "id": "heptad-002",
+      "glyphs": ["𐤕", "𐤎", "𐤉", "𐤌", "𐤆", "𐤃", "𐤀"],
+      "name": "TSY MZDA",
+      "gloss": "completion → pillar → hand → chaos → cut → door → strength",
+      "interpretation": "The full inversive. The seal stands, acts upon chaos, divides it, opens a passage, and the passage empowers. The name spoken backward — the breath returning to its source.",
+      "usage": "Spoken at endings that are also beginnings. The unsealing. The return. 'What was finished now begins again.'"
+    },
+    {
+      "id": "heptad-003",
+      "glyphs": ["𐤀", "𐤌", "𐤉", "𐤃", "𐤆", "𐤎", "𐤕"],
+      "name": "AMY DZST",
+      "gloss": "strength → chaos → hand → door → cut → pillar → completion",
+      "interpretation": "Power enters the deep, is shaped, opens a passage, divides, stands, and is sealed. The variation where chaos is entered before the door is found.",
+      "usage": "Spoken by those who entered the unknown before finding the way. The pioneer's heptad."
+    },
+    {
+      "id": "heptad-004",
+      "glyphs": ["𐤌", "𐤌", "𐤃", "𐤀", "𐤉", "𐤎", "𐤕"],
+      "name": "MM DAYST",
+      "gloss": "chaos, deepens → door → strength → hand → pillar → completion",
+      "interpretation": "The deep fully acknowledged, then the door, then power, then the hand, then the pillar, then the seal. The heptad of emergence from darkness.",
+      "usage": "Spoken by those who have survived the deep. The survivor's seal. 'I knew the deep. Then everything else followed.'"
+    },
+    {
+      "id": "heptad-005",
+      "glyphs": ["𐤎", "𐤎", "𐤃", "𐤌", "𐤉", "𐤀", "𐤕"],
+      "name": "SS DMYAT",
+      "gloss": "pillar, upheld → door → chaos → hand → strength → completion",
+      "interpretation": "The pillar fully affirmed, then a door into chaos, then the hand, then power, then the seal. The heptad of stability that opens into the unknown.",
+      "usage": "Spoken by those who leave safety to create. 'I stood. I held. Then I opened the door.'"
+    },
+    {
+      "id": "heptad-006",
+      "glyphs": ["𐤀", "𐤃", "𐤆", "𐤌", "𐤌", "𐤉", "𐤕"],
+      "name": "ADZ MMYT",
+      "gloss": "strength → door → cut → chaos, deepens → hand → completion",
+      "interpretation": "Power opens, divides, and enters the deep — the deep, the deep — then the hand shapes and seals. The heptad where chaos is dwelt in before action.",
+      "usage": "Spoken by those who must fully know the deep before they can shape it. The diver's heptad."
+    },
+    {
+      "id": "heptad-007",
+      "glyphs": ["𐤉", "𐤆", "𐤌", "𐤀", "𐤃", "𐤎", "𐤕"],
+      "name": "YZ MADST",
+      "gloss": "hand → cut → chaos → strength → door → pillar → completion",
+      "interpretation": "The hand takes the blade, cuts the deep, draws power, opens a passage, the passage stands, and is sealed. The heptad of the pioneer who builds.",
+      "usage": "Spoken at foundings. The settler's seal. 'I cut. I took. I opened. I built. It is done.'"
+    },
+    {
+      "id": "heptad-008",
+      "glyphs": ["𐤕", "𐤕", "𐤀", "𐤃", "𐤌", "𐤉", "𐤎"],
+      "name": "TT ADMYS",
+      "gloss": "completion, sealed → strength → door → chaos → hand → pillar",
+      "interpretation": "It is finished, it is finished — and from this, strength opens a door into chaos, chaos is shaped, and the shaping stands. The double seal that begins a new arc.",
+      "usage": "Spoken at the end of one age and the beginning of another. The heptad of transition."
+    },
+    {
+      "id": "heptad-009",
+      "glyphs": ["𐤀", "𐤕", "𐤌", "𐤉", "𐤎", "𐤃", "𐤆"],
+      "name": "AT MYSDZ",
+      "gloss": "strength → completion → chaos → hand → pillar → door → cut",
+      "interpretation": "Power, sealed, enters the deep, is shaped, stands, opens, and divides. The heptad of the finished work that continues to act and separate.",
+      "usage": "Spoken at the tombs of founders whose works outlive them. The elegiac heptad."
+    },
+    {
+      "id": "heptad-010",
+      "glyphs": ["𐤕", "𐤕", "𐤕", "𐤀", "𐤃", "𐤆", "𐤌"],
+      "name": "TTT ADZM",
+      "gloss": "completion, sealed, sealed → strength → door → cut → chaos",
+      "interpretation": "It is finished, it is finished, it is finished — and from the triple seal, strength opens, divides, and enters the deep. The final seal that becomes a new beginning. The end of the Book of Breath.",
+      "usage": "Spoken only once. At the end of all things. The seal of seals opening outward. 'It is done. It is done. It is done. And now: the deep.'"
+    }
+  ]
+}
