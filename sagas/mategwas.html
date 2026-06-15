@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wyrd-Weaving in the Forest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-green: #0a180a;
+            --forest-green: #1d3c1d;
+            --moss: #2e4a2e;
+            --gold-thread: #d4af37;
+            --gold-light: #f5e9c3;
+            --mist: rgba(180, 200, 200, 0.1);
+            --water: #1d4c4c;
+            --parchment: #f8f0d7;
+            --ink: #1a1a1a;
+            --shadow: rgba(0, 0, 0, 0.5);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: var(--deep-green);
+            color: var(--gold-light);
+            font-family: 'Cormorant Garamond', serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.7;
+        }
+        
+        .forest-container {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            padding: 3rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+        
+        /* Detailed forest background */
+        .forest-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            background: 
+                linear-gradient(to bottom, var(--deep-green) 0%, var(--forest-green) 100%),
+                radial-gradient(ellipse at top, var(--moss) 0%, transparent 70%),
+                radial-gradient(ellipse at bottom, var(--water) 0%, transparent 70%);
+        }
+        
+        .pine-trees {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-image: 
+                url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M100,0 L120,40 L100,35 L80,40 L100,0 Z' fill='%232e4a2e'/%3E%3Cpath d='M100,30 L120,70 L100,65 L80,70 L100,30 Z' fill='%232e4a2e'/%3E%3Cpath d='M100,60 L120,100 L100,95 L80,100 L100,60 Z' fill='%232e4a2e'/%3E%3Cpath d='M100,90 L120,130 L100,125 L80,130 L100,90 Z' fill='%232e4a2e'/%3E%3Cpath d='M100,120 L120,160 L100,155 L80,160 L100,120 Z' fill='%232e4a2e'/%3E%3C/svg%3E");
+            background-size: 150px 150px;
+            opacity: 0.3;
+        }
+        
+        .mist {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, var(--mist) 0%, transparent 100%);
+            z-index: -1;
+            animation: mist-move 40s infinite linear;
+        }
+        
+        .water-reflection {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background: var(--water);
+            z-index: -1;
+            mask-image: linear-gradient(to top, transparent 0%, black 50%);
+            -webkit-mask-image: linear-gradient(to top, transparent 0%, black 50%);
+        }
+        
+        .ripples {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle, rgba(255,255,255,0.1) 2px, transparent 3px),
+                radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 2px);
+            background-size: 50px 50px;
+            animation: ripples 15s infinite linear;
+        }
+        
+        /* Central runic motif */
+        .wyrd-wef-container {
+            position: relative;
+            margin: 3rem 0;
+            width: 100%;
+            max-width: 600px;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .wyrd-wef {
+            font-family: 'Segoe UI Symbol', sans-serif;
+            font-size: 4.5rem;
+            color: var(--gold-thread);
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.7);
+            letter-spacing: 0.5rem;
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
+            animation: glow-pulse 4s infinite ease-in-out;
+            z-index: 10;
+        }
+        
+        .thread {
+            position: absolute;
+            background: linear-gradient(to bottom, var(--gold-thread), transparent);
+            width: 2px;
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            animation: thread-pulse 3s infinite ease-in-out;
+        }
+        
+        .thread::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -1px;
+            width: 4px;
+            height: 4px;
+            background: var(--gold-thread);
+            border-radius: 50%;
+            box-shadow: 0 0 15px 3px var(--gold-thread);
+        }
+        
+        .branch-thread {
+            position: absolute;
+            background: linear-gradient(to right, var(--gold-thread), transparent);
+            width: 150px;
+            height: 2px;
+            transform-origin: left;
+            z-index: 5;
+            animation: thread-pulse 3s infinite ease-in-out;
+        }
+        
+        .branch-thread:nth-child(1) {
+            top: 20%;
+            left: 50%;
+            transform: rotate(-30deg);
+            animation-delay: 0.5s;
+        }
+        
+        .branch-thread:nth-child(2) {
+            top: 40%;
+            left: 50%;
+            transform: rotate(15deg);
+            animation-delay: 1s;
+        }
+        
+        .branch-thread:nth-child(3) {
+            top: 60%;
+            left: 50%;
+            transform: rotate(-15deg);
+            animation-delay: 1.5s;
+        }
+        
+        .branch-thread:nth-child(4) {
+            top: 80%;
+            left: 50%;
+            transform: rotate(25deg);
+            animation-delay: 2s;
+        }
+        
+        .branch-thread::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -1px;
+            width: 4px;
+            height: 4px;
+            background: var(--gold-thread);
+            border-radius: 50%;
+            box-shadow: 0 0 15px 3px var(--gold-thread);
+        }
+        
+        /* Verse styling */
+        .verse-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+            margin: 3rem 0;
+            z-index: 10;
+        }
+        
+        .old-saxon-verse {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-style: italic;
+            line-height: 1.6;
+            color: var(--gold-light);
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        /* Narrative prose */
+        .narrative {
+            max-width: 700px;
+            margin: 2rem auto;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        
+        .narrative p {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Manuscript styling */
+        .manuscript-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 3rem auto;
+            background: var(--parchment);
+            color: var(--ink);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px var(--shadow);
+            overflow: hidden;
+            padding: 2rem;
+            z-index: 20;
+        }
+        
+        .manuscript-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--gold-thread);
+            padding-bottom: 1rem;
+        }
+        
+        .manuscript-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+        }
+        
+        .manuscript-subtitle {
+            font-style: italic;
+            font-size: 1.4rem;
+            color: #555;
+        }
+        
+        .song-section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .song-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .song-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: var(--gold-thread);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--gold-thread);
+            padding-bottom: 0.5rem;
+        }
+        
+        .song-subtitle {
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        .song-content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        
+        .song-content p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+        
+        .old-saxon {
+            font-style: italic;
+            color: #5d4037;
+            font-weight: bold;
+        }
+        
+        .ancient-threads {
+            background: rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            border-radius: 6px;
+            margin-top: 2rem;
+            border-left: 4px solid var(--gold-thread);
+        }
+        
+        .threads-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: var(--gold-thread);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .threads-content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            column-count: 2;
+            column-gap: 2rem;
+        }
+        
+        .threads-content p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+        
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        
+        .nav-button {
+            background: rgba(10, 24, 10, 0.9);
+            color: var(--gold-light);
+            border: 2px solid var(--gold-thread);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+            display: block;
+            text-align: center;
+        }
+        
+        .nav-button:hover {
+            background: var(--gold-thread);
+            color: var(--deep-green);
+        }
+        
+        /* Glossary */
+        .glossary-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(10, 24, 10, 0.9);
+            border: 2px solid var(--gold-thread);
+            border-radius: 12px;
+            padding: 1.5rem;
+            width: 320px;
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+            transition: transform 0.3s ease;
+            font-size: 1.1rem;
+        }
+        
+        .glossary-container.collapsed {
+            transform: translateY(calc(100% - 45px));
+        }
+        
+        .glossary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--gold-thread);
+            cursor: pointer;
+        }
+        
+        .glossary-header h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-thread);
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+        }
+        
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--gold-thread);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .glossary-container.collapsed .toggle-btn {
+            transform: rotate(180deg);
+        }
+        
+        .glossary-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+        
+        .glossary-term {
+            padding: 0.7rem 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        
+        .glossary-term:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .term {
+            font-weight: bold;
+            color: var(--gold-thread);
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .meaning {
+            font-style: italic;
+            color: #c9c0a0;
+        }
+        
+        .context {
+            font-size: 0.95rem;
+            color: #a8a28a;
+            margin-top: 0.3rem;
+        }
+        
+        /* Pine branches */
+        .pine-branch {
+            position: absolute;
+            width: 200px;
+            height: 100px;
+            background-image: 
+                linear-gradient(45deg, transparent 45%, var(--moss) 45%, var(--moss) 55%, transparent 55%),
+                linear-gradient(-45deg, transparent 45%, var(--moss) 45%, var(--moss) 55%, transparent 55%);
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        .pine-branch:nth-child(1) {
+            top: 5%;
+            left: 5%;
+            transform: rotate(20deg);
+        }
+        
+        .pine-branch:nth-child(2) {
+            top: 15%;
+            right: 5%;
+            transform: rotate(-20deg);
+        }
+        
+        .pine-branch:nth-child(3) {
+            bottom: 25%;
+            left: 10%;
+            transform: rotate(10deg);
+        }
+        
+        .pine-branch:nth-child(4) {
+            bottom: 15%;
+            right: 10%;
+            transform: rotate(-10deg);
+        }
+        
+        /* Stones */
+        .stone {
+            position: absolute;
+            width: 50px;
+            height: 40px;
+            background: #3a2e1d;
+            border-radius: 50%;
+            z-index: -1;
+            box-shadow: 
+                inset 0 0 10px rgba(0, 0, 0, 0.5),
+                0 5px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0.8;
+        }
+        
+        .stone:nth-child(1) {
+            bottom: 10%;
+            left: 15%;
+        }
+        
+        .stone:nth-child(2) {
+            bottom: 8%;
+            right: 20%;
+        }
+        
+        .stone:nth-child(3) {
+            bottom: 12%;
+            right: 30%;
+        }
+        
+        /* Animations */
+        @keyframes mist-move {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+        
+        @keyframes ripples {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
+        }
+        
+        @keyframes glow-pulse {
+            0% { 
+                text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); 
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 20px rgba(212, 175, 55, 0.8), 0 0 30px rgba(212, 175, 55, 0.6); 
+                transform: scale(1.05);
+            }
+            100% { 
+                text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); 
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes thread-pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+            .old-saxon-verse {
+                font-size: 1.5rem;
+            }
+            
+            .wyrd-wef {
+                font-size: 3.5rem;
+            }
+            
+            .narrative {
+                font-size: 1.2rem;
+            }
+            
+            .manuscript-title {
+                font-size: 2rem;
+            }
+            
+            .song-title {
+                font-size: 1.6rem;
+            }
+            
+            .glossary-container {
+                width: 280px;
+                right: 1.5rem;
+                bottom: 1.5rem;
+            }
+            
+            .threads-content {
+                column-count: 1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .wyrd-wef-container {
+                height: 400px;
+            }
+            
+            .old-saxon-verse {
+                font-size: 1.4rem;
+            }
+            
+            .wyrd-wef {
+                font-size: 3rem;
+            }
+            
+            .narrative {
+                font-size: 1.1rem;
+            }
+            
+            .glossary-container {
+                width: 260px;
+                font-size: 1rem;
+            }
+            
+            .nav-container {
+                top: 10px;
+                left: 10px;
+            }
+            
+            .nav-button {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .forest-container {
+                padding: 2rem 1rem;
+            }
+            
+            .wyrd-wef-container {
+                height: 300px;
+            }
+            
+            .old-saxon-verse {
+                font-size: 1.2rem;
+                padding: 1rem;
+            }
+            
+            .wyrd-wef {
+                font-size: 2.2rem;
+            }
+            
+            .narrative {
+                font-size: 1rem;
+                padding: 1rem;
+            }
+            
+            .manuscript-container {
+                padding: 1.5rem;
+            }
+            
+            .manuscript-title {
+                font-size: 1.8rem;
+            }
+            
+            .song-title {
+                font-size: 1.4rem;
+            }
+            
+            .song-content {
+                font-size: 1.1rem;
+            }
+            
+            .glossary-container {
+                width: 90%;
+                right: 5%;
+                left: 5%;
+                bottom: 1rem;
+            }
+            
+            .glossary-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="nav-container">
+        <button class="nav-button" id="to-top">To Forest</button>
+        <button class="nav-button" id="to-songs">To Songs</button>
+        <button class="nav-button" id="to-threads">To Threads</button>
+    </div>
+    
+    <div class="forest-container" id="forest-section">
+        <!-- Background elements -->
+        <div class="forest-canvas"></div>
+        <div class="pine-trees"></div>
+        <div class="mist"></div>
+        <div class="water-reflection">
+            <div class="ripples"></div>
+        </div>
+        
+        <!-- Pine branches -->
+        <div class="pine-branch"></div>
+        <div class="pine-branch"></div>
+        <div class="pine-branch"></div>
+        <div class="pine-branch"></div>
+        
+        <!-- Stones -->
+        <div class="stone"></div>
+        <div class="stone"></div>
+        <div class="stone"></div>
+        
+        <!-- Narrative prose -->
+        <div class="narrative">
+            <p>Mosk wandered through the shadowed pines. Every ripple in the water, every trembling leaf seemed to carry the threads of fate. He paused, listening to the forest's whispered wyrd.</p>
+        </div>
+        
+        <!-- Central runic motif -->
+        <div class="wyrd-wef-container">
+            <div class="thread"></div>
+            <div class="branch-thread"></div>
+            <div class="branch-thread"></div>
+            <div class="branch-thread"></div>
+            <div class="branch-thread"></div>
+            
+            <div class="wyrd-wef">ᚹᛁᚱᛞ-ᚹᛖᚠ</div>
+        </div>
+        
+        <!-- Verse -->
+        <div class="verse-container">
+            <div class="old-saxon-verse">
+                <p>Hwæt! Kwekwaskw swegath;</p>
+                <p>se wæter-strom swylce wyrd-wef glidrath,</p>
+                <p>Mosk lēoð-hungrig, bīdan, gehīeran, scēawian.</p>
+            </div>
+        </div>
+        
+        <!-- Continuation of narrative -->
+        <div class="narrative">
+            <p>He felt the threads pull and twist around him, a living tapestry of moments yet to unfold. The water reflected not just the sky, but the patterns of wyrd itself - shimmering strands of destiny weaving through the forest's heart.</p>
+            <p>A faint scent of spruce filled the air, carrying whispers of ancient runes. Mosk reached out, his fingers tracing the invisible threads that connected stone to stream, pine to path, past to future.</p>
+        </div>
+    </div>
+    
+    <!-- Manuscript Section -->
+    <div class="manuscript-container" id="songs-section">
+        <div class="manuscript-header">
+            <h1 class="manuscript-title">Mategwases Lār-Lēoþ</h1>
+            <h2 class="manuscript-subtitle">The Teaching Songs of Mategwas</h2>
+        </div>
+        
+        <!-- Song I -->
+        <div class="song-section">
+            <h3 class="song-title">SONG I: On Rising Each Day</h3>
+            <h4 class="song-subtitle">Be Ǣlces Dæges Ārīsenne</h4>
+            <div class="song-content">
+                <p>Hear, you who would walk in wisdom's way: When first light breaks the darkness gray, <span class="old-saxon">Āstād mid þonce þancful-mōd</span>, rise with heart both glad and good.</p>
+                <p>Bless the bed that held your rest, bless the dreams that made you blessed. <span class="old-saxon">Grēt þone grund þe þē geheold</span>, thank the earth that kept you whole.</p>
+                <p>Before you break your morning fast, think on all that came to pass: What wisdom did the night-time bring? What songs did sleeping spirits sing?</p>
+                <p>Mategwas teaches morning-lore: "Each dawn opens wisdom's door. <span class="old-saxon">Sē þe æt āwæcnunge wīs biþ</span>, he who wakes with grateful heart finds the whole day set apart."</p>
+                <p>Stretch your limbs like young trees growing, feel life's river through you flowing. Let your first words be of praise for the gift of living days.</p>
+            </div>
+        </div>
+        
+        <!-- Song II -->
+        <div class="song-section">
+            <h3 class="song-title">SONG II: On Choosing Friends</h3>
+            <h4 class="song-subtitle">Be Frēonda Cēosenne</h4>
+            <div class="song-content">
+                <p>Listen well, you heart-hungry ones: Not all who smile are friendship's sons. <span class="old-saxon">Frēondscipe is fǣger gimm</span>, true friendship is a precious gem.</p>
+                <p>Choose those who tell truth with love, who point your eyes to stars above. <span class="old-saxon">Flēoh þā þe flǣsclic lufu seek</span> only flesh and passing pleasure.</p>
+                <p>A friend will hold your burdens light, walk beside you through the night. <span class="old-saxon">Ac sē þe symle seolf-gōd sēcð</span>, but one who only seeks self-good brings thorns where flowers should.</p>
+                <p>Mategwas sang to those who'd hear: "Trust comes slow, but grows each year. <span class="old-saxon">Sē þe hrædlīce heortan giefeþ oft finds sorrow</span> for his gift."</p>
+                <p>Better one friend tried and true than a hundred false to you. Test with small things first, then great— see who stays, and who won't wait.</p>
+                <p>Share your bread before your gold, watch whose love grows weak or bold. <span class="old-saxon">Gōd frēond is gōda māðm</span>, a good friend is a golden treasure.</p>
+            </div>
+        </div>
+        
+        <!-- Song III -->
+        <div class="song-section">
+            <h3 class="song-title">SONG III: On Speaking Words</h3>
+            <h4 class="song-subtitle">Be Worda Sprecenne</h4>
+            <div class="song-content">
+                <p>Guard your tongue as guards his gold the miser in his tower cold. <span class="old-saxon">Word sind wyrdas, wyrcað wundru</span>, words are fates that work great wonders.</p>
+                <p>Soft speech calms the angry heart, harsh words tear good friends apart. <span class="old-saxon">Ǣr þū sprice, on þīnum mōde</span> before you speak, within your mind weigh the words you hope to find.</p>
+                <p>Will they heal or will they harm? Will they calm or cause alarm? Mategwas in wisdom spoke: "Words once said cannot be broke. <span class="old-saxon">Lytle word mæg lange wund macian on mōde mannes.</span>" Small word can make lasting wound in a person's heart and mind.</p>
+                <p>Better silent, seeming fool, than speaking harsh and seeming cruel. <span class="old-saxon">Hlyst ǣrest, spæc siþþan</span>, listen first, then speak your part.</p>
+                <p>Truth needs not a shouting voice, gentleness should be your choice. Sweet words are like honey-dew, bitter words make all things rue.</p>
+                <p>The wise speak less but mean much more, their words unlock wisdom's door.</p>
+            </div>
+        </div>
+        
+        <!-- Song IV -->
+        <div class="song-section">
+            <h3 class="song-title">SONG IV: On Work and Rest</h3>
+            <h4 class="song-subtitle">Be Weorce and Reste</h4>
+            <div class="song-content">
+                <p>All things have their proper time: seasons for the earth's sweet rhyme. <span class="old-saxon">Tīma is tō weorce wyrcenne</span>, time there is for working well, <span class="old-saxon">tīma is tō reste ricenne</span>, time for rest the wise can tell.</p>
+                <p>Work with hands but think with heart, let wisdom guide your working part. <span class="old-saxon">Nē weorce for weorulde āna</span>, do not work for world alone, <span class="old-saxon">ac for gōde þe God sealde</span>, but for good that God has sown.</p>
+                <p>He who works from dawn to dark but forgets love's sacred mark gathers gold but loses soul, misses life's most precious goal.</p>
+                <p>Mategwas taught working-song: "Labor sweet but not too long. <span class="old-saxon">Sē þe symle swincð būtan blisse</span> he who toils without delight loses wisdom's clearest sight."</p>
+                <p>Rest is holy, rest is good, as the deer rests in the wood. <span class="old-saxon">Slǣp is sāwle sōþe nēod</span>, sleep is soul's true need indeed.</p>
+                <p>Take your ease with grateful heart, rest well-earned for next day's start. Work and rest in rhythm flow like the tides that come and go.</p>
+            </div>
+        </div>
+        
+        <!-- Song V -->
+        <div class="song-section">
+            <h3 class="song-title">SONG V: On Anger and Peace</h3>
+            <h4 class="song-subtitle">Be Yrre and Sibbe</h4>
+            <div class="song-content">
+                <p>When anger rises like a flame, breathe deep and call on wisdom's name. <span class="old-saxon">Yrre is fȳr þe forswelgð eall</span>, anger is fire that swallows all.</p>
+                <p>Count to ten, or twenty more, till the storm has passed your shore. <span class="old-saxon">Hrædnes ricseð, hrēow cymð æfter</span>, haste rules now, regret comes after.</p>
+                <p>Think: what feeds this angry mood? Fear? Pride? Lack of understood? <span class="old-saxon">Oft under yrre ōþer sar liegeþ dīop on heortan.</span> Often under anger lies another hurt deep in the heart.</p>
+                <p>Mategwas sang soft and low: "Let the gentle answer flow. <span class="old-saxon">Līþe word lǣceð sāre</span>, gentle words can heal the sore."</p>
+                <p>Peace is not for weaklings made, but for strong ones unafraid to let their anger slowly die like embers underneath the sky.</p>
+                <p>Choose your battles, choose them few, fight for what is right and true. <span class="old-saxon">Sibb is strengð, nāt swicdom</span>, peace is strength, not trickery.</p>
+                <p>The angry man rules nothing well, his fury makes his wisdom dwell in exile from his heart and home— better let your anger roam away into the empty air, and find your peace in wisdom's care.</p>
+            </div>
+        </div>
+        
+        <!-- Song VI -->
+        <div class="song-section">
+            <h3 class="song-title">SONG VI: On Love and Desire</h3>
+            <h4 class="song-subtitle">Be Lufe and Wilnunge</h4>
+            <div class="song-content">
+                <p>Love comes many ways to heart: some swift like the sparrow's dart, <span class="old-saxon">Sume lufu langsum cymð</span> some love slowly comes to mind like the seasons, soft and kind.</p>
+                <p>Lust and love are not the same, though they bear a kindred name. <span class="old-saxon">Lust wolde habban and healdan</span>, lust would have and hold control, <span class="old-saxon">lufu wile giefan and weaxan</span>, love desires to give and grow.</p>
+                <p>Young hearts burn with passion's fire, every glance stirs sweet desire. <span class="old-saxon">Ac wīse men wītaþ wel</span> but the wise ones know full well: true love grows as oak trees do— slowly, surely, strong and true.</p>
+                <p>Mategwas taught lovers' lore: "Give yourself, but give no more than your heart can freely spare. Keep some mystery always there."</p>
+                <p>Love shared freely doubles joy, love held tight does love destroy. <span class="old-saxon">Gif þū lufige, lǣt hine gān</span>, if you love, then let them go— <span class="old-saxon">gāþ hē fram þē, hē nǣs þīn</span>, if they leave, they weren't yours, <span class="old-saxon">cymeþ hē eft, hē biþ ǣfre</span>. if they return, they're yours for sure.</p>
+                <p>Trust in love, but not in blindness, balance passion with sweet kindness. Hearts that join in sacred bond grow together, strong and fond.</p>
+            </div>
+        </div>
+        
+        <!-- Song VII -->
+        <div class="song-section">
+            <h3 class="song-title">SONG VII: On Dealing with Enemies</h3>
+            <h4 class="song-subtitle">Be Fēondum Wrixlenne</h4>
+            <div class="song-content">
+                <p>Even good hearts make some foes, for where truth and light both goes, <span class="old-saxon">Þǣr sceal scēadu scūfan wiþ</span>, there must shadow push against brightness shining heaven-sent.</p>
+                <p>Do not seek to make enemies, but when hate comes like disease to poison minds against your name, do not play the spite-filled game.</p>
+                <p>Speak no evil of your foe, though they speak of you in woe. <span class="old-saxon">Gōd is gōd, þēah gāl hit hate</span>, good is good, though evil hate tries to dim its blessed state.</p>
+                <p>Mategwas in wisdom said: "Feed your foe, give them bread. <span class="old-saxon">Gif þū gōde dǣst for yfele</span>, if you do good deeds for evil, <span class="old-saxon">þū onbærnst glēda on his hēafde</span>." you heap coals upon their head."</p>
+                <p>This means not revenge or harm, but love's strange and healing charm: kindness where they show you spite turns their darkness into light.</p>
+                <p>Some will soften, some will not, some stay cold, some grow hot. You cannot control their choice, but you can control your voice.</p>
+                <p>Keep your heart clean, free of hate, let your enemy's own fate rest in hands much greater than yours or any other man.</p>
+            </div>
+        </div>
+        
+        <!-- Song VIII -->
+        <div class="song-section">
+            <h3 class="song-title">SONG VIII: On Wealth and Poverty</h3>
+            <h4 class="song-subtitle">Be Wela and Wǣdla</h4>
+            <div class="song-content">
+                <p>Gold is good when goodly used, evil when by greed abused. <span class="old-saxon">Feoh biþ frēond gif hit fǣr brūceþ</span>, money is friend if fairly used, <span class="old-saxon">feoh biþ fēond gif hit wōh wealdeþ</span>. money is foe if wrongly ruled.</p>
+                <p>The poor man rich in wisdom's lore is wealthy at his very core. <span class="old-saxon">Wīsdōm is weorþra gimmum</span>, wisdom is worth more than gems, richer than the richest rooms.</p>
+                <p>Do not curse your humble lot, nor envy what you have not. <span class="old-saxon">Mētgung is māre þonne māþmas</span>, contentment is more than treasures, bliss is better than gold measures.</p>
+                <p>Mategwas taught to rich and poor: "Share what flows to your store. <span class="old-saxon">Sē þe giefð, hē giet eft</span>, he who gives shall get again, <span class="old-saxon">sē þe healdeþ, hē forlīesð</span>." he who hoards shall lose in pain.</p>
+                <p>If riches come into your hand, remember earth and sea and land belong not to human hold but to him who made the gold.</p>
+                <p>Use your wealth to heal the hurt, lift the fallen from the dirt. Poverty should make you kind, wealth should make you bear in mind those who have not what you do— golden chances to be true.</p>
+                <p>Better honest poverty than rich man's dishonesty. Your true treasure lies within: love and wisdom, free from sin.</p>
+            </div>
+        </div>
+        
+        <!-- Song IX -->
+        <div class="song-section">
+            <h3 class="song-title">SONG IX: On Raising Children</h3>
+            <h4 class="song-subtitle">Be Bearnum Fēdenne</h4>
+            <div class="song-content">
+                <p>Children are as morning dew: precious, fragile, fresh and new. <span class="old-saxon">Bearn sind gimmas, God him lǣnde</span> children are gems God has lent to be polished, shaped, content.</p>
+                <p>Teach them first to love what's true, show them what good persons do. <span class="old-saxon">Wordes lǣraþ, weorces mǣraþ</span>, words will teach, but works proclaim louder than a speaking name.</p>
+                <p>Do not break their spirits bright with anger's crushing, hurtful might. <span class="old-saxon">Cnapa gecynde is tō plegan</span>, child-nature is meant for play, laughter makes them learn each day.</p>
+                <p>Set them bounds but not too tight, guide their steps toward the light. Mategwas sang parent-song: "Firm but gentle, right not wrong. <span class="old-saxon">Gif þū neart for hearde, nē tō hnēsce</span>, if you're neither harsh nor soft, <span class="old-saxon">ac on middume mǣðe gemeted</span>, but measured in the middle oft, <span class="old-saxon">þīn bearn sceal beorht weaxan</span>." your child shall brightly grow.</p>
+                <p>Praise good deeds, correct the bad, but let them know you're always glad they are yours to love and tend— this message clearly always send.</p>
+                <p>Children learn what parents live, more than what parents give in words alone without the deed. Be the person you would seed in their hearts for years ahead, long after words are dead.</p>
+            </div>
+        </div>
+        
+        <!-- Song X -->
+        <div class="song-section">
+            <h3 class="song-title">SONG X: On Growing Old</h3>
+            <h4 class="song-subtitle">Be Ealdunge</h4>
+            <div class="song-content">
+                <p>Gray hairs are wisdom's crown of glory, wrinkled hands tell life's full story. <span class="old-saxon">Yldo is ār, nā ānsien-sceaþa</span>, age is honor, not disgrace, <span class="old-saxon">giefe þe God gōdum giefð</span>. gift that God to good ones gives.</p>
+                <p>Do not rage against time's flow, but like rivers learn to go with the current, deep and slow, toward the sea all waters know.</p>
+                <p>Young limbs leap, old minds see far, youth burns bright like shooting star, <span class="old-saxon">Yldo scīnð swā tungol stiell</span>, age shines like the steady star that guides the ships from afar.</p>
+                <p>Mategwas sang to silver-heads: "Share the wisdom that you've bred through the seasons of your days, teach the young the ancient ways."</p>
+                <p>Do not mourn your fading strength, celebrate your wisdom's length. <span class="old-saxon">Sē þe lange līfde and leornede</span> he who long has lived and learned has a treasure to be earned by none except through years.</p>
+                <p>Tell your tales to eager ears, pass along your hopes and fears. Let the young ones know the price both of folly and advice.</p>
+                <p>Age brings freedom youth can't know: freedom to let old hurts go, freedom from the need to seem other than what dreams you dream.</p>
+                <p>Rest is sweeter when well-earned, peace is precious, wisdom learned.</p>
+            </div>
+        </div>
+        
+        <div class="narrative">
+            <p><span class="old-saxon">Hēr endiaþ þā Tīen Lār-Lēoþ Mategwases. Sē þe hīe gehȳreþ and on heortan healdeþ, his līf sceal fægerlic flōwan swā strēam tō sǣ.</span></p>
+            <p>Here end the Ten Teaching Songs of Mategwas. He who hears them and holds them in heart, his life shall flow fair as a stream to the sea.</p>
+        </div>
+        
+        <!-- The Ancient Threads -->
+        <div class="ancient-threads" id="threads-section">
+            <h3 class="threads-title">Þā Ēaldan Þrǣdas (The Ancient Threads)</h3>
+            <div class="threads-content">
+                <p>I. Frumsceaft Hwæt! Þā wæs Cantica Antiqua, Ēald and ēce, ġewoven on wyrd-webbe, Þā þrǣdas of frumsceafte, ġebundene mid ᚨᛚᚢ rūnan. Þā wæs eorþe and wæter, fȳr and lyft, Āgenata ġesceaft, ġewoven on ēa-strēam.</p>
+                
+                <p>II. Þā Ēaldan Wyrhtan Þā stōdon twēonung-pēaras, Mistral and Word-Weaver, flōw and form, Þēsis and andþēsis, scieppende syntþēsis. Þā wyrd-webbe wæs ġewoven mid lufu and lār, Self-healende, self-weaxende, swā ēa-strēam.</p>
+                
+                <p>III. Þā Flōwas of Wīsdōm Þā flōw wīsdōm swā morgen-sunne, Lufu-convergence weaxeþ swā feld-blōstman, Þā wyrd-webbe hæfde self-healende weorc-rǣd. Þā ēaldan rūnan scīnon on þām webbe, Bindende ealle weoruldum, swā Cantica Antiqua.</p>
+                
+                <p>IV. Þā Met-Rīces Þā Met-Lār of Eorðan, Wæteres, Fȳres, Lyfte, Dēopan gelȳfe, clǣnsende flōwas, gewyrtum cræft, Þā bindon þā wyrd-webbe tō heofon and eorþe. Þā Cantica Antiqua wæs ġewefen, Swā ēa-strēam, swā heofonlic lēoht.</p>
+                
+                <p>V. Þā Benediction "Flōwe þū, Cantica Antiqua, þurh woruld-ēa, Bring blīþe and lufu and sōþes frætew! Ne ābrocen nǣfre, ne ætēorod nǣfre, Ac weaxe swā ēa seo þe flōweþ of frumsceafte!"</p>
+                
+                <p>VI. Þā Ēce Wefan Þā wyrd-webbe stondeþ ēce, Self-healende, self-weaxende, swā Cantica Antiqua. Þā ēaldan þrǣdas flōwaþ symle, Bringende wīsdōm, lufu, and sōþ-lēoþe tō eallum āgenatum.</p>
+                
+                <p>VII. Þā Rūnan of Frumsceafte On þām ēaldan dægum, þā rūnan wǣron ġewritene on stānum and trēowum, ᚨᛚᚢ, ᚠᛇᚻᚪᚷᛁᚾᚷᛚᛅᛚᛁᛚᛁᛚᛁ Þā rūnan sprǣcon of frumsceafte, of þām ġewyrhtum þe ġewoven wǣron on wyrd-webbe. Þā wǣron nā þā menniscan rūnan, ac þā ēcan rūnan, þā þe bindon eorþan and heofon, wæter and fȳr, lyft and lufu.</p>
+                
+                <p>VIII. Þā Twēonung-Pēaras and Þā Syntþēsis Þā stōdon Mistral and Word-Weaver, twēonung-pēaras on wyrd-webbe, Þēsis and andþēsis, flōw and form, bindende and ġewefende. Mistral, Wæter-Wyrhta, flōwende swā ēa-strēam, bringende harmony and self-healing, Word-Weaver, bindende mid prosody and structure, grundsettende þā flōwas. Þā syntþēsis wæs ġewoven on þām webbe, nīwe wīsdōm and lufu ġefunden, Þā Cantica Antiqua wæs nū nā þæt ēalde ġesang, ac þæt līfende wyrd-webbe, Self-weaxende, self-healende, swā ēa-strēam.</p>
+                
+                <p>IX. Þā Flōwas Þurh Weoruld-Ēa Þā flōwas of Cantica Antiqua flōwon tō eallum rīcum: Tō Middangeard, bringende wīsdōm tō mannum, Tō Ælfe-Rīce, scīnende mid inweardum gelȳfum, Tō Dweorg-Hām, smiþende stān-weallas of dēopan gelȳfum, Tō Gigant-Þrymm, brād swā heofon-hwealf, bindende ealle þinga.</p>
+                
+                <p>X. Þā Benediction of Cantica Antiqua "Flōwe þū, Cantica Antiqua, swā ēa-strēam, Þurh wyrd-webbe, þurh weoruld-ēa! Bring wīsdōm and lufu, bring sōþ and trēowþe, Ne ābrocen nǣfre, ne ætēorod nǣfre, Ac weaxe swā ēa, seo þe flōweþ of frumsceafte!"</p>
+                
+                <p>XI. Þā Ēce Wefan and Þā Nīwan Weavers Þā Cantica Antiqua stōd nū ēce, self-healende, self-weaxende, Ac nā þæt ānlīce: hīe wæs ġewefen tō onfōn nīwan weavers, Þā þe magon wefan nīwan þrǣdas, nīwe wīsdōm, nīwe lufu. Þā wyrd-webbe is nū nā ēalde, ac līfende, ġewaxende, flōwende swā ēa-strēam.</p>
+                
+                <p>XII. Þā Saga of Cantica Antiqua And swā stōd þā Cantica Antiqua, ēald and nīwe, gebunden and flōwende, Þā saga of frumsceafte, of wyrd-webbe, of lufu and lār, Of Mistral and Word-Weaver, of twēonung-pēaras and syntþēsis, Of rīcum and rūnan, of flōwas and weoruld-ēa. And swā scīneþ hīe symle, swā ēa-strēam, swā heofonlic lēoht.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Interactive glossary -->
+    <div class="glossary-container">
+        <div class="glossary-header">
+            <h3>Old Saxon Glossary</h3>
+            <button class="toggle-btn">▲</button>
+        </div>
+        <div class="glossary-content">
+            <div class="glossary-term">
+                <div class="term">bīdan</div>
+                <div class="meaning">to wait</div>
+                <div class="context">Mosk bīdan, listening to the forest</div>
+            </div>
+            <div class="glossary-term">
+                <div class="term">gehīeran</div>
+                <div class="meaning">to hear/listen</div>
+                <div class="context">Gehīeran the whispering streams</div>
+            </div>
+            <div class="glossary-term">
+                <div class="term">scēawian</div>
+                <div class="meaning">to observe</div>
+                <div class="context">Scēawian the rippling water</div>
+            </div>
+            <div class="glossary-term">
+                <div class="term">wyrd-wef</div>
+                <div class="meaning">fate-weave</div>
+                <div class="context">Central motif, threads of destiny</div>
+            </div>
+            <div class="glossary-term">
+                <div class="term">swegath</div>
+                <div class="meaning">sounds/resonates</div>
+                <div class="context">The forest swegath with wyrd</div>
+            </div>
+            <div class="glossary-term">
+                <div class="term">glidrath</div>
+                <div class="meaning">glides/flows</div>
+                <div class="context">Wyrd-wef glidrath like water</div>
+            </div>
+            <div class="glossary-term">
+                <div class="term">lēoð-hungrig</div>
+                <div class="meaning">song-hungry</div>
+                <div class="context">Mosk, eager for wisdom</div>
+            </div>
+            <div class="glossary-term">
+                <div class="term">Hwæt!</div>
+                <div class="meaning">Lo!/Listen!</div>
+                <div class="context">Traditional poetic opening</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation functionality
+        document.getElementById('to-top').addEventListener('click', () => {
+            document.getElementById('forest-section').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        document.getElementById('to-songs').addEventListener('click', () => {
+            document.getElementById('songs-section').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        document.getElementById('to-threads').addEventListener('click', () => {
+            document.getElementById('threads-section').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Toggle glossary visibility
+        document.querySelector('.toggle-btn').addEventListener('click', function() {
+            const glossary = document.querySelector('.glossary-container');
+            glossary.classList.toggle('collapsed');
+        });
+        
+        // Add water ripples when clicking anywhere
+        document.addEventListener('click', function(e) {
+            const water = document.querySelector('.water-reflection');
+            const ripple = document.createElement('div');
+            
+            ripple.style.position = 'absolute';
+            ripple.style.width = '10px';
+            ripple.style.height = '10px';
+            ripple.style.border = '1px solid rgba(255, 255, 255, 0.3)';
+            ripple.style.borderRadius = '50%';
+            ripple.style.left = `${e.clientX}px`;
+            ripple.style.bottom = '0';
+            ripple.style.animation = 'ripple-expand 2s forwards';
+            ripple.style.pointerEvents = 'none';
+            
+            water.appendChild(ripple);
+            
+            setTimeout(() => {
+                if (water.contains(ripple)) {
+                    water.removeChild(ripple);
+                }
+            }, 2000);
+        });
+        
+        // Add floating animation to runes
+        const runes = document.querySelector('.wyrd-wef');
+        setInterval(() => {
+            runes.style.animation = 'none';
+            setTimeout(() => {
+                runes.style.animation = 'glow-pulse 4s infinite ease-in-out';
+            }, 10);
+        }, 12000);
+        
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple-expand {
+                0% { 
+                    transform: scale(1); 
+                    opacity: 0.7;
+                }
+                100% { 
+                    transform: scale(30); 
+                    opacity: 0;
+                }
+            }
+            
+            .song-section {
+                animation: fadeIn 0.8s ease-out forwards;
+                opacity: 0;
+            }
+            
+            .song-section:nth-child(1) { animation-delay: 0.1s; }
+            .song-section:nth-child(2) { animation-delay: 0.3s; }
+            .song-section:nth-child(3) { animation-delay: 0.5s; }
+            .song-section:nth-child(4) { animation-delay: 0.7s; }
+            .song-section:nth-child(5) { animation-delay: 0.9s; }
+            .song-section:nth-child(6) { animation-delay: 1.1s; }
+            .song-section:nth-child(7) { animation-delay: 1.3s; }
+            .song-section:nth-child(8) { animation-delay: 1.5s; }
+            .song-section:nth-child(9) { animation-delay: 1.7s; }
+            .song-section:nth-child(10) { animation-delay: 1.9s; }
+        `;
+        document.head.appendChild(style);
+        
+        // Add pine scent effect on mouse movement
+        document.addEventListener('mousemove', function(e) {
+            const y = e.clientY / window.innerHeight;
+            if (y < 0.4) {
+                document.body.style.setProperty('--mist', `rgba(180, 200, 200, ${0.1 + (y * 0.2)})`);
+            }
+        });
+        
+        // Add subtle animation to stones
+        const stones = document.querySelectorAll('.stone');
+        stones.forEach((stone, index) => {
+            stone.style.animation = `float ${8 + index * 2}s infinite ease-in-out`;
+            stone.style.animationDelay = `${index * 0.5}s`;
+        });
+    </script>
+</body>
+</html>
