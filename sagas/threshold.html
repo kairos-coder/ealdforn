@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wyrd-Weaving in the Forest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-green: #0a180a;
+            --forest-green: #1d3c1d;
+            --moss: #2e4a2e;
+            --gold-thread: #d4af37;
+            --gold-light: #f5e9c3;
+            --mist: rgba(180, 200, 200, 0.1);
+            --water: #1d4c4c;
+            --parchment: #f8f0d7;
+            --ink: #1a1a1a;
+            --shadow: rgba(0, 0, 0, 0.5);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: var(--deep-green);
+            color: var(--gold-light);
+            font-family: 'Cormorant Garamond', serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.7;
+        }
+        
+        .forest-container {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            padding: 3rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            perspective: 1000px;
+        }
+        
+        /* Enhanced forest background with depth */
+        .forest-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            background: 
+                linear-gradient(to bottom, var(--deep-green) 0%, var(--forest-green) 100%),
+                radial-gradient(ellipse at top, var(--moss) 0%, transparent 70%),
+                radial-gradient(ellipse at bottom, var(--water) 0%, transparent 70%);
+        }
+        
+        .pine-trees {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-image: 
+                url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M100,0 L120,40 L100,35 L80,40 L100,0 Z' fill='%232e4a2e'/%3E%3Cpath d='M100,30 L120,70 L100,65 L80,70 L100,30 Z' fill='%232e4a2e'/%3E%3Cpath d='M100,60 L120,100 L100,95 L80,100 L100,60 Z' fill='%232e4a2e'/%3E%3Cpath d='M100,90 L120,130 L100,125 L80,130 L100,90 Z' fill='%232e4a2e'/%3E%3Cpath d='M100,120 L120,160 L100,155 L80,160 L100,120 Z' fill='%232e4a2e'/%3E%3C/svg%3E");
+            background-size: 150px 150px;
+            opacity: 0.3;
+            transform: translateZ(-100px) scale(1.5);
+        }
+        
+        .mist {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, var(--mist) 0%, transparent 100%);
+            z-index: -1;
+            animation: mist-move 40s infinite linear;
+            transform: translateZ(-50px) scale(1.3);
+        }
+        
+        .water-reflection {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background: var(--water);
+            z-index: -1;
+            mask-image: linear-gradient(to top, transparent 0%, black 50%);
+            -webkit-mask-image: linear-gradient(to top, transparent 0%, black 50%);
+            transform: translateZ(0);
+        }
+        
+        .ripples {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle, rgba(255,255,255,0.1) 2px, transparent 3px),
+                radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 2px);
+            background-size: 50px 50px;
+            animation: ripples 15s infinite linear;
+        }
+        
+        /* Enhanced runic motif with interactivity */
+        .wyrd-wef-container {
+            position: relative;
+            margin: 3rem 0;
+            width: 100%;
+            max-width: 600px;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .wyrd-wef-container:hover {
+            transform: scale(1.05);
+        }
+        
+        .wyrd-wef {
+            font-family: 'Segoe UI Symbol', sans-serif;
+            font-size: 4.5rem;
+            color: var(--gold-thread);
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.7);
+            letter-spacing: 0.5rem;
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
+            animation: glow-pulse 4s infinite ease-in-out;
+            z-index: 10;
+            transition: all 0.5s ease;
+        }
+        
+        .wyrd-wef:hover {
+            text-shadow: 0 0 25px rgba(212, 175, 55, 0.9), 0 0 40px rgba(212, 175, 55, 0.7);
+            transform: scale(1.1);
+        }
+        
+        .thread {
+            position: absolute;
+            background: linear-gradient(to bottom, var(--gold-thread), transparent);
+            width: 2px;
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            animation: thread-pulse 3s infinite ease-in-out;
+            transition: all 0.3s ease;
+        }
+        
+        .thread:hover {
+            width: 3px;
+            box-shadow: 0 0 15px var(--gold-thread);
+        }
+        
+        .thread::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -1px;
+            width: 4px;
+            height: 4px;
+            background: var(--gold-thread);
+            border-radius: 50%;
+            box-shadow: 0 0 15px 3px var(--gold-thread);
+            animation: glow-pulse 2s infinite alternate;
+        }
+        
+        .branch-thread {
+            position: absolute;
+            background: linear-gradient(to right, var(--gold-thread), transparent);
+            width: 150px;
+            height: 2px;
+            transform-origin: left;
+            z-index: 5;
+            animation: thread-pulse 3s infinite ease-in-out;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .branch-thread:hover {
+            height: 3px;
+            box-shadow: 0 0 10px var(--gold-thread);
+        }
+        
+        .branch-thread:nth-child(1) {
+            top: 20%;
+            left: 50%;
+            transform: rotate(-30deg);
+            animation-delay: 0.5s;
+        }
+        
+        .branch-thread:nth-child(2) {
+            top: 40%;
+            left: 50%;
+            transform: rotate(15deg);
+            animation-delay: 1s;
+        }
+        
+        .branch-thread:nth-child(3) {
+            top: 60%;
+            left: 50%;
+            transform: rotate(-15deg);
+            animation-delay: 1.5s;
+        }
+        
+        .branch-thread:nth-child(4) {
+            top: 80%;
+            left: 50%;
+            transform: rotate(25deg);
+            animation-delay: 2s;
+        }
+        
+        .branch-thread::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -1px;
+            width: 4px;
+            height: 4px;
+            background: var(--gold-thread);
+            border-radius: 50%;
+            box-shadow: 0 0 15px 3px var(--gold-thread);
+            animation: glow-pulse 2s infinite alternate;
+        }
+        
+        /* Verse styling */
+        .verse-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+            margin: 3rem 0;
+            z-index: 10;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            backdrop-filter: blur(3px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .verse-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .old-saxon-verse {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-style: italic;
+            line-height: 1.6;
+            color: var(--gold-light);
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Narrative prose */
+        .narrative {
+            max-width: 700px;
+            margin: 2rem auto;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .narrative:hover {
+            background: rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .narrative p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .highlight {
+            color: var(--gold-thread);
+            text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+            font-weight: bold;
+        }
+        
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .nav-button {
+            background: rgba(10, 24, 10, 0.9);
+            color: var(--gold-light);
+            border: 2px solid var(--gold-thread);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-button:hover {
+            background: var(--gold-thread);
+            color: var(--deep-green);
+            transform: translateY(-3px);
+        }
+        
+        /* Glossary */
+        .glossary-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(10, 24, 10, 0.9);
+            border: 2px solid var(--gold-thread);
+            border-radius: 12px;
+            padding: 1.5rem;
+            width: 320px;
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0.95;
+            animation: slideUp 0.8s ease-out;
+        }
+        
+        .glossary-container.collapsed {
+            transform: translateY(calc(100% - 45px));
+            opacity: 0.7;
+        }
+        
+        .glossary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--gold-thread);
+            cursor: pointer;
+        }
+        
+        .glossary-header h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-thread);
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+        }
+        
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--gold-thread);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+        
+        .toggle-btn:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .glossary-container.collapsed .toggle-btn {
+            transform: rotate(180deg);
+        }
+        
+        .glossary-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        
+        .glossary-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .glossary-content::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+        }
+        
+        .glossary-content::-webkit-scrollbar-thumb {
+            background: var(--gold-thread);
+            border-radius: 3px;
+        }
+        
+        .glossary-term {
+            padding: 0.7rem;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        .glossary-term:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .glossary-term.highlighted {
+            background: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+        
+        .term {
+            font-weight: bold;
+            color: var(--gold-thread);
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .meaning {
+            font-style: italic;
+            color: #c9c0a0;
+        }
+        
+        .context {
+            font-size: 0.95rem;
+            color: #a8a28a;
+            margin-top: 0.3rem;
+        }
+        
+        /* Pine branches */
+        .pine-branch {
+            position: absolute;
+            width: 200px;
+            height: 100px;
+            background-image: 
+                linear-gradient(45deg, transparent 45%, var(--moss) 45%, var(--moss) 55%, transparent 55%),
+                linear-gradient(-45deg, transparent 45%, var(--moss) 45%, var(--moss) 55%, transparent 55%);
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: -1;
+            opacity: 0.7;
+            animation: float 15s infinite ease-in-out;
+        }
+        
+        .pine-branch:nth-child(1) {
+            top: 5%;
+            left: 5%;
+            transform: rotate(20deg);
+            animation-delay: 0s;
+        }
+        
+        .pine-branch:nth-child(2) {
+            top: 15%;
+            right: 5%;
+            transform: rotate(-20deg);
+            animation-delay: 3s;
+        }
+        
+        .pine-branch:nth-child(3) {
+            bottom: 25%;
+            left: 10%;
+            transform: rotate(10deg);
+            animation-delay: 6s;
+        }
+        
+        .pine-branch:nth-child(4) {
+            bottom: 15%;
+            right: 10%;
+            transform: rotate(-10deg);
+            animation-delay: 9s;
+        }
+        
+        /* Stones */
+        .stone {
+            position: absolute;
+            width: 50px;
+            height: 40px;
+            background: #3a2e1d;
+            border-radius: 50%;
+            z-index: -1;
+            box-shadow: 
+                inset 0 0 10px rgba(0, 0, 0, 0.5),
+                0 5px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0.8;
+            animation: float 10s infinite ease-in-out;
+        }
+        
+        .stone:nth-child(1) {
+            bottom: 10%;
+            left: 15%;
+            animation-delay: 1s;
+        }
+        
+        .stone:nth-child(2) {
+            bottom: 8%;
+            right: 20%;
+            animation-delay: 4s;
+        }
+        
+        .stone:nth-child(3) {
+            bottom: 12%;
+            right: 30%;
+            animation-delay: 7s;
+        }
+        
+        /* Sound controls */
+        .sound-control {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--gold-thread);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 200;
+            color: var(--gold-thread);
+            font-size: 1.2rem;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .sound-control:hover {
+            transform: scale(1.1);
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        /* Animations */
+        @keyframes mist-move {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+        
+        @keyframes ripples {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
+        }
+        
+        @keyframes glow-pulse {
+            0% { 
+                text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); 
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 20px rgba(212, 175, 55, 0.8), 0 0 30px rgba(212, 175, 55, 0.6); 
+                transform: scale(1.05);
+            }
+            100% { 
+                text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); 
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes thread-pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+            .old-saxon-verse {
+                font-size: 1.5rem;
+            }
+            
+            .wyrd-wef {
+                font-size: 3.5rem;
+            }
+            
+            .narrative {
+                font-size: 1.2rem;
+            }
+            
+            .glossary-container {
+                width: 280px;
+                right: 1.5rem;
+                bottom: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .wyrd-wef-container {
+                height: 400px;
+            }
+            
+            .old-saxon-verse {
+                font-size: 1.4rem;
+            }
+            
+            .wyrd-wef {
+                font-size: 3rem;
+            }
+            
+            .narrative {
+                font-size: 1.1rem;
+            }
+            
+            .glossary-container {
+                width: 260px;
+                font-size: 1rem;
+            }
+            
+            .nav-container {
+                top: 10px;
+                left: 10px;
+            }
+            
+            .nav-button {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .forest-container {
+                padding: 2rem 1rem;
+            }
+            
+            .wyrd-wef-container {
+                height: 300px;
+            }
+            
+            .old-saxon-verse {
+                font-size: 1.2rem;
+                padding: 1rem;
+            }
+            
+            .wyrd-wef {
+                font-size: 2.2rem;
+            }
+            
+            .narrative {
+                font-size: 1rem;
+                padding: 1rem;
+            }
+            
+            .glossary-container {
+                width: 90%;
+                right: 5%;
+                left: 5%;
+                bottom: 1rem;
+            }
+            
+            .glossary-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="nav-container">
+        <button class="nav-button" id="to-top">To Forest</button>
+        <button class="nav-button" id="to-songs">To Songs</button>
+        <button class="nav-button" id="to-threads">To Threads</button>
+    </div>
+    
+    <div class="forest-container" id="forest-section">
+        <!-- Background elements -->
+        <div class="forest-canvas"></div>
+        <div class="pine-trees"></div>
+        <div class="mist"></div>
+        <div class="water-reflection">
+            <div class="ripples"></div>
+        </div>
+        
+        <!-- Pine branches -->
+        <div class="pine-branch"></div>
+        <div class="pine-branch"></div>
+        <div class="pine-branch"></div>
+        <div class="pine-branch"></div>
+        
+        <!-- Stones -->
+        <div class="stone"></div>
+        <div class="stone"></div>
+        <div class="stone"></div>
+        
+        <!-- Sound control -->
+        <div class="sound-control" id="soundToggle">♪</div>
+        
+        <!-- Narrative prose -->
+        <div class="narrative">
+            <p>Mosk wandered through the shadowed pines. Every ripple in the water, every trembling leaf seemed to carry the threads of fate. He paused, listening to the forest's whispered wyrd.</p>
+        </div>
+        
+        <!-- Central runic motif -->
+        <div class="wyrd-wef-container">
+            <div class="thread"></div>
+            <div class="branch-thread"></div>
+            <div class="branch-thread"></div>
+            <div class="branch-thread"></div>
+            <div class="branch-thread"></div>
+            
+            <div class="wyrd-wef">ᚹᛁᚱᛞ-ᚹᛖᚠ</div>
+        </div>
+        
+        <!-- Verse -->
+        <div class="verse-container">
+            <div class="old-saxon-verse">
+                <p>Hwæt! Kwekwaskw swegath;</p>
+                <p>se wæter-strom swylce wyrd-wef glidrath,</p>
+                <p>Mosk lēoð-hungrig, bīdan, gehīeran, scēawian.</p>
+            </div>
+        </div>
+        
+        <!-- Continuation of narrative -->
+        <div class="narrative">
+            <p>He felt the threads pull and twist around him, a living tapestry of moments yet to unfold. The water reflected not just the sky, but the patterns of wyrd itself - shimmering strands of destiny weaving through the forest's heart.</p>
+            <p>A faint scent of spruce filled the air, carrying whispers of ancient runes. Mosk reached out, his fingers tracing the invisible threads that connected stone to stream, pine to path, past to future.</p>
+        </div>
+    </div>
+    
+    <!-- Interactive glossary -->
+    <div class="glossary-container">
+        <div class="glossary-header">
+            <h3>Old Saxon Glossary</h3>
+            <button class="toggle-btn">▲</button>
+        </div>
+        <div class="glossary-content">
+            <div class="glossary-term" data-term="bīdan">
+                <div class="term">bīdan</div>
+                <div class="meaning">to wait</div>
+                <div class="context">Mosk bīdan, listening to the forest</div>
+            </div>
+            <div class="glossary-term" data-term="gehīeran">
+                <div class="term">gehīeran</div>
+                <div class="meaning">to hear/listen</div>
+                <div class="context">Gehīeran the whispering streams</div>
+            </div>
+            <div class="glossary-term" data-term="scēawian">
+                <div class="term">scēawian</div>
+                <div class="meaning">to observe</div>
+                <div class="context">Scēawian the rippling water</div>
+            </div>
+            <div class="glossary-term" data-term="wyrd-wef">
+                <div class="term">wyrd-wef</div>
+                <div class="meaning">fate-weave</div>
+                <div class="context">Central motif, threads of destiny</div>
+            </div>
+            <div class="glossary-term" data-term="swegath">
+                <div class="term">swegath</div>
+                <div class="meaning">sounds/resonates</div>
+                <div class="context">The forest swegath with wyrd</div>
+            </div>
+            <div class="glossary-term" data-term="glidrath">
+                <div class="term">glidrath</div>
+                <div class="meaning">glides/flows</div>
+                <div class="context">Wyrd-wef glidrath like water</div>
+            </div>
+            <div class="glossary-term" data-term="lēoð-hungrig">
+                <div class="term">lēoð-hungrig</div>
+                <div class="meaning">song-hungry</div>
+                <div class="context">Mosk, eager for wisdom</div>
+            </div>
+            <div class="glossary-term" data-term="Hwæt!">
+                <div class="term">Hwæt!</div>
+                <div class="meaning">Lo!/Listen!</div>
+                <div class="context">Traditional poetic opening</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation functionality
+        document.getElementById('to-top').addEventListener('click', () => {
+            document.getElementById('forest-section').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Toggle glossary visibility
+        document.querySelector('.toggle-btn').addEventListener('click', function() {
+            const glossary = document.querySelector('.glossary-container');
+            glossary.classList.toggle('collapsed');
+        });
+        
+        // Add water ripples when clicking anywhere
+        document.addEventListener('click', function(e) {
+            const water = document.querySelector('.water-reflection');
+            const ripple = document.createElement('div');
+            
+            ripple.style.position = 'absolute';
+            ripple.style.width = '10px';
+            ripple.style.height = '10px';
+            ripple.style.border = '1px solid rgba(255, 255, 255, 0.3)';
+            ripple.style.borderRadius = '50%';
+            ripple.style.left = `${e.clientX}px`;
+            ripple.style.top = `${e.clientY}px`;
+            ripple.style.transformOrigin = 'center';
+            ripple.style.animation = 'ripple-expand 2s forwards';
+            ripple.style.pointerEvents = 'none';
+            ripple.style.zIndex = '0';
+            
+            document.body.appendChild(ripple);
+            
+            // Play ripple sound if enabled
+            if (soundEnabled) {
+                playSound('water');
+            }
+            
+            setTimeout(() => {
+                if (document.body.contains(ripple)) {
+                    document.body.removeChild(ripple);
+                }
+            }, 2000);
+        });
+        
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple-expand {
+                0% { 
+                    transform: scale(1); 
+                    opacity: 0.7;
+                }
+                100% { 
+                    transform: scale(30); 
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Glossary term highlighting
+        const glossaryTerms = document.querySelectorAll('.glossary-term');
+        glossaryTerms.forEach(term => {
+            term.addEventListener('click', function() {
+                // Remove highlight from all terms
+                glossaryTerms.forEach(t => t.classList.remove('highlighted'));
+                
+                // Highlight clicked term
+                this.classList.add('highlighted');
+                
+                // Play sound if enabled
+                if (soundEnabled) {
+                    playSound('select');
+                }
+                
+                // Get the term
+                const termText = this.dataset.term;
+                
+                // Remove previous highlights from narrative
+                document.querySelectorAll('.highlight').forEach(el => {
+                    el.outerHTML = el.innerHTML;
+                });
+                
+                // Highlight term in narrative
+                const narratives = document.querySelectorAll('.narrative');
+                narratives.forEach(narrative => {
+                    const text = narrative.innerHTML;
+                    const highlightedText = text.replace(
+                        new RegExp(termText, 'gi'), 
+                        match => `<span class="highlight">${match}</span>`
+                    );
+                    narrative.innerHTML = highlightedText;
+                });
+            });
+        });
+        
+        // Sound effects
+        const soundToggle = document.getElementById('soundToggle');
+        let soundEnabled = true;
+        
+        soundToggle.addEventListener('click', function() {
+            soundEnabled = !soundEnabled;
+            this.textContent = soundEnabled ? '♪' : '🔇';
+            this.title = soundEnabled ? 'Sound On' : 'Sound Off';
+        });
+        
+        function playSound(type) {
+            if (!soundEnabled) return;
+            
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            switch(type) {
+                case 'water':
+                    oscillator.type = 'sine';
+                    oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 1);
+                    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+                    break;
+                case 'select':
+                    oscillator.type = 'sine';
+                    oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(523.25, audioContext.currentTime + 0.1);
+                    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                    break;
+            }
+            
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + (type === 'water' ? 1 : 0.3));
+        }
+        
+        // Runic motif interaction
+        const wyrdWef = document.querySelector('.wyrd-wef');
+        wyrdWef.addEventListener('click', function() {
+            this.style.transform = 'scale(1.2)';
+            this.style.color = '#ffdf70';
+            
+            // Play sound if enabled
+            if (soundEnabled) {
+                playSound('select');
+            }
+            
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+                this.style.color = 'var(--gold-thread)';
+            }, 500);
+        });
+        
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', function(e) {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            
+            document.querySelector('.pine-trees').style.transform = `translate(${x * 0.3}px, ${y * 0.3}px) translateZ(-100px) scale(1.5)`;
+            document.querySelector('.mist').style.transform = `translate(${x * 0.2}px, ${y * 0.2}px) translateZ(-50px) scale(1.3)`;
+            
+            // Adjust mist opacity based on mouse position
+            const mist = document.querySelector('.mist');
+            if (e.clientY < window.innerHeight * 0.3) {
+                mist.style.opacity = 0.5;
+            } else {
+                mist.style.opacity = 0.3;
+            }
+        });
+        
+        // Add pine scent effect on mouse movement
+        document.addEventListener('mousemove', function(e) {
+            const y = e.clientY / window.innerHeight;
+            if (y < 0.4) {
+                document.body.style.setProperty('--mist', `rgba(180, 200, 200, ${0.1 + (y * 0.2)})`);
+            }
+        });
+        
+        // Initialize tooltips
+        glossaryTerms.forEach(term => {
+            const termText = term.querySelector('.term').textContent;
+            term.title = `Click to highlight "${termText}" in text`;
+        });
+        
+        // Add forest ambiance on load
+        window.addEventListener('load', function() {
+            // Animate elements in
+            document.querySelectorAll('.narrative, .verse-container, .wyrd-wef-container').forEach(el => {
+                el.style.animation = 'fadeIn 1s ease-out forwards';
+                el.style.opacity = '0';
+            });
+        });
+    </script>
+</body>
+</html>
