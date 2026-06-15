@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kairos Kernel · Creative Writing Engine</title>
+<style>
+:root {
+  --bg: #0d0d0d;
+  --surface: #1a1a1a;
+  --surface2: #222;
+  --text: #d4c8b5;
+  --text-dim: #8a7e6e;
+  --gold: #c9a84c;
+  --gold-dim: #7a6438;
+  --red: #8b3a3a;
+  --red-glow: #c44;
+  --blue: #3a5f8b;
+  --blue-glow: #5a9fcf;
+  --green: #4a7a4a;
+  --purple: #6b4e8b;
+  --font: 'Georgia', 'Times New Roman', serif;
+  --mono: 'Courier New', monospace;
+  --radius: 6px;
+  --gap: 12px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#app {
+  width: 100%;
+  max-width: 680px;
+  padding: 16px var(--gap);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  padding: 20px 0 8px;
+  border-bottom: 1px solid var(--gold-dim);
+}
+.header h1 {
+  font-size: 1.4rem;
+  color: var(--gold);
+  letter-spacing: 2px;
+  font-weight: normal;
+}
+.header .subtitle {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* Panels */
+.panel {
+  background: var(--surface);
+  border: 1px solid #2a2a2a;
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.panel h2 {
+  font-size: 0.85rem;
+  color: var(--gold-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  font-weight: normal;
+  border-bottom: 1px solid #2a2a2a;
+  padding-bottom: 6px;
+}
+
+/* Voice Selector */
+.voice-tabs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.voice-tab {
+  flex: 1;
+  min-width: 70px;
+  padding: 8px 6px;
+  background: var(--surface2);
+  border: 1px solid #333;
+  color: var(--text-dim);
+  font-family: var(--font);
+  font-size: 0.7rem;
+  cursor: pointer;
+  border-radius: var(--radius);
+  text-align: center;
+  transition: all 0.2s;
+  letter-spacing: 1px;
+}
+.voice-tab.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: #1a1a10;
+}
+
+/* Cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 8px;
+}
+.card-chip {
+  background: var(--surface2);
+  border: 1px solid #333;
+  border-radius: var(--radius);
+  padding: 8px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.7rem;
+  transition: all 0.15s;
+  user-select: none;
+}
+.card-chip.selected {
+  border-color: var(--gold);
+  background: #1a1a10;
+  color: var(--gold);
+}
+.card-chip .card-glyph {
+  font-size: 1.4rem;
+  display: block;
+}
+.card-chip .card-name {
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+/* Triad Display */
+.triad-display {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+}
+.triad-slot {
+  width: 64px;
+  height: 64px;
+  border: 2px dashed #333;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: var(--text-dim);
+  transition: all 0.3s;
+}
+.triad-slot.filled {
+  border-color: var(--gold-dim);
+  color: var(--gold);
+  border-style: solid;
+}
+.triad-label {
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 18px;
+  background: var(--surface2);
+  border: 1px solid #444;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.8rem;
+  cursor: pointer;
+  border-radius: var(--radius);
+  letter-spacing: 1px;
+  transition: all 0.2s;
+  width: 100%;
+}
+.btn:hover {
+  border-color: var(--gold-dim);
+  color: var(--gold);
+}
+.btn.primary {
+  border-color: var(--gold-dim);
+  color: var(--gold);
+  background: #1a1a10;
+}
+.btn.primary:hover {
+  border-color: var(--gold);
+  box-shadow: 0 0 12px rgba(201,168,76,0.15);
+}
+
+/* Output */
+.output-area {
+  background: var(--surface);
+  border: 1px solid #2a2a2a;
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  min-height: 160px;
+  font-family: var(--font);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text);
+  white-space: pre-wrap;
+  position: relative;
+}
+.output-area .hem { color: var(--blue-glow); }
+.output-area .haw { color: var(--purple); }
+.output-area .hum { color: var(--gold); }
+.output-area .label {
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 8px;
+}
+.output-area .label.hem-label { color: var(--blue); }
+.output-area .label.haw-label { color: var(--purple); }
+.output-area .label.hum-label { color: var(--gold-dim); }
+
+/* Metadata strip */
+.meta-strip {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  font-family: var(--mono);
+  padding: 8px 0;
+}
+.meta-tag {
+  background: var(--surface2);
+  padding: 3px 8px;
+  border-radius: 3px;
+  border: 1px solid #2a2a2a;
+}
+
+/* Resonance bar */
+.res-bar-wrap {
+  height: 4px;
+  background: #222;
+  border-radius: 2px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+.res-bar-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: width 0.5s;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 12px;
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+}
+
+/* Pulse animation */
+@keyframes pulse {
+  0%,100% { opacity:1; }
+  50% { opacity:0.5; }
+}
+.generating { animation: pulse 1.2s infinite; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <!-- Header -->
+  <div class="header">
+    <h1>KAIROS KERNEL</h1>
+    <div class="subtitle">Creative Writing Engine · Monolith v1.0</div>
+  </div>
+
+  <!-- Voice Selector -->
+  <div class="panel">
+    <h2>▸ Manuscript Voice</h2>
+    <div class="voice-tabs" id="voiceTabs">
+      <button class="voice-tab active" data-voice="sagas">Ealdforn Sagas</button>
+      <button class="voice-tab" data-voice="abbey">Ealdforn Abbey</button>
+      <button class="voice-tab" data-voice="pomeroy">Pomeroy</button>
+      <button class="voice-tab" data-voice="cotentin">Cotentin</button>
+    </div>
+  </div>
+
+  <!-- Persona Cards -->
+  <div class="panel">
+    <h2>▸ Archetype Triad <span style="font-size:0.65rem;color:var(--text-dim)">(select 3)</span></h2>
+    <div class="card-grid" id="cardGrid"></div>
+    <div class="triad-display" style="margin-top:10px;">
+      <div style="text-align:center;">
+        <div class="triad-slot" id="slotHem">⋯</div>
+        <div class="triad-label">Hem · Fabric</div>
+      </div>
+      <div style="text-align:center;">
+        <div class="triad-slot" id="slotHaw">⋯</div>
+        <div class="triad-label">Haw · Thought</div>
+      </div>
+      <div style="text-align:center;">
+        <div class="triad-slot" id="slotHum">⋯</div>
+        <div class="triad-label">Hum · Song</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Generate -->
+  <button class="btn primary" id="btnGenerate">⚡ Generate Passage</button>
+
+  <!-- Output -->
+  <div class="panel">
+    <h2>▸ Passage</h2>
+    <div class="output-area" id="output">
+      <span style="color:var(--text-dim)">Select three archetypes and a voice, then generate.</span>
+    </div>
+    <div class="meta-strip" id="metaStrip"></div>
+    <div class="res-bar-wrap"><div class="res-bar-fill" id="resBar" style="width:0%"></div></div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    ADZMIST · Quipotec · Ealdforn · Kairos Kernel · Loop Closing
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// KAIROS KERNEL · CREATIVE WRITING ENGINE
+// Monolith v1.0 — Single HTML Artifact
+// ═══════════════════════════════════════
+
+// ── CONSTANTS ──────────────────────────
+
+const GOLDEN_RATIO = 1.618;
+
+// 12 Ealdforn Archetype Cards (front = name, back = harmonic pair)
+const PERSONA_CARDS = [
+  { id:'mateqwas', name:'Mategwas', glyph:'🐇', title:'First Hare', aspect:'Trickster / Boundary-Crosser',
+    pair:'gehaldric', domain:'The Leap', back:'Cunning that opens the way' },
+  { id:'gehaldric', name:'Gehaldric', glyph:'📜', title:'Word-Weaver', aspect:'Bargainer / Poet',
+    pair:'mateqwas', domain:'The Binding', back:'Words that hold the wyrm' },
+  { id:'thyrdeth', name:'Thyrdeth', glyph:'🧶', title:'Fate-Weaver', aspect:'Three-in-One / Norn',
+    pair:'malsum', domain:'The Scattering', back:'Threads that cannot be uncut' },
+  { id:'malsum', name:'Malsum', glyph:'🐺', title:'Shadow-Twin', aspect:'Wolf / Hunger',
+    pair:'thyrdeth', domain:'The Leap', back:'The shadow that walks beside' },
+  { id:'gluskab', name:'Gluskab', glyph:'🌊', title:'River\'s Herald', aspect:'Messenger / Tide-Bearer',
+    pair:'aelfgar', domain:'The Scattering', back:'What the water remembers' },
+  { id:'aelfgar', name:'Ælfgar', glyph:'👑', title:'Elf-King', aspect:'Threshold Lord / Keeper',
+    pair:'gluskab', domain:'The Binding', back:'The door that opens both ways' },
+  { id:'nidhogg', name:'Níðhöggr', glyph:'🐉', title:'Wyrm', aspect:'Bound Destroyer / Hunger',
+    pair:'gehaldric', domain:'The Binding', back:'What words alone restrain' },
+  { id:'bran', name:'Bran', glyph:'🔔', title:'Bell-Ringer', aspect:'Young Keeper / Failed Then Rose',
+    pair:'aethelstan', domain:'The Leap', back:'The bell that was not rung' },
+  { id:'aethelstan', name:'Aethelstan', glyph:'📖', title:'Abbot', aspect:'Pattern-Reader / Patient',
+    pair:'bran', domain:'The Binding', back:'The long watch that holds' },
+  { id:'mahtig', name:'Mahtig', glyph:'🔥', title:'Scholar', aspect:'Book-Bearer / Keeper of Ash',
+    pair:'gealdrikr', domain:'The Scattering', back:'What survives the burning' },
+  { id:'gealdrikr', name:'Gealdrikr', glyph:'🦴', title:'Winter Walker', aspect:'Rattler / Hunger-Philosopher',
+    pair:'mahtig', domain:'The Leap', back:'The feast that fills no belly' },
+  { id:'persephone', name:'Persephone', glyph:'🦉', title:'Threshold Figure', aspect:'Guarantor / Chooser',
+    pair:'eleanor', domain:'The Binding', back:'The debt that must be paid or refused' }
+];
+
+// 21 ADZMIST Glyphs (Proto-Sinaitic)
+const GLYPHS = [
+  '𐤀','𐤁','𐤂','𐤃','𐤄','𐤅','𐤆',
+  '𐤇','𐤈','𐤉','𐤊','𐤋','𐤌','𐤍',
+  '𐤎','𐤏','𐤐','𐤑','𐤒','𐤓','𐤔'
+];
+
+// 7 Rune Sigils → glyph membership
+const RUNES = {
+  'Δ': ['𐤀','𐤁','𐤂'],
+  'Φ': ['𐤃','𐤄','𐤅'],
+  'Ψ': ['𐤆','𐤇','𐤈'],
+  'Θ': ['𐤉','𐤊','𐤋'],
+  'Ω': ['𐤌','𐤍','𐤎'],
+  'Σ': ['𐤏','𐤐','𐤑'],
+  'Ξ': ['𐤒','𐤓','𐤔']
+};
+
+// Quipotec Breath Vectors (15 operators)
+const BREATH_VECTORS = {
+  'GL-001': { name:'Ritual Seal', func:'phrase_boundary', desc:'Scene break, chapter closure',
+    opener:'The stillness held.', closer:'And it was sealed.' },
+  'GL-002': { name:'Invocation Start', func:'chant_trigger', desc:'Incantation, oath, promise',
+    opener:'Let it be spoken:', closer:'So the words began.' },
+  'GL-003': { name:'Identity Pulse', func:'name_phrase', desc:'Character naming, title, lineage',
+    opener:'They called them ', closer:', and the name took root.' },
+  'GL-004': { name:'Echo Loop', func:'breath_loop', desc:'Refrain, callback, motif return',
+    opener:'Again the pattern turned.', closer:'As it had before.' },
+  'GL-005': { name:'Authority Register', func:'invocation_linkage', desc:'Alliance, pact, diplomatic speech',
+    opener:'By the bond between:', closer:'So it was witnessed.' },
+  'GL-006': { name:'Divine Title', func:'lineage_tag', desc:'Ancestry, god-name, heritage',
+    opener:'Of the line of ', closer:', blood and bone.' },
+  'GL-007': { name:'Offering Gesture', func:'breath_extension', desc:'Gift, sacrifice, trust extended',
+    opener:'Take this.', closer:'The hand opened.' },
+  'GL-008': { name:'Ritual Phrase', func:'speech_time', desc:'Prophecy, timed utterance',
+    opener:'When the moon turns:', closer:'Then it shall be.' },
+  'GL-009': { name:'Transformation', func:'role_anchor', desc:'Disguise, shapeshift, identity shift',
+    opener:'The mask settled.', closer:'Something else looked back.' },
+  'GL-010': { name:'Calendar Math', func:'fertility_logic', desc:'Harvest, season, cyclical time',
+    opener:'The season knew.', closer:'And the wheel turned.' },
+  'GL-011': { name:'Initiation', func:'ritual_start', desc:'Threshold crossing, beginning',
+    opener:'Step across.', closer:'The threshold welcomed them.' },
+  'GL-012': { name:'Ritual Binding', func:'sacrificial_scroll', desc:'Cost, payment, binding promise',
+    opener:'The price was named.', closer:'And the bond held fast.' },
+  'GL-013': { name:'Collapse Vector', func:'termination_tag', desc:'Death, ending, debt called',
+    opener:'It ended here.', closer:'Nothing remained.' },
+  'GL-014': { name:'Ancestral Echo', func:'location_tag', desc:'Place memory, haunted ground',
+    opener:'This ground remembered.', closer:'The stones kept their secret.' },
+  'GL-015': { name:'Phrase Modifier', func:'semantic_bracket', desc:'Framing device, nested story',
+    opener:'Listen closely:', closer:'So the story was told.' }
+};
+
+// Quipotec Phonic Layer (phoneme → prosody template)
+const PHONIC_MAP = {
+  'ʔa': { weight:'open', feel:'initiating', rhythm:'rising', desc:'invocations, beginnings, breath-first utterances' },
+  'ja': { weight:'open', feel:'initiating', rhythm:'rising', desc:'same as ʔa with palatal glide' },
+  'ha': { weight:'breath', feel:'exhalation', rhythm:'falling', desc:'water syllables, root words, release' },
+  '-i': { weight:'light', feel:'suspension', rhythm:'trailing', desc:'questions, longing, unfinished thoughts' },
+  '-u': { weight:'light', feel:'closure', rhythm:'rounding', desc:'completions, deep vowels, resolution' },
+  'na': { weight:'ground', feel:'anchoring', rhythm:'steady', desc:'names, identity, lineage markers' },
+  'ya': { weight:'ground', feel:'anchoring', rhythm:'steady', desc:'agentive markers, personal name prefix' },
+  'ho': { weight:'round', feel:'certainty', rhythm:'full', desc:'numbers, completion, calendric certainty' },
+  'pa': { weight:'stop', feel:'boundary', rhythm:'punctuated', desc:'time markers, thresholds, cut points' },
+  'ku': { weight:'stop', feel:'boundary', rhythm:'punctuated', desc:'sun/day glyphs, cycle initiators' },
+  'ma': { weight:'soft', feel:'receiving', rhythm:'gentle', desc:'offerings, reception, grasp, acceptance' },
+  'ka': { weight:'soft', feel:'receiving', rhythm:'gentle', desc:'ritual verb, give/receive semantics' },
+  'to': { weight:'firm', feel:'authority', rhythm:'declarative', desc:'titles, rulership, nobility markers' },
+  'xo': { weight:'firm', feel:'authority', rhythm:'declarative', desc:'elite markers, crest-tag syllables' },
+  'cha':{ weight:'active', feel:'grasping', rhythm:'staccato', desc:'ritual action, taking, receiving' },
+  'tsa':{ weight:'active', feel:'grasping', rhythm:'staccato', desc:'grasp/give verb root variant' },
+  'si': { weight:'hiss', feel:'extension', rhythm:'sibilant', desc:'secondary invocation, whisper, chant extension' },
+  'wi': { weight:'shift', feel:'transformation', rhythm:'wavering', desc:'mask glyph, persona change, gender marker' },
+  'ʔi': { weight:'cut', feel:'collapse', rhythm:'abrupt', desc:'sacrifice root, breath stop, termination' },
+  'ke': { weight:'cut', feel:'collapse', rhythm:'abrupt', desc:'breath/wind, sacrificial root variant' },
+  'ba': { weight:'place', feel:'grounded', rhythm:'low', desc:'toponymic compounds, location, where-ness' }
+};
+
+// Manuscript Voice Profiles
+const VOICE_PROFILES = {
+  sagas: {
+    name: 'Ealdforn Sagas',
+    register: 'alliterative-poetic',
+    cadence: 'strong-stress',
+    openerTemplates: [
+      'In the days when the {domain} still trembled,',
+      'Hear now the {aspect} of {card_name},',
+      'The {title} stood at the edge of the {domain},'
+    ],
+    midTemplates: [
+      'and the {breath_func} came upon them',
+      'while the {phonic_feel} of the old words lingered',
+      'with {card_pair} watching from the shadow-line'
+    ],
+    closerTemplates: [
+      '—so the fitt ends.',
+      '—and the scop falls silent.',
+      '—this the wise ones remember.'
+    ],
+    glyphMap: { hem:'𐤇', haw:'𐤆', hum:'𐤈' }
+  },
+  abbey: {
+    name: 'Ealdforn Abbey',
+    register: 'animal-fantasy-warm',
+    cadence: 'flowing-narrative',
+    openerTemplates: [
+      'Bran remembered the bell.',
+      'The Abbey stones held their silence.',
+      'Aethelstan read the pattern in the candlelight.'
+    ],
+    midTemplates: [
+      'and somewhere beyond the causeway, the {breath_func} stirred',
+      'the tapestries showed what the {phonic_feel} had always known',
+      'Mahtig held the scorched page closer'
+    ],
+    closerTemplates: [
+      '—and the kitchen fires still burned.',
+      '—the causeway flooded, as it always did.',
+      '—some stories survive the burning.'
+    ],
+    glyphMap: { hem:'𐤌', haw:'𐤍', hum:'𐤎' }
+  },
+  pomeroy: {
+    name: 'Pomeroy',
+    register: 'literary-horror',
+    cadence: 'slow-build-dread',
+    openerTemplates: [
+      'The water under the granite was not still.',
+      'Persephone felt the owls before she saw them.',
+      'The farmhouse had been waiting.'
+    ],
+    midTemplates: [
+      'and the {breath_func} pressed against the glass',
+      'the {phonic_feel} of the old bargain clung to the air',
+      'Eleanor\'s signature was still wet on the page'
+    ],
+    closerTemplates: [
+      '—the Hunter\'s Moon was rising.',
+      '—the debt does not forget.',
+      '—something beneath the granite exhaled.'
+    ],
+    glyphMap: { hem:'𐤃', haw:'𐤇', hum:'𐤂' }
+  },
+  cotentin: {
+    name: 'Count of Cotentin',
+    register: 'historical-saga',
+    cadence: 'deliberate-strategic',
+    openerTemplates: [
+      'Hrólfr looked upon the Seine and saw a road.',
+      'The winter of 868 did not forgive.',
+      'Glimthaven. He named it himself.'
+    ],
+    midTemplates: [
+      'and the {breath_func} was written into Frankish law',
+      'the {phonic_feel} of legitimacy was performance, nothing more',
+      'Count Gauzfrid understood the bargain'
+    ],
+    closerTemplates: [
+      '—the wolf learns to wait.',
+      '—a story can hold a throne.',
+      '—the Seine remembers every keel.'
+    ],
+    glyphMap: { hem:'𐤒', haw:'𐤓', hum:'𐤔' }
+  }
+};
+
+// ── STATE ──────────────────────────────
+let selectedCards = [];
+let activeVoice = 'sagas';
+let isGenerating = false;
+
+// ── INIT ───────────────────────────────
+function init() {
+  renderCards();
+  bindVoiceTabs();
+  document.getElementById('btnGenerate').addEventListener('click', generatePassage);
+}
+
+function renderCards() {
+  const grid = document.getElementById('cardGrid');
+  grid.innerHTML = '';
+  PERSONA_CARDS.forEach(card => {
+    const chip = document.createElement('div');
+    chip.className = 'card-chip';
+    chip.dataset.cardId = card.id;
+    chip.innerHTML = `<span class="card-glyph">${card.glyph}</span><span class="card-name">${card.name}</span>`;
+    chip.addEventListener('click', () => toggleCard(card, chip));
+    grid.appendChild(chip);
+  });
+}
+
+function toggleCard(card, chip) {
+  const idx = selectedCards.findIndex(c => c.id === card.id);
+  if (idx >= 0) {
+    selectedCards.splice(idx, 1);
+    chip.classList.remove('selected');
+  } else if (selectedCards.length < 3) {
+    selectedCards.push(card);
+    chip.classList.add('selected');
+  } else {
+    // Replace the oldest selection
+    const oldest = selectedCards.shift();
+    document.querySelector(`[data-card-id="${oldest.id}"]`)?.classList.remove('selected');
+    selectedCards.push(card);
+    chip.classList.add('selected');
+  }
+  updateTriadDisplay();
+}
+
+function updateTriadDisplay() {
+  const slots = [
+    document.getElementById('slotHem'),
+    document.getElementById('slotHaw'),
+    document.getElementById('slotHum')
+  ];
+  slots.forEach((slot, i) => {
+    if (selectedCards[i]) {
+      slot.textContent = selectedCards[i].glyph;
+      slot.classList.add('filled');
+    } else {
+      slot.textContent = '⋯';
+      slot.classList.remove('filled');
+    }
+  });
+}
+
+function bindVoiceTabs() {
+  document.querySelectorAll('.voice-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.voice-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      activeVoice = tab.dataset.voice;
+    });
+  });
+}
+
+// ── ADZMIST RESONANCE SCORING ──────────
+function scoreResonance(triadGlyphs) {
+  let score = 0.5;
+  if (new Set(triadGlyphs).size === 1) score += 0.3;
+  if (triadGlyphs[0] === triadGlyphs[2]) score += 0.1;
+  return Math.min(score, 1.0);
+}
+
+function identifySigil(triadGlyphs) {
+  for (const [sigil, members] of Object.entries(RUNES)) {
+    if (triadGlyphs.every(g => members.includes(g))) return sigil;
+  }
+  return '∴';
+}
+
+// ── QUIPOTEC BREATH VECTOR SELECTION ───
+function selectBreathVector(card, position) {
+  // Map card domain + position to a breath vector
+  const domainMap = {
+    'The Leap': ['GL-011','GL-002','GL-004'],
+    'The Scattering': ['GL-013','GL-009','GL-014'],
+    'The Binding': ['GL-012','GL-005','GL-001']
+  };
+  const posMap = { 0:0, 1:1, 2:2 };
+  const options = domainMap[card.domain] || ['GL-002','GL-007','GL-015'];
+  const bvKey = options[posMap[position]] || 'GL-002';
+  return BREATH_VECTORS[bvKey];
+}
+
+// ── PHONIC SELECTION ───────────────────
+function selectPhonic(card, voiceProfile) {
+  // Map card aspect to a phonic feel
+  const aspectPhonics = {
+    'Trickster / Boundary-Crosser': 'ʔa',
+    'Bargainer / Poet': 'ma',
+    'Three-in-One / Norn': '-i',
+    'Wolf / Hunger': 'ʔi',
+    'Messenger / Tide-Bearer': 'ha',
+    'Threshold Lord / Keeper': 'to',
+    'Bound Destroyer / Hunger': 'ke',
+    'Young Keeper / Failed Then Rose': 'na',
+    'Pattern-Reader / Patient': 'si',
+    'Book-Bearer / Keeper of Ash': 'wi',
+    'Rattler / Hunger-Philosopher': 'cha',
+    'Guarantor / Chooser': 'ba'
+  };
+  const phonemeKey = aspectPhonics[card.aspect] || 'na';
+  return PHONIC_MAP[phonemeKey] || PHONIC_MAP['na'];
+}
+
+// ── PROSE GENERATION ───────────────────
+function generatePassage() {
+  if (selectedCards.length !== 3) {
+    const output = document.getElementById('output');
+    output.innerHTML = '<span style="color:var(--red-glow)">Select exactly three archetypes (Hem · Haw · Hum).</span>';
+    return;
+  }
+  if (isGenerating) return;
+  isGenerating = true;
+  const btn = document.getElementById('btnGenerate');
+  btn.textContent = '⟳ Weaving...';
+  btn.classList.add('generating');
+  btn.disabled = true;
+
+  // Small delay for feel + animation
+  setTimeout(() => {
+    const passage = buildPassage();
+    renderPassage(passage);
+    isGenerating = false;
+    btn.textContent = '⚡ Generate Passage';
+    btn.classList.remove('generating');
+    btn.disabled = false;
+  }, 400 + Math.random() * 300);
+}
+
+function buildPassage() {
+  const voice = VOICE_PROFILES[activeVoice];
+  const triadGlyphs = [
+    voice.glyphMap.hem,
+    voice.glyphMap.haw,
+    voice.glyphMap.hum
+  ];
+  const sigil = identifySigil(triadGlyphs);
+  const resonance = scoreResonance(triadGlyphs);
+
+  // Build three lines (hem/haw/hum) from card data
+  const positions = [
+    { name:'hem', card:selectedCards[0], bvPos:0 },
+    { name:'haw', card:selectedCards[1], bvPos:1 },
+    { name:'hum', card:selectedCards[2], bvPos:2 }
+  ];
+
+  const lines = positions.map((pos, i) => {
+    const card = pos.card;
+    const bv = selectBreathVector(card, pos.bvPos);
+    const phonic = selectPhonic(card, voice);
+
+    // Pick template based on position
+    let template;
+    if (i === 0) {
+      template = voice.openerTemplates[Math.floor(Math.random() * voice.openerTemplates.length)];
+    } else if (i === 2) {
+      template = voice.closerTemplates[Math.floor(Math.random() * voice.closerTemplates.length)];
+    } else {
+      template = voice.midTemplates[Math.floor(Math.random() * voice.midTemplates.length)];
+    }
+
+    // Fill template variables
+    let line = template
+      .replace('{domain}', card.domain)
+      .replace('{aspect}', card.aspect)
+      .replace('{card_name}', card.name)
+      .replace('{title}', card.title)
+      .replace('{breath_func}', bv.name.toLowerCase())
+      .replace('{phonic_feel}', phonic.feel)
+      .replace('{card_pair}', (PERSONA_CARDS.find(c => c.id === card.pair) || {}).name || card.pair);
+
+    return {
+      position: pos.name,
+      card: card,
+      line: line,
+      breathVector: bv,
+      phonic: phonic,
+      glyph: triadGlyphs[i]
+    };
+  });
+
+  return {
+    lines: lines,
+    sigil: sigil,
+    resonance: resonance,
+    voice: voice,
+    triadGlyphs: triadGlyphs
+  };
+}
+
+function renderPassage(passage) {
+  const output = document.getElementById('output');
+  const metaStrip = document.getElementById('metaStrip');
+  const resBar = document.getElementById('resBar');
+
+  // Build HTML output with hem/haw/hum labels
+  let html = '';
+  passage.lines.forEach(line => {
+    html += `<span class="${line.position}">${line.line}</span>\n`;
+    html += `<span class="label ${line.position}-label">${line.position} · ${line.card.name} · ${line.breathVector.name}</span>\n`;
+    if (line.position !== 'hum') html += '\n';
+  });
+
+  output.innerHTML = html;
+
+  // Build metadata strip
+  const tags = [
+    `Sigil: ${passage.sigil}`,
+    `Triad: ${passage.triadGlyphs.join('')}`,
+    `Resonance: ${passage.resonance.toFixed(2)}`,
+    `Voice: ${passage.voice.name}`,
+    `Phonic: ${passage.lines.map(l => l.phonic.feel).join(' → ')}`,
+    `BV: ${passage.lines.map(l => l.breathVector.func).join(' › ')}`
+  ];
+  metaStrip.innerHTML = tags.map(t => `<span class="meta-tag">${t}</span>`).join('');
+
+  // Resonance bar
+  resBar.style.width = (passage.resonance * 100) + '%';
+  if (passage.resonance >= 0.8) {
+    resBar.style.background = 'var(--gold)';
+  } else if (passage.resonance >= 0.6) {
+    resBar.style.background = 'var(--blue-glow)';
+  } else {
+    resBar.style.background = 'var(--red-glow)';
+  }
+}
+
+// ── BOOT ───────────────────────────────
+document.addEventListener('DOMContentLoaded', init);
+
+// Log the artifact
+console.log('%c🐉 Kairos Kernel · Creative Writing Engine · Monolith v1.0 %cReady',
+  'color:#c9a84c;font-size:1.1rem;', 'color:#d4c8b5;');
+console.log('%cADZMIST · Quipotec · Ealdforn · Grimoir · The loop closes here.',
+  'color:#8a7e6e;font-size:0.75rem;');
+console.log('%c12 Persona Cards · 21 Glyphs · 7 Sigils · 15 Breath Vectors · 14 Phonemes · 4 Voices',
+  'color:#5a9fcf;font-size:0.7rem;');
+</script>
+</body>
+</html>
