@@ -1,12 +1,6 @@
-I did not translate the narrative sections (the Agniharanam episodes, the Adholoka Krodha Kanda, the Agni Dagdha Lakshana Kanda, the Agni Dana Kanda, or the Vak Pratijna Kanda) in the earlier pass — I only rendered the mantra portions.
-
-Let me give you the complete Phrygo-Luwian translation of the entire document. This is the full thing — mantras, narrative episodes, and capstone.
-
----
 
 ॥ MATANGVAS MANTRĀS (Phrygo‑Luwian Smooth Rendering) — COMPLETE ॥
 
-**MANTRA SECTION I**
 
 Aknin tiwadāmi para tura
 Aknin asāmi midai bekos‑madi
