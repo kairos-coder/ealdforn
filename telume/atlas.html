@@ -296,57 +296,38 @@
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-// ATLAS MARKER ENGINE
-// Positions city markers on the base map image
+// ATLAS MARKER ENGINE · CALIBRATED
+// Positions hand-placed via calibrate.html
 // ═══════════════════════════════════════════════════════════════
 
-// Map bounds (approximate — adjust after seeing the image)
-const MAP_BOUNDS = {
-  north: 52.5,
-  south: 40.5,
-  east: -52,
-  west: -89
-};
-
-// City data with lat/lon
+// Calibrated city data — x/y are percentages of image dimensions
 const CITIES = [
-  // Haldorian city-states
-  { id: 'nesatta',    name: 'Nešatta',    tier: 'Hittite · Pankus Fire',      lat: 49.52, lon: -63.06, realm: 'haldorian', pulse: true },
-  { id: 'tihomir',    name: 'Tihomir',    tier: 'OCS · Witness Monastery',    lat: 47.38, lon: -61.87, realm: 'haldorian' },
-  { id: 'tsarnigrad', name: 'Tsarnigrad', tier: 'Old East Slavic · Fortress', lat: 48.44, lon: -68.52, realm: 'haldorian' },
-  { id: 'radogost',   name: 'Radogost',   tier: 'Old West Slavic · Trade',    lat: 48.43, lon: -71.05, realm: 'haldorian' },
-  { id: 'aristopol',  name: 'Aristopol',  tier: 'Macedonian Greek · Empire',  lat: 46.79, lon: -71.20, realm: 'haldorian' },
-  { id: 'gordeon',    name: 'Gordéon',    tier: 'Phrygian · Unsolvable',      lat: 47.99, lon: -66.66, realm: 'haldorian' },
-  { id: 'pescassa',   name: 'Pescassa',   tier: 'Epic Latin · Maritime',      lat: 47.55, lon: -52.75, realm: 'haldorian' },
-  // Realm capitals
-  { id: 'ealdenburg', name: 'Ealdenburg', tier: 'Capital of Ealdor',          lat: 45.51, lon: -73.59, realm: 'ealdor' },
-  { id: 'suryapura',  name: 'Sūryapura',  tier: 'Capital · Sun City',         lat: 44.35, lon: -68.19, realm: 'surya', pulse: true },
-  { id: 'kichigamswak', name: 'Kichigamswak', tier: 'The Great Lake Ones',     lat: 43.04, lon: -79.05, realm: 'kichigamswak' },
-  // Sacred site
-  { id: 'ring',       name: 'The Ring',    tier: 'Sacred Crater · Manicouagan', lat: 51.39, lon: -68.70, realm: 'ealdor' }
+  { id: 'nesatta',    name: 'Nešatta',    tier: 'Hittite · Pankus Fire',      x: 75.37, y: 30.48, realm: 'haldorian', pulse: true },
+  { id: 'tihomir',    name: 'Tihomir',    tier: 'OCS · Witness Monastery',    x: 77.92, y: 46.31, realm: 'haldorian' },
+  { id: 'tsarnigrad', name: 'Tsarnigrad', tier: 'Old East Slavic · Fortress', x: 63.10, y: 39.51, realm: 'haldorian' },
+  { id: 'radogost',   name: 'Radogost',   tier: 'Old West Slavic · Trade',    x: 57.55, y: 38.51, realm: 'haldorian' },
+  { id: 'aristopol',  name: 'Aristopol',  tier: 'Macedonian Greek · Empire',  x: 57.28, y: 50.71, realm: 'haldorian' },
+  { id: 'gordeon',    name: 'Gordéon',    tier: 'Phrygian · Unsolvable',      x: 71.74, y: 35.71, realm: 'haldorian' },
+  { id: 'pescassa',   name: 'Pescassa',   tier: 'Epic Latin · Maritime',      x: 96.10, y: 44.71, realm: 'haldorian' },
+  { id: 'ealdenburg', name: 'Ealdenburg', tier: 'Capital of Ealdor',          x: 51.37, y: 58.91, realm: 'ealdor' },
+  { id: 'suryapura',  name: 'Sūryapura',  tier: 'Capital · Sun City',         x: 62.28, y: 65.70, realm: 'surya', pulse: true },
+  { id: 'kichigamswak', name: 'Kichigamswak', tier: 'The Great Lake Ones',     x: 38.01, y: 76.50, realm: 'kichigamswak' },
+  { id: 'ring',       name: 'The Ring',   tier: 'Sacred Crater · Manicouagan', x: 62.55, y: 15.92, realm: 'ealdor' }
 ];
 
-// Fallback info
 const CITY_INFO = {
   nesatta:    { desc: 'Oldest of the seven. Archive city. Nearly abandoned. Holds the glyph archive that could break every other kingdom\'s origin story. The Pankus assembly meets here every seven years.' },
   tihomir:    { desc: 'Monastery on the Magdalen Islands. Does not vote in the Pankus. Keeps the written record. Bogumil transcribed the Nešatta Codex here. Brother Eadwine compiled The Lost Tales here.' },
   tsarnigrad: { desc: 'The dark fortress on the south shore. Almost-monarchy. Greatest internal threat to the Pankus covenant. The city that effaced and recarved the "no king" inscription.' },
   radogost:   { desc: 'Glad host at the Saguenay fjord. Inland gateway to the river routes. Where the Pankus gets its grain. The most welcoming of the seven — and the most vulnerable.' },
   aristopol:  { desc: '"The city of the best." Empire-builder on the cliffs of Quebec. Perpetually proposes a hegemon for the Pankus. Exhausting and indispensable.' },
-  gordeon:    { desc: 'Old money. Old gods. The unsolvable city tucked into Chaleur Bay. The Gordian knot as political theology. Doesn\'t explain itself. Buying fuel at unusual rates.' },
+  gordeon:    { desc: 'Old money. Old gods. The unsolvable city tucked into Chaleur Bay. The Gordian knot as political theology. Doesn\'t explain itself.' },
   pescassa:   { desc: 'The maritime outlier at St. John\'s, Newfoundland. Epic Latin — the language of the net and the oar. Arrived in boats. Never left. The easternmost city in the world.' },
   ealdenburg: { desc: 'The Old Fort. Island city at the confluence of rivers. Where the Witenagemot meets to choose the king. The Ring lies to the north.' },
   suryapura:  { desc: 'Temple complex of golden spires on Mount Desert Island. The Sun-King resides here. The Trilingual Codex is kept in the Agnihotra temple. The Dawnstone faces the sunrise.' },
   kichigamswak: { desc: 'The heart of the confederacy at the Niagara junction. No fixed capital — the council fire moves between the clan-seats. The Great Law predates the Tower.' },
-  ring:       { desc: 'The meteor crater where Hengist swore the first oath. Where Ymir hit the ground. Where the oldest ogham circle stands. Three traditions, one site. Tended by the Tuatha dé Gwalenn.' }
+  ring:       { desc: 'The meteor crater where Hengist swore the first oath. Where Ymir hit the ground. Where the oldest ogham circle stands. Tended by the Tuatha dé Gwalenn.' }
 };
-
-// ── COORDINATE PROJECTION ────────────────────────────────────
-function project(lat, lon, imgWidth, imgHeight) {
-  const x = ((lon - MAP_BOUNDS.west) / (MAP_BOUNDS.east - MAP_BOUNDS.west)) * imgWidth;
-  const y = ((MAP_BOUNDS.north - lat) / (MAP_BOUNDS.north - MAP_BOUNDS.south)) * imgHeight;
-  return { x, y };
-}
 
 // ── BUILD MARKERS ────────────────────────────────────────────
 function buildMarkers() {
@@ -354,30 +335,26 @@ function buildMarkers() {
   const layer = document.getElementById('markersLayer');
   if (!img || !layer) return;
 
-  // Wait for image to load
   if (!img.complete) {
     img.addEventListener('load', buildMarkers);
     return;
   }
 
-  const imgWidth = img.clientWidth;
-  const imgHeight = img.clientHeight;
   layer.innerHTML = '';
 
   CITIES.forEach(city => {
-    const pos = project(city.lat, city.lon, imgWidth, imgHeight);
-
     const marker = document.createElement('div');
     marker.className = 'city-marker';
-    marker.style.left = (pos.x / imgWidth * 100) + '%';
-    marker.style.top = (pos.y / imgHeight * 100) + '%';
+    marker.style.left = city.x + '%';
+    marker.style.top = city.y + '%';
     marker.setAttribute('data-id', city.id);
 
     const dot = document.createElement('div');
     dot.className = 'city-dot' + (city.pulse ? ' pulse' : '');
-    dot.style.backgroundColor = city.realm === 'ealdor' ? '#6A9464' :
-                                 city.realm === 'kichigamswak' ? '#4A7AB8' :
-                                 city.realm === 'surya' ? '#D4784A' : '#C8980A';
+    dot.style.backgroundColor = 
+      city.realm === 'ealdor' ? '#6A9464' :
+      city.realm === 'kichigamswak' ? '#4A7AB8' :
+      city.realm === 'surya' ? '#D4784A' : '#C8980A';
     marker.appendChild(dot);
 
     const label = document.createElement('span');
@@ -390,7 +367,6 @@ function buildMarkers() {
     sublabel.textContent = city.tier.split('·')[0].trim();
     marker.appendChild(sublabel);
 
-    // Events
     marker.addEventListener('click', () => showInfo(city.id));
     marker.addEventListener('mouseenter', (e) => showTooltip(e, city.name));
     marker.addEventListener('mousemove', moveTooltip);
@@ -423,7 +399,6 @@ function hideTooltip() {
 function showInfo(id) {
   const city = CITIES.find(c => c.id === id);
   if (!city) return;
-
   const info = CITY_INFO[id] || { desc: 'Location data not yet recorded.' };
   const panel = document.getElementById('info-panel');
   document.getElementById('panelName').textContent = city.name;
