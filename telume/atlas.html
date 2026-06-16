@@ -17,10 +17,6 @@
       --gold: #C8980A;
       --gold-dark: #8A6008;
       --border: rgba(164,134,80,0.35);
-      --ocean: #B0C8D8;
-      --land: #E8DCC8;
-      --land-stroke: #C8B898;
-      --river: #8AB0C8;
       --surya-color: #D4784A;
       --ealdor-color: #6A9464;
       --kichigamswak-color: #4A7AB8;
@@ -65,7 +61,7 @@
 
     .map-wrapper {
       position: relative;
-      width: min(1000px, 97vw);
+      width: min(1100px, 98vw);
       margin: 1.5rem auto;
       background: var(--parchment);
       border: 1px solid var(--border);
@@ -79,6 +75,14 @@
       position: absolute; inset: 0;
       background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139,119,80,0.015) 2px, rgba(139,119,80,0.015) 4px);
       pointer-events: none; z-index: 5;
+    }
+
+    .map-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      position: relative;
+      z-index: 1;
     }
 
     .map-title {
@@ -99,29 +103,66 @@
       pointer-events: none; opacity: 0.6;
     }
 
-    svg { display: block; width: 100%; height: auto; }
-
-    .realm-label {
-      font-family: 'Cinzel Decorative', serif;
-      letter-spacing: 2px;
+    .markers-layer {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 3;
       pointer-events: none;
-      text-shadow: 0 0 8px var(--parchment);
     }
 
     .city-marker {
+      position: absolute;
       cursor: pointer;
+      pointer-events: all;
+      transform: translate(-50%, -50%);
       transition: all 0.3s ease;
     }
     .city-marker:hover .city-glow { opacity: 1; }
     .city-marker:hover .city-dot { fill: var(--gold); }
 
-    .city-glow { opacity: 0; transition: opacity 0.4s; }
-    .city-dot { transition: fill 0.3s; }
-
-    .city-pulse { animation: pulse 3s ease-in-out infinite; }
+    .city-dot {
+      display: block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin: 0 auto;
+      background: var(--gold-dark);
+      transition: all 0.3s;
+    }
+    .city-dot.pulse {
+      animation: pulse 3s ease-in-out infinite;
+    }
     @keyframes pulse {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 0.9; }
+      0%, 100% { box-shadow: 0 0 4px var(--gold-dark); }
+      50% { box-shadow: 0 0 14px var(--gold), 0 0 24px rgba(200,152,10,0.4); }
+    }
+
+    .city-label {
+      display: block;
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-size: 0.5rem;
+      letter-spacing: 1px;
+      color: var(--ink);
+      margin-top: 2px;
+      text-shadow: 0 0 4px var(--parchment), 0 0 8px var(--parchment);
+      white-space: nowrap;
+    }
+    .city-sublabel {
+      display: block;
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-size: 0.38rem;
+      letter-spacing: 0.5px;
+      color: var(--ink-dim);
+      opacity: 0.6;
+    }
+
+    .realm-label {
+      position: absolute;
+      font-family: 'Cinzel Decorative', serif;
+      letter-spacing: 2px;
+      pointer-events: none;
+      z-index: 4;
+      text-shadow: 0 0 8px var(--parchment), 0 0 16px var(--parchment);
     }
 
     .tooltip {
@@ -144,39 +185,39 @@
     #info-panel {
       display: none;
       position: absolute; bottom: 1.5rem; right: 1rem;
-      width: 240px;
+      width: 220px;
       background: rgba(245,236,215,0.95);
       border: 1px solid var(--border);
       padding: 1rem;
       z-index: 15;
       border-radius: 2px;
-      font-size: 0.8rem; line-height: 1.6;
+      font-size: 0.75rem; line-height: 1.6;
     }
     #info-panel.visible { display: block; }
     #info-panel .panel-name {
       font-family: 'Cinzel', serif;
-      font-size: 0.7rem; letter-spacing: 2px;
+      font-size: 0.65rem; letter-spacing: 2px;
       text-align: center; text-transform: uppercase;
       color: var(--ink-mid); margin-bottom: 0.3rem;
     }
     #info-panel .panel-tier {
       font-family: 'Cinzel', serif;
-      font-size: 0.5rem; letter-spacing: 1px;
+      font-size: 0.45rem; letter-spacing: 1px;
       text-align: center; text-transform: uppercase;
       color: var(--gold-dark); margin-bottom: 0.5rem;
     }
     #info-panel .panel-desc {
-      font-size: 0.8rem; color: var(--ink-dim); font-style: italic;
+      font-size: 0.72rem; color: var(--ink-dim); font-style: italic;
     }
 
     .legend {
       position: absolute; bottom: 1rem; left: 1rem;
-      font-size: 0.5rem; letter-spacing: 1px;
+      font-size: 0.45rem; letter-spacing: 1px;
       color: var(--ink-dim); z-index: 10;
       pointer-events: none; line-height: 1.8;
     }
     .legend span {
-      display: inline-block; width: 10px; height: 10px;
+      display: inline-block; width: 8px; height: 8px;
       margin-right: 0.3rem; vertical-align: middle; border-radius: 50%;
     }
 
@@ -184,16 +225,17 @@
       position: absolute; top: 0.8rem; right: 1rem;
       z-index: 10; pointer-events: none;
       font-family: 'Cinzel', serif;
-      font-size: 0.5rem; letter-spacing: 2px;
+      font-size: 0.45rem; letter-spacing: 2px;
       color: var(--ink-dim); opacity: 0.5;
       text-align: center;
     }
-    .compass .north { font-size: 0.65rem; color: var(--gold-dark); }
+    .compass .north { font-size: 0.6rem; color: var(--gold-dark); }
 
     @media (max-width: 600px) {
       .map-wrapper { margin: 0.5rem auto; }
       #info-panel { width: 180px; right: 0.3rem; bottom: 1rem; }
       .legend { bottom: 0.3rem; left: 0.3rem; }
+      .city-label { font-size: 0.4rem; }
     }
   </style>
 </head>
@@ -219,216 +261,193 @@
     <div>S ▼</div>
   </div>
 
-  <svg viewBox="0 0 1000 800" xmlns="http://www.w3.org/2000/svg" id="mapSvg">
+  <!-- Base map image -->
+  <img src="images/atlas.png" alt="The Bay of Ealdforn" class="map-image" id="mapImage" />
 
-    <!-- OCEAN BACKGROUND -->
-    <rect x="0" y="0" width="1000" height="800" fill="#B0C8D8" opacity="0.2" />
+  <!-- Realm labels -->
+  <div class="realm-label" style="top:25%;left:32%;font-size:0.8rem;color:#6A9464;opacity:0.7;" data-realm="ealdor">EALDOR</div>
+  <div class="realm-label" style="top:38%;left:15%;font-size:0.75rem;color:#4A7AB8;opacity:0.7;" data-realm="kichigamswak">KICHIGAMSWAK</div>
+  <div class="realm-label" style="top:30%;left:55%;font-size:0.75rem;color:#C8980A;opacity:0.75;" data-realm="haldorian">HALDORIAN REPUBLIC</div>
+  <div class="realm-label" style="top:58%;left:60%;font-size:0.8rem;color:#D4784A;opacity:0.7;" data-realm="surya">SŪRYA SAMRĀJYA</div>
 
-    <!-- 
-      COASTLINES
-      Simplified from real geography. Projection: lat 42-52°N, lon -80 to -52°W
-      x = (lon + 80) / 28 * 1000
-      y = (52 - lat) / 10 * 800
-    -->
+  <!-- City markers layer -->
+  <div class="markers-layer" id="markersLayer">
+    <!-- Positions set by JS after image loads -->
+  </div>
 
-    <!-- Labrador / North Shore (top) -->
-    <path d="M0,120 L150,110 L300,105 L450,115 L600,130 L750,140 L900,130 L1000,120"
-          fill="none" stroke="#C8B898" stroke-width="0.5" opacity="0.2" />
-
-    <!-- North Shore of St. Lawrence -->
-    <path d="M0,260 L100,255 L200,258 L300,265 L350,270 L400,278 L450,285 L500,282 L550,278 L600,272 L650,268 L700,270 L750,275 L850,280 L1000,275"
-          fill="#E8DCC8" stroke="#C8B898" stroke-width="1" />
-
-    <!-- Gaspé Peninsula -->
-    <path d="M500,282 L510,310 L520,340 L515,370 L505,395 L490,385 L482,350 L478,315 L500,282 Z"
-          fill="#E8DCC8" stroke="#C8B898" stroke-width="1" />
-
-    <!-- Anticosti Island -->
-    <ellipse cx="605" cy="240" rx="55" ry="16"
-             fill="#E8DCC8" stroke="#C8B898" stroke-width="0.8"
-             transform="rotate(-12, 605, 240)" />
-
-    <!-- Magdalen Islands -->
-    <circle cx="648" cy="370" r="4" fill="#E0D4C0" stroke="#C8B898" stroke-width="0.4" />
-    <circle cx="656" cy="366" r="3" fill="#E0D4C0" stroke="#C8B898" stroke-width="0.4" />
-    <circle cx="643" cy="377" r="3.5" fill="#E0D4C0" stroke="#C8B898" stroke-width="0.4" />
-
-    <!-- Cape Breton Island -->
-    <path d="M810,380 L835,365 L860,375 L870,410 L855,450 L830,470 L805,455 L795,420 Z"
-          fill="#E8DCC8" stroke="#C8B898" stroke-width="1" />
-
-    <!-- Nova Scotia -->
-    <path d="M770,500 L800,485 L830,495 L850,515 L840,550 L810,565 L775,555 L760,535 Z"
-          fill="#E8DCC8" stroke="#C8B898" stroke-width="1" />
-
-    <!-- New Brunswick / Miramichi coast -->
-    <path d="M570,490 L610,480 L650,490 L690,500 L730,510 L770,500 L750,530 L710,550 L650,540 L590,520 Z"
-          fill="#E8DCC8" stroke="#C8B898" stroke-width="1" />
-
-    <!-- Maine coast -->
-    <path d="M480,590 L520,575 L560,580 L600,595 L580,630 L540,650 L490,640 L460,625 Z"
-          fill="#E8DCC8" stroke="#C8B898" stroke-width="1" />
-
-    <!-- Chaleur Bay (Gordéon's inlet) -->
-    <path d="M505,395 L500,410 L490,420 L510,425 L520,410 L515,395 Z"
-          fill="#B0C8D8" opacity="0.3" stroke="none" />
-
-    <!-- St. Lawrence River -->
-    <path d="M0,290 L80,285 L160,282 L240,280 L320,278 L400,280 L440,278 L470,282"
-          stroke="#8AB0C8" stroke-width="5" fill="none" opacity="0.45" />
-    <path d="M0,310 L80,308 L160,310 L240,312 L320,310 L400,308 L440,310 L470,315"
-          stroke="#8AB0C8" stroke-width="3" fill="none" opacity="0.25" />
-
-    <!-- Estuary widening -->
-    <path d="M470,282 L490,310 L505,340 L510,380"
-          stroke="#8AB0C8" stroke-width="7" fill="none" opacity="0.3" />
-
-    <!-- Saguenay River (to Radogost) -->
-    <path d="M440,278 L400,285 L360,288 L320,286"
-          stroke="#8AB0C8" stroke-width="2.5" fill="none" opacity="0.35" />
-
-    <!-- Bay of Fundy -->
-    <path d="M730,540 L720,560 L700,575 L680,580 L660,570 L650,555"
-          stroke="#8AB0C8" stroke-width="2.5" fill="none" opacity="0.3" />
-
-    <!-- The Ring (Manicouagan) -->
-    <circle cx="404" cy="49" r="18" fill="none" stroke="#6A9464" stroke-width="1.5" opacity="0.5" />
-    <circle cx="404" cy="49" r="14" fill="none" stroke="#6A9464" stroke-width="0.5" opacity="0.3" />
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- REALM LABELS -->
-    <!-- ═══════════════════════════════════════════ -->
-
-    <text x="280" y="160" class="realm-label" font-size="12" fill="#6A9464" opacity="0.7"
-          text-anchor="middle" font-weight="bold">EALDOR</text>
-    <text x="280" y="178" class="realm-label" font-size="7" fill="#6A9464" opacity="0.5"
-          text-anchor="middle">The Old March</text>
-
-    <text x="90" y="450" class="realm-label" font-size="11" fill="#4A7AB8" opacity="0.7"
-          text-anchor="middle" font-weight="bold">KICHIGAMSWAK</text>
-    <text x="90" y="468" class="realm-label" font-size="6.5" fill="#4A7AB8" opacity="0.5"
-          text-anchor="middle">The Great Lake Ones</text>
-
-    <text x="620" y="160" class="realm-label" font-size="11" fill="#C8980A" opacity="0.75"
-          text-anchor="middle" font-weight="bold">THE HALDORIAN REPUBLIC</text>
-    <text x="620" y="178" class="realm-label" font-size="6.5" fill="#C8980A" opacity="0.5"
-          text-anchor="middle">Bay of Ealdforn · Seven City-States</text>
-
-    <text x="560" y="640" class="realm-label" font-size="12" fill="#D4784A" opacity="0.7"
-          text-anchor="middle" font-weight="bold">SŪRYA SAMRĀJYA</text>
-    <text x="560" y="658" class="realm-label" font-size="7" fill="#D4784A" opacity="0.5"
-          text-anchor="middle">Empire of the Dawnland Sun</text>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- CITY-STATE MARKERS (projected from lat/lon) -->
-    <!-- ═══════════════════════════════════════════ -->
-
-    <!-- Nešatta · Anticosti west · 49.52, -63.06 → (605, 198) -->
-    <g class="city-marker" data-id="nesatta">
-      <circle cx="605" cy="198" r="14" fill="none" stroke="#C8980A" stroke-width="0.6" opacity="0.3" class="city-glow" />
-      <circle cx="605" cy="198" r="4.5" fill="#C8980A" class="city-dot city-pulse" />
-      <text x="605" y="184" text-anchor="middle" font-family="'Cinzel',serif" font-size="8" fill="#8A6008" opacity="0.8">Nešatta</text>
-      <text x="605" y="216" text-anchor="middle" font-family="'Cinzel',serif" font-size="5" fill="#8A6008" opacity="0.35">Hittite · Pankus Fire</text>
-    </g>
-
-    <!-- Tihomir · Magdalen Islands · 47.38, -61.87 → (648, 370) -->
-    <g class="city-marker" data-id="tihomir">
-      <circle cx="648" cy="370" r="12" fill="none" stroke="#C8980A" stroke-width="0.5" opacity="0.25" class="city-glow" />
-      <circle cx="648" cy="370" r="3.5" fill="#C8980A" class="city-dot" />
-      <text x="648" y="358" text-anchor="middle" font-family="'Cinzel',serif" font-size="7" fill="#8A6008" opacity="0.7">Tihomir</text>
-      <text x="648" y="386" text-anchor="middle" font-family="'Cinzel',serif" font-size="5" fill="#8A6008" opacity="0.35">OCS · Witness</text>
-    </g>
-
-    <!-- Tsarnigrad · Rimouski · 48.44, -68.52 → (410, 285) -->
-    <g class="city-marker" data-id="tsarnigrad">
-      <circle cx="410" cy="285" r="13" fill="none" stroke="#C8980A" stroke-width="0.5" opacity="0.25" class="city-glow" />
-      <circle cx="410" cy="285" r="4" fill="#C8980A" class="city-dot" />
-      <text x="410" y="272" text-anchor="middle" font-family="'Cinzel',serif" font-size="7" fill="#8A6008" opacity="0.7">Tsarnigrad</text>
-      <text x="410" y="302" text-anchor="middle" font-family="'Cinzel',serif" font-size="5" fill="#8A6008" opacity="0.35">Old East Slavic · Fortress</text>
-    </g>
-
-    <!-- Radogost · Saguenay · 48.43, -71.05 → (320, 286) -->
-    <g class="city-marker" data-id="radogost">
-      <circle cx="320" cy="286" r="12" fill="none" stroke="#C8980A" stroke-width="0.5" opacity="0.25" class="city-glow" />
-      <circle cx="320" cy="286" r="3.5" fill="#C8980A" class="city-dot" />
-      <text x="320" y="273" text-anchor="middle" font-family="'Cinzel',serif" font-size="7" fill="#8A6008" opacity="0.7">Radogost</text>
-      <text x="320" y="303" text-anchor="middle" font-family="'Cinzel',serif" font-size="5" fill="#8A6008" opacity="0.35">Old West Slavic · Inland Gate</text>
-    </g>
-
-    <!-- Aristopol · Quebec City · 46.79, -71.20 → (314, 417) -->
-    <g class="city-marker" data-id="aristopol">
-      <circle cx="314" cy="417" r="13" fill="none" stroke="#C8980A" stroke-width="0.5" opacity="0.25" class="city-glow" />
-      <circle cx="314" cy="417" r="4" fill="#C8980A" class="city-dot" />
-      <text x="314" y="404" text-anchor="middle" font-family="'Cinzel',serif" font-size="8" fill="#8A6008" opacity="0.7">Aristopol</text>
-      <text x="314" y="434" text-anchor="middle" font-family="'Cinzel',serif" font-size="5" fill="#8A6008" opacity="0.35">Macedonian Greek · Empire-Builder</text>
-    </g>
-
-    <!-- Gordéon · Chaleur Bay · 47.99, -66.66 → (476, 321) -->
-    <g class="city-marker" data-id="gordeon">
-      <circle cx="476" cy="321" r="12" fill="none" stroke="#C8980A" stroke-width="0.5" opacity="0.25" class="city-glow" />
-      <circle cx="476" cy="321" r="3.5" fill="#C8980A" class="city-dot" />
-      <text x="476" y="308" text-anchor="middle" font-family="'Cinzel',serif" font-size="7" fill="#8A6008" opacity="0.7">Gordéon</text>
-      <text x="476" y="338" text-anchor="middle" font-family="'Cinzel',serif" font-size="5" fill="#8A6008" opacity="0.35">Phrygian · Unsolvable</text>
-    </g>
-
-    <!-- Pescassa · St. John's · 47.55, -52.75 → (973, 356) -->
-    <g class="city-marker" data-id="pescassa">
-      <circle cx="973" cy="356" r="12" fill="none" stroke="#C8980A" stroke-width="0.5" opacity="0.25" class="city-glow" />
-      <circle cx="973" cy="356" r="3.5" fill="#C8980A" class="city-dot" />
-      <text x="973" y="343" text-anchor="middle" font-family="'Cinzel',serif" font-size="7" fill="#8A6008" opacity="0.7">Pescassa</text>
-      <text x="973" y="373" text-anchor="middle" font-family="'Cinzel',serif" font-size="5" fill="#8A6008" opacity="0.35">Epic Latin · Maritime</text>
-    </g>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- REALM CAPITALS & SACRED SITES -->
-    <!-- ═══════════════════════════════════════════ -->
-
-    <!-- Ealdenburg · Montreal · 45.51, -73.59 → (229, 519) -->
-    <g class="city-marker" data-id="ealdenburg">
-      <circle cx="229" cy="519" r="12" fill="none" stroke="#6A9464" stroke-width="0.5" opacity="0.25" class="city-glow" />
-      <circle cx="229" cy="519" r="4" fill="#6A9464" class="city-dot" />
-      <text x="229" y="506" text-anchor="middle" font-family="'Cinzel',serif" font-size="7" fill="#6A9464" opacity="0.7">Ealdenburg</text>
-    </g>
-
-    <!-- Sūryapura · Mount Desert Island · 44.35, -68.19 → (422, 612) -->
-    <g class="city-marker" data-id="suryapura">
-      <circle cx="422" cy="612" r="14" fill="none" stroke="#D4784A" stroke-width="0.5" opacity="0.3" class="city-glow" />
-      <circle cx="422" cy="612" r="5" fill="#D4784A" class="city-dot city-pulse" />
-      <text x="422" y="598" text-anchor="middle" font-family="'Cinzel',serif" font-size="8" fill="#D4784A" opacity="0.7">Sūryapura</text>
-    </g>
-
-    <!-- Kichigamswak · Niagara · 43.04, -79.05 → (34, 717) -->
-    <g class="city-marker" data-id="kichigamswak">
-      <circle cx="34" cy="717" r="12" fill="none" stroke="#4A7AB8" stroke-width="0.5" opacity="0.25" class="city-glow" />
-      <circle cx="34" cy="717" r="4" fill="#4A7AB8" class="city-dot" />
-      <text x="44" y="710" text-anchor="start" font-family="'Cinzel',serif" font-size="7" fill="#4A7AB8" opacity="0.7">Kichigamswak</text>
-    </g>
-
-    <!-- The Ring · Manicouagan · 51.39, -68.70 → (404, 49) -->
-    <g class="city-marker" data-id="ring">
-      <circle cx="404" cy="49" r="18" fill="none" stroke="#6A9464" stroke-width="0.6" opacity="0.4" class="city-glow" />
-      <circle cx="404" cy="49" r="4" fill="#6A9464" class="city-dot" />
-      <text x="404" y="38" text-anchor="middle" font-family="'Cinzel',serif" font-size="6" fill="#6A9464" opacity="0.7">The Ring</text>
-    </g>
-
-  </svg>
-
+  <!-- Tooltip -->
   <div class="tooltip" id="tooltip"></div>
 
+  <!-- Info panel -->
   <div id="info-panel">
     <div class="panel-name" id="panelName"></div>
     <div class="panel-tier" id="panelTier"></div>
     <div class="panel-desc" id="panelDesc"></div>
   </div>
 
+  <!-- Legend -->
   <div class="legend">
-    <span style="background:#6A9464;"></span> Ealdor · The Old March<br>
-    <span style="background:#4A7AB8;"></span> Kichigamswak · Great Lake Ones<br>
-    <span style="background:#C8980A;"></span> Haldorian Republic · Seven Cities<br>
-    <span style="background:#D4784A;"></span> Sūrya Samrājya · Dawnland Sun<br>
+    <span style="background:#6A9464;"></span> Ealdor<br>
+    <span style="background:#4A7AB8;"></span> Kichigamswak<br>
+    <span style="background:#C8980A;"></span> Haldorian Republic<br>
+    <span style="background:#D4784A;"></span> Sūrya Samrājya
   </div>
 </div>
 
-<script src="js/atlas.js"></script>
+<script>
+// ═══════════════════════════════════════════════════════════════
+// ATLAS MARKER ENGINE
+// Positions city markers on the base map image
+// ═══════════════════════════════════════════════════════════════
+
+// Map bounds (approximate — adjust after seeing the image)
+const MAP_BOUNDS = {
+  north: 52.5,
+  south: 40.5,
+  east: -52,
+  west: -89
+};
+
+// City data with lat/lon
+const CITIES = [
+  // Haldorian city-states
+  { id: 'nesatta',    name: 'Nešatta',    tier: 'Hittite · Pankus Fire',      lat: 49.52, lon: -63.06, realm: 'haldorian', pulse: true },
+  { id: 'tihomir',    name: 'Tihomir',    tier: 'OCS · Witness Monastery',    lat: 47.38, lon: -61.87, realm: 'haldorian' },
+  { id: 'tsarnigrad', name: 'Tsarnigrad', tier: 'Old East Slavic · Fortress', lat: 48.44, lon: -68.52, realm: 'haldorian' },
+  { id: 'radogost',   name: 'Radogost',   tier: 'Old West Slavic · Trade',    lat: 48.43, lon: -71.05, realm: 'haldorian' },
+  { id: 'aristopol',  name: 'Aristopol',  tier: 'Macedonian Greek · Empire',  lat: 46.79, lon: -71.20, realm: 'haldorian' },
+  { id: 'gordeon',    name: 'Gordéon',    tier: 'Phrygian · Unsolvable',      lat: 47.99, lon: -66.66, realm: 'haldorian' },
+  { id: 'pescassa',   name: 'Pescassa',   tier: 'Epic Latin · Maritime',      lat: 47.55, lon: -52.75, realm: 'haldorian' },
+  // Realm capitals
+  { id: 'ealdenburg', name: 'Ealdenburg', tier: 'Capital of Ealdor',          lat: 45.51, lon: -73.59, realm: 'ealdor' },
+  { id: 'suryapura',  name: 'Sūryapura',  tier: 'Capital · Sun City',         lat: 44.35, lon: -68.19, realm: 'surya', pulse: true },
+  { id: 'kichigamswak', name: 'Kichigamswak', tier: 'The Great Lake Ones',     lat: 43.04, lon: -79.05, realm: 'kichigamswak' },
+  // Sacred site
+  { id: 'ring',       name: 'The Ring',    tier: 'Sacred Crater · Manicouagan', lat: 51.39, lon: -68.70, realm: 'ealdor' }
+];
+
+// Fallback info
+const CITY_INFO = {
+  nesatta:    { desc: 'Oldest of the seven. Archive city. Nearly abandoned. Holds the glyph archive that could break every other kingdom\'s origin story. The Pankus assembly meets here every seven years.' },
+  tihomir:    { desc: 'Monastery on the Magdalen Islands. Does not vote in the Pankus. Keeps the written record. Bogumil transcribed the Nešatta Codex here. Brother Eadwine compiled The Lost Tales here.' },
+  tsarnigrad: { desc: 'The dark fortress on the south shore. Almost-monarchy. Greatest internal threat to the Pankus covenant. The city that effaced and recarved the "no king" inscription.' },
+  radogost:   { desc: 'Glad host at the Saguenay fjord. Inland gateway to the river routes. Where the Pankus gets its grain. The most welcoming of the seven — and the most vulnerable.' },
+  aristopol:  { desc: '"The city of the best." Empire-builder on the cliffs of Quebec. Perpetually proposes a hegemon for the Pankus. Exhausting and indispensable.' },
+  gordeon:    { desc: 'Old money. Old gods. The unsolvable city tucked into Chaleur Bay. The Gordian knot as political theology. Doesn\'t explain itself. Buying fuel at unusual rates.' },
+  pescassa:   { desc: 'The maritime outlier at St. John\'s, Newfoundland. Epic Latin — the language of the net and the oar. Arrived in boats. Never left. The easternmost city in the world.' },
+  ealdenburg: { desc: 'The Old Fort. Island city at the confluence of rivers. Where the Witenagemot meets to choose the king. The Ring lies to the north.' },
+  suryapura:  { desc: 'Temple complex of golden spires on Mount Desert Island. The Sun-King resides here. The Trilingual Codex is kept in the Agnihotra temple. The Dawnstone faces the sunrise.' },
+  kichigamswak: { desc: 'The heart of the confederacy at the Niagara junction. No fixed capital — the council fire moves between the clan-seats. The Great Law predates the Tower.' },
+  ring:       { desc: 'The meteor crater where Hengist swore the first oath. Where Ymir hit the ground. Where the oldest ogham circle stands. Three traditions, one site. Tended by the Tuatha dé Gwalenn.' }
+};
+
+// ── COORDINATE PROJECTION ────────────────────────────────────
+function project(lat, lon, imgWidth, imgHeight) {
+  const x = ((lon - MAP_BOUNDS.west) / (MAP_BOUNDS.east - MAP_BOUNDS.west)) * imgWidth;
+  const y = ((MAP_BOUNDS.north - lat) / (MAP_BOUNDS.north - MAP_BOUNDS.south)) * imgHeight;
+  return { x, y };
+}
+
+// ── BUILD MARKERS ────────────────────────────────────────────
+function buildMarkers() {
+  const img = document.getElementById('mapImage');
+  const layer = document.getElementById('markersLayer');
+  if (!img || !layer) return;
+
+  // Wait for image to load
+  if (!img.complete) {
+    img.addEventListener('load', buildMarkers);
+    return;
+  }
+
+  const imgWidth = img.clientWidth;
+  const imgHeight = img.clientHeight;
+  layer.innerHTML = '';
+
+  CITIES.forEach(city => {
+    const pos = project(city.lat, city.lon, imgWidth, imgHeight);
+
+    const marker = document.createElement('div');
+    marker.className = 'city-marker';
+    marker.style.left = (pos.x / imgWidth * 100) + '%';
+    marker.style.top = (pos.y / imgHeight * 100) + '%';
+    marker.setAttribute('data-id', city.id);
+
+    const dot = document.createElement('div');
+    dot.className = 'city-dot' + (city.pulse ? ' pulse' : '');
+    dot.style.backgroundColor = city.realm === 'ealdor' ? '#6A9464' :
+                                 city.realm === 'kichigamswak' ? '#4A7AB8' :
+                                 city.realm === 'surya' ? '#D4784A' : '#C8980A';
+    marker.appendChild(dot);
+
+    const label = document.createElement('span');
+    label.className = 'city-label';
+    label.textContent = city.name;
+    marker.appendChild(label);
+
+    const sublabel = document.createElement('span');
+    sublabel.className = 'city-sublabel';
+    sublabel.textContent = city.tier.split('·')[0].trim();
+    marker.appendChild(sublabel);
+
+    // Events
+    marker.addEventListener('click', () => showInfo(city.id));
+    marker.addEventListener('mouseenter', (e) => showTooltip(e, city.name));
+    marker.addEventListener('mousemove', moveTooltip);
+    marker.addEventListener('mouseleave', hideTooltip);
+
+    layer.appendChild(marker);
+  });
+}
+
+// ── TOOLTIP ──────────────────────────────────────────────────
+const tooltip = document.getElementById('tooltip');
+
+function showTooltip(e, name) {
+  tooltip.textContent = name;
+  tooltip.style.opacity = '1';
+}
+
+function moveTooltip(e) {
+  const wrapper = document.getElementById('mapWrapper');
+  const rect = wrapper.getBoundingClientRect();
+  tooltip.style.left = (e.clientX - rect.left + 16) + 'px';
+  tooltip.style.top  = (e.clientY - rect.top - 36) + 'px';
+}
+
+function hideTooltip() {
+  tooltip.style.opacity = '0';
+}
+
+// ── INFO PANEL ───────────────────────────────────────────────
+function showInfo(id) {
+  const city = CITIES.find(c => c.id === id);
+  if (!city) return;
+
+  const info = CITY_INFO[id] || { desc: 'Location data not yet recorded.' };
+  const panel = document.getElementById('info-panel');
+  document.getElementById('panelName').textContent = city.name;
+  document.getElementById('panelTier').textContent = city.tier;
+  document.getElementById('panelDesc').textContent = info.desc;
+  panel.classList.add('visible');
+}
+
+document.addEventListener('click', (e) => {
+  const panel = document.getElementById('info-panel');
+  if (!panel.contains(e.target) && !e.target.closest('.city-marker')) {
+    panel.classList.remove('visible');
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.getElementById('info-panel').classList.remove('visible');
+  }
+});
+
+// ── INIT ─────────────────────────────────────────────────────
+window.addEventListener('load', buildMarkers);
+window.addEventListener('resize', buildMarkers);
+</script>
 </body>
 </html>
