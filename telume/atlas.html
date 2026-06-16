@@ -301,18 +301,19 @@
 // ═══════════════════════════════════════════════════════════════
 
 // Calibrated city data — x/y are percentages of image dimensions
+// Replace the CITIES array in atlas.html with this calibrated data:
 const CITIES = [
-  { id: 'nesatta',    name: 'Nešatta',    tier: 'Hittite · Pankus Fire',      x: 75.37, y: 30.48, realm: 'haldorian', pulse: true },
-  { id: 'tihomir',    name: 'Tihomir',    tier: 'OCS · Witness Monastery',    x: 77.92, y: 46.31, realm: 'haldorian' },
-  { id: 'tsarnigrad', name: 'Tsarnigrad', tier: 'Old East Slavic · Fortress', x: 63.10, y: 39.51, realm: 'haldorian' },
-  { id: 'radogost',   name: 'Radogost',   tier: 'Old West Slavic · Trade',    x: 57.55, y: 38.51, realm: 'haldorian' },
-  { id: 'aristopol',  name: 'Aristopol',  tier: 'Macedonian Greek · Empire',  x: 57.28, y: 50.71, realm: 'haldorian' },
-  { id: 'gordeon',    name: 'Gordéon',    tier: 'Phrygian · Unsolvable',      x: 71.74, y: 35.71, realm: 'haldorian' },
-  { id: 'pescassa',   name: 'Pescassa',   tier: 'Epic Latin · Maritime',      x: 96.10, y: 44.71, realm: 'haldorian' },
-  { id: 'ealdenburg', name: 'Ealdenburg', tier: 'Capital of Ealdor',          x: 51.37, y: 58.91, realm: 'ealdor' },
-  { id: 'suryapura',  name: 'Sūryapura',  tier: 'Capital · Sun City',         x: 62.28, y: 65.70, realm: 'surya', pulse: true },
-  { id: 'kichigamswak', name: 'Kichigamswak', tier: 'The Great Lake Ones',     x: 38.01, y: 76.50, realm: 'kichigamswak' },
-  { id: 'ring',       name: 'The Ring',   tier: 'Sacred Crater · Manicouagan', x: 62.55, y: 15.92, realm: 'ealdor' }
+  { id: 'nesatta', name: 'Nešatta', realm: 'haldorian', x: 75.1, y: 31.83 },
+  { id: 'tihomir', name: 'Tihomir', realm: 'haldorian', x: 78.01, y: 47.89 },
+  { id: 'tsarnigrad', name: 'Tsarnigrad', realm: 'haldorian', x: 64.74, y: 38.68 },
+  { id: 'radogost', name: 'Radogost', realm: 'haldorian', x: 57.64, y: 40.08 },
+  { id: 'aristopol', name: 'Aristopol', realm: 'haldorian', x: 56.92, y: 51.67 },
+  { id: 'gordeon', name: 'Gordéon', realm: 'haldorian', x: 71.92, y: 37.08 },
+  { id: 'pescassa', name: 'Pescassa', realm: 'haldorian', x: 96.1, y: 46.87 },
+  { id: 'ealdenburg', name: 'Ealdenburg', realm: 'ealdor', x: 51.19, y: 60.27 },
+  { id: 'suryapura', name: 'Sūryapura', realm: 'surya', x: 62.19, y: 67.87 },
+  { id: 'ring', name: 'The Ring', realm: 'ealdor', x: 62.64, y: 17.29 },
+  { id: 'kichigamswak', name: 'Kichigamswak', realm: 'kichigamswak', x: 38.01, y: 77.66 },
 ];
 
 const CITY_INFO = {
