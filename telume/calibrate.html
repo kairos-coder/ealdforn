@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telumë · Atlas Calibration Tool</title>
+  <style>
+    body {
+      background: #1a1008;
+      color: #e8dcc8;
+      font-family: 'Cinzel', serif;
+      padding: 1rem;
+    }
+    h1 { font-size: 1.2rem; letter-spacing: 3px; text-align: center; margin-bottom: 0.5rem; }
+    .instructions {
+      text-align: center;
+      font-size: 0.7rem;
+      color: #8a6008;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+    .instructions .current {
+      color: #c8980a;
+      font-weight: bold;
+    }
+    .container {
+      position: relative;
+      max-width: 1100px;
+      margin: 0 auto;
+      cursor: crosshair;
+    }
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .marker {
+      position: absolute;
+      width: 10px; height: 10px;
+      background: #c8980a;
+      border: 2px solid #1a1008;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 10;
+    }
+    .marker .label {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      font-size: 0.5rem;
+      color: #c8980a;
+      text-shadow: 0 0 4px #1a1008;
+    }
+    .queue {
+      max-width: 1100px;
+      margin: 1rem auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .queue-item {
+      padding: 0.3rem 0.6rem;
+      border: 1px solid #5a4008;
+      border-radius: 3px;
+      font-size: 0.55rem;
+      color: #8a6008;
+    }
+    .queue-item.done {
+      border-color: #6a9464;
+      color: #6a9464;
+    }
+    .queue-item.current {
+      border-color: #c8980a;
+      color: #c8980a;
+      animation: pulse 1s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .output {
+      max-width: 1100px;
+      margin: 1rem auto;
+      background: #0d0d0d;
+      border: 1px solid #5a4008;
+      padding: 1rem;
+      font-family: monospace;
+      font-size: 0.65rem;
+      color: #6a9464;
+      white-space: pre-wrap;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .btn-row {
+      text-align: center;
+      margin: 1rem;
+    }
+    button {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      margin: 0 0.3rem;
+      border: 1px solid #8a6008;
+      background: transparent;
+      color: #c8980a;
+      cursor: pointer;
+    }
+    button:hover {
+      background: rgba(200,152,10,0.1);
+    }
+    button.danger {
+      border-color: #8b2500;
+      color: #c87070;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Atlas Calibration Tool</h1>
+<div class="instructions">
+  Click each city on the map in order.<br>
+  Current target: <span class="current" id="currentTarget">Nešatta</span><br>
+  <span id="remaining">10 remaining</span>
+</div>
+
+<div class="queue" id="queue"></div>
+
+<div class="container" id="mapContainer">
+  <img src="images/atlas.png" alt="Calibration Map" id="mapImage" />
+</div>
+
+<div class="btn-row">
+  <button onclick="undoLast()">Undo Last</button>
+  <button class="danger" onclick="resetAll()">Reset All</button>
+  <button onclick="copyOutput()">Copy JSON</button>
+</div>
+
+<div class="output" id="output">Click the map to begin calibration...</div>
+
+<script>
+// ── CITY QUEUE ───────────────────────────────────────────────
+const CITIES = [
+  { id: 'nesatta',    name: 'Nešatta',    realm: 'haldorian' },
+  { id: 'tihomir',    name: 'Tihomir',    realm: 'haldorian' },
+  { id: 'tsarnigrad', name: 'Tsarnigrad', realm: 'haldorian' },
+  { id: 'radogost',   name: 'Radogost',   realm: 'haldorian' },
+  { id: 'aristopol',  name: 'Aristopol',  realm: 'haldorian' },
+  { id: 'gordeon',    name: 'Gordéon',    realm: 'haldorian' },
+  { id: 'pescassa',   name: 'Pescassa',   realm: 'haldorian' },
+  { id: 'ealdenburg', name: 'Ealdenburg', realm: 'ealdor' },
+  { id: 'suryapura',  name: 'Sūryapura',  realm: 'surya' },
+  { id: 'ring',       name: 'The Ring',   realm: 'ealdor' },
+  { id: 'kichigamswak', name: 'Kichigamswak', realm: 'kichigamswak' }
+];
+
+let currentIndex = 0;
+let positions = [];
+
+// ── BUILD QUEUE DISPLAY ──────────────────────────────────────
+function buildQueue() {
+  const queue = document.getElementById('queue');
+  queue.innerHTML = CITIES.map((c, i) => {
+    let cls = 'queue-item';
+    if (i < currentIndex) cls += ' done';
+    if (i === currentIndex) cls += ' current';
+    return `<div class="${cls}">${c.name}</div>`;
+  }).join('');
+  document.getElementById('currentTarget').textContent = 
+    currentIndex < CITIES.length ? CITIES[currentIndex].name : 'DONE';
+  document.getElementById('remaining').textContent = 
+    (CITIES.length - currentIndex) + ' remaining';
+}
+
+// ── HANDLE CLICK ─────────────────────────────────────────────
+document.getElementById('mapContainer').addEventListener('click', (e) => {
+  if (currentIndex >= CITIES.length) return;
+
+  const img = document.getElementById('mapImage');
+  const rect = img.getBoundingClientRect();
+  const containerRect = document.getElementById('mapContainer').getBoundingClientRect();
+
+  // Calculate position as percentage of image dimensions
+  const xPct = ((e.clientX - rect.left) / rect.width * 100).toFixed(2);
+  const yPct = ((e.clientY - rect.top) / rect.height * 100).toFixed(2);
+
+  const city = CITIES[currentIndex];
+  positions.push({
+    id: city.id,
+    name: city.name,
+    realm: city.realm,
+    xPct: parseFloat(xPct),
+    yPct: parseFloat(yPct)
+  });
+
+  // Place visual marker
+  const marker = document.createElement('div');
+  marker.className = 'marker';
+  marker.style.left = xPct + '%';
+  marker.style.top = yPct + '%';
+  marker.innerHTML = `<span class="label">${city.name}</span>`;
+  marker.style.backgroundColor = 
+    city.realm === 'ealdor' ? '#6A9464' :
+    city.realm === 'kichigamswak' ? '#4A7AB8' :
+    city.realm === 'surya' ? '#D4784A' : '#C8980A';
+  document.getElementById('mapContainer').appendChild(marker);
+
+  currentIndex++;
+  buildQueue();
+  updateOutput();
+
+  if (currentIndex >= CITIES.length) {
+    document.getElementById('currentTarget').textContent = 'ALL DONE';
+  }
+});
+
+// ── UPDATE OUTPUT ────────────────────────────────────────────
+function updateOutput() {
+  const output = document.getElementById('output');
+  if (positions.length === 0) {
+    output.textContent = 'Click the map to begin calibration...';
+    return;
+  }
+
+  // Generate the JavaScript array for atlas.html
+  const jsArray = positions.map(p => 
+    `  { id: '${p.id}', name: '${p.name}', realm: '${p.realm}', x: ${p.xPct}, y: ${p.yPct} },`
+  ).join('\n');
+
+  // Generate the full replacement code
+  const code = `// Replace the CITIES array in atlas.html with this calibrated data:
+const CITIES = [
+${jsArray}
+];`;
+
+  output.textContent = code;
+}
+
+// ── UNDO ─────────────────────────────────────────────────────
+function undoLast() {
+  if (currentIndex === 0) return;
+  currentIndex--;
+  positions.pop();
+  // Remove last marker
+  const markers = document.querySelectorAll('.marker');
+  if (markers.length > 0) {
+    markers[markers.length - 1].remove();
+  }
+  buildQueue();
+  updateOutput();
+}
+
+// ── RESET ────────────────────────────────────────────────────
+function resetAll() {
+  currentIndex = 0;
+  positions = [];
+  document.querySelectorAll('.marker').forEach(m => m.remove());
+  buildQueue();
+  updateOutput();
+}
+
+// ── COPY ─────────────────────────────────────────────────────
+function copyOutput() {
+  const output = document.getElementById('output').textContent;
+  navigator.clipboard.writeText(output).then(() => {
+    alert('Calibration data copied to clipboard!');
+  });
+}
+
+// ── INIT ─────────────────────────────────────────────────────
+buildQueue();
+updateOutput();
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'z' && (e.ctrlKey || e.metaKey)) {
+    e.preventDefault();
+    undoLast();
+  }
+  if (e.key === 'Escape') {
+    resetAll();
+  }
+});
+</script>
+</body>
+</html>
