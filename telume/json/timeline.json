@@ -2,17 +2,17 @@
   "meta": {
     "world": "Telumë",
     "calendar": "Haldorian Reckoning",
-    "epoch": "Year 0 — The Collapse (Tower of Babel)",
-    "description": "A chronicle of major events in Telumë from the Collapse to the present age. Compiled from Sūrya, Haldorian, Ealdor, and Kichigamswak sources. Disputed events are noted. Gaps are preserved.",
-    "version": "1.0.0",
-    "lastUpdated": "Year 892 — Brother Eadwine, Tihomir Monastery"
+    "epoch": "Year 0 — The Collapse (Tower of Babel) · ~2200 BCE",
+    "description": "A chronicle of major events in Telumë from the Collapse to the present age. The Haldorian Reckoning counts from Year 0. Approximate Common Era equivalents are given for reference. Compiled from Sūrya, Haldorian, Ealdor, and Kichigamswak sources. Disputed events are noted. Gaps are preserved.",
+    "version": "2.0.0",
+    "lastUpdated": "Year 3450 — Present Day · ~1250 CE · Little Ice Age onset"
   },
 
   "eras": [
     {
       "id": "pre-collapse",
       "name": "Before the Collapse",
-      "years": "Before Year 0",
+      "years": "Before Year 0 · Before ~2200 BCE",
       "description": "The age of one language. Adzmyst spoken by all. The Rabbit walks the earth. Nokomis tends the fire.",
       "events": [
         {
@@ -39,7 +39,7 @@
     {
       "id": "collapse",
       "name": "The Collapse",
-      "years": "Year 0–50",
+      "years": "Year 0–50 · ~2200–2150 BCE",
       "description": "The Tower falls. The language shatters into five fragments. The storm god Tarḫunt departs. The Flood reshapes the Bay of Ealdforn. The peoples scatter.",
       "events": [
         {
@@ -72,7 +72,7 @@
     {
       "id": "early-kingdoms",
       "name": "The Early Kingdoms",
-      "years": "Year 50–315",
+      "years": "Year 50–315 · ~2150–1885 BCE",
       "description": "The four realms take shape. Sūrya builds its temple-complex. Ealdor elects its kings. The Haldorian city-states war and trade. The Dawnstone is carved.",
       "events": [
         {
@@ -108,40 +108,41 @@
         },
         {
           "year": 315,
-          "event": "The Pankus Accord is signed at Nešatta. The Haldorian Republic is chartered. Seven city-states. No king. No capital. The assembly meets every seven years. The 'no king' clause is carved above every meeting hall — except in Tsarnigrad, where it will be effaced and recarved four times in the next five centuries.",
+          "event": "The Pankus Accord is signed at Nešatta. The Haldorian Republic is chartered. Seven city-states. No king. No capital. The assembly meets every seven years. The 'no king' clause is carved above every meeting hall — except in Tsarnigrad, where it will be effaced and recarved multiple times over the centuries.",
           "source": "Nešatta Codex · Pankus Accord charter",
           "disputed": false
         }
       ]
     },
     {
-      "id": "republic-era",
-      "name": "The Republic Era",
-      "years": "Year 315–847",
-      "description": "The Haldorian Republic stabilizes. The monastic orders are founded. The Nešatta Codex is transcribed. The Lost Tales are compiled.",
+      "id": "long-silence",
+      "name": "The Long Silence",
+      "years": "Year 315–2900 · ~1885–700 BCE",
+      "description": "A period of consolidation, slow growth, and few written records. The kingdoms stabilize. Trade routes open. The monastic traditions begin in oral form. The Agnihotra Śāstra is composed and censored. The Ātravan tradition goes underground. The Galdr-Gemyndigan begin their oral chronicles at the Ring. Few documents survive from this era. What remains is fragmentary.",
       "events": [
         {
-          "year": 320,
-          "event": "The Tihomir Monastery is founded on the Magdalen Islands. Old Church Slavonic monks. Witnesses, not voters. They begin keeping the written record.",
-          "source": "Tihomir monastery charter",
+          "year": "~500",
+          "event": "The Agnihotra Śāstra is composed by the Metoullin priesthood. The Sun-King's censors remove three verses. The Ātravan reject the text in its entirety and compose their own oral tradition — the Ātarš Apstāna.",
+          "source": "Agnihotra Śāstra colophon · Ātravan oral tradition",
+          "disputed": true,
+          "disputeNote": "The exact date of composition is unknown. Metoullin sources claim the text was revealed by the fire itself at the founding of the Agnihotra temple. Ātravan sources claim it was written by a committee of priests to curry favor with the throne."
+        },
+        {
+          "year": "~1000",
+          "event": "The Galdr-Gemyndigan order begins its oral chronicle at the Ring. The Ātravan coal brought in Year 279 is still burning. A succession of 'silent brothers' — descendants or successors of the original young berserker — tend it. None of them speak. The Galdr-Gemyndigan learn to read the coal's flickering.",
+          "source": "Galdr-Gemyndigan oral tradition · later transcribed in the Ring Chronicle",
           "disputed": false
         },
         {
-          "year": 347,
-          "event": "The 'present' of the Republican calendar — the year from which forward-dating begins in many Haldorian documents.",
-          "source": "Various",
+          "year": "~1500",
+          "event": "The Nešatta archive reaches its present form. Clay tablets organized by era and language. The glyph archive is sealed in the deepest chamber. Only the chief archivist may enter.",
+          "source": "Nešatta archive inventory",
           "disputed": false
         },
         {
-          "year": 520,
-          "event": "The Galdr-Gemyndigan order is formally chartered at the Ring. Their founding document acknowledges 'the silent brother from the south' — the now-elderly Ātravan who still tends the coal. The coal is still burning.",
-          "source": "Galdr-Gemyndigan charter",
-          "disputed": false
-        },
-        {
-          "year": 847,
-          "event": "Bogumil transcribes the Nešatta Codex at Tihomir Monastery. Seven tablets. Three translatable. One missing. One unreadable. One sealed. One blank. Bogumil notes: 'I have copied what I cannot read. The gaps are my ignorance, not the stone's.'",
-          "source": "Nešatta Codex, Colophon",
+          "year": "~2500",
+          "event": "The Trilingual Codex is copied and recopied. The original Dawnstone shows signs of weathering. The Old Persian face is nearly illegible. The Avestan face is worn but readable. The Vedic face is repainted in gold leaf by order of the Sun-King.",
+          "source": "Sūryapura temple records",
           "disputed": false
         }
       ]
@@ -149,25 +150,96 @@
     {
       "id": "age-of-chronicles",
       "name": "The Age of Chronicles",
-      "years": "Year 847–present",
-      "description": "The great compilations. The Lost Tales. The Ealdenbóc. The expansion of the monastic libraries. The Medieval Warm Period begins its slow decline.",
+      "years": "Year 2900–3200 · ~700–1000 CE",
+      "description": "The great written compilations. The monastic orders are formally chartered. The oral traditions are set down on vellum. The Medieval Warm Period enables travel, trade, and the exchange of manuscripts between the realms.",
       "events": [
         {
-          "year": 892,
+          "year": 2950,
+          "event": "The Tihomir Monastery is formally chartered on the Magdalen Islands. Old Church Slavonic monks. Witnesses, not voters in the Pankus. They begin keeping the written record. The monastery's charter specifies that it will never vote, never hold office, and never refuse a request for shelter.",
+          "source": "Tihomir monastery charter",
+          "disputed": false
+        },
+        {
+          "year": 3000,
+          "event": "Bogumil transcribes the Nešatta Codex at Tihomir Monastery. Seven tablets. Three translatable. One missing (removed by a delegation from Tsarnigrad). One in an unreadable script. One sealed with clay impressed with a glyph Bogumil refuses to reproduce. One blank — clay fired, surface prepared, nothing written. Bogumil notes: 'I have copied what I cannot read. The gaps are my ignorance, not the stone's.'",
+          "source": "Nešatta Codex, Colophon",
+          "disputed": false
+        },
+        {
+          "year": 3010,
+          "event": "The Galdr-Gemyndigan order is formally chartered at the Ring. Their founding document acknowledges 'the silent brother from the south' — the successor of the original young Ātravan, still tending the coal after nearly three thousand years. The coal is still burning. The charter specifies that the order will keep both flames — the Ring fire and the Ātravan coal — burning in perpetuity, but will never allow them to touch.",
+          "source": "Galdr-Gemyndigan charter",
+          "disputed": false
+        },
+        {
+          "year": 3050,
           "event": "Brother Eadwine compiles The Lost Tales of Telumë at Tihomir Monastery. He synthesizes Sūrya, Nešatta, and Kichigamswak sources. His colophon notes: 'They do not agree. I have not made them agree. The Rabbit does not want them to agree.'",
           "source": "The Lost Tales of Telumë, Coda",
           "disputed": false
         },
         {
-          "year": 950,
-          "event": "The Medieval Warm Period reaches its peak. Sea routes are fully open. Trade flows freely between all four realms. The Pankus meets without interruption.",
-          "source": "Tihomir climate records",
+          "year": 3100,
+          "event": "The Ealdenbóc (Se Ǣrest Hlāford Hengist) is set down in writing by the Galdr-Gemyndigan. The oral traditions of the Markfolk, Fellfolk, and Tuathafolk are recorded. The genealogies are compiled. The sayings of the wise are collected. Marginal corrections from living skalds are included — some angry, some grieving.",
+          "source": "Ealdenbóc",
+          "disputed": false
+        }
+      ]
+    },
+    {
+      "id": "warm-period",
+      "name": "The Warm Period Peak",
+      "years": "Year 3200–3350 · ~1000–1150 CE",
+      "description": "The Medieval Warm Period at its height. Sea routes fully open. Trade flourishing. The Pankus meets without interruption. The kingdoms are connected. The great libraries expand.",
+      "events": [
+        {
+          "year": 3200,
+          "event": "The Pankus meets for the 412th time since the Accord. All seven city-states send delegations. The 'no king' clause is reaffirmed. Tsarnigrad abstains.",
+          "source": "Haldorian Republic assembly records",
           "disputed": false
         },
         {
-          "year": 1247,
-          "event": "Senator Claudius, writing from the Bay of Ealdforn, references the Nešatta Codex in a letter to the Pankus. He quotes the central prohibition: 'LUGAL-uš lē ēšta — a king shall not be.' The letter is entered into the Republican record.",
+          "year": 3300,
+          "event": "The Sun-King's library at Sūryapura reaches its greatest extent. Over three thousand palm-leaf manuscripts. The Agnihotra Śāstra is recopied with new commentary. The censored verses are still missing. The Ātravan still remember them.",
+          "source": "Sūryapura temple inventory",
+          "disputed": false
+        }
+      ]
+    },
+    {
+      "id": "present-age",
+      "name": "The Present Age · The Cooling",
+      "years": "Year 3350–3450 · ~1150–1250 CE",
+      "description": "The Medieval Warm Period declines. The Little Ice Age begins. Sea routes narrow. The northern passages freeze. The kingdoms face pressure from climate, from each other, and from forces older than the Collapse.",
+      "events": [
+        {
+          "year": 3380,
+          "event": "The first recorded failure of the Pankus to convene. Three city-states send word that the sea routes are impassable. The assembly is postponed. It meets two years late.",
+          "source": "Haldorian Republic assembly records",
+          "disputed": false
+        },
+        {
+          "year": 3400,
+          "event": "Senator Claudius, writing from the Bay of Ealdforn, references the Nešatta Codex in a letter to the Pankus. He quotes the central prohibition: 'LUGAL-uš lē ēšta — a king shall not be.' The letter warns of 'the cold that comes from the north and the hunger that comes from the cold.' The letter is entered into the Republican record.",
           "source": "Haldorian Republic senatorial archives",
+          "disputed": false
+        },
+        {
+          "year": 3420,
+          "event": "Tsarnigrad stockpiles grain. The other city-states accuse it of hoarding. Tsarnigrad replies that it is preparing for 'the winter that will not end.' The Pankus debates sanctions. No decision is reached.",
+          "source": "Haldorian Republic assembly records",
+          "disputed": true,
+          "disputeNote": "Tsarnigrad denies hoarding. The Tihomir chronicle notes: 'Tsarnigrad has always prepared for winters. This winter is different. The granaries are full. The gates are closed. The city does not explain itself.'"
+        },
+        {
+          "year": 3440,
+          "event": "The sea ice reaches the northern fjords of Ealdor. Fellfolk ships can no longer reach the open water. The Thing is deadlocked — some Jarls want to raid south, some want to stay and freeze, some want to abandon the old territory entirely.",
+          "source": "Ealdenbóc, marginalia · Fellfolk oral reports",
+          "disputed": false
+        },
+        {
+          "year": 3450,
+          "event": "Present day. The Little Ice Age advances. The Pankus convenes at Nešatta for what may be the last time before the ice makes the journey impossible. The Nešatta Codex is read aloud. The seventh tablet is still blank. The storm god has not returned. The coal at the Ring is still burning.",
+          "source": "Current · This chronicle is being written now",
           "disputed": false
         }
       ]
@@ -177,18 +249,24 @@
   "ongoing": [
     {
       "id": "coal",
-      "description": "The Ātravan coal at the Ring monastery. Brought by the young berserker in Year 279. Still burning as of the latest record. The Galdr-Gemyndigan tend it alongside their own fire. The two flames have never been allowed to touch.",
-      "lastRecorded": "Year 892 — Brother Eadwine notes: 'The coal is still burning. The silent brother died long ago. The fire has not forgotten him.'"
+      "name": "The Ātravan Coal",
+      "description": "The Ātravan coal at the Ring monastery. Brought by the young berserker in Year 279. Still burning as of the latest record (Year 3450). The Galdr-Gemyndigan tend it alongside their own fire. The two flames have never been allowed to touch. The succession of silent brothers — descendants or successors of the original young berserker — has continued unbroken for over three thousand years. The current silent brother is the eighty-seventh of the line. He has never spoken. The coal is still burning.",
+      "firstRecorded": "Year 279",
+      "lastRecorded": "Year 3450 — Present day"
     },
     {
       "id": "sword",
-      "description": "The sword of Ātarš-Gaēθa. Never recovered after his execution in Year 281. The Ātravan claim it was smuggled to Ealdor. The Metoullin claim it was destroyed. The Tihomir chronicle notes: 'The fire knows where the sword is.'",
-      "lastRecorded": "Year 847 — Bogumil notes in the margin of the Nešatta Codex: 'A pilgrim from Ealdor claims to have seen a sword that burns without fuel in the monastery at the Ring. I do not know if this is true. I write it here in case it is.'"
+      "name": "The Sword of Ātarš-Gaēθa",
+      "description": "Never recovered after his execution in Year 281. The Ātravan claim it was smuggled to Ealdor and hidden at the Ring. The Metoullin claim it was melted down and reforged. The Tihomir chronicle has recorded seventeen separate claims of its discovery over the centuries. None have been verified. The Ātravan say the sword will ignite only for the true heir of Ātarš-Gaēθa — and that heir has not yet appeared.",
+      "firstRecorded": "Year 281",
+      "lastRecorded": "Year 3400 — Senator Claudius notes: 'A mercenary in Aristopol claims to carry the burning sword. He charges money to show it. The sword does not burn. The mercenary is a fraud. But there is a scar on his palm that looks like an old burn.'"
     },
     {
       "id": "blank-tablet",
-      "description": "The seventh tablet of the Nešatta Codex. Blank. Clay fired. Surface prepared. Nothing written. The storm god has not returned to write the final tablet. The Pankus waits.",
-      "lastRecorded": "Year 847 — Bogumil notes: 'I do not know what this means. The abbot says it means the covenant is not finished.'"
+      "name": "The Seventh Tablet",
+      "description": "The seventh tablet of the Nešatta Codex. Blank. Clay fired. Surface prepared. Nothing written. The storm god Tarḫunt has not returned to write the final tablet. The Pankus waits. The tablet is displayed at every assembly. Delegates are invited to write on it. No one has. Bogumil noted: 'I do not know what this means. The abbot says it means the covenant is not finished.'",
+      "firstRecorded": "Year 3000 — Bogumil's transcription",
+      "lastRecorded": "Year 3450 — Present day. The tablet is still blank."
     }
   ],
 
@@ -205,7 +283,17 @@
     },
     {
       "id": "sword-location",
-      "description": "Where is the sword of Ātarš-Gaēθa? Ealdor monastery? Sūryapura (melted down)? Still hidden in the eastern mountains?",
+      "description": "Where is the sword of Ātarš-Gaēθa? Ring monastery? Sūryapura (melted down)? Eastern mountains? The seventeen claims of discovery are documented in the Tihomir chronicle. None verified.",
+      "status": "Unresolved"
+    },
+    {
+      "id": "atrava-coal-origin",
+      "description": "Is the coal at the Ring truly the original coal brought by the young berserker in Year 279? The Galdr-Gemyndigan insist it is. Skeptics note that coal cannot burn for three thousand years. The Galdr-Gemyndigan reply that the coal is not burning — the fire is. The coal is just what the fire lives in.",
+      "status": "Unresolved"
+    },
+    {
+      "id": "silent-brother-lineage",
+      "description": "Are the silent brothers truly a continuous lineage from the original young berserker? The Galdr-Gemyndigan maintain a genealogy. Critics note gaps in the early centuries. The current silent brother does not speak. He cannot be asked.",
       "status": "Unresolved"
     }
   ]
