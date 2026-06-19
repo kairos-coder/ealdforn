@@ -1,0 +1,212 @@
+{
+  "meta": {
+    "world": "Telumë",
+    "calendar": "Haldorian Reckoning",
+    "epoch": "Year 0 — The Collapse (Tower of Babel)",
+    "description": "A chronicle of major events in Telumë from the Collapse to the present age. Compiled from Sūrya, Haldorian, Ealdor, and Kichigamswak sources. Disputed events are noted. Gaps are preserved.",
+    "version": "1.0.0",
+    "lastUpdated": "Year 892 — Brother Eadwine, Tihomir Monastery"
+  },
+
+  "eras": [
+    {
+      "id": "pre-collapse",
+      "name": "Before the Collapse",
+      "years": "Before Year 0",
+      "description": "The age of one language. Adzmyst spoken by all. The Rabbit walks the earth. Nokomis tends the fire.",
+      "events": [
+        {
+          "year": "Before 0",
+          "event": "Mategwas carries fire from the underworld. Nokomis names him Fyrsthara — the Fire-Carrier.",
+          "source": "The Lost Tales of Telumë, Tale I",
+          "disputed": false
+        },
+        {
+          "year": "Before 0",
+          "event": "Mategwas weaves his brother Lox from twigs, grass, fur, and light. Lox squanders the gift of fire and freezes. Raccoon finds him in the spring. He learns nothing.",
+          "source": "The Lost Tales of Telumë, Tale VII",
+          "disputed": true,
+          "disputeNote": "The Sūrya priests reject this tale. They claim Lox was not woven but born, and that he froze not from carelessness but from challenging the Sun-King's ancestor."
+        },
+        {
+          "year": "Before 0",
+          "event": "The Tower is built on the plain of Shinar. Mategwas speaks the first mantras at its base. The builders do not listen.",
+          "source": "The Lost Tales of Telumë, Tale I · The Dawnstone · The Book of Babel",
+          "disputed": false
+        }
+      ]
+    },
+    {
+      "id": "collapse",
+      "name": "The Collapse",
+      "years": "Year 0–50",
+      "description": "The Tower falls. The language shatters into five fragments. The storm god Tarḫunt departs. The Flood reshapes the Bay of Ealdforn. The peoples scatter.",
+      "events": [
+        {
+          "year": 0,
+          "event": "The Tower falls. The one language shatters. The peoples are scattered. The storm god Tarḫunt departs — where he went is not recorded.",
+          "source": "Nešatta Codex, Tablets 1–2 · The Book of Babel",
+          "disputed": false
+        },
+        {
+          "year": 0,
+          "event": "Mategwas vanishes at the scattering. He is not seen again — except when he is.",
+          "source": "The Lost Tales of Telumë, Coda",
+          "disputed": true,
+          "disputeNote": "The Sūrya priests claim he ascended into the Sun. The Kichigamswak elders say he went north and is still running. The Nešatta archivists file him under 'whereabouts unknown — presumed present.'"
+        },
+        {
+          "year": "1–50",
+          "event": "The Flood. Melting ice reshapes the Bay of Ealdforn. Sea routes open. The coastline takes its present form.",
+          "source": "Kichigamswak oral tradition · Prūsisk amber records",
+          "disputed": false
+        },
+        {
+          "year": 47,
+          "event": "First siege of Aristopol by Ealdor. The Markfolk attempt to take the cliff-city at the river narrows. The siege fails. The walls hold.",
+          "source": "Ealdenbóc, The Genealogies",
+          "disputed": false
+        }
+      ]
+    },
+    {
+      "id": "early-kingdoms",
+      "name": "The Early Kingdoms",
+      "years": "Year 50–315",
+      "description": "The four realms take shape. Sūrya builds its temple-complex. Ealdor elects its kings. The Haldorian city-states war and trade. The Dawnstone is carved.",
+      "events": [
+        {
+          "year": 200,
+          "event": "The Dawnstone is carved at Sūryapura. The Trilingual Codex is begun. Vedic Sanskrit, Avestan, and Old Persian on three faces of a single monolith.",
+          "source": "The Dawnstone",
+          "disputed": false
+        },
+        {
+          "year": 278,
+          "event": "The Ātravan Schism — Burning of the Eastern Archives. The berserker Ātarš-Gaēθa leads a night raid on three Metoullin scriptoriums. Eleven priests killed. Palm-leaf copies of the Agnihotra Śāstra burned. He paints his taunt on the wall: 'Fire is first. The king is ash.'",
+          "source": "Sūrya court records · Ātravan oral tradition · Tihomir chronicle",
+          "disputed": true,
+          "disputeNote": "Metoullin sources claim the archives were rebuilt within a year. Ātravan sources claim the fire from the burning shelves spread to three villages. The Tihomir chronicle notes both claims and adds: 'The fire knows what it burned.'"
+        },
+        {
+          "year": 279,
+          "event": "A young Ātravan berserker — unnamed, the Fire-Place carrier — is separated from his warband during the retreat. He crosses into Ealdor carrying a copper brazier with a coal from the eternal flame. A peasant named Cerdic, son of Wulf, encounters him on the road south of Ealdenburg. King Æthelwulf places the boy in the care of the Galdr-Gemyndigan at the Ring. The coal is still burning.",
+          "source": "Ealdenbóc, The Genealogies · Galdr-Gemyndigan monastery records",
+          "disputed": false
+        },
+        {
+          "year": 281,
+          "event": "Ātarš-Gaēθa is captured and executed by fire at Sūryapura. The Sun-King himself lights the pyre. The berserker's last word is 'ātarš.' His sword is never recovered. The Ātravan say it was smuggled to Ealdor. The Metoullin say it was melted down. The Tihomir chronicle notes: 'The young berserker at the Ring has still not spoken. The coal is still burning. The fire knows where the sword is.'",
+          "source": "Sūrya court records · Ātravan oral tradition · Tihomir chronicle",
+          "disputed": true
+        },
+        {
+          "year": 312,
+          "event": "Fourth siege of Aristopol by Ealdor. The city nearly falls. Tsarnigrad sends ships. The siege breaks. The Haldorian city-states realize they must unify or perish.",
+          "source": "Ealdenbóc, The Genealogies · Haldorian Republic charter preamble",
+          "disputed": false
+        },
+        {
+          "year": 315,
+          "event": "The Pankus Accord is signed at Nešatta. The Haldorian Republic is chartered. Seven city-states. No king. No capital. The assembly meets every seven years. The 'no king' clause is carved above every meeting hall — except in Tsarnigrad, where it will be effaced and recarved four times in the next five centuries.",
+          "source": "Nešatta Codex · Pankus Accord charter",
+          "disputed": false
+        }
+      ]
+    },
+    {
+      "id": "republic-era",
+      "name": "The Republic Era",
+      "years": "Year 315–847",
+      "description": "The Haldorian Republic stabilizes. The monastic orders are founded. The Nešatta Codex is transcribed. The Lost Tales are compiled.",
+      "events": [
+        {
+          "year": 320,
+          "event": "The Tihomir Monastery is founded on the Magdalen Islands. Old Church Slavonic monks. Witnesses, not voters. They begin keeping the written record.",
+          "source": "Tihomir monastery charter",
+          "disputed": false
+        },
+        {
+          "year": 347,
+          "event": "The 'present' of the Republican calendar — the year from which forward-dating begins in many Haldorian documents.",
+          "source": "Various",
+          "disputed": false
+        },
+        {
+          "year": 520,
+          "event": "The Galdr-Gemyndigan order is formally chartered at the Ring. Their founding document acknowledges 'the silent brother from the south' — the now-elderly Ātravan who still tends the coal. The coal is still burning.",
+          "source": "Galdr-Gemyndigan charter",
+          "disputed": false
+        },
+        {
+          "year": 847,
+          "event": "Bogumil transcribes the Nešatta Codex at Tihomir Monastery. Seven tablets. Three translatable. One missing. One unreadable. One sealed. One blank. Bogumil notes: 'I have copied what I cannot read. The gaps are my ignorance, not the stone's.'",
+          "source": "Nešatta Codex, Colophon",
+          "disputed": false
+        }
+      ]
+    },
+    {
+      "id": "age-of-chronicles",
+      "name": "The Age of Chronicles",
+      "years": "Year 847–present",
+      "description": "The great compilations. The Lost Tales. The Ealdenbóc. The expansion of the monastic libraries. The Medieval Warm Period begins its slow decline.",
+      "events": [
+        {
+          "year": 892,
+          "event": "Brother Eadwine compiles The Lost Tales of Telumë at Tihomir Monastery. He synthesizes Sūrya, Nešatta, and Kichigamswak sources. His colophon notes: 'They do not agree. I have not made them agree. The Rabbit does not want them to agree.'",
+          "source": "The Lost Tales of Telumë, Coda",
+          "disputed": false
+        },
+        {
+          "year": 950,
+          "event": "The Medieval Warm Period reaches its peak. Sea routes are fully open. Trade flows freely between all four realms. The Pankus meets without interruption.",
+          "source": "Tihomir climate records",
+          "disputed": false
+        },
+        {
+          "year": 1247,
+          "event": "Senator Claudius, writing from the Bay of Ealdforn, references the Nešatta Codex in a letter to the Pankus. He quotes the central prohibition: 'LUGAL-uš lē ēšta — a king shall not be.' The letter is entered into the Republican record.",
+          "source": "Haldorian Republic senatorial archives",
+          "disputed": false
+        }
+      ]
+    }
+  ],
+
+  "ongoing": [
+    {
+      "id": "coal",
+      "description": "The Ātravan coal at the Ring monastery. Brought by the young berserker in Year 279. Still burning as of the latest record. The Galdr-Gemyndigan tend it alongside their own fire. The two flames have never been allowed to touch.",
+      "lastRecorded": "Year 892 — Brother Eadwine notes: 'The coal is still burning. The silent brother died long ago. The fire has not forgotten him.'"
+    },
+    {
+      "id": "sword",
+      "description": "The sword of Ātarš-Gaēθa. Never recovered after his execution in Year 281. The Ātravan claim it was smuggled to Ealdor. The Metoullin claim it was destroyed. The Tihomir chronicle notes: 'The fire knows where the sword is.'",
+      "lastRecorded": "Year 847 — Bogumil notes in the margin of the Nešatta Codex: 'A pilgrim from Ealdor claims to have seen a sword that burns without fuel in the monastery at the Ring. I do not know if this is true. I write it here in case it is.'"
+    },
+    {
+      "id": "blank-tablet",
+      "description": "The seventh tablet of the Nešatta Codex. Blank. Clay fired. Surface prepared. Nothing written. The storm god has not returned to write the final tablet. The Pankus waits.",
+      "lastRecorded": "Year 847 — Bogumil notes: 'I do not know what this means. The abbot says it means the covenant is not finished.'"
+    }
+  ],
+
+  "disputed": [
+    {
+      "id": "mategwas-vanishing",
+      "description": "What happened to Mategwas at the Scattering? Sūrya: ascended into the Sun. Kichigamswak: went north, still running. Nešatta: whereabouts unknown — presumed present.",
+      "status": "Unresolved"
+    },
+    {
+      "id": "lox-origin",
+      "description": "Was Lox woven by Mategwas (Kichigamswak telling) or born as his twin (Sūrya telling)? The Sūrya priests reject the weaving story as 'folk superstition.' The Kichigamswak elders reject the birth story as 'priestly arrogance.'",
+      "status": "Unresolved"
+    },
+    {
+      "id": "sword-location",
+      "description": "Where is the sword of Ātarš-Gaēθa? Ealdor monastery? Sūryapura (melted down)? Still hidden in the eastern mountains?",
+      "status": "Unresolved"
+    }
+  ]
+}
