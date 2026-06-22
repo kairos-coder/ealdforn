@@ -1,203 +1,348 @@
 {
-    "id": "coal_chapel",
-    "name": "The Coal Chapel",
-    "width": 750,
-    "height": 550,
-    "layers": [
+  "id": "coal_chapel",
+  "name": "The Coal Chapel",
+  "description": "Sanctuary of the Ātravan Flame. A small gothic chapel built into the inner ward of Ealdor Castle. Stone by stone. The fire has never gone out. The Silent Brother has never spoken.",
+  "version": "1.0.0",
+
+  "dimensions": {
+    "width": 800,
+    "height": 600,
+    "perspective": 0.35,
+    "vanishingPoint": { "x": 400, "y": 280 }
+  },
+
+  "stoneConfig": {
+    "colorBase": { "r": 61, "g": 54, "b": 47 },
+    "colorVariance": 18,
+    "courseHeight": 20,
+    "mortarGap": 3,
+    "weathering": 0.35,
+    "highlightColor": { "r": 75, "g": 68, "b": 60 },
+    "shadowColor": { "r": 40, "g": 35, "b": 30 }
+  },
+
+  "walls": [
+    {
+      "id": "far-wall",
+      "type": "wall",
+      "x": 100,
+      "y": 60,
+      "width": 600,
+      "height": 320,
+      "perspective": "none",
+      "z": 1,
+      "openings": [
         {
-            "class": "vault-shadow",
-            "z": 0,
-            "style": {
-                "background": "radial-gradient(ellipse at 50% 30%, rgba(26,20,16,0.1) 0%, rgba(15,12,8,0.7) 70%)"
-            }
-        },
-        {
-            "class": "far-wall",
-            "position": { "x": "5%", "y": "10%", "z": 1 },
-            "width": "90%", "height": "35%",
-            "style": {
-                "background": "linear-gradient(to bottom, #3d362f 0%, #2a2520 100%)",
-                "border": "3px solid #4a4138",
-                "borderBottom": "none",
-                "boxShadow": "inset 0 0 80px rgba(0,0,0,0.5)"
-            }
-        },
-        {
-            "class": "floor",
-            "position": { "x": "5%", "y": "45%", "z": 1 },
-            "width": "90%", "height": "50%",
-            "style": {
-                "background": "linear-gradient(to bottom, #5c4f42 0%, #4a3f35 30%, #3d342b 100%)",
-                "border": "3px solid #4a4138",
-                "borderTop": "none",
-                "boxShadow": "inset 0 30px 60px rgba(0,0,0,0.4)"
-            }
+          "id": "chapel-window",
+          "type": "window",
+          "shape": "gothic_arch",
+          "x": 220,
+          "y": 30,
+          "width": 160,
+          "height": 220,
+          "arch": {
+            "type": "pointed",
+            "innerRadius": 80,
+            "stoneCount": 15,
+            "stoneDepth": 22,
+            "keystoneOversize": 1.4,
+            "springPoint": { "y": 140 }
+          },
+          "tracery": {
+            "type": "geometric",
+            "mullions": 2,
+            "transoms": 1,
+            "glyph": "𐤇",
+            "glyphOpacity": 0.3
+          },
+          "glass": {
+            "colors": ["#1a3040", "#2a4a6a", "#3a5a7a", "#1a3a2a"],
+            "frostBinding": "ice",
+            "frostThresholds": [
+              { "ice": 20, "opacity": 0.1, "height": "15%" },
+              { "ice": 40, "opacity": 0.35, "height": "40%" },
+              { "ice": 60, "opacity": 0.6, "height": "65%" },
+              { "ice": 80, "opacity": 0.85, "height": "90%" },
+              { "ice": 95, "opacity": 1.0, "height": "100%" }
+            ]
+          }
         }
-    ],
-    "objects": [
+      ],
+      "features": [
         {
-            "id": "window",
-            "type": "container",
-            "name": "Chapel Window",
-            "zone": "window",
-            "position": { "x": "center", "y": "15%", "z": 5 },
-            "interaction": {
-                "label": "Look out upon the fjord",
-                "action": "lookOutWindow"
-            },
-            "children": [
-                {
-                    "type": "rect",
-                    "class": "chapel-window-frame",
-                    "width": 140, "height": 200,
-                    "style": {
-                        "background": "linear-gradient(180deg, #1a3040 0%, #2a4a6a 40%, #3a5a7a 100%)",
-                        "border": "8px solid #3d362f",
-                        "borderRadius": "70px 70px 0 0",
-                        "boxShadow": "0 0 30px rgba(58,90,122,0.3), inset 0 0 40px rgba(0,0,0,0.6)"
-                    }
-                },
-                {
-                    "id": "frost-overlay",
-                    "type": "rect",
-                    "width": 124, "height": 184,
-                    "position": { "x": 8, "y": 8 },
-                    "bind": {
-                        "height": "$ice + '%'",
-                        "opacity": "$ice > 20 ? 0.7 : 0"
-                    },
-                    "style": {
-                        "background": "linear-gradient(to top, rgba(200,216,228,0.9) 0%, transparent 100%)",
-                        "transition": "height 1.5s ease"
-                    }
-                }
-            ]
-        },
-        {
-            "id": "brazier",
-            "type": "container",
-            "name": "Ātravan Coal",
-            "zone": "brazier",
-            "position": { "x": "center", "y": "55%", "z": 10 },
-            "interaction": {
-                "label": "Tend the Coal",
-                "action": "tendFire",
-                "cost": { "resource": "Timber", "amount": 1 },
-                "rewards": { "faith": 5, "morale": 5 }
-            },
-            "children": [
-                {
-                    "type": "rect",
-                    "class": "plinth",
-                    "width": 100, "height": 35,
-                    "style": {
-                        "background": "linear-gradient(#5c4f42, #4a3f35)",
-                        "border": "3px solid #3d362f",
-                        "borderRadius": "4px"
-                    }
-                },
-                {
-                    "type": "rect",
-                    "class": "brazier-bowl",
-                    "width": 70, "height": 55,
-                    "position": { "x": "center", "y": -10 },
-                    "style": {
-                        "background": "linear-gradient(#2a2018, #1a1410)",
-                        "border": "4px solid #3d362f",
-                        "borderRadius": "8px 8px 4px 4px"
-                    }
-                },
-                {
-                    "type": "circle",
-                    "class": "coal-glow",
-                    "radius": 20,
-                    "position": { "x": "center", "y": 12 },
-                    "bind": {
-                        "opacity": "1",
-                        "boxShadow": "$faith > 70 ? '0 0 40px #e85d2c, 0 0 80px rgba(196,79,28,0.6)' : '0 0 25px #c44f1c, 0 0 50px rgba(196,79,28,0.3)'"
-                    },
-                    "animation": "coalPulse 3s ease-in-out infinite"
-                }
-            ]
-        },
-        {
-            "id": "silent_brother",
-            "type": "container",
-            "name": "The Silent Brother",
-            "zone": "brother",
-            "position": { "x": "20%", "y": "55%", "z": 8 },
-            "interaction": {
-                "label": "Observe the Brother",
-                "action": "observeBrother"
-            },
-            "children": [
-                {
-                    "type": "rect",
-                    "class": "brother-body",
-                    "width": 30, "height": 45,
-                    "position": { "x": "center", "y": 25 },
-                    "style": {
-                        "background": "linear-gradient(#3d362f, #2a2018)",
-                        "borderRadius": "15px 15px 8px 8px"
-                    }
-                },
-                {
-                    "type": "circle",
-                    "class": "brother-hood",
-                    "radius": 16,
-                    "position": { "x": "center", "y": 5 },
-                    "animation": "brotherBreathe 6s ease-in-out infinite",
-                    "bind": {
-                        "boxShadow": "$silentBrotherSpoke ? '0 0 8px rgba(184,134,11,0.3)' : 'none'"
-                    }
-                }
-            ]
-        },
-        {
-            "id": "wood_stack",
-            "type": "container",
-            "name": "Wood Stack",
-            "zone": "wood",
-            "position": { "x": "8%", "y": "75%", "z": 8 },
-            "interaction": {
-                "label": "Check wood stores",
-                "action": "checkWood"
-            },
-            "children": [
-                {
-                    "id": "log-visual",
-                    "type": "container",
-                    "position": { "x": 0, "y": 0 },
-                    "bind": {
-                        "children": "generateLogs($Timber)"
-                    }
-                }
-            ]
+          "id": "altar-plinth",
+          "type": "plinth",
+          "x": 230,
+          "y": 265,
+          "width": 140,
+          "height": 45,
+          "stoneConfig": {
+            "colorBase": { "r": 75, "g": 65, "b": 55 },
+            "colorVariance": 10,
+            "courseHeight": 28,
+            "weathering": 0.15
+          },
+          "inscription": {
+            "text": "THE FLAME ENDURES",
+            "font": "Cinzel, serif",
+            "size": 8,
+            "color": "rgba(184,134,11,0.5)",
+            "position": { "x": "center", "y": 22 }
+          }
         }
-    ],
-    "particles": [
+      ]
+    },
+    {
+      "id": "left-wall",
+      "type": "wall",
+      "x": 0,
+      "y": 60,
+      "width": 120,
+      "height": 380,
+      "perspective": "recede-left",
+      "z": 0,
+      "features": [
         {
-            "id": "dust",
-            "z": 2,
-            "count": 60,
-            "minSize": 1,
-            "maxSize": 3,
-            "color": "rgba(232,216,176,0.4)",
-            "animationName": "dustDrift",
-            "continuous": false
+          "id": "tally-wall",
+          "type": "tally_marks",
+          "x": 15,
+          "y": 180,
+          "width": 60,
+          "height": 120,
+          "bind": "crisisHistory",
+          "markColor": "rgba(244,228,193,0.2)",
+          "markSize": 10,
+          "groupSize": 5
         },
         {
-            "id": "embers",
-            "z": 4,
-            "count": 8,
-            "minSize": 2,
-            "maxSize": 5,
-            "color": "radial-gradient(circle, #ff6b2b, #c44f1c)",
-            "originX": "50%",
-            "originY": "52%",
-            "animationName": "emberRise",
-            "continuous": true,
-            "interval": 4000
+          "id": "wall-sconce-left",
+          "type": "sconce",
+          "x": 85,
+          "y": 300,
+          "lit": true,
+          "lightColor": "#daa520",
+          "lightRadius": 40,
+          "bind": {
+            "lit": "$faith > 30"
+          }
         }
+      ]
+    },
+    {
+      "id": "right-wall",
+      "type": "wall",
+      "x": 680,
+      "y": 60,
+      "width": 120,
+      "height": 380,
+      "perspective": "recede-right",
+      "z": 0,
+      "features": [
+        {
+          "id": "tablet-niche",
+          "type": "niche",
+          "x": 30,
+          "y": 200,
+          "width": 55,
+          "height": 80,
+          "arch": {
+            "type": "rounded",
+            "radius": 27
+          },
+          "depth": 15,
+          "shelfCount": 3,
+          "bind": {
+            "fragments": "$tabletFragments"
+          }
+        },
+        {
+          "id": "wall-sconce-right",
+          "type": "sconce",
+          "x": 10,
+          "y": 300,
+          "lit": true,
+          "lightColor": "#daa520",
+          "lightRadius": 40,
+          "bind": {
+            "lit": "$faith > 30"
+          }
+        }
+      ]
+    }
+  ],
+
+  "floor": {
+    "id": "chapel-floor",
+    "type": "floor",
+    "x": 60,
+    "y": 370,
+    "width": 680,
+    "height": 200,
+    "perspective": "recede-floor",
+    "stoneConfig": {
+      "colorBase": { "r": 85, "g": 72, "b": 60 },
+      "colorVariance": 22,
+      "courseHeight": 32,
+      "mortarGap": 4,
+      "weathering": 0.55
+    },
+    "pattern": "diagonal",
+    "features": [
+      {
+        "id": "floor-glyphs",
+        "type": "glyph_carving",
+        "glyphs": ["𐤃", "𐤀", "𐤕", "𐤔", "𐤐", "𐤌", "𐤇"],
+        "x": 290,
+        "y": 80,
+        "spacing": 45,
+        "color": "rgba(184,134,11,0.12)",
+        "size": 26
+      },
+      {
+        "id": "approach-path",
+        "type": "worn_path",
+        "from": { "x": 340, "y": 20 },
+        "to": { "x": 340, "y": 140 },
+        "width": 50,
+        "color": "rgba(0,0,0,0.15)"
+      }
     ]
+  },
+
+  "ceiling": {
+    "id": "chapel-ceiling",
+    "type": "vault",
+    "style": "barrel_vault",
+    "x": 100,
+    "y": -30,
+    "width": 600,
+    "height": 100,
+    "z": -1,
+    "color": "#1a1410",
+    "highlightColor": "#2a2520",
+    "ribs": [
+      { "id": "rib-left", "x": 180, "curve": "pointed_arch", "depth": 8, "color": "#3d362f" },
+      { "id": "rib-center", "x": 400, "curve": "pointed_arch", "depth": 10, "color": "#4a4138" },
+      { "id": "rib-right", "x": 620, "curve": "pointed_arch", "depth": 8, "color": "#3d362f" }
+    ],
+    "webbing": {
+      "color": "#1a1410",
+      "coursesVisible": true,
+      "courseColor": "rgba(42,37,32,0.3)"
+    },
+    "bosses": [
+      { "id": "boss-center", "x": 400, "y": -55, "radius": 12, "glyph": "𐤃" },
+      { "id": "boss-left", "x": 280, "y": -40, "radius": 8, "glyph": "𐤀" },
+      { "id": "boss-right", "x": 520, "y": -40, "radius": 8, "glyph": "𐤕" }
+    ]
+  },
+
+  "arches": [
+    {
+      "id": "chancel-arch",
+      "type": "pointed_arch",
+      "span": 400,
+      "height": 280,
+      "springPoint": { "x": 200, "y": 300 },
+      "centerX": 400,
+      "centerY": 60,
+      "innerRadius": 200,
+      "stoneCount": 21,
+      "stoneDepth": 25,
+      "keystoneOversize": 1.5,
+      "columns": {
+        "left": { "x": 190, "y": 300, "width": 30, "height": 80, "capital": true },
+        "right": { "x": 580, "y": 300, "width": 30, "height": 80, "capital": true }
+      }
+    }
+  ],
+
+  "atmosphere": {
+    "dustMotes": {
+      "count": 50,
+      "size": { "min": 1, "max": 3 },
+      "color": "rgba(232,216,176,0.3)",
+      "driftSpeed": { "min": 18, "max": 35 },
+      "spread": "full"
+    },
+    "incense": {
+      "source": { "x": 420, "y": 350 },
+      "count": 15,
+      "size": { "min": 2, "max": 5 },
+      "color": "rgba(139,125,107,0.2)",
+      "riseSpeed": { "min": 8, "max": 15 },
+      "spread": 60
+    },
+    "coldDraft": {
+      "source": { "x": 340, "y": 520 },
+      "direction": "up",
+      "intensity": 0.3,
+      "bind": {
+        "intensity": "$ice > 50 ? 0.6 : 0.3"
+      }
+    },
+    "soundProfile": {
+      "ambient": [
+        { "type": "coal_crackle", "volume": 0.25, "proximity": true, "source": "brazier" },
+        { "type": "wind_outside", "volume": 0.15, "bind": { "volume": "$ice > 60 ? 0.3 : 0.15" } },
+        { "type": "stone_settling", "volume": 0.05, "interval": { "min": 20, "max": 60 } }
+      ],
+      "triggered": [
+        { "type": "door_creak", "on": "leaveChapel", "volume": 0.4 },
+        { "type": "ember_burst", "on": "tendFire", "volume": 0.3 },
+        { "type": "brother_breath", "on": "firstSpeak", "volume": 0.5 }
+      ]
+    }
+  },
+
+  "lighting": {
+    "ambient": "rgba(26,20,16,0.4)",
+    "sources": [
+      {
+        "id": "coal-light",
+        "type": "point",
+        "x": 400,
+        "y": 290,
+        "color": "#c44f1c",
+        "intensity": 1.0,
+        "radius": 250,
+        "pulse": true,
+        "pulseSpeed": 3000,
+        "pulseAmount": 0.2,
+        "bind": {
+          "intensity": "$faith > 70 ? 1.3 : $faith > 40 ? 1.0 : 0.7"
+        }
+      },
+      {
+        "id": "window-light",
+        "type": "directional",
+        "x": 400,
+        "y": 80,
+        "color": "#c8d8e4",
+        "intensity": 0.4,
+        "angle": 15,
+        "bind": {
+          "intensity": "$ice > 70 ? 0.5 : 0.3"
+        }
+      },
+      {
+        "id": "sconce-left-light",
+        "type": "point",
+        "x": 95,
+        "y": 310,
+        "color": "#daa520",
+        "intensity": 0.5,
+        "radius": 80
+      },
+      {
+        "id": "sconce-right-light",
+        "type": "point",
+        "x": 700,
+        "y": 310,
+        "color": "#daa520",
+        "intensity": 0.5,
+        "radius": 80
+      }
+    ]
+  }
 }
