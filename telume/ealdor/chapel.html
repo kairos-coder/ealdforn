@@ -6,14 +6,43 @@
     <title>The Coal Chapel · Ealdor</title>
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* ═══════════════════════════════════════════════════════════
+           THE COAL CHAPEL · Proto-Cathedral of Ealdor
+           ealdforn/telume/ealdor/chapel.html
+           
+           A single sacred room. Six walls. One fire. One brother.
+           Built from typography. Rendered by the browser's text engine.
+           Every letter is a stone. Every line-height is a course of mortar.
+           The heaviest blackletter fonts become ashlar masonry.
+           This is the test bed for every cathedral that follows.
+           
+           Stone: #3d362f    Mortar: #1a1612    Parchment: #f4e4c1
+           Ember: #c44f1c    Gold: #b8860b      Frost: #c8d8e4
+           Deep: #1a1410     Void: #0a0806
+           ═══════════════════════════════════════════════════════════ */
+
         :root {
-            --stone: #3d362f; --deep-stone: #2a2520; --parchment: #f4e4c1;
-            --ember: #c44f1c; --ember-bright: #e85d2c; --ash: #8b7d6b;
-            --frost: #c8d8e4; --gold: #b8860b; --deep: #1a1410;
+            --stone: #3d362f;
+            --deep-stone: #2a2520;
+            --mortar: #1a1612;
+            --parchment: #f4e4c1;
+            --ember: #c44f1c;
+            --ember-bright: #e85d2c;
+            --ember-deep: #8b2a0e;
+            --ash: #8b7d6b;
+            --frost: #c8d8e4;
+            --frost-deep: #a0b8c8;
+            --blood: #7a1c1c;
+            --gold: #b8860b;
+            --gold-pale: #d4af37;
+            --deep: #1a1410;
+            --void: #0a0806;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            background: #0f0c08;
+            background: var(--void);
             color: var(--parchment);
             font-family: 'Georgia', 'Times New Roman', serif;
             display: flex;
@@ -22,136 +51,163 @@
             min-height: 100vh;
             overflow-x: hidden;
             cursor: default;
+            background-image:
+                radial-gradient(ellipse at 50% 30%, rgba(196,79,28,0.05) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 100%, rgba(26,20,16,0.95) 0%, transparent 55%);
         }
 
-        /* ── Header ── */
+        #ambient-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(ellipse at 50% 45%, transparent 40%, rgba(10,8,6,0.55) 100%);
+        }
+
+        /* ── HEADER ── */
         .chapel-header {
             text-align: center;
-            padding: 1.2rem 1rem 0.3rem;
+            padding: 1.5rem 1rem 0.2rem;
             z-index: 10;
             width: 100%;
+            position: relative;
         }
         .chapel-header h1 {
             font-family: 'UnifrakturMaguntia', cursive;
-            font-size: clamp(2rem, 5vw, 3rem);
+            font-size: clamp(2.2rem, 5.5vw, 3.4rem);
             color: var(--gold);
-            text-shadow: 0 0 12px rgba(184,134,11,0.5), 2px 2px 0 var(--deep);
-            letter-spacing: 3px;
+            text-shadow: 0 0 15px rgba(184,134,11,0.4), 0 0 40px rgba(196,79,28,0.2), 2px 2px 0 var(--void);
+            letter-spacing: 4px;
             line-height: 1;
+            margin-bottom: 0.15rem;
         }
         .chapel-header .subtitle {
             font-family: 'Cinzel', serif;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--ash);
-            letter-spacing: 4px;
+            letter-spacing: 5px;
             text-transform: uppercase;
-            margin-top: 0.1rem;
+        }
+        .chapel-header .glyph-divider {
+            color: var(--gold);
+            opacity: 0.5;
+            font-size: 0.8rem;
+            letter-spacing: 8px;
+            margin-top: 0.2rem;
         }
 
-        /* ── Stats Bar ── */
+        /* ── STAT PILLS ── */
         .stats-bar {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.35rem;
+            gap: 0.3rem;
             justify-content: center;
-            padding: 0.4rem;
+            padding: 0.5rem;
             z-index: 10;
             width: 100%;
         }
         .stat-pill {
-            background: rgba(26,20,16,0.7);
-            border: 1px solid var(--ash);
+            background: rgba(26,20,16,0.75);
+            border: 1px solid rgba(139,125,107,0.4);
             border-radius: 20px;
-            padding: 0.2rem 0.6rem;
-            font-size: 0.65rem;
+            padding: 0.2rem 0.65rem;
+            font-size: 0.62rem;
             display: flex;
             align-items: center;
             gap: 0.25rem;
             font-family: 'Cinzel', serif;
+            backdrop-filter: blur(4px);
+            transition: border-color 0.5s;
         }
-        .stat-pill .stat-value { font-weight: bold; color: var(--gold); }
-        .stat-pill .stat-value.low { color: #7a1c1c; }
+        .stat-pill .stat-icon { font-size: 0.8rem; }
+        .stat-pill .stat-value { font-weight: bold; color: var(--gold); transition: color 0.5s; }
+        .stat-pill .stat-value.low { color: var(--blood); }
         .stat-pill .stat-value.warn { color: var(--ember); }
 
-        /* ── Chapel Container ── */
+        /* ── THE CHAPEL CONTAINER ── */
         #chapel-container {
             position: relative;
-            width: 800px;
+            width: 820px;
             max-width: 98vw;
-            aspect-ratio: 4 / 3;
-            margin: 0.5rem auto;
+            height: 615px;
+            margin: 0.5rem auto 1.5rem;
             overflow: hidden;
-            border: 2px solid #2a2520;
-            border-radius: 4px;
-            box-shadow: 0 0 60px rgba(0,0,0,0.6), 0 0 120px rgba(0,0,0,0.3);
-        }
-
-        /* ── Zone overlays (positioned absolutely by object-renderer) ── */
-        .zone {
-            cursor: pointer;
-            transition: filter 0.2s, transform 0.2s;
-        }
-        .zone:hover {
-            filter: brightness(1.3);
-        }
-        .zone:active {
-            transform: scale(0.95);
-        }
-
-        /* ── Toast ── */
-        #toast {
-            position: fixed;
-            bottom: 1.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(15,12,8,0.95);
-            border: 1px solid var(--gold);
+            border: 3px solid var(--deep-stone);
             border-radius: 6px;
-            padding: 0.6rem 1.4rem;
-            font-family: 'Georgia', serif;
-            font-size: 0.8rem;
-            z-index: 100;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-            text-align: center;
-            max-width: 420px;
-            line-height: 1.4;
+            box-shadow: 0 0 80px rgba(0,0,0,0.7), 0 0 160px rgba(0,0,0,0.4), inset 0 0 60px rgba(0,0,0,0.3);
+            background: var(--void);
+        }
+        @media (max-width: 840px) {
+            #chapel-container { width: 98vw; height: calc(98vw * 0.75); }
+        }
+
+        /* ── ZONES ── */
+        .zone { cursor: pointer; transition: filter 0.25s, transform 0.25s; }
+        .zone:hover { filter: brightness(1.35); z-index: 50 !important; }
+        .zone:active { transform: scale(0.94); transition: transform 0.1s; }
+
+        /* ── TOAST ── */
+        #toast {
+            position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+            background: rgba(10,8,6,0.94); border: 1px solid var(--gold);
+            border-radius: 6px; padding: 0.7rem 1.5rem;
+            font-family: 'Georgia', serif; font-size: 0.82rem;
+            z-index: 200; opacity: 0; transition: opacity 0.35s;
+            pointer-events: none; text-align: center;
+            max-width: 440px; line-height: 1.45;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+            white-space: pre-line;
         }
         #toast.show { opacity: 1; }
 
-        /* ── Animations ── */
+        /* ── ANIMATIONS ── */
         @keyframes coalPulse {
-            0%, 100% { box-shadow: 0 0 20px var(--ember), 0 0 40px rgba(196,79,28,0.3); }
-            50% { box-shadow: 0 0 35px var(--ember-bright), 0 0 70px rgba(196,79,28,0.6); }
+            0%, 100% { box-shadow: 0 0 20px var(--ember), 0 0 45px rgba(196,79,28,0.35), 0 0 80px rgba(196,79,28,0.15); }
+            50% { box-shadow: 0 0 35px var(--ember-bright), 0 0 65px rgba(196,79,28,0.55), 0 0 110px rgba(196,79,28,0.25); }
         }
         @keyframes brotherBreathe {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.015); }
+            50% { transform: scale(1.012); }
         }
         @keyframes sparkFade {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(3); opacity: 0; }
+            0% { transform: scale(0.5); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
         }
         @keyframes emberRise {
-            0% { transform: translateY(0) translateX(0) scale(1); opacity: 1; }
-            100% { transform: translateY(-140px) translateX(var(--dx)) scale(0); opacity: 0; }
+            0% { transform: translateY(0) translateX(0) scale(1); opacity: 0.9; }
+            100% { transform: translateY(-160px) translateX(var(--dx)) scale(0); opacity: 0; }
+        }
+        @keyframes dustDrift {
+            0% { transform: translateY(0) translateX(0); opacity: 0.25; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-80px) translateX(15px); opacity: 0; }
+        }
+        @keyframes coldDraft {
+            0%, 100% { opacity: 0.08; }
+            50% { opacity: 0.28; }
+        }
+        @keyframes inscriptionGlow {
+            0%, 100% { text-shadow: 0 0 8px rgba(184,134,11,0.2); }
+            50% { text-shadow: 0 0 16px rgba(184,134,11,0.45); }
         }
     </style>
 </head>
 <body>
 
-    <div class="chapel-header">
+    <div id="ambient-overlay"></div>
+
+    <header class="chapel-header">
         <h1>The Coal Chapel</h1>
         <div class="subtitle">Sanctuary of the Ātravan Flame</div>
-    </div>
+        <div class="glyph-divider">𐤃 · 𐤀 · 𐤕 · 𐤔 · 𐤐 · 𐤌 · 𐤇</div>
+    </header>
 
     <div class="stats-bar">
-        <div class="stat-pill">🌾 Timber: <span class="stat-value" id="timberStat">3</span></div>
-        <div class="stat-pill">❤️ Faith: <span class="stat-value" id="faithStat">60</span></div>
-        <div class="stat-pill">☀️ Morale: <span class="stat-value" id="moraleStat">70</span></div>
-        <div class="stat-pill">❄️ Ice: <span class="stat-value warn" id="iceStat">15%</span></div>
-        <div class="stat-pill">📜 Tablets: <span class="stat-value" id="tabletStat">0/7</span></div>
+        <div class="stat-pill"><span class="stat-icon">🌾</span> Timber: <span class="stat-value" id="timberStat">3</span></div>
+        <div class="stat-pill"><span class="stat-icon">❤️</span> Faith: <span class="stat-value" id="faithStat">60</span></div>
+        <div class="stat-pill"><span class="stat-icon">☀️</span> Morale: <span class="stat-value" id="moraleStat">70</span></div>
+        <div class="stat-pill"><span class="stat-icon">❄️</span> Ice: <span class="stat-value warn" id="iceStat">15%</span></div>
+        <div class="stat-pill"><span class="stat-icon">📜</span> Tablets: <span class="stat-value" id="tabletStat">0</span>/7</div>
     </div>
 
     <div id="chapel-container"></div>
@@ -159,361 +215,392 @@
 
     <script src="js/font-mason.js"></script>
     <script src="js/object-renderer.js"></script>
+
     <script>
+    /*
+     * ═══════════════════════════════════════════════════════════════
+     * THE COAL CHAPEL · Proto-Cathedral · Monolith
+     * ealdforn/telume/ealdor/chapel.html
+     *
+     * Architecture is typography. Walls are letters. Fire is CSS.
+     * One room. Seven zones. Infinite silence.
+     * This is the foundation. The cathedrals come next.
+     * ═══════════════════════════════════════════════════════════════
+     */
+
     // ═══════════════════════════════════════
-    // THE COAL CHAPEL
-    // ealdforn/telume/ealdor/chapel.html
+    // STATE
     // ═══════════════════════════════════════
 
-    // ── State ──
-    let state = {
+    const SEASONS = ['Spring','Summer','Autumn','Winter'];
+    const GLYPHS = '𐤀𐤁𐤂𐤃𐤄𐤅𐤆𐤇𐤈𐤉𐤊𐤋𐤌𐤍𐤎𐤏𐤐𐤑𐤒𐤓𐤔𐤕'.split('');
+
+    const DEFAULT_STATE = {
         year: 3450, season: 0, ice: 15,
         playerResources: { Stone: 4, Timber: 3, Grain: 5, Iron: 2, Salt: 2, Cloth: 3 },
         population: 100, morale: 70, faith: 60,
-        tabletFragments: 0, silentBrotherSpoke: false,
-        crisisHistory: [],
+        tabletFragments: 0, silentBrotherSpoke: false, crisisHistory: [],
     };
 
-    const GLYPHS = ['𐤀','𐤁','𐤂','𐤃','𐤄','𐤅','𐤆','𐤇','𐤈','𐤉','𐤊','𐤋','𐤌','𐤍','𐤎','𐤏','𐤐','𐤑','𐤒','𐤓','𐤔','𐤕'];
+    let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
 
-    // ── Save/Load ──
     function loadState() {
-        const saved = localStorage.getItem('ealdor_save');
-        if (saved) { try { state = JSON.parse(saved); return true; } catch(e) {} }
-        return false;
+        const raw = localStorage.getItem('ealdor_save');
+        if (!raw) return false;
+        try {
+            const saved = JSON.parse(raw);
+            state = { ...DEFAULT_STATE, ...saved };
+            return true;
+        } catch (e) { return false; }
     }
+
     function saveState() {
         localStorage.setItem('ealdor_save', JSON.stringify(state));
     }
 
-    // ── Toast ──
-    function toast(msg, duration = 2800) {
-        const el = document.getElementById('toast');
-        el.textContent = msg;
-        el.classList.add('show');
-        clearTimeout(el._timeout);
-        el._timeout = setTimeout(() => el.classList.remove('show'), duration);
+    // ═══════════════════════════════════════
+    // TOAST
+    // ═══════════════════════════════════════
+
+    const toastEl = document.getElementById('toast');
+    let toastTimer = null;
+
+    function toast(msg, duration = 3000) {
+        toastEl.textContent = msg;
+        toastEl.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toastEl.classList.remove('show'), duration);
     }
 
-    // ── Stats ──
+    // ═══════════════════════════════════════
+    // STATS
+    // ═══════════════════════════════════════
+
     function renderStats() {
         document.getElementById('timberStat').textContent = state.playerResources.Timber || 0;
         document.getElementById('faithStat').textContent = state.faith;
         document.getElementById('moraleStat').textContent = state.morale;
         document.getElementById('iceStat').textContent = state.ice + '%';
-        document.getElementById('tabletStat').textContent = (state.tabletFragments || 0) + '/7';
+        document.getElementById('tabletStat').textContent = state.tabletFragments || 0;
 
         ['faithStat','moraleStat'].forEach(id => {
             const el = document.getElementById(id);
-            const v = parseInt(el.textContent);
-            el.className = 'stat-value' + (v < 30 ? ' low' : v < 50 ? ' warn' : '');
+            const v = parseInt(el.textContent) || 0;
+            el.className = 'stat-value';
+            if (v < 30) el.classList.add('low');
+            else if (v < 50) el.classList.add('warn');
         });
+
         const iceEl = document.getElementById('iceStat');
-        iceEl.className = 'stat-value' + (state.ice > 70 ? ' low' : state.ice > 40 ? ' warn' : '');
+        iceEl.className = 'stat-value';
+        if (state.ice > 70) iceEl.classList.add('low');
+        else if (state.ice > 40) iceEl.classList.add('warn');
     }
 
-    // ── Ember particles ──
+    // ═══════════════════════════════════════
+    // PARTICLES
+    // ═══════════════════════════════════════
+
     function spawnEmbers(count = 10) {
         const container = document.getElementById('chapel-container');
+        if (!container) return;
         for (let i = 0; i < count; i++) {
             const ember = document.createElement('div');
-            const dx = (Math.random() - 0.5) * 60;
+            const size = 2 + Math.random() * 4;
+            const dx = (Math.random() - 0.5) * 70;
+            const delay = Math.random() * 0.4;
+            const duration = 1.2 + Math.random() * 2.2;
             ember.style.cssText = `
-                position: absolute;
-                left: ${46 + Math.random() * 8}%;
-                top: 48%;
-                width: ${2 + Math.random() * 4}px;
-                height: ${2 + Math.random() * 4}px;
-                background: radial-gradient(circle, #ff6b2b, #c44f1c);
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 30;
-                --dx: ${dx}px;
-                animation: emberRise ${1.2 + Math.random() * 2}s ease-out forwards;
-                animation-delay: ${Math.random() * 0.3}s;
+                position:absolute; left:${45+Math.random()*10}%; top:${47+Math.random()*3}%;
+                width:${size}px; height:${size}px;
+                background:radial-gradient(circle at 40% 40%,#ff6b2b,var(--ember));
+                border-radius:50%; pointer-events:none; z-index:35;
+                --dx:${dx}px;
+                animation:emberRise ${duration}s ease-out ${delay}s forwards;
             `;
             container.appendChild(ember);
-            setTimeout(() => ember.remove(), 3500);
+            setTimeout(() => { if (ember.parentNode) ember.remove(); }, (duration+delay)*1000+200);
+        }
+    }
+
+    function spawnDust() {
+        const container = document.getElementById('chapel-container');
+        if (!container) return;
+        for (let i = 0; i < 35; i++) {
+            const mote = document.createElement('div');
+            const size = 1 + Math.random() * 2.5;
+            mote.style.cssText = `
+                position:absolute; left:${Math.random()*100}%; top:${20+Math.random()*70}%;
+                width:${size}px; height:${size}px;
+                background:rgba(244,228,193,${0.15+Math.random()*0.3});
+                border-radius:50%; pointer-events:none; z-index:3;
+                animation:dustDrift ${15+Math.random()*25}s linear ${Math.random()*20}s infinite;
+            `;
+            container.appendChild(mote);
+        }
+    }
+
+    function spawnPrayerSpark(x, y) {
+        const spark = document.createElement('div');
+        spark.style.cssText = `
+            position:fixed; left:${x}px; top:${y}px;
+            width:3px; height:3px;
+            background:var(--gold-pale); border-radius:50%;
+            box-shadow:0 0 12px var(--gold-pale),0 0 24px rgba(196,79,28,0.35);
+            pointer-events:none; z-index:150;
+            animation:sparkFade 1.4s ease-out forwards;
+        `;
+        document.body.appendChild(spark);
+        setTimeout(() => { if (spark.parentNode) spark.remove(); }, 1500);
+    }
+
+    // ═══════════════════════════════════════
+    // NOKOMIS
+    // ═══════════════════════════════════════
+
+    const NOKOMIS = [
+        '"You are not Otter. You are not Woodpecker. You are not Bear. You are the one who carries."',
+        '"Fear is not the enemy. Fear is the door."',
+        '"The fire does not go to the happy. The fire goes to the ones who have sat in the dark."',
+        '"The coal does not ask to burn. It simply does."',
+        '"Silence is not empty. Silence is the vessel."',
+        '"The truth holds. The lie scatters."',
+        '"The Rabbit does not want them to agree. The Rabbit wants you to listen."',
+        '"The fire holds. The vault is open. The seventh tablet is still blank."',
+    ];
+
+    function maybeNokomis(delay = 2000) {
+        if (Math.random() < 0.18) {
+            const saying = NOKOMIS[Math.floor(Math.random() * NOKOMIS.length)];
+            setTimeout(() => toast(`👁️ ${saying}`, 4000), delay);
         }
     }
 
     // ═══════════════════════════════════════
-    // BUILD THE CHAPEL
+    // ARCHITECTURE — The Masonry
     // ═══════════════════════════════════════
 
-    function buildChapel() {
+    function buildChapelArchitecture() {
+        const container = document.getElementById('chapel-container');
+        if (!container) throw new Error('Chapel container not found');
+        container.innerHTML = '';
+
         const mason = new FontMason('chapel-container');
 
-        // ── Far Wall ──
+        // FAR WALL — altar wall with window opening
         mason.buildWall({
             id: 'far-wall',
-            x: 110, y: 55, width: 580, height: 310, z: 1,
-            fontSize: 40, lineHeight: 0.53, letterSpacing: -3,
-            textColor: '#4a3f35', mortarColor: '#2a2520',
+            x: 110, y: 50, width: 600, height: 320, z: 1,
+            fontSize: 41, lineHeight: 0.52, letterSpacing: -3,
+            fontFamily: "'UnifrakturMaguntia','Cinzel','Georgia',serif",
+            textColor: '#4a3f35', mortarColor: '#242018',
             characters: ['M','W','H','N','M'],
-            weathering: 0.15,
-            openings: [{
-                x: 210, y: 25, width: 160, height: 210,
-                arch: true, glass: true, glassFrost: state.ice,
-            }],
+            highlightColor: 'rgba(255,255,255,0.04)',
+            shadowColor: 'rgba(0,0,0,0.28)',
+            weathering: 0.12,
+            openings: [{ x: 215, y: 22, width: 170, height: 215, arch: true, glass: true, glassFrost: state.ice }],
         });
 
-        // ── Window Arch ──
+        // WINDOW ARCH
         mason.buildArch({
-            cx: 400, cy: 85, innerRadius: 80,
-            stoneCount: 17, stoneDepth: 22, z: 6,
-            fontSize: 26, keystoneChar: 'M',
-            voussoirChars: ['H','N','M','W'],
+            cx: 410, cy: 82, innerRadius: 85, stoneCount: 19, stoneDepth: 24, z: 7,
+            fontFamily: "'UnifrakturMaguntia','Cinzel',serif",
+            fontSize: 27, textColor: '#4a3f35',
+            highlightColor: 'rgba(255,255,255,0.05)', shadowColor: 'rgba(0,0,0,0.3)',
+            keystoneOversize: 1.55, keystoneChar: 'M',
+            voussoirChars: ['H','N','M','W','H'],
         });
 
-        // ── Left Wall ──
+        // LEFT WALL — recedes into shadow
         mason.buildWall({
             id: 'left-wall',
-            x: 2, y: 55, width: 115, height: 370, z: 0,
+            x: 0, y: 50, width: 118, height: 380, z: 0,
             perspective: 'recede-left',
-            fontSize: 32, lineHeight: 0.55, letterSpacing: -3,
-            textColor: '#3d362f', mortarColor: '#2a2520',
-            characters: ['M','N','H','M'],
-            weathering: 0.2,
+            fontSize: 33, lineHeight: 0.54, letterSpacing: -3,
+            fontFamily: "'UnifrakturMaguntia','Cinzel',serif",
+            textColor: '#3d362f', mortarColor: '#1f1a15',
+            characters: ['M','N','H','M'], weathering: 0.18,
         });
 
-        // ── Right Wall ──
+        // RIGHT WALL — recedes, with niche
         mason.buildWall({
             id: 'right-wall',
-            x: 683, y: 55, width: 115, height: 370, z: 0,
+            x: 702, y: 50, width: 118, height: 380, z: 0,
             perspective: 'recede-right',
-            fontSize: 32, lineHeight: 0.55, letterSpacing: -3,
-            textColor: '#3d362f', mortarColor: '#2a2520',
-            characters: ['N','M','H','N'],
-            weathering: 0.2,
-            openings: [{
-                x: 28, y: 195, width: 55, height: 75,
-                arch: true,
-            }],
+            fontSize: 33, lineHeight: 0.54, letterSpacing: -3,
+            fontFamily: "'UnifrakturMaguntia','Cinzel',serif",
+            textColor: '#3d362f', mortarColor: '#1f1a15',
+            characters: ['N','M','H','N'], weathering: 0.18,
+            openings: [{ x: 30, y: 195, width: 55, height: 78, arch: true }],
         });
 
-        // ── Niche Arch ──
+        // NICHE ARCH
         mason.buildArch({
-            cx: 740, cy: 255, innerRadius: 27,
-            stoneCount: 9, stoneDepth: 14, z: 6,
-            fontSize: 18, keystoneChar: 'N',
-            voussoirChars: ['M','H','N'],
+            cx: 750, cy: 258, innerRadius: 28, stoneCount: 9, stoneDepth: 14, z: 7,
+            fontFamily: "'UnifrakturMaguntia','Cinzel',serif",
+            fontSize: 18, textColor: '#4a3f35',
+            keystoneChar: 'N', voussoirChars: ['M','H','N'],
         });
 
-        // ── Floor ──
+        // FLOOR
         mason.buildFloor({
-            x: 60, y: 355, width: 680, height: 200, z: 0,
-            fontSize: 48, lineHeight: 0.48, letterSpacing: -2,
-            textColor: '#5c4f42', mortarColor: '#3d342b',
+            x: 55, y: 360, width: 710, height: 210, z: 0,
+            fontSize: 50, lineHeight: 0.47, letterSpacing: -2,
+            fontFamily: "'Georgia','Times New Roman',serif",
+            textColor: '#5c4f42', mortarColor: '#3a3028',
             characters: ['▓','░','▓','▒','░'],
-            perspectiveStrength: 14,
+            perspectiveStrength: 15,
             glyphCarving: {
                 text: '𐤃  𐤀  𐤕  𐤔  𐤐  𐤌  𐤇',
-                x: 150, y: 60,
-                size: 24,
-                spacing: 40,
-                color: 'rgba(184,134,11,0.12)',
+                x: 155, y: 65, size: 22, spacing: 42,
+                color: 'rgba(184,134,11,0.1)',
             },
         });
 
-        // ── Vault Ceiling ──
+        // VAULT CEILING
         mason.buildVault({
-            x: 110, y: -18, width: 580, height: 75, z: -1,
-            fontSize: 16, lineHeight: 0.85, letterSpacing: 2,
+            x: 110, y: -22, width: 600, height: 78, z: -1,
+            fontFamily: "'Georgia','Times New Roman',serif",
+            fontSize: 15, lineHeight: 0.85, letterSpacing: 2,
             textColor: '#2a2520',
             ribs: [
-                { x: 240, depth: 7, color: '#3d362f' },
-                { x: 396, depth: 9, color: '#4a4138' },
-                { x: 552, depth: 7, color: '#3d362f' },
+                { x: 245, depth: 7, color: '#3d362f' },
+                { x: 410, depth: 10, color: '#4a4138' },
+                { x: 575, depth: 7, color: '#3d362f' },
             ],
         });
 
-        // ── Pillars flanking the altar ──
-        mason.buildPillar({ x: 235, y: 245, width: 28, height: 115, z: 3, capital: true, capitalHeight: 26 });
-        mason.buildPillar({ x: 537, y: 245, width: 28, height: 115, z: 3, capital: true, capitalHeight: 26 });
+        // PILLARS
+        mason.buildPillar({ x: 238, y: 248, width: 30, height: 120, z: 3, fontFamily: "'UnifrakturMaguntia','Cinzel',serif", fontSize: 20, textColor: '#4a3f35', mortarColor: '#2a2520', characters: ['H','H','H'], capital: true, capitalHeight: 28 });
+        mason.buildPillar({ x: 552, y: 248, width: 30, height: 120, z: 3, fontFamily: "'UnifrakturMaguntia','Cinzel',serif", fontSize: 20, textColor: '#4a3f35', mortarColor: '#2a2520', characters: ['H','H','H'], capital: true, capitalHeight: 28 });
 
-        // ── Plinth Inscription ──
+        // PLINTH INSCRIPTION
         mason.buildInscription({
-            x: 332, y: 363, text: 'THE  FLAME  ENDURES',
+            x: 340, y: 370, text: 'THE  FLAME  ENDURES',
             fontSize: 9, color: 'rgba(184,134,11,0.45)',
-            fontFamily: "'Cinzel', serif",
-            z: 8,
+            fontFamily: "'Cinzel',serif", z: 9,
+            animation: 'inscriptionGlow 4s ease-in-out infinite',
         });
 
-        // ── Tally Marks on Left Wall ──
+        // TALLY MARKS
         const tallyCount = state.crisisHistory ? state.crisisHistory.length : 0;
-        let tallyText = '';
-        for (let i = 0; i < Math.min(tallyCount, 45); i++) {
-            tallyText += (i % 5 === 4) ? '|  ' : '|';
+        let tallyText = tallyCount === 0 ? '·  ·  ·  ·  ·' : '';
+        if (tallyCount > 0) {
+            for (let i = 0; i < Math.min(tallyCount, 50); i++) {
+                tallyText += (i % 5 === 4) ? '|  ' : '|';
+            }
         }
-        if (tallyCount === 0) tallyText = '·······';
         mason.buildInscription({
-            x: 22, y: 200, text: tallyText,
-            fontSize: 8, color: 'rgba(244,228,193,0.18)',
-            fontFamily: "'Courier New', monospace",
-            z: 5, rotation: -2,
+            x: 18, y: 210, text: tallyText,
+            fontSize: 7, color: 'rgba(244,228,193,0.16)',
+            fontFamily: "'Courier New',monospace", z: 5, rotation: -2.5,
+        });
+
+        // FLOOR APPROACH
+        mason.buildInscription({
+            x: 340, y: 440, text: '·  ·  ·  ·  ·  ·  ·  ·  ·  ·',
+            fontSize: 10, color: 'rgba(0,0,0,0.25)',
+            fontFamily: "'Georgia',serif", z: 2,
         });
 
         return mason;
     }
 
     // ═══════════════════════════════════════
-    // INTERACTIVE OBJECTS
+    // OBJECTS — The Interactive Layer
     // ═══════════════════════════════════════
 
-    function buildObjects(mason) {
+    function buildChapelObjects() {
         const objRenderer = new ObjectRenderer('chapel-container');
         objRenderer.setState(state);
 
-        const objects = {
+        const timberCount = state.playerResources.Timber || 0;
+        const fragments = state.tabletFragments || 0;
+        const brotherSpoke = state.silentBrotherSpoke;
+
+        const roomDef = {
             objects: [
-                // ── Brazier ──
+                // ĀTRAVAN COAL BRAZIER
                 {
                     id: 'brazier', name: 'Ātravan Coal', zone: 'brazier',
-                    position: { x: 358, y: 275, z: 20 },
+                    position: { x: 365, y: 280, z: 22 },
                     components: [
-                        {
-                            type: 'rect', width: 100, height: 32,
-                            style: {
-                                background: 'linear-gradient(#5c4f42, #4a3f35)',
-                                border: '3px solid #3d362f', borderRadius: '4px',
-                                boxShadow: '0 6px 16px rgba(0,0,0,0.5)',
-                            },
-                        },
-                        {
-                            type: 'rect', width: 66, height: 48,
-                            position: { x: 17, y: -42 },
-                            style: {
-                                background: 'linear-gradient(#2a2018, #1a1410)',
-                                border: '4px solid #3d362f', borderRadius: '8px 8px 4px 4px',
-                                boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
-                            },
-                        },
-                        {
-                            type: 'circle', radius: 20,
-                            position: { x: 33, y: -36 },
-                            animation: 'coalPulse 3s ease-in-out infinite',
-                            style: {
-                                background: 'radial-gradient(ellipse, #e85d2c 0%, #c44f1c 40%, #1a1410 100%)',
-                                boxShadow: '0 0 25px #c44f1c, 0 0 50px rgba(196,79,28,0.3)',
-                            },
-                        },
+                        { type: 'rect', width: 108, height: 34, style: { background: 'linear-gradient(#5c4f42,#4a3f35)', border: '3px solid #3d362f', borderRadius: '4px', boxShadow: '0 8px 20px rgba(0,0,0,0.55)' } },
+                        { type: 'rect', width: 72, height: 50, position: { x: 18, y: -44 }, style: { background: 'linear-gradient(#2a2018,#1a1410)', border: '4px solid #3d362f', borderRadius: '8px 8px 4px 4px', boxShadow: '0 4px 14px rgba(0,0,0,0.55)' } },
+                        { type: 'circle', radius: 21, position: { x: 36, y: -38 }, animation: 'coalPulse 3s ease-in-out infinite', style: { background: 'radial-gradient(ellipse at 45% 35%,#ff7b3b 0%,#e85d2c 25%,#c44f1c 55%,#1a1410 100%)', boxShadow: '0 0 25px #c44f1c,0 0 55px rgba(196,79,28,0.3)' } },
                     ],
-                    interaction: { action: 'tendFire', label: 'Tend the Coal' },
+                    interaction: { action: 'tendFire', label: 'Tend the Ātravan Coal' },
                 },
-                // ── Silent Brother ──
+                // THE SILENT BROTHER
                 {
                     id: 'brother', name: 'The Silent Brother', zone: 'brother',
-                    position: { x: 228, y: 355, z: 15 },
+                    position: { x: 225, y: 360, z: 16 },
                     components: [
-                        {
-                            type: 'rect', width: 28, height: 42,
-                            position: { x: 6, y: 18 },
-                            style: {
-                                background: 'linear-gradient(#3d362f, #2a2018)',
-                                borderRadius: '14px 14px 6px 6px',
-                            },
-                        },
-                        {
-                            type: 'circle', radius: 15,
-                            position: { x: 5, y: 2 },
-                            animation: 'brotherBreathe 6s ease-in-out infinite',
-                            style: {
-                                background: '#2a2018',
-                                boxShadow: state.silentBrotherSpoke
-                                    ? '0 0 8px rgba(184,134,11,0.25)'
-                                    : 'none',
-                            },
-                        },
+                        { type: 'rect', width: 30, height: 44, position: { x: 5, y: 20 }, style: { background: 'linear-gradient(#3d362f,#2a2018)', borderRadius: '14px 14px 6px 6px' } },
+                        { type: 'circle', radius: 16, position: { x: 4, y: 0 }, animation: 'brotherBreathe 6s ease-in-out infinite', style: { background: 'linear-gradient(#2a2018,#1a1410)', boxShadow: brotherSpoke ? '0 0 10px rgba(184,134,11,0.3)' : 'none', transition: 'box-shadow 1.5s ease' } },
+                        { type: 'rect', width: 32, height: 6, position: { x: 4, y: 64 }, style: { background: 'rgba(0,0,0,0.35)', borderRadius: '50%' } },
                     ],
-                    interaction: { action: 'observeBrother', label: 'Observe the Brother' },
+                    interaction: { action: 'observeBrother', label: 'Observe the Silent Brother' },
                 },
-                // ── Wood Stack ──
+                // WOOD STACK
                 {
                     id: 'wood', name: 'Wood Stack', zone: 'wood',
-                    position: { x: 75, y: 420, z: 15 },
-                    components: [
-                        {
-                            type: 'rect', width: 44, height: 10,
-                            position: { x: 0, y: 0 },
-                            style: { background: '#5c3a1f', borderRadius: '3px', boxShadow: '0 2px 4px rgba(0,0,0,0.4)' },
-                        },
-                        {
-                            type: 'rect', width: 44, height: 10,
-                            position: { x: 0, y: 11 },
-                            style: { background: '#4a2f18', borderRadius: '3px', boxShadow: '0 2px 4px rgba(0,0,0,0.4)' },
-                        },
-                        {
-                            type: 'rect', width: 44, height: 10,
-                            position: { x: 0, y: 22 },
-                            style: { background: '#3d2b1f', borderRadius: '3px', boxShadow: '0 2px 4px rgba(0,0,0,0.4)' },
-                        },
-                    ],
+                    position: { x: 72, y: 430, z: 16 },
+                    components: (() => {
+                        const logs = [];
+                        const count = Math.max(1, Math.min(8, timberCount));
+                        for (let i = 0; i < count; i++) {
+                            logs.push({
+                                type: 'rect', width: 46, height: 9,
+                                position: { x: 0, y: i * 10 },
+                                style: { background: ['#5c3a1f','#4a2f18','#3d2b1f','#3a2818','#352618'][i%5], borderRadius: '3px', boxShadow: '0 2px 3px rgba(0,0,0,0.35)', opacity: timberCount > 0 ? 1 : 0.2 },
+                            });
+                        }
+                        return logs;
+                    })(),
                     interaction: { action: 'takeWood', label: 'Take Timber' },
                 },
-                // ── Tablet Niche ──
+                // TABLET NICHE
                 {
                     id: 'niche', name: 'Tablet Niche', zone: 'niche',
-                    position: { x: 640, y: 305, z: 15 },
+                    position: { x: 645, y: 310, z: 16 },
                     components: [
-                        {
-                            type: 'rect', width: 42, height: 60,
-                            style: {
-                                background: '#1a1410',
-                                border: '3px solid #2a2520',
-                                borderRadius: '21px 21px 4px 4px',
-                                boxShadow: 'inset 0 0 24px rgba(0,0,0,0.6)',
-                            },
-                        },
+                        { type: 'rect', width: 44, height: 62, style: { background: '#0f0c08', border: '3px solid #2a2520', borderRadius: '22px 22px 5px 5px', boxShadow: 'inset 0 0 28px rgba(0,0,0,0.7)' } },
+                        ...(fragments > 0 ? [{ type: 'sprite', glyph: GLYPHS[fragments % GLYPHS.length], fontSize: 16, position: { x: 14, y: 18 }, style: { color: `rgba(184,134,11,${0.3 + (fragments/7)*0.6})`, transition: 'color 0.5s,opacity 0.5s' } }] : []),
                     ],
                     interaction: { action: 'studyNiche', label: 'Study the fragments' },
                 },
-                // ── Window ──
+                // WINDOW
                 {
-                    id: 'window', name: 'Window', zone: 'window',
-                    position: { x: 320, y: 55, z: 12 },
-                    components: [
-                        {
-                            type: 'rect', width: 160, height: 210,
-                            style: { background: 'transparent' },
-                        },
-                    ],
+                    id: 'window', name: 'Chapel Window', zone: 'window',
+                    position: { x: 320, y: 50, z: 14 },
+                    components: [{ type: 'rect', width: 170, height: 215, style: { background: 'transparent' } }],
                     interaction: { action: 'lookOutWindow', label: 'Look out upon the fjord' },
                 },
-                // ── Door ──
+                // DOOR
                 {
-                    id: 'door', name: 'Door', zone: 'door',
-                    position: { x: 355, y: 500, z: 25 },
+                    id: 'door', name: 'Chapel Door', zone: 'door',
+                    position: { x: 365, y: 505, z: 26 },
                     components: [
-                        {
-                            type: 'rect', width: 90, height: 55,
-                            style: {
-                                background: 'linear-gradient(#4a3a2f, #3d3028)',
-                                border: '4px solid #2a2018',
-                                borderRadius: '45px 45px 4px 4px',
-                                boxShadow: '0 6px 18px rgba(0,0,0,0.5)',
-                            },
-                        },
+                        { type: 'rect', width: 90, height: 58, style: { background: 'linear-gradient(#4a3a2f,#3d3028)', border: '4px solid #2a2018', borderRadius: '45px 45px 5px 5px', boxShadow: '0 6px 20px rgba(0,0,0,0.55)' } },
+                        { type: 'circle', radius: 5, position: { x: 72, y: 26 }, style: { background: 'var(--gold)', boxShadow: '0 0 6px rgba(184,134,11,0.5)' } },
                     ],
-                    interaction: { action: 'leaveChapel', label: 'Return to courtyard' },
+                    interaction: { action: 'leaveChapel', label: 'Return to the courtyard' },
                 },
             ],
         };
 
-        objRenderer.loadRoom(objects);
+        objRenderer.loadRoom(roomDef);
 
-        // ── Handle interactions ──
-        objRenderer.on('onInteract', (objDef, el) => {
+        // ── ACTION HANDLERS ──
+        objRenderer.on('onInteract', (objDef) => {
             const action = objDef.interaction?.action;
             if (!action) return;
 
             switch (action) {
                 case 'tendFire': {
                     const timber = state.playerResources.Timber || 0;
-                    if (timber < 1) {
-                        toast('No timber to feed the fire. The Silent Brother watches you, expressionless.');
-                        break;
-                    }
+                    if (timber < 1) { toast('No timber to feed the fire. The Silent Brother watches you, expressionless.'); break; }
                     state.playerResources.Timber -= 1;
                     state.morale = Math.min(100, state.morale + 5);
                     state.faith = Math.min(100, state.faith + 5);
@@ -523,30 +610,19 @@
                         state.faith = Math.min(100, state.faith + 15);
                         msg += '\n\n🧘 The Silent Brother opens his mouth. One word: "Threshold." Then silence resumes. Faith +15.';
                     }
-                    toast(msg);
-                    spawnEmbers(18);
-                    break;
+                    toast(msg); spawnEmbers(18); break;
                 }
                 case 'observeBrother': {
                     state.faith = Math.min(100, state.faith + 2);
                     const lines = state.silentBrotherSpoke
-                        ? ['He has not spoken since that day. But his presence is heavier now.',
-                           'The eighty-seventh keeper. His silence is a kind of tending, too.',
-                           'You watch him. He watches the Coal. The Coal watches nothing.']
-                        : ['He kneels. He has always knelt. The fire has never gone out.',
-                           'His hood does not turn. He tends the Coal. That is all.',
-                           'You stand near him. The air is warmer here. He does not acknowledge you.'];
-                    toast(lines[Math.floor(Math.random() * lines.length)]);
-                    break;
+                        ? ['He has not spoken since that day. But his presence is heavier now — as if the one word emptied something.','The eighty-seventh keeper. His silence is a kind of tending, too.','You watch him. He watches the Coal. The Coal watches nothing. That is the order of things.']
+                        : ['He kneels. He has always knelt. The eighty-seventh of his line. He has never spoken. The fire has never gone out.','His hood does not turn. He tends the Coal. That is all. That is everything.','You stand near him. The air is warmer here. He does not acknowledge you. He does not need to.'];
+                    toast(lines[Math.floor(Math.random() * lines.length)]); break;
                 }
                 case 'takeWood': {
                     const timber = state.playerResources.Timber || 0;
-                    if (timber > 0) {
-                        state.playerResources.Timber -= 1;
-                        toast(`🪵 You take one Timber from the stack. ${state.playerResources.Timber} remaining.`);
-                    } else {
-                        toast('The wood stack is empty. Only dust and splinters remain.');
-                    }
+                    if (timber > 0) { state.playerResources.Timber -= 1; toast(`🪵 You take one Timber. ${state.playerResources.Timber} remaining.`); }
+                    else { toast('The wood stack is empty. Only dust and splinters remain.'); }
                     break;
                 }
                 case 'studyNiche': {
@@ -554,26 +630,17 @@
                     state.faith = Math.min(100, state.faith + 3);
                     const g = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
                     let msg = `📜 You study a fragment. A glyph catches the firelight: ${g} — ${state.tabletFragments}/7 fragments.`;
-                    if (state.tabletFragments >= 7) {
-                        msg += '\n\n✨ The fragments align. The Seventh Tablet begins to write itself.';
-                    }
-                    toast(msg);
-                    break;
+                    if (state.tabletFragments >= 7) msg += '\n\n✨ The fragments align. The Seventh Tablet begins to write itself. Something ancient stirs.';
+                    toast(msg); break;
                 }
                 case 'lookOutWindow': {
                     const ice = state.ice;
-                    const seasons = ['Spring','Summer','Autumn','Winter'];
-                    let desc = ice < 30 ? `The fjord glitters in ${seasons[state.season].toLowerCase()} light. Dark water. Ships could still pass.`
-                        : ice < 60 ? `Ice fingers reach across the fjord. ${seasons[state.season]} cold bites the glass.`
-                        : ice < 85 ? 'The fjord is mostly white. Ice sheets groan. No ships.'
-                        : 'The fjord is sealed. A white plain where water once was.';
+                    let desc = ice < 30 ? `The fjord glitters in ${SEASONS[state.season].toLowerCase()} light. Dark water. Whitecaps. Ships could still pass.`
+                        : ice < 60 ? `Ice fingers reach across the fjord. The water is steel-grey. ${SEASONS[state.season]} cold bites the glass.`
+                        : ice < 85 ? 'The fjord is mostly white. Ice sheets groan against each other. No ships. Only the wind.'
+                        : 'The fjord is sealed. A white plain where water once was. The ice is thick enough to walk on — if you dared.';
                     toast(`🪟 ${desc} Ice: ${ice}%.`);
-                    if (Math.random() < 0.2) {
-                        setTimeout(() => {
-                            const g = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-                            toast(`✨ A glyph forms in the frost on the glass: ${g}`);
-                        }, 1600);
-                    }
+                    if (Math.random() < 0.22) { const g = GLYPHS[Math.floor(Math.random() * GLYPHS.length)]; setTimeout(() => toast(`✨ A glyph forms in the frost on the glass: ${g}`), 1600); }
                     break;
                 }
                 case 'leaveChapel': {
@@ -583,19 +650,15 @@
                     break;
                 }
             }
-
             saveState();
             renderStats();
-
-            // Update frost on window
-            mason.setFrost('far-wall', 0, state.ice);
         });
 
         return objRenderer;
     }
 
     // ═══════════════════════════════════════
-    // INIT
+    // INIT — Raise the Stones
     // ═══════════════════════════════════════
 
     function init() {
@@ -603,8 +666,9 @@
         if (!loaded) saveState();
 
         const params = new URLSearchParams(window.location.search);
-        if (params.get('from')) {
-            toast(`🚶 You enter the Coal Chapel from the ${params.get('from')}. The warmth meets you at the door.`);
+        const from = params.get('from');
+        if (from) {
+            toast(`🚶 You enter the Coal Chapel from the ${from}. The warmth meets you at the door.`);
             window.history.replaceState({}, '', 'chapel.html');
         } else {
             toast('🔥 The Ātravan Coal burns. The Silent Brother kneels. The chapel holds its breath.');
@@ -612,32 +676,49 @@
 
         renderStats();
 
-        const mason = buildChapel();
-        buildObjects(mason);
+        // Build architecture
+        let mason;
+        try {
+            mason = buildChapelArchitecture();
+        } catch (e) {
+            console.error('Architecture failed:', e);
+            document.getElementById('chapel-container').innerHTML =
+                `<div style="color:var(--ember);text-align:center;padding:3rem;font-family:Georgia,serif;line-height:1.6;">
+                    <span style="font-size:1.5rem;">𐤇</span><br>
+                    ⚠️ The stones would not rise.<br>
+                    <span style="font-size:0.7rem;color:var(--ash);">${e.message}</span>
+                </div>`;
+            return;
+        }
 
-        // Ambient click sparks
+        // Build objects
+        try { buildChapelObjects(); } catch (e) { console.error('Objects failed:', e); }
+
+        // Atmosphere
+        spawnDust();
+        spawnEmbers(8);
+        maybeNokomis(3500);
+
+        // Prayer sparks
         document.addEventListener('click', (e) => {
-            if (Math.random() > 0.72 && !e.target.closest('.zone')) {
-                const spark = document.createElement('div');
-                spark.style.cssText = `
-                    position: fixed;
-                    left: ${e.clientX}px; top: ${e.clientY}px;
-                    width: 3px; height: 3px;
-                    background: #ffd700;
-                    border-radius: 50%;
-                    box-shadow: 0 0 10px #ffd700, 0 0 20px rgba(196,79,28,0.3);
-                    pointer-events: none;
-                    z-index: 90;
-                    animation: sparkFade 1.4s ease-out forwards;
-                `;
-                document.body.appendChild(spark);
-                setTimeout(() => spark.remove(), 1500);
+            if (Math.random() > 0.7 && !e.target.closest('.zone')) {
+                spawnPrayerSpark(e.clientX, e.clientY);
             }
         });
 
-        // Initial ember burst
-        spawnEmbers(8);
+        // Keyboard: Space = tend fire
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && !e.target.closest('input,textarea')) {
+                e.preventDefault();
+                const brazier = document.getElementById('brazier');
+                if (brazier) brazier.click();
+            }
+        });
     }
+
+    // ═══════════════════════════════════════
+    // LET THERE BE LIGHT
+    // ═══════════════════════════════════════
 
     init();
     </script>
