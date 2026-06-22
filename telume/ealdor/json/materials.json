@@ -1,0 +1,441 @@
+{
+  "stone": {
+    "ashlar_limestone": {
+      "characters": ["M","W","H","N","M"],
+      "textColor": "#4a3f35",
+      "mortarColor": "#242018",
+      "fontSize": 41,
+      "lineHeight": 0.52,
+      "letterSpacing": -3,
+      "fontFamily": "'UnifrakturMaguntia','Cinzel','Georgia',serif",
+      "weathering": 0.12
+    },
+    "ashlar_sandstone": {
+      "characters": ["M","W","H","N","M"],
+      "textColor": "#8b7d5e",
+      "mortarColor": "#5c4f3a",
+      "fontSize": 41,
+      "lineHeight": 0.52,
+      "letterSpacing": -3,
+      "fontFamily": "'UnifrakturMaguntia','Cinzel','Georgia',serif",
+      "weathering": 0.2
+    },
+    "rubble_basalt": {
+      "characters": ["▓","▒","░","█","▓"],
+      "textColor": "#2a2520",
+      "mortarColor": "#1a1410",
+      "fontSize": 38,
+      "lineHeight": 0.58,
+      "letterSpacing": -2,
+      "fontFamily": "monospace",
+      "weathering": 0.35
+    },
+    "dressed_granite": {
+      "characters": ["H","H","H","N","N"],
+      "textColor": "#5c4f42",
+      "mortarColor": "#3d362f",
+      "fontSize": 42,
+      "lineHeight": 0.5,
+      "letterSpacing": -4,
+      "fontFamily": "'Cinzel','Georgia',serif",
+      "weathering": 0.05
+    },
+    "flagstone_worn": {
+      "characters": ["▓","░","▒","█","░"],
+      "textColor": "#5c4f42",
+      "mortarColor": "#3a3028",
+      "fontSize": 50,
+      "lineHeight": 0.47,
+      "letterSpacing": -2,
+      "fontFamily": "'Georgia','Times New Roman',serif",
+      "weathering": 0.55
+    },
+    "cobblestone": {
+      "characters": ["○","●","○","●","◐"],
+      "textColor": "#6b5d4f",
+      "mortarColor": "#4a3f35",
+      "fontSize": 36,
+      "lineHeight": 0.6,
+      "letterSpacing": 0,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0.45
+    },
+    "cyclopean": {
+      "characters": ["█","▓","█","▒","█"],
+      "textColor": "#3d362f",
+      "mortarColor": "#1a1410",
+      "fontSize": 55,
+      "lineHeight": 0.55,
+      "letterSpacing": -1,
+      "fontFamily": "monospace",
+      "weathering": 0.6
+    },
+    "marble_white": {
+      "characters": ["M","N","H","M","N"],
+      "textColor": "#d8d0c8",
+      "mortarColor": "#b8b0a8",
+      "fontSize": 40,
+      "lineHeight": 0.5,
+      "letterSpacing": -3,
+      "fontFamily": "'Cinzel','Georgia',serif",
+      "weathering": 0.03
+    }
+  },
+
+  "wood": {
+    "oak_dark": {
+      "characters": ["║","║","║","│","│"],
+      "textColor": "#3d2b1f",
+      "mortarColor": "#2a1f15",
+      "fontSize": 28,
+      "lineHeight": 0.55,
+      "letterSpacing": 0,
+      "fontFamily": "monospace",
+      "weathering": 0.3
+    },
+    "oak_weathered": {
+      "characters": ["║","│","║","│","║"],
+      "textColor": "#5c4a3a",
+      "mortarColor": "#3d3028",
+      "fontSize": 28,
+      "lineHeight": 0.58,
+      "letterSpacing": 0,
+      "fontFamily": "monospace",
+      "weathering": 0.5
+    },
+    "pine_plank": {
+      "characters": ["│","│","╎","│","╎"],
+      "textColor": "#8b7d5e",
+      "mortarColor": "#6b5d4a",
+      "fontSize": 26,
+      "lineHeight": 0.55,
+      "letterSpacing": 0,
+      "fontFamily": "monospace",
+      "weathering": 0.2
+    },
+    "thatch_dark": {
+      "characters": ["⌣","⌢","~","⋅","⌣"],
+      "textColor": "#4a3a2f",
+      "mortarColor": "#3d3028",
+      "fontSize": 24,
+      "lineHeight": 0.65,
+      "letterSpacing": 1,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0.4
+    },
+    "timber_beam": {
+      "characters": ["▬","▬","▬","▬","▬"],
+      "textColor": "#4a3020",
+      "mortarColor": "#2a1f15",
+      "fontSize": 30,
+      "lineHeight": 0.5,
+      "letterSpacing": -1,
+      "fontFamily": "monospace",
+      "weathering": 0.15
+    }
+  },
+
+  "water": {
+    "fjord_deep": {
+      "characters": ["~","≈","~","≋","~"],
+      "textColor": "#2a4a6a",
+      "mortarColor": "#1a3040",
+      "fontSize": 32,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "'Georgia',serif",
+      "animation": "waveDrift 4s ease-in-out infinite"
+    },
+    "fjord_frozen": {
+      "characters": ["~","≈","~","≋","~"],
+      "textColor": "#c8d8e4",
+      "mortarColor": "#a0b8c8",
+      "fontSize": 32,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "'Georgia',serif"
+    },
+    "river_shallow": {
+      "characters": ["~","⋅","~","⋅","~"],
+      "textColor": "#3a6b8c",
+      "mortarColor": "#2a4a6a",
+      "fontSize": 24,
+      "lineHeight": 0.45,
+      "letterSpacing": 1,
+      "fontFamily": "'Georgia',serif",
+      "animation": "waveDrift 2s ease-in-out infinite"
+    },
+    "lake_still": {
+      "characters": ["≋","≋","~","≋","≋"],
+      "textColor": "#3a5a7a",
+      "mortarColor": "#2a4a6a",
+      "fontSize": 30,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "'Georgia',serif"
+    },
+    "well_dark": {
+      "characters": ["◉","◉","◉","◉","◉"],
+      "textColor": "#1a1410",
+      "mortarColor": "#0a0806",
+      "fontSize": 20,
+      "lineHeight": 0.55,
+      "letterSpacing": 2,
+      "fontFamily": "'Georgia',serif"
+    }
+  },
+
+  "vegetation": {
+    "forest_canopy": {
+      "characters": ["▲","▲","▼","▲","◆"],
+      "textColor": "#2d3a1f",
+      "mortarColor": "#1a2a0f",
+      "fontSize": 28,
+      "lineHeight": 0.45,
+      "letterSpacing": -1,
+      "fontFamily": "monospace",
+      "weathering": 0.4
+    },
+    "forest_pine": {
+      "characters": ["▲","▲","▲","◆","▲"],
+      "textColor": "#1a3a1a",
+      "mortarColor": "#0f1f0f",
+      "fontSize": 32,
+      "lineHeight": 0.4,
+      "letterSpacing": -2,
+      "fontFamily": "monospace",
+      "weathering": 0.3
+    },
+    "grass_field": {
+      "characters": ["╱","╲","╱","╲","│"],
+      "textColor": "#3d5a2a",
+      "mortarColor": "#2d3a1f",
+      "fontSize": 22,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "monospace",
+      "weathering": 0.5
+    },
+    "grass_frost": {
+      "characters": ["╱","╲","╱","╲","│"],
+      "textColor": "#8a9baa",
+      "mortarColor": "#6b7a8a",
+      "fontSize": 22,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "monospace",
+      "weathering": 0.3
+    },
+    "moss_stone": {
+      "characters": ["▓","░","▒","░","▓"],
+      "textColor": "#4a5a3a",
+      "mortarColor": "#3d4a2f",
+      "fontSize": 34,
+      "lineHeight": 0.52,
+      "letterSpacing": -2,
+      "fontFamily": "monospace",
+      "weathering": 0.5
+    },
+    "vines": {
+      "characters": ["╿","╽","╿","╽","┆"],
+      "textColor": "#3d5a2a",
+      "mortarColor": "#2d3a1f",
+      "fontSize": 18,
+      "lineHeight": 0.6,
+      "letterSpacing": 2,
+      "fontFamily": "monospace",
+      "weathering": 0.6
+    },
+    "crops_wheat": {
+      "characters": ["╎","╎","╎","╎","╎"],
+      "textColor": "#b8860b",
+      "mortarColor": "#8b6d2a",
+      "fontSize": 20,
+      "lineHeight": 0.5,
+      "letterSpacing": 1,
+      "fontFamily": "monospace",
+      "weathering": 0.2
+    },
+    "barren_soil": {
+      "characters": ["░","⋅","░","⋅","░"],
+      "textColor": "#5c4f42",
+      "mortarColor": "#3d342b",
+      "fontSize": 24,
+      "lineHeight": 0.55,
+      "letterSpacing": 1,
+      "fontFamily": "monospace",
+      "weathering": 0.7
+    }
+  },
+
+  "metal": {
+    "iron_dark": {
+      "characters": ["▬","▬","▬","▬","▬"],
+      "textColor": "#3d362f",
+      "mortarColor": "#2a2520",
+      "fontSize": 22,
+      "lineHeight": 0.5,
+      "letterSpacing": -1,
+      "fontFamily": "monospace",
+      "weathering": 0.1
+    },
+    "bronze_weathered": {
+      "characters": ["▬","▬","▬","▬","▬"],
+      "textColor": "#6b8a5a",
+      "mortarColor": "#4a6b3a",
+      "fontSize": 22,
+      "lineHeight": 0.5,
+      "letterSpacing": -1,
+      "fontFamily": "monospace",
+      "weathering": 0.3
+    },
+    "gold_leaf": {
+      "characters": ["◆","◇","◆","◇","◆"],
+      "textColor": "#d4af37",
+      "mortarColor": "#b8860b",
+      "fontSize": 18,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0.02
+    },
+    "chain_rusty": {
+      "characters": ["○","○","○","○","○"],
+      "textColor": "#7a4a2a",
+      "mortarColor": "#5a3020",
+      "fontSize": 16,
+      "lineHeight": 0.5,
+      "letterSpacing": 2,
+      "fontFamily": "monospace",
+      "weathering": 0.5
+    }
+  },
+
+  "glass": {
+    "stained_dark": {
+      "characters": ["◈","◈","◈","◈","◈"],
+      "textColor": "#2a4a6a",
+      "mortarColor": "#1a3040",
+      "fontSize": 26,
+      "lineHeight": 0.55,
+      "letterSpacing": 0,
+      "fontFamily": "'Georgia',serif"
+    },
+    "frosted": {
+      "characters": ["░","▒","░","▒","░"],
+      "textColor": "#c8d8e4",
+      "mortarColor": "#a0b8c8",
+      "fontSize": 26,
+      "lineHeight": 0.55,
+      "letterSpacing": 0,
+      "fontFamily": "monospace"
+    },
+    "clear_glass": {
+      "characters": ["◈","◇","◈","◇","◈"],
+      "textColor": "rgba(200,216,228,0.4)",
+      "mortarColor": "rgba(200,216,228,0.1)",
+      "fontSize": 26,
+      "lineHeight": 0.55,
+      "letterSpacing": 0,
+      "fontFamily": "'Georgia',serif"
+    }
+  },
+
+  "bone": {
+    "bone_white": {
+      "characters": ["│","╎","│","╎","│"],
+      "textColor": "#e8d8c0",
+      "mortarColor": "#c8b8a0",
+      "fontSize": 16,
+      "lineHeight": 0.55,
+      "letterSpacing": 1,
+      "fontFamily": "monospace",
+      "weathering": 0.3
+    },
+    "bone_ancient": {
+      "characters": ["│","╎","│","╎","│"],
+      "textColor": "#b8a890",
+      "mortarColor": "#8b7d6b",
+      "fontSize": 16,
+      "lineHeight": 0.55,
+      "letterSpacing": 1,
+      "fontFamily": "monospace",
+      "weathering": 0.7
+    }
+  },
+
+  "ice": {
+    "glacier_blue": {
+      "characters": ["◈","◇","◈","◇","◈"],
+      "textColor": "#a0d8f0",
+      "mortarColor": "#80b8d8",
+      "fontSize": 30,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "'Georgia',serif"
+    },
+    "ice_cracked": {
+      "characters": ["◈","╱","◈","╲","◈"],
+      "textColor": "#c8d8e4",
+      "mortarColor": "#a0b8c8",
+      "fontSize": 30,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "'Georgia',serif"
+    }
+  },
+
+  "fire": {
+    "coal_ember": {
+      "characters": ["●","○","●","○","●"],
+      "textColor": "#e85d2c",
+      "mortarColor": "#c44f1c",
+      "fontSize": 20,
+      "lineHeight": 0.45,
+      "letterSpacing": 0,
+      "fontFamily": "'Georgia',serif",
+      "animation": "coalPulse 3s ease-in-out infinite"
+    },
+    "flame_orange": {
+      "characters": ["▲","▼","▲","▼","◆"],
+      "textColor": "#ff6b2b",
+      "mortarColor": "#e85d2c",
+      "fontSize": 22,
+      "lineHeight": 0.4,
+      "letterSpacing": -1,
+      "fontFamily": "monospace",
+      "animation": "coalPulse 1.5s ease-in-out infinite"
+    },
+    "candle_gold": {
+      "characters": ["⋅","●","⋅","●","⋅"],
+      "textColor": "#ffd700",
+      "mortarColor": "#daa520",
+      "fontSize": 14,
+      "lineHeight": 0.5,
+      "letterSpacing": 1,
+      "fontFamily": "'Georgia',serif",
+      "animation": "coalPulse 0.8s ease-in-out infinite"
+    }
+  },
+
+  "void": {
+    "darkness": {
+      "characters": [" "," "," "," "," "],
+      "textColor": "#0a0806",
+      "mortarColor": "#0a0806",
+      "fontSize": 20,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "monospace"
+    },
+    "shadow_corner": {
+      "characters": ["▓","▒","░"," "," "],
+      "textColor": "#0a0806",
+      "mortarColor": "#0a0806",
+      "fontSize": 28,
+      "lineHeight": 0.55,
+      "letterSpacing": -2,
+      "fontFamily": "monospace"
+    }
+  }
+}
