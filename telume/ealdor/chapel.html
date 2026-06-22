@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Coal Chapel · Ealdor</title>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Cinzel:wght@400;700&family=Georgia&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --stone: #3d362f;
+            --deep-stone: #2a2520;
+            --parchment: #f4e4c1;
+            --ember: #c44f1c;
+            --ember-bright: #e85d2c;
+            --ash: #8b7d6b;
+            --frost: #c8d8e4;
+            --blood: #7a1c1c;
+            --gold: #b8860b;
+            --deep: #1a1410;
+            --shadow: #0f0c08;
+            --candle: #ffd700;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--shadow);
+            color: var(--parchment);
+            font-family: 'Georgia', 'Times New Roman', serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            cursor: default;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ═══════════════════════════════════════
+           ATMOSPHERIC LAYERS
+           ═══════════════════════════════════ */
+
+        .vault-shadow {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(ellipse at 50% 30%, rgba(26,20,16,0.1) 0%, rgba(15,12,8,0.7) 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .dust-layer {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .ember-layer {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* ═══════════════════════════════════════
+           THE ROOM — CSS PERSPECTIVE
+           ═══════════════════════════════════════ */
+
+        .chapel {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            min-height: 100vh;
+            margin: 0 auto;
+            perspective: 1000px;
+            perspective-origin: 50% 45%;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem 1rem 3rem;
+        }
+
+        /* ── Header ── */
+        .chapel-header {
+            text-align: center;
+            padding: 1.5rem 1rem 0.5rem;
+            position: relative;
+            z-index: 5;
+            width: 100%;
+        }
+        .chapel-header h1 {
+            font-family: 'UnifrakturCook', cursive;
+            font-size: clamp(2.5rem, 6vw, 3.8rem);
+            color: var(--gold);
+            text-shadow: 0 0 12px rgba(184,134,11,0.5), 2px 2px 0 var(--deep);
+            letter-spacing: 3px;
+            line-height: 1;
+        }
+        .chapel-header .subtitle {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            color: var(--ash);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-top: 0.2rem;
+        }
+
+        /* ── Room Container ── */
+        .room {
+            position: relative;
+            width: 100%;
+            max-width: 750px;
+            min-height: 550px;
+            margin: 1rem auto;
+            transform-style: preserve-3d;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            gap: 0;
+        }
+
+        /* ── Far Wall ── */
+        .far-wall {
+            position: relative;
+            width: 100%;
+            background: linear-gradient(to bottom, #3d362f 0%, #2a2520 100%);
+            border: 3px solid #4a4138;
+            border-bottom: none;
+            padding: 1.5rem 1rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: rotateX(3deg);
+            transform-origin: bottom center;
+            box-shadow: inset 0 0 80px rgba(0,0,0,0.5);
+            z-index: 1;
+        }
+
+        /* Window */
+        .chapel-window {
+            width: 140px;
+            height: 200px;
+            background: linear-gradient(180deg, #1a3040 0%, #2a4a6a 40%, #3a5a7a 100%);
+            border: 8px solid #3d362f;
+            border-radius: 70px 70px 0 0;
+            position: relative;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 0 30px rgba(58,90,122,0.3), inset 0 0 40px rgba(0,0,0,0.6);
+            overflow: hidden;
+        }
+        .chapel-window .frost-overlay {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%;
+            height: 0%;
+            background: linear-gradient(to top, rgba(200,216,228,0.9) 0%, rgba(200,216,228,0.3) 60%, transparent 100%);
+            transition: height 1.5s ease;
+            pointer-events: none;
+        }
+        .chapel-window .glyph-in-window {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: rgba(184,134,11,0.5);
+            pointer-events: none;
+        }
+        .chapel-window .window-mullions {
+            position: absolute;
+            top: 0; left: 50%;
+            width: 6px; height: 100%;
+            background: #3d362f;
+            transform: translateX(-50%);
+        }
+        .chapel-window .window-transom {
+            position: absolute;
+            top: 50%; left: 0;
+            width: 100%; height: 6px;
+            background: #3d362f;
+        }
+
+        /* ── Floor ── */
+        .floor {
+            position: relative;
+            width: 100%;
+            min-height: 200px;
+            background: linear-gradient(to bottom, #5c4f42 0%, #4a3f35 30%, #3d342b 100%);
+            border: 3px solid #4a4138;
+            border-top: none;
+            transform: rotateX(-5deg);
+            transform-origin: top center;
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-rows: 1fr auto;
+            gap: 0.5rem;
+            padding: 2rem 1rem 1.5rem;
+            box-shadow: inset 0 30px 60px rgba(0,0,0,0.4);
+            z-index: 1;
+        }
+        .floor::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 5%; width: 90%; height: 1px;
+            background: rgba(184,134,11,0.2);
+        }
+
+        /* Glyph carvings on floor */
+        .floor-glyphs {
+            position: absolute;
+            top: 15%; left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            color: rgba(184,134,11,0.15);
+            letter-spacing: 12px;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        /* ── Side Walls ── */
+        .left-wall {
+            position: absolute;
+            left: -20px; top: 0;
+            width: 40px; height: 100%;
+            background: linear-gradient(to right, #2a2520, #3d362f);
+            border-right: 2px solid #4a4138;
+            transform: rotateY(15deg);
+            transform-origin: right center;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .right-wall {
+            position: absolute;
+            right: -20px; top: 0;
+            width: 40px; height: 100%;
+            background: linear-gradient(to left, #2a2520, #3d362f);
+            border-left: 2px solid #4a4138;
+            transform: rotateY(-15deg);
+            transform-origin: left center;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ── Ceiling Vault ── */
+        .vault {
+            position: absolute;
+            top: -60px; left: 5%;
+            width: 90%; height: 70px;
+            background: radial-gradient(ellipse at 50% 100%, #2a2520 0%, #1a1410 70%);
+            border-radius: 45% 45% 0 0;
+            z-index: -1;
+            pointer-events: none;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+        }
+        .vault-rib {
+            position: absolute;
+            top: -55px;
+            width: 8px;
+            background: #3d362f;
+            border-radius: 4px 4px 0 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .vault-rib.left { left: 18%; height: 65px; transform: rotate(-8deg); }
+        .vault-rib.center { left: 50%; height: 75px; transform: translateX(-50%); }
+        .vault-rib.right { right: 18%; height: 65px; transform: rotate(8deg); }
+
+        /* ═══════════════════════════════════════
+           INTERACTIVE ZONES
+           ═══════════════════════════════════════ */
+
+        .zone {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .zone:hover {
+            filter: brightness(1.2);
+            z-index: 10;
+        }
+        .zone:active {
+            filter: brightness(1.4);
+            transform: scale(0.97);
+        }
+
+        /* ── Brazier (on far wall plinth) ── */
+        .brazier-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        .plinth {
+            width: 100px;
+            height: 35px;
+            background: linear-gradient(#5c4f42, #4a3f35);
+            border: 3px solid #3d362f;
+            border-radius: 4px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+        .brazier {
+            width: 70px;
+            height: 55px;
+            background: linear-gradient(#2a2018, #1a1410);
+            border: 4px solid #3d362f;
+            border-radius: 8px 8px 4px 4px;
+            position: relative;
+            margin-top: -10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            cursor: pointer;
+        }
+        .brazier .coal-glow {
+            position: absolute;
+            top: 8px; left: 50%;
+            transform: translateX(-50%);
+            width: 40px; height: 28px;
+            background: radial-gradient(ellipse, var(--ember-bright) 0%, var(--ember) 40%, #1a1410 100%);
+            border-radius: 50%;
+            animation: coalPulse 3s ease-in-out infinite;
+            box-shadow: 0 0 30px var(--ember), 0 0 60px rgba(196,79,28,0.4);
+        }
+        .brazier .ember-particles {
+            position: absolute;
+            top: -5px; left: 50%;
+            transform: translateX(-50%);
+            width: 50px; height: 20px;
+            pointer-events: none;
+        }
+
+        @keyframes coalPulse {
+            0%, 100% { box-shadow: 0 0 25px var(--ember), 0 0 50px rgba(196,79,28,0.3); }
+            50% { box-shadow: 0 0 40px var(--ember-bright), 0 0 80px rgba(196,79,28,0.6); }
+        }
+
+        /* ── Silent Brother ── */
+        .silent-brother {
+            position: absolute;
+            left: 18%;
+            bottom: 22%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            z-index: 5;
+        }
+        .brother-figure {
+            width: 36px;
+            height: 70px;
+            position: relative;
+        }
+        .brother-body {
+            width: 30px;
+            height: 45px;
+            background: linear-gradient(#3d362f, #2a2018);
+            border-radius: 15px 15px 8px 8px;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .brother-hood {
+            width: 32px;
+            height: 30px;
+            background: #2a2018;
+            border-radius: 50% 50% 40% 40%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: brotherBreathe 6s ease-in-out infinite;
+        }
+        .brother-shadow {
+            width: 40px;
+            height: 10px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 50%;
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        @keyframes brotherBreathe {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.02); }
+        }
+
+        /* ── Wood Stack ── */
+        .wood-stack {
+            position: absolute;
+            left: 8%;
+            bottom: 8%;
+            cursor: pointer;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .logs {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            align-items: center;
+        }
+        .log {
+            width: 50px;
+            height: 10px;
+            background: linear-gradient(#5c3a1f, #3d2b1f);
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+        .wood-label {
+            font-size: 0.6rem;
+            color: var(--ash);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 4px;
+        }
+
+        /* ── Tally Wall (left wall marking) ── */
+        .tally-wall {
+            position: absolute;
+            left: 3%;
+            top: 25%;
+            cursor: pointer;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .tally-marks {
+            font-family: 'Courier New', monospace;
+            font-size: 0.7rem;
+            color: rgba(244,228,193,0.3);
+            line-height: 1.2;
+            transform: rotate(-2deg);
+            text-align: right;
+            max-width: 60px;
+            word-break: break-all;
+        }
+
+        /* ── Tablet Niche ── */
+        .tablet-niche {
+            position: absolute;
+            right: 6%;
+            top: 30%;
+            cursor: pointer;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .niche-arch {
+            width: 50px;
+            height: 65px;
+            background: #1a1410;
+            border: 3px solid #3d362f;
+            border-radius: 25px 25px 6px 6px;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .niche-fragment {
+            font-size: 1.2rem;
+            color: rgba(184,134,11,0.6);
+        }
+        .niche-count {
+            font-size: 0.55rem;
+            color: var(--ash);
+            margin-top: 3px;
+            letter-spacing: 1px;
+        }
+
+        /* ── Door (bottom center) ── */
+        .door-zone {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+            z-index: 5;
+        }
+        .door {
+            width: 90px;
+            height: 140px;
+            background: linear-gradient(#4a3a2f, #3d3028);
+            border: 4px solid #2a2018;
+            border-radius: 45px 45px 6px 6px;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            transition: all 0.3s;
+        }
+        .door:hover {
+            box-shadow: 0 8px 30px rgba(184,134,11,0.3);
+            border-color: var(--gold);
+        }
+        .door-handle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(184,134,11,0.5);
+        }
+        .door-crack {
+            position: absolute;
+            left: 4px;
+            top: 10%;
+            width: 3px;
+            height: 80%;
+            background: rgba(200,216,228,0.15);
+            border-radius: 2px;
+            animation: coldDraft 4s ease-in-out infinite;
+        }
+
+        @keyframes coldDraft {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.35; }
+        }
+
+        .door-label {
+            text-align: center;
+            font-size: 0.65rem;
+            color: var(--ash);
+            letter-spacing: 2px;
+            margin-top: 4px;
+        }
+
+        /* ═══════════════════════════════════════
+           STATS BAR
+           ═══════════════════════════════════════ */
+
+        .stats-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            padding: 0.5rem;
+            width: 100%;
+            max-width: 750px;
+            z-index: 5;
+        }
+        .stat-pill {
+            background: rgba(26,20,16,0.7);
+            border: 1px solid var(--ash);
+            border-radius: 20px;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .stat-pill .stat-icon { font-size: 0.9rem; }
+        .stat-pill .stat-value { font-weight: bold; color: var(--gold); }
+        .stat-pill .stat-value.low { color: var(--blood); }
+        .stat-pill .stat-value.warn { color: var(--ember); }
+
+        /* ═══════════════════════════════════════
+           TOAST
+           ═══════════════════════════════════════ */
+
+        #toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15,12,8,0.95);
+            border: 1px solid var(--gold);
+            border-radius: 6px;
+            padding: 0.7rem 1.5rem;
+            font-family: 'Georgia', serif;
+            font-size: 0.85rem;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            text-align: center;
+            max-width: 450px;
+            line-height: 1.4;
+        }
+        #toast.show { opacity: 1; }
+
+        /* ═══════════════════════════════════════
+           ROSETTE (decorative, click for prayer)
+           ═══════════════════════════════════════ */
+
+        .rosette-container {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 6;
+            cursor: pointer;
+        }
+        .rosette-svg {
+            width: 60px;
+            height: 60px;
+            filter: drop-shadow(0 0 8px rgba(184,134,11,0.4));
+        }
+
+        /* ═══════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════ */
+
+        @media (max-width: 600px) {
+            .silent-brother { left: 10%; bottom: 25%; }
+            .wood-stack { left: 2%; bottom: 10%; }
+            .tally-wall { left: 1%; top: 30%; }
+            .tablet-niche { right: 2%; top: 35%; }
+            .chapel-window { width: 100px; height: 150px; }
+            .brazier { width: 55px; height: 42px; }
+            .brazier .coal-glow { width: 30px; height: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="vault-shadow"></div>
+    <div class="dust-layer" id="dustLayer"></div>
+    <div class="ember-layer" id="emberLayer"></div>
+
+    <div class="chapel">
+        <div class="chapel-header">
+            <h1>The Coal Chapel</h1>
+            <div class="subtitle">Sanctuary of the Ātravan Flame</div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-bar">
+            <div class="stat-pill"><span class="stat-icon">🌾</span> Timber: <span class="stat-value" id="timberStat">3</span></div>
+            <div class="stat-pill"><span class="stat-icon">❤️</span> Faith: <span class="stat-value" id="faithStat">60</span></div>
+            <div class="stat-pill"><span class="stat-icon">☀️</span> Morale: <span class="stat-value" id="moraleStat">70</span></div>
+            <div class="stat-pill"><span class="stat-icon">❄️</span> Ice: <span class="stat-value warn" id="iceStat">15%</span></div>
+            <div class="stat-pill"><span class="stat-icon">📜</span> Tablets: <span class="stat-value" id="tabletStat">0</span>/7</div>
+        </div>
+
+        <!-- THE ROOM -->
+        <div class="room" id="chapelRoom">
+            <!-- Vault ceiling ribs -->
+            <div class="vault"></div>
+            <div class="vault-rib left"></div>
+            <div class="vault-rib center"></div>
+            <div class="vault-rib right"></div>
+
+            <!-- Side walls (decorative) -->
+            <div class="left-wall"></div>
+            <div class="right-wall"></div>
+
+            <!-- Rosette -->
+            <div class="rosette-container zone" data-zone="rosette" title="Offer a silent prayer">
+                <svg class="rosette-svg" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="30" cy="30" r="28" fill="none" stroke="#b8860b" stroke-width="3"/>
+                    <circle cx="30" cy="30" r="18" fill="none" stroke="#7a1c1c" stroke-width="2"/>
+                    <circle cx="30" cy="30" r="8" fill="#c44f1c" stroke="#b8860b" stroke-width="2"/>
+                    <g stroke="#b8860b" stroke-width="1.5" fill="none">
+                        <line x1="30" y1="4" x2="30" y2="22"/>
+                        <line x1="30" y1="38" x2="30" y2="56"/>
+                        <line x1="4" y1="30" x2="22" y2="30"/>
+                        <line x1="38" y1="30" x2="56" y2="30"/>
+                        <line x1="11" y1="11" x2="22" y2="22"/>
+                        <line x1="38" y1="38" x2="49" y2="49"/>
+                        <line x1="49" y1="11" x2="38" y2="22"/>
+                        <line x1="22" y1="38" x2="11" y2="49"/>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- Far Wall -->
+            <div class="far-wall">
+                <div class="chapel-window zone" data-zone="window" title="Look out upon the fjord">
+                    <div class="frost-overlay" id="frostOverlay"></div>
+                    <div class="glyph-in-window">𐤇</div>
+                    <div class="window-mullions"></div>
+                    <div class="window-transom"></div>
+                </div>
+
+                <!-- Brazier -->
+                <div class="brazier-container zone" data-zone="brazier" title="Tend the Ātravan Coal">
+                    <div class="brazier">
+                        <div class="coal-glow"></div>
+                    </div>
+                    <div class="plinth"></div>
+                </div>
+            </div>
+
+            <!-- Floor -->
+            <div class="floor">
+                <div class="floor-glyphs">𐤃 𐤀 𐤕 𐤔 𐤐 𐤌 𐤇</div>
+
+                <!-- Silent Brother -->
+                <div class="silent-brother zone" data-zone="brother" title="Observe the Silent Brother">
+                    <div class="brother-figure">
+                        <div class="brother-hood"></div>
+                        <div class="brother-body"></div>
+                    </div>
+                    <div class="brother-shadow"></div>
+                </div>
+
+                <!-- Wood Stack -->
+                <div class="wood-stack zone" data-zone="wood" title="Check the wood stores">
+                    <div class="logs" id="logStack">
+                        <div class="log"></div>
+                        <div class="log"></div>
+                        <div class="log"></div>
+                    </div>
+                    <div class="wood-label">Timber</div>
+                </div>
+
+                <!-- Tally Wall -->
+                <div class="tally-wall zone" data-zone="tally" title="Read the council tallies">
+                    <div class="tally-marks" id="tallyMarks">|||| |||| |||| ||</div>
+                </div>
+
+                <!-- Tablet Niche -->
+                <div class="tablet-niche zone" data-zone="niche" title="Study the tablet fragments">
+                    <div class="niche-arch">
+                        <span class="niche-fragment" id="nicheGlyph">𐤃</span>
+                    </div>
+                    <div class="niche-count" id="nicheCount">0 fragments</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Door (exit) -->
+        <div class="door-zone zone" data-zone="door" title="Return to the courtyard">
+            <div class="door">
+                <div class="door-handle"></div>
+                <div class="door-crack"></div>
+            </div>
+            <div class="door-label">LEAVE CHAPEL</div>
+        </div>
+    </div>
+
+    <div id="toast"></div>
+
+    <script>
+    // ═══════════════════════════════════════
+    // THE COAL CHAPEL · chapel.html
+    // ealdforn/telume/ealdor/chapel.html
+    // ═══════════════════════════════════════
+
+    const GLYPHS = ['𐤀','𐤁','𐤂','𐤃','𐤄','𐤅','𐤆','𐤇','𐤈','𐤉','𐤊','𐤋','𐤌','𐤍','𐤎','𐤏','𐤐','𐤑','𐤒','𐤓','𐤔','𐤕'];
+
+    const NOKOMIS_SAYINGS = [
+        '"You are not Otter. You are not Woodpecker. You are not Bear. You are the one who carries."',
+        '"Fear is not the enemy. Fear is the door."',
+        '"The fire does not go to the happy. The fire goes to the ones who have sat in the dark."',
+        '"The truth holds. The lie scatters."',
+        '"Helping is not the same as saving. Carrying is not the same as keeping."',
+        '"The coal does not ask to burn. It simply does."',
+        '"Silence is not empty. Silence is the vessel."',
+        '"The Rabbit does not want them to agree. The Rabbit wants you to listen."',
+    ];
+
+    function freshState() {
+        return {
+            year: 3450, season: 0, ice: 15,
+            playerResources: { Stone: 4, Timber: 3, Grain: 5, Iron: 2, Salt: 2, Cloth: 3 },
+            population: 100, morale: 70, faith: 60,
+            actionPoints: 3, maxActionPoints: 3,
+            crisisHistory: [], rabbitAppeared: false,
+            thingCooldown: 0, tradeCooldown: 0, omenCooldown: 0,
+            tabletFragments: 0, silentBrotherSpoke: false,
+            pendingCrisis: null,
+        };
+    }
+
+    let state = freshState();
+
+    // ═══════════════════════════════════════
+    // SAVE / LOAD
+    // ═══════════════════════════════════════
+
+    function loadState() {
+        const saved = localStorage.getItem('ealdor_save');
+        if (saved) {
+            try { state = JSON.parse(saved); return true; } catch(e) {}
+        }
+        return false;
+    }
+
+    function saveState() {
+        localStorage.setItem('ealdor_save', JSON.stringify(state));
+    }
+
+    // ═══════════════════════════════════════
+    // TOAST
+    // ═══════════════════════════════════════
+
+    function toast(msg, duration = 2500) {
+        const el = document.getElementById('toast');
+        el.textContent = msg;
+        el.classList.add('show');
+        clearTimeout(el._timeout);
+        el._timeout = setTimeout(() => el.classList.remove('show'), duration);
+    }
+
+    // ═══════════════════════════════════════
+    // ZONE ACTIONS
+    // ═══════════════════════════════════════
+
+    function handleZoneClick(zone) {
+        switch (zone) {
+            case 'brazier': tendFire(); break;
+            case 'brother': observeBrother(); break;
+            case 'wood': checkWood(); break;
+            case 'tally': readTallies(); break;
+            case 'niche': studyNiche(); break;
+            case 'window': lookOutWindow(); break;
+            case 'door': leaveChapel(); break;
+            case 'rosette': silentPrayer(); break;
+        }
+        saveState();
+        render();
+    }
+
+    function tendFire() {
+        const timber = state.playerResources.Timber || 0;
+        if (timber < 1) {
+            toast('No timber to feed the fire. The Silent Brother watches you, expressionless.');
+            return;
+        }
+        state.playerResources.Timber -= 1;
+        state.morale = Math.min(100, state.morale + 5);
+        state.faith = Math.min(100, state.faith + 5);
+        toast('🔥 You place timber on the Ātravan Coal. The flames rise. The warmth spreads. Faith +5, Morale +5.');
+
+        // Check for first speak
+        if (!state.silentBrotherSpoke && state.ice > 50 && state.faith > 50 && Math.random() < 0.35) {
+            state.silentBrotherSpoke = true;
+            state.faith = Math.min(100, state.faith + 15);
+            setTimeout(() => {
+                toast('🧘 The Silent Brother opens his mouth. One word: "Threshold." Then silence resumes. Faith +15.');
+            }, 1800);
+        }
+
+        // Spark burst
+        spawnEmbers(15);
+    }
+
+    function observeBrother() {
+        if (state.silentBrotherSpoke) {
+            const sayings = [
+                'He has not spoken since that day. But his presence is heavier now — as if the one word emptied something.',
+                'The eighty-seventh keeper. His silence is a kind of tending, too.',
+                'You watch him. He watches the Coal. The Coal watches nothing. That is the order of things.',
+            ];
+            toast(sayings[Math.floor(Math.random() * sayings.length)]);
+        } else {
+            const sayings = [
+                'He kneels. He has always knelt. The eighty-seventh of his line. He has never spoken. The fire has never gone out.',
+                'His hood does not turn. He tends the Coal. That is all. That is everything.',
+                'You stand near him. The air is warmer here. He does not acknowledge you. He does not need to.',
+            ];
+            toast(sayings[Math.floor(Math.random() * sayings.length)]);
+        }
+        state.faith = Math.min(100, state.faith + 2);
+    }
+
+    function checkWood() {
+        const timber = state.playerResources.Timber || 0;
+        if (timber > 0) {
+            state.playerResources.Timber -= 1;
+            toast(`🪵 You take one Timber from the stack. ${state.playerResources.Timber} remaining. The wood is dry — good burning wood.`);
+        } else {
+            toast('The wood stack is empty. The pile is just dust and splinters. You will need to find more timber.');
+        }
+    }
+
+    function readTallies() {
+        const count = state.crisisHistory.length;
+        const thingStatus = state.thingCooldown > 0 ? 'The Thing has convened recently.' : 'The Thing is ready to convene.';
+        toast(`📋 The tally wall holds ${count} crisis marks. ${thingStatus} The charcoal is old — some marks are centuries deep.`);
+        state.morale = Math.min(100, state.morale + 1);
+    }
+
+    function studyNiche() {
+        state.tabletFragments = Math.min(7, (state.tabletFragments || 0) + 1);
+        const g = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+        toast(`📜 You study a fragment in the niche. A glyph catches the firelight: ${g} — ${state.tabletFragments}/7 fragments collected.`);
+        state.faith = Math.min(100, state.faith + 3);
+
+        if (state.tabletFragments >= 7) {
+            setTimeout(() => {
+                toast('✨ The fragments align. The Seventh Tablet begins to write itself. Something ancient stirs.');
+            }, 2000);
+        }
+    }
+
+    function lookOutWindow() {
+        const ice = state.ice;
+        const seasonNames = ['Spring','Summer','Autumn','Winter'];
+        const season = seasonNames[state.season];
+        let msg = '';
+        if (ice < 30) {
+            msg = `The fjord glitters in ${season.toLowerCase()} light. Dark water. Whitecaps. Ships could still pass — barely.`;
+        } else if (ice < 60) {
+            msg = `Ice fingers reach across the fjord. The water is steel-grey. ${season} cold bites the glass.`;
+        } else if (ice < 85) {
+            msg = `The fjord is mostly white now. Ice sheets groan against each other. No ships. Only the wind.`;
+        } else {
+            msg = 'The fjord is sealed. A white plain where water once was. The ice is thick enough to walk on — if you dared.';
+        }
+        toast(`🪟 ${msg} Ice: ${ice}%.`);
+
+        // Possible omen
+        if (Math.random() < 0.25) {
+            const g = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+            setTimeout(() => toast(`✨ A glyph forms in the frost on the glass: ${g}`), 1500);
+        }
+    }
+
+    function leaveChapel() {
+        saveState();
+        const params = new URLSearchParams(window.location.search);
+        const from = params.get('from') || 'courtyard';
+        toast('🚶 You bow to the Coal and step backward through the door...');
+        setTimeout(() => {
+            window.location.href = `index.html?from=chapel`;
+        }, 1000);
+    }
+
+    function silentPrayer() {
+        const sayings = [
+            'You offer a silent prayer. The Coal pulses — once — as if acknowledging.',
+            'You close your eyes. When you open them, the embers have rearranged. Or perhaps they were always that way.',
+            'The prayer leaves your lips without sound. The Silent Brother shifts — barely. The fire hears.',
+        ];
+        toast(sayings[Math.floor(Math.random() * sayings.length)]);
+        state.faith = Math.min(100, state.faith + 1);
+        spawnEmbers(5);
+    }
+
+    // ═══════════════════════════════════════
+    // PARTICLES
+    // ═══════════════════════════════════════
+
+    function createDust() {
+        const layer = document.getElementById('dustLayer');
+        for (let i = 0; i < 60; i++) {
+            const mote = document.createElement('div');
+            mote.style.cssText = `
+                position: absolute;
+                width: ${Math.random() * 3 + 1}px;
+                height: ${Math.random() * 3 + 1}px;
+                background: rgba(232,216,176,${Math.random() * 0.4 + 0.2});
+                border-radius: 50%;
+                left: ${Math.random() * 100}%;
+                top: ${Math.random() * 100}%;
+                animation: dustDrift ${Math.random() * 20 + 15}s linear infinite;
+                animation-delay: ${Math.random() * 15}s;
+            `;
+            layer.appendChild(mote);
+        }
+    }
+
+    function spawnEmbers(count) {
+        const layer = document.getElementById('emberLayer');
+        for (let i = 0; i < count; i++) {
+            const ember = document.createElement('div');
+            const size = Math.random() * 4 + 2;
+            const startX = 45 + Math.random() * 10;
+            ember.style.cssText = `
+                position: absolute;
+                width: ${size}px;
+                height: ${size}px;
+                background: radial-gradient(circle, #ff6b2b, #c44f1c);
+                border-radius: 50%;
+                left: ${startX}%;
+                top: 45%;
+                box-shadow: 0 0 ${size * 3}px rgba(196,79,28,0.6);
+                animation: emberRise ${Math.random() * 2 + 1.5}s ease-out forwards;
+                animation-delay: ${Math.random() * 0.5}s;
+                pointer-events: none;
+            `;
+            layer.appendChild(ember);
+            setTimeout(() => ember.remove(), 3000);
+        }
+    }
+
+    // ═══════════════════════════════════════
+    // Nokomis whisper (random)
+    // ═══════════════════════════════════════
+
+    function maybeNokomis() {
+        if (Math.random() < 0.12) {
+            const saying = NOKOMIS_SAYINGS[Math.floor(Math.random() * NOKOMIS_SAYINGS.length)];
+            setTimeout(() => toast(`👁️ ${saying}`, 3500), 800);
+        }
+    }
+
+    // ═══════════════════════════════════════
+    // RENDER
+    // ═══════════════════════════════════════
+
+    function render() {
+        document.getElementById('timberStat').textContent = state.playerResources.Timber || 0;
+        document.getElementById('faithStat').textContent = state.faith;
+        document.getElementById('moraleStat').textContent = state.morale;
+        document.getElementById('iceStat').textContent = state.ice + '%';
+        document.getElementById('tabletStat').textContent = state.tabletFragments || 0;
+
+        // Color stats
+        ['faithStat','moraleStat'].forEach(id => {
+            const el = document.getElementById(id);
+            const val = parseInt(el.textContent);
+            el.className = 'stat-value';
+            if (val < 30) el.className += ' low';
+            else if (val < 50) el.className += ' warn';
+        });
+        const iceEl = document.getElementById('iceStat');
+        iceEl.className = 'stat-value';
+        if (state.ice > 70) iceEl.className += ' low';
+        else if (state.ice > 40) iceEl.className += ' warn';
+
+        // Frost on window
+        const frostOverlay = document.getElementById('frostOverlay');
+        const frostHeight = Math.min(95, state.ice);
+        frostOverlay.style.height = frostHeight + '%';
+
+        // Wood stack visual
+        const logStack = document.getElementById('logStack');
+        const timberCount = Math.min(8, state.playerResources.Timber || 0);
+        logStack.innerHTML = '';
+        for (let i = 0; i < timberCount; i++) {
+            const log = document.createElement('div');
+            log.className = 'log';
+            log.style.opacity = 1 - (i * 0.08);
+            logStack.appendChild(log);
+        }
+        if (timberCount === 0) {
+            const empty = document.createElement('div');
+            empty.style.cssText = 'font-size:0.55rem;color:var(--blood);text-align:center;';
+            empty.textContent = 'EMPTY';
+            logStack.appendChild(empty);
+        }
+
+        // Tally marks
+        const tallyEl = document.getElementById('tallyMarks');
+        const crisisCount = state.crisisHistory.length;
+        let marks = '';
+        for (let i = 0; i < Math.min(crisisCount, 40); i++) {
+            marks += (i % 5 === 4) ? '| ' : '|';
+        }
+        if (crisisCount === 0) marks = 'No tallies yet.';
+        tallyEl.textContent = marks;
+
+        // Niche glyph
+        const nicheGlyph = document.getElementById('nicheGlyph');
+        const fragments = state.tabletFragments || 0;
+        nicheGlyph.textContent = fragments > 0 ? GLYPHS[fragments % GLYPHS.length] : '𐤃';
+        nicheGlyph.style.opacity = fragments > 0 ? 0.4 + (fragments / 7) * 0.6 : 0.2;
+        document.getElementById('nicheCount').textContent = `${fragments} fragment${fragments !== 1 ? 's' : ''}`;
+
+        // Brother visual (slightly different if he spoke)
+        const brotherHood = document.querySelector('.brother-hood');
+        if (state.silentBrotherSpoke) {
+            brotherHood.style.boxShadow = '0 0 8px rgba(184,134,11,0.3)';
+        }
+    }
+
+    // ═══════════════════════════════════════
+    // EVENT LISTENERS
+    // ═══════════════════════════════════════
+
+    document.getElementById('chapelRoom').addEventListener('click', (e) => {
+        const zone = e.target.closest('.zone');
+        if (!zone) return;
+        const zoneId = zone.dataset.zone;
+        if (zoneId) handleZoneClick(zoneId);
+    });
+
+    // Click sparks (from Grok's draft — kept as ambient response)
+    document.addEventListener('click', (e) => {
+        if (Math.random() > 0.75 && !e.target.closest('.zone')) {
+            const spark = document.createElement('div');
+            spark.style.cssText = `
+                position: fixed;
+                left: ${e.clientX}px;
+                top: ${e.clientY}px;
+                width: 4px; height: 4px;
+                background: #ffd700;
+                border-radius: 50%;
+                box-shadow: 0 0 12px #ffd700, 0 0 24px rgba(196,79,28,0.4);
+                pointer-events: none;
+                z-index: 90;
+                animation: sparkFade 1.4s ease-out forwards;
+            `;
+            document.body.appendChild(spark);
+            setTimeout(() => spark.remove(), 1500);
+        }
+    });
+
+    // ═══════════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════════
+
+    function init() {
+        const loaded = loadState();
+        if (!loaded) {
+            state = freshState();
+            saveState();
+        }
+
+        // URL params
+        const params = new URLSearchParams(window.location.search);
+        const from = params.get('from');
+        if (from) {
+            toast(`🚶 You enter the Coal Chapel from the ${from}. The warmth meets you at the door.`);
+            window.history.replaceState({}, '', 'chapel.html');
+        } else {
+            toast('🔥 The Ātravan Coal burns. The Silent Brother kneels. The chapel holds its breath.');
+        }
+
+        // Atmosphere
+        createDust();
+        spawnEmbers(6);
+        maybeNokomis();
+
+        // Animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes dustDrift {
+                0% { transform: translateY(0) translateX(0); opacity: 0.3; }
+                50% { opacity: 0.6; }
+                100% { transform: translateY(-110vh) translateX(30px); opacity: 0; }
+            }
+            @keyframes emberRise {
+                0% { transform: translateY(0) translateX(0) scale(1); opacity: 1; }
+                100% { transform: translateY(-120px) translateX(${Math.random() > 0.5 ? '' : '-'}${Math.random() * 40}px) scale(0); opacity: 0; }
+            }
+            @keyframes sparkFade {
+                0% { transform: scale(1); opacity: 1; }
+                100% { transform: scale(3); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        render();
+    }
+
+    init();
+    </script>
+</body>
+</html>
