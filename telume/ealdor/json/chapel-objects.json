@@ -1,0 +1,146 @@
+{
+    "objects": [
+        {
+            "id": "brazier",
+            "name": "Ātravan Coal",
+            "zone": "brazier",
+            "position": { "x": 370, "y": 270, "z": 20 },
+            "components": [
+                {
+                    "type": "rect",
+                    "id": "plinth",
+                    "width": 100, "height": 35,
+                    "style": {
+                        "background": "linear-gradient(#5c4f42, #4a3f35)",
+                        "border": "3px solid #3d362f",
+                        "borderRadius": "4px",
+                        "boxShadow": "0 8px 20px rgba(0,0,0,0.5)"
+                    }
+                },
+                {
+                    "type": "rect",
+                    "id": "brazier-bowl",
+                    "width": 70, "height": 50,
+                    "position": { "x": 15, "y": -45 },
+                    "style": {
+                        "background": "linear-gradient(#2a2018, #1a1410)",
+                        "border": "4px solid #3d362f",
+                        "borderRadius": "8px 8px 4px 4px",
+                        "boxShadow": "0 4px 15px rgba(0,0,0,0.6)"
+                    }
+                },
+                {
+                    "type": "circle",
+                    "id": "coal-glow",
+                    "radius": 22,
+                    "position": { "x": 35, "y": -40 },
+                    "bind": {
+                        "boxShadow": "$faith > 70 ? '0 0 40px #e85d2c, 0 0 80px rgba(196,79,28,0.6)' : '0 0 25px #c44f1c, 0 0 50px rgba(196,79,28,0.3)'"
+                    },
+                    "animation": "coalPulse 3s ease-in-out infinite",
+                    "particles": {
+                        "type": "embers",
+                        "count": 12,
+                        "color": "#c44f1c",
+                        "spread": 40,
+                        "rise": -120
+                    }
+                }
+            ],
+            "interaction": {
+                "action": "tendFire",
+                "label": "Tend the Coal",
+                "cost": { "resource": "Timber", "amount": 1 },
+                "rewards": { "faith": 5, "morale": 5 },
+                "toast_success": "You place timber on the Ātravan Coal. The flames rise. Faith +5, Morale +5.",
+                "toast_fail": "No timber to feed the fire. The Silent Brother watches you, expressionless."
+            }
+        },
+        {
+            "id": "silent-brother",
+            "name": "The Silent Brother",
+            "zone": "brother",
+            "position": { "x": 240, "y": 360, "z": 15 },
+            "components": [
+                {
+                    "type": "rect",
+                    "id": "brother-body",
+                    "width": 30, "height": 45,
+                    "style": {
+                        "background": "linear-gradient(#3d362f, #2a2018)",
+                        "borderRadius": "15px 15px 8px 8px"
+                    }
+                },
+                {
+                    "type": "circle",
+                    "id": "brother-hood",
+                    "radius": 16,
+                    "position": { "x": -1, "y": -8 },
+                    "animation": "brotherBreathe 6s ease-in-out infinite",
+                    "bind": {
+                        "boxShadow": "$silentBrotherSpoke ? '0 0 8px rgba(184,134,11,0.3)' : 'none'"
+                    }
+                }
+            ],
+            "interaction": {
+                "action": "observeBrother",
+                "label": "Observe the Brother",
+                "toast_unspoken": [
+                    "He kneels. He has always knelt. The eighty-seventh of his line. He has never spoken.",
+                    "His hood does not turn. He tends the Coal. That is all. That is everything.",
+                    "You stand near him. The air is warmer here. He does not acknowledge you."
+                ],
+                "toast_spoken": [
+                    "He has not spoken since that day. But his presence is heavier now.",
+                    "The eighty-seventh keeper. His silence is a kind of tending, too."
+                ]
+            }
+        },
+        {
+            "id": "wood-stack",
+            "name": "Wood Stack",
+            "zone": "wood",
+            "position": { "x": 60, "y": 440, "z": 15 },
+            "interaction": {
+                "action": "takeWood",
+                "label": "Take Timber",
+                "reward": { "resource": "Timber", "amount": 1 },
+                "toast_success": "You take one Timber from the stack.",
+                "toast_fail": "The wood stack is empty. Only dust and splinters."
+            }
+        },
+        {
+            "id": "tablet-niche",
+            "name": "Tablet Niche",
+            "zone": "niche",
+            "position": { "x": 620, "y": 320, "z": 15 },
+            "interaction": {
+                "action": "studyNiche",
+                "label": "Study the fragments",
+                "toast_success": "You study a fragment. A glyph catches the firelight.",
+                "onAction": "collectFragment"
+            }
+        },
+        {
+            "id": "chapel-window",
+            "name": "Window",
+            "zone": "window",
+            "position": { "x": 340, "y": 40, "z": 5 },
+            "interaction": {
+                "action": "lookOutWindow",
+                "label": "Look out upon the fjord"
+            }
+        },
+        {
+            "id": "chapel-door",
+            "name": "Door",
+            "zone": "door",
+            "position": { "x": 350, "y": 520, "z": 25 },
+            "interaction": {
+                "action": "leaveChapel",
+                "label": "Return to courtyard",
+                "transition": "index.html?from=chapel"
+            }
+        }
+    ]
+}
