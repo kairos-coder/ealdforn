@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kingdom of Ealdor · Telumë</title>
+<style>
+  :root {
+    --stone: #2a2520;
+    --parchment: #f4e4c1;
+    --ember: #c44f1c;
+    --ash: #8b7d6b;
+    --frost: #c8d8e4;
+    --blood: #7a1c1c;
+    --gold: #b8860b;
+    --deep: #1a1410;
+    --wall: #3d362f;
+    --floor: #5c4f42;
+    --fjord: #3a6b8c;
+    --ice: #c8d8e4;
+    --player-glow: #daa520;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--deep);
+    color: var(--parchment);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
+  }
+  #game {
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  /* ── HEADER ── */
+  header {
+    text-align: center;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 0.5rem;
+  }
+  header h1 {
+    font-size: 1.6rem;
+    letter-spacing: 0.05em;
+    color: var(--gold);
+  }
+  header .subtitle {
+    font-style: italic;
+    color: var(--ash);
+    font-size: 0.85rem;
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.4rem;
+  }
+  .stat-card {
+    background: rgba(42,37,32,0.7);
+    border: 1px solid var(--ash);
+    border-radius: 4px;
+    padding: 0.4rem;
+    text-align: center;
+  }
+  .stat-card .label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    color: var(--ash);
+    letter-spacing: 0.05em;
+  }
+  .stat-card .value {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  .stat-card .value.low { color: var(--blood); }
+  .stat-card .value.warn { color: var(--ember); }
+
+  .ap-display {
+    display: flex;
+    gap: 0.3rem;
+    justify-content: center;
+    margin-top: 0.2rem;
+  }
+  .ap-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--ash);
+  }
+  .ap-dot.active { background: var(--gold); box-shadow: 0 0 6px var(--gold); }
+
+  /* ── MAP ── */
+  #map-container {
+    background: var(--deep);
+    border: 3px solid var(--ash);
+    border-radius: 6px;
+    padding: 3px;
+  }
+  #castle-map {
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    grid-template-rows: repeat(10, 38px);
+    gap: 2px;
+    min-height: 380px;
+  }
+  .cell {
+    border-radius: 2px;
+    transition: all 0.3s;
+    position: relative;
+    cursor: default;
+  }
+  .cell.wall {
+    background: var(--wall);
+    border: 1px solid #4a4138;
+  }
+  .cell.fjord {
+    background: var(--fjord);
+    border: 1px solid #4a7a9c;
+    transition: background 0.8s;
+  }
+  .cell.fjord.frozen {
+    background: var(--ice);
+    border-color: #a0b8c8;
+  }
+  .cell.room {
+    background: var(--floor);
+    border: 1px solid #6b5d4f;
+    cursor: pointer;
+  }
+  .cell.room:hover {
+    background: #6b5d4f;
+    border-color: var(--gold);
+    z-index: 2;
+    box-shadow: 0 0 8px rgba(184,134,11,0.3);
+  }
+  .cell.room.player-here {
+    border: 2px solid var(--player-glow);
+    box-shadow: inset 0 0 12px rgba(218,165,32,0.4);
+    animation: pulse 2s infinite;
+  }
+  .cell.room.current-zone {
+    border-color: var(--gold);
+    background: #6b5d4f;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: inset 0 0 8px rgba(218,165,32,0.3); }
+    50% { box-shadow: inset 0 0 16px rgba(218,165,32,0.6); }
+  }
+  .cell .icon {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.1rem;
+    pointer-events: none;
+    line-height: 1;
+  }
+  .cell .npc {
+    position: absolute;
+    top: 2px; right: 4px;
+    font-size: 0.7rem;
+    pointer-events: none;
+  }
+  #room-label {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--gold);
+    padding: 0.4rem 0 0.1rem;
+    letter-spacing: 0.05em;
+  }
+  #room-action-hint {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--ash);
+    font-style: italic;
+    min-height: 1.2em;
+    padding-bottom: 0.3rem;
+  }
+
+  /* ── MAP TOOLTIP ── */
+  #map-tooltip {
+    position: fixed;
+    background: rgba(26,20,16,0.95);
+    border: 1px solid var(--gold);
+    border-radius: 6px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.8rem;
+    pointer-events: none;
+    z-index: 100;
+    max-width: 220px;
+    display: none;
+    line-height: 1.4;
+  }
+  #map-tooltip .tt-name {
+    color: var(--gold);
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+  #map-tooltip .tt-status {
+    color: var(--parchment);
+  }
+  #map-tooltip .tt-action {
+    color: var(--ash);
+    font-style: italic;
+    font-size: 0.75rem;
+    margin-top: 0.2rem;
+  }
+
+  /* ── PANELS ── */
+  .panel {
+    background: rgba(42,37,32,0.7);
+    border: 1px solid var(--ash);
+    border-radius: 6px;
+    padding: 0.75rem;
+  }
+  .panel h2 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--frost);
+    margin-bottom: 0.4rem;
+  }
+  #log {
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    padding-right: 0.3rem;
+  }
+  #log .entry {
+    margin-bottom: 0.4rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(139,125,107,0.3);
+  }
+  #log .glyph {
+    font-size: 1.6rem;
+    color: var(--gold);
+    display: inline;
+  }
+  #log .nokomis { color: var(--frost); font-style: italic; }
+  #log .crisis { color: var(--blood); font-weight: bold; }
+  #log .gain { color: #6b8e23; }
+  #log .loss { color: var(--ember); }
+
+  /* ── BUTTONS ── */
+  #actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  button {
+    background: var(--stone);
+    color: var(--parchment);
+    border: 1px solid var(--ash);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+  }
+  button:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  button.primary {
+    background: var(--ember);
+    border-color: var(--ember);
+  }
+  button.primary:hover { background: #d45a2a; }
+
+  #footer {
+    text-align: center;
+    font-size: 0.65rem;
+    color: var(--ash);
+  }
+</style>
+</head>
+<body>
+<div id="game">
+  <header>
+    <h1>𐤃 Kingdom of Ealdor 𐤃</h1>
+    <div class="subtitle">Year <span id="yearDisplay">3450</span> AC · The Cooling · Little Ice Age</div>
+    <div class="subtitle" id="seasonDisplay">Spring · Action Points: <span id="apText">3</span></div>
+  </header>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat-card"><span class="label">Population</span><span class="value" id="pop">100</span></div>
+    <div class="stat-card"><span class="label">Morale</span><span class="value" id="morale">70</span></div>
+    <div class="stat-card"><span class="label">Faith</span><span class="value" id="faith">60</span></div>
+    <div class="stat-card"><span class="label">Ice</span><span class="value warn" id="ice">15%</span></div>
+    <div class="stat-card">
+      <span class="label">Action Points</span>
+      <div class="ap-display" id="apDots"></div>
+    </div>
+  </div>
+
+  <!-- CASTLE MAP -->
+  <div id="map-container">
+    <div id="castle-map"></div>
+    <div id="room-label">Click a location to move</div>
+    <div id="room-action-hint"></div>
+  </div>
+  <div id="map-tooltip"></div>
+
+  <!-- CHRONICLE -->
+  <div class="panel">
+    <h2>Chronicle</h2>
+    <div id="log"></div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="panel">
+    <div id="actions">
+      <button class="primary" onclick="advanceSeason()">⏳ Let the Season Pass</button>
+      <button onclick="showResources()">📦 Inventory</button>
+    </div>
+  </div>
+
+  <div id="footer">
+    The fire holds. The vault is open. The seventh tablet is still blank.<br>
+    <em>Se deret, se deretai.</em> Whoever holds is held.
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// GAME ENGINE
+// ═══════════════════════════════════════
+
+const GLYPHS = [
+  { char: '𐤀', hint: 'the ox, the beginning, the burden carried' },
+  { char: '𐤁', hint: 'the house, the container, what holds' },
+  { char: '𐤂', hint: 'the camel, the journey, what crosses' },
+  { char: '𐤃', hint: 'the door, the threshold, what opens' },
+  { char: '𐤄', hint: 'the window, the breath, what sees' },
+  { char: '𐤅', hint: 'the nail, the fastened, what binds' },
+  { char: '𐤆', hint: 'the weapon, the cut, what divides' },
+  { char: '𐤇', hint: 'the wall, the boundary, what protects' },
+  { char: '𐤈', hint: 'the wheel, the cycle, what returns' },
+  { char: '𐤉', hint: 'the hand, the work, what builds' },
+  { char: '𐤊', hint: 'the palm, the open, what receives' },
+  { char: '𐤋', hint: 'the goad, the prod, what drives' },
+  { char: '𐤌', hint: 'the water, the chaos, what flows' },
+  { char: '𐤍', hint: 'the fish, the hidden, what swims beneath' },
+  { char: '𐤎', hint: 'the pillar, the support, what stands' },
+  { char: '𐤏', hint: 'the eye, the witness, what sees all' },
+  { char: '𐤐', hint: 'the mouth, the word, what speaks' },
+  { char: '𐤑', hint: 'the serpent, the coil, what encircles' },
+  { char: '𐤒', hint: 'the needle, the pierce, what mends' },
+  { char: '𐤓', hint: 'the head, the crown, what rules' },
+  { char: '𐤔', hint: 'the tooth, the consume, what devours' },
+  { char: '𐤕', hint: 'the mark, the signature, what seals' },
+];
+
+const RESOURCES = ['Stone','Timber','Grain','Iron','Salt','Cloth'];
+const SEASONS = ['Spring','Summer','Autumn','Winter'];
+
+// ═══════════════════════════════════════
+// MAP DEFINITION — 14×10 grid
+// ═══════════════════════════════════════
+
+const MAP_COLS = 14;
+const MAP_ROWS = 10;
+
+// Zone definitions: which cells belong to each location
+const ZONES = {
+  battlements: {
+    name: 'Battlements',
+    ealdorName: 'The Threshold Wall',
+    icon: '🏰',
+    cells: [
+      // Top wall — rows 0-1, cols 0-13
+      [0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],[0,9],[0,10],[0,11],[0,12],[0,13],
+      [1,0],[1,1],[1,2],[1,3],[1,12],[1,13],
+    ],
+    description: 'The wind bites. The fjord stretches north, white creeping at its edges. From here, you can see what comes.',
+    actionName: 'Scan the Horizon (Seek Omen)',
+    action: 'seekOmen',
+    actionCost: 1
+  },
+  gatehouse: {
+    name: 'Gatehouse',
+    ealdorName: 'The Open Gate',
+    icon: '🚪',
+    cells: [
+      [1,4],[1,5],[1,6],[1,7],[1,8],[1,9],[1,10],[1,11],
+      [2,3],[2,4],[2,5],[2,6],[2,7],[2,8],[2,9],[2,10],[2,11],
+      [3,3],[3,4],[3,5],[3,6],[3,7],[3,8],[3,9],[3,10],[3,11],
+    ],
+    description: 'The portcullis is raised. Envoys from the other kingdoms arrive here. The gate has never been closed since the council took the castle.',
+    actionName: 'Receive Envoys (Trade)',
+    action: 'tradeWithKingdom',
+    actionCost: 1
+  },
+  courtyard: {
+    name: 'Courtyard',
+    ealdorName: 'The People\'s Yard',
+    icon: '🌾',
+    cells: [
+      [4,3],[4,4],[4,5],[4,6],[4,7],[4,8],[4,9],[4,10],[4,11],
+      [5,3],[5,4],[5,5],[5,6],[5,7],[5,8],[5,9],[5,10],[5,11],
+    ],
+    description: 'Markets, workshops, the granary tower. The people of Ealdor work here. Smoke rises from the forge. Grain sacks lean against the tower.',
+    actionName: 'Manage Resources (Craft/Store)',
+    action: 'manageResources',
+    actionCost: 1
+  },
+  greatHall: {
+    name: 'Great Hall',
+    ealdorName: 'The Thing-Stead',
+    icon: '🪨',
+    cells: [
+      [6,1],[6,2],[6,3],[6,4],[6,5],[6,6],
+      [7,1],[7,2],[7,3],[7,4],[7,5],[7,6],
+    ],
+    description: 'No throne. A circle of twelve stones. The fire pit in the center. The walls bear the marks of every vote ever taken — tally marks in charcoal, some centuries old.',
+    actionName: 'Convene the Thing',
+    action: 'conveneThing',
+    actionCost: 2
+  },
+  court: {
+    name: 'Court',
+    ealdorName: 'The Empty Court',
+    icon: '👑',
+    cells: [
+      [6,8],[6,9],[6,10],[6,11],[6,12],[6,13],
+      [7,8],[7,9],[7,10],[7,11],[7,12],[7,13],
+    ],
+    description: 'A throne sits against the far wall. It is clean. It is empty. The council refuses to fill it. Glyphs are carved into the floor — some ancient, some newly cut.',
+    actionName: 'Study the Glyphs',
+    action: 'studyGlyphs',
+    actionCost: 1
+  },
+  chapel: {
+    name: 'Chapel',
+    ealdorName: 'The Coal Chapel',
+    icon: '🔥',
+    cells: [
+      [8,1],[8,2],[8,3],[8,4],[8,5],[8,6],
+      [9,1],[9,2],[9,3],[9,4],[9,5],[9,6],
+    ],
+    description: 'The Ātravan Coal burns in an iron brazier. The Silent Brother — eighty-seventh of his line — tends it. He has never spoken. The fire has never gone out.',
+    actionName: 'Tend the Fire',
+    action: 'tendFire',
+    actionCost: 1
+  },
+  kingsChambers: {
+    name: 'King\'s Chambers',
+    ealdorName: 'The Unoccupied Room',
+    icon: '🛏️',
+    cells: [
+      [8,8],[8,9],[8,10],[8,11],[8,12],[8,13],
+      [9,8],[9,9],[9,10],[9,11],[9,12],[9,13],
+    ],
+    description: 'The bed is made. A fire burns in the grate — the servants keep it lit, though no one sleeps here. The window looks south, toward the wild wood.',
+    actionName: 'Wait and Watch (Encounter)',
+    action: 'waitInChambers',
+    actionCost: 1
+  }
+};
+
+// Walls: everything not in a zone and not fjord
+function buildCellMap() {
+  const map = {};
+  // Default: fjord for top two rows, wall for outer edges, room for everything else
+  for (let r = 0; r < MAP_ROWS; r++) {
+    for (let c = 0; c < MAP_COLS; c++) {
+      const key = `${r},${c}`;
+      // Check if in any zone
+      let inZone = null;
+      for (const [zoneId, zone] of Object.entries(ZONES)) {
+        if (zone.cells.some(([zr, zc]) => zr === r && zc === c)) {
+          inZone = zoneId;
+          break;
+        }
+      }
+      if (inZone) {
+        map[key] = { type: 'room', zone: inZone };
+      } else if (r <= 1) {
+        map[key] = { type: 'fjord' };
+      } else if (r === 2 && (c <= 2 || c >= 12)) {
+        map[key] = { type: 'fjord' };
+      } else if (r === 2 && c >= 3 && c <= 11) {
+        map[key] = { type: 'wall' };
+      } else {
+        map[key] = { type: 'wall' };
+      }
+    }
+  }
+  return map;
+}
+
+const cellMap = buildCellMap();
+
+// ═══════════════════════════════════════
+// GAME STATE
+// ═══════════════════════════════════════
+
+let state = {
+  year: 3450,
+  season: 0,
+  ice: 15,
+  playerResources: { Stone: 4, Timber: 3, Grain: 5, Iron: 2, Salt: 2, Cloth: 3 },
+  population: 100,
+  morale: 70,
+  faith: 60,
+  actionPoints: 3,
+  maxActionPoints: 3,
+  playerZone: 'courtyard', // starting location
+  log: [],
+  currentGlyph: null,
+  crisisHistory: [],
+  rabbitAppeared: false,
+  thingCooldown: 0,
+  tradeCooldown: 0,
+  omenCooldown: 0,
+  tabletFragments: 0,
+  silentBrotherSpoke: false,
+};
+
+const KINGDOMS = {
+  Ealdor: {
+    name: 'Ealdor', full: 'Kingdom of Ealdor', gov: 'Council (Thing/Pankus)',
+    pillar: 'The Threshold', glyph: '𐤃', color: 'var(--gold)',
+    resources: { Stone: 4, Timber: 2, Grain: 3, Iron: 1, Salt: 1, Cloth: 2 },
+    rule: 'reroll', ruleDesc: 'Council: May reroll one draw per season.', player: true
+  },
+  Tsarnigrad: {
+    name: 'Tsarnigrad', full: 'Tsarnigrad Monarchy', gov: 'Monarchy',
+    pillar: 'The Flame', glyph: '𐤔', color: 'var(--blood)',
+    resources: { Stone: 2, Timber: 1, Grain: 8, Iron: 2, Salt: 1, Cloth: 1 },
+    rule: 'hoard', ruleDesc: 'Monarchy: Hoards grain. Preparing for "the winter that will not end."', player: false
+  },
+  Kichigamswak: {
+    name: 'Kichigamswak', full: 'Kichigamswak Confederacy', gov: 'Confederacy',
+    pillar: 'Water / Cycles', glyph: '𐤌', color: '#4a90d9',
+    resources: { Stone: 1, Timber: 3, Grain: 4, Iron: 1, Salt: 3, Cloth: 3 },
+    rule: 'cycle', ruleDesc: 'Confederacy: Draws extra. Cannot store—must use or trade.', player: false
+  },
+  Haldor: {
+    name: 'Haldor', full: 'Haldorian Republic', gov: 'Post-Theocracy',
+    pillar: 'The Word (silent)', glyph: '𐤐', color: 'var(--frost)',
+    resources: { Stone: 3, Timber: 2, Grain: 2, Iron: 3, Salt: 2, Cloth: 1 },
+    rule: 'prophecy', ruleDesc: 'Republic: Sees omens. God departed. The stela still stands.', player: false
+  }
+};
+
+const CRISES = [
+  { id: 'ice_advance', name: 'The Ice Advances', desc: 'Sea ice creeps closer to the northern fjords.', effect: { ice: 8, morale: -5 } },
+  { id: 'grain_blight', name: 'Blight in the Grain', desc: 'A wet summer. The grain spoils in the fields.', effect: { resource: 'Grain', lose: 3, population: -5 } },
+  { id: 'border_raid', name: 'Raiders from the East', desc: 'Unknown raiders strike the eastern villages.', effect: { population: -8, morale: -10, resource: 'Iron', lose: 1 } },
+  { id: 'tsarnigrad_hoarding', name: 'Tsarnigrad Hoards', desc: 'The Monarchy stockpiles grain. Prices rise.', effect: { morale: -5, faith: -3 } },
+  { id: 'pankus_deadlock', name: 'The Thing Deadlocks', desc: 'The council cannot agree.', effect: { morale: -10, faith: -5 } },
+  { id: 'prophecy_silence', name: 'Haldor Sees Nothing', desc: 'The Republic\'s augurs read the sky. Empty.', effect: { faith: -8 } },
+  { id: 'rabbit_sighting', name: 'The Rabbit Runs', desc: 'A yellow-footed hare watches from the forest edge.', effect: { faith: 5, morale: 5, special: 'rabbit' } },
+  { id: 'coal_flicker', name: 'The Coal Flickers', desc: 'The Ātravan Coal dims for three heartbeats.', effect: { faith: -5, special: 'coal' } },
+  { id: 'kichi_trade', name: 'Kichigamswak Canoes', desc: 'Canoes from the Great Lake arrive with fish and salt.', effect: { resource: 'Salt', gain: 2, morale: 3 } },
+  { id: 'storm_omens', name: 'Storm Omens', desc: 'Lightning over Sūryapura. The Dawnstone glows.', effect: { faith: 5, special: 'omen' } },
+  { id: 'succession_crisis', name: 'Tsarnigrad Succession', desc: 'The old monarch dies. The court fractures.', effect: { special: 'succession' } },
+  { id: 'blank_tablet_dream', name: 'The Seventh Tablet', desc: 'A dream spreads: the seventh tablet is written. No one remembers what it said.', effect: { faith: 8, morale: 3 } },
+];
+
+const NOKOMIS = [
+  '"You are not Otter. You are not Woodpecker. You are not Bear. You are the one who carries."',
+  '"Fear is not the enemy. Fear is the door."',
+  '"The fire does not go to the happy. The fire goes to the ones who have sat in the dark."',
+  '"You give something. You do not get it back. That does not mean you should stop leaping."',
+  '"The ones who know where they are going never find anything worth finding."',
+  '"The truth holds. The lie scatters."',
+  '"Helping is not the same as saving. Carrying is not the same as keeping."',
+  '"The Rabbit does not want them to agree. The Rabbit wants you to listen to all of them and decide nothing."',
+];
+
+// ═══════════════════════════════════════
+// LOG
+// ═══════════════════════════════════════
+
+function log(msg, cls = '') {
+  const prefix = cls ? `<span class="${cls}">` : '';
+  const suffix = cls ? '</span>' : '';
+  state.log.push(prefix + msg + suffix);
+  if (state.log.length > 100) state.log.shift();
+}
+
+// ═══════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════
+
+function drawResource() {
+  const r = RESOURCES[Math.floor(Math.random() * RESOURCES.length)];
+  return { resource: r, count: Math.floor(Math.random() * 3) + 1 };
+}
+
+function drawCrisis() {
+  const available = CRISES.filter(c => !state.crisisHistory.slice(-6).includes(c.id));
+  if (available.length === 0) { state.crisisHistory = []; return CRISES[Math.floor(Math.random() * CRISES.length)]; }
+  return available[Math.floor(Math.random() * available.length)];
+}
+
+function drawGlyph() {
+  const g = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+  state.currentGlyph = g;
+  log(`<span class="glyph">${g.char}</span> — ${g.hint}`);
+}
+
+function useAP(amount) {
+  if (state.actionPoints >= amount) {
+    state.actionPoints -= amount;
+    return true;
+  }
+  log('<span class="loss">Not enough action points. Let the season pass to restore.</span>');
+  return false;
+}
+
+// ═══════════════════════════════════════
+// ZONE ACTIONS
+// ═══════════════════════════════════════
+
+function moveToZone(zoneId) {
+  if (zoneId === state.playerZone) {
+    // Already here — trigger action
+    triggerZoneAction(zoneId);
+    return;
+  }
+  // Moving — costs no AP, just changes location
+  state.playerZone = zoneId;
+  const zone = ZONES[zoneId];
+  log(`You walk to the <strong>${zone.ealdorName}</strong>. ${zone.description}`);
+  render();
+}
+
+function triggerZoneAction(zoneId) {
+  const zone = ZONES[zoneId];
+  if (!zone.action) return;
+  if (zone.actionCost && !useAP(zone.actionCost)) return;
+
+  switch (zone.action) {
+    case 'seekOmen': doSeekOmen(); break;
+    case 'tradeWithKingdom': doTrade(); break;
+    case 'manageResources': doManageResources(); break;
+    case 'conveneThing': doConveneThing(); break;
+    case 'studyGlyphs': doStudyGlyphs(); break;
+    case 'tendFire': doTendFire(); break;
+    case 'waitInChambers': doWaitInChambers(); break;
+  }
+  render();
+}
+
+function doSeekOmen() {
+  if (state.omenCooldown > 0) {
+    log('The horizon is unclear. You must wait before scanning again.');
+    return;
+  }
+  state.omenCooldown = 4;
+  drawGlyph();
+  const bonus = Math.random();
+  if (bonus < 0.4) {
+    state.faith = Math.min(100, state.faith + 10);
+    log('<span class="gain">The glyph resonates. Faith strengthens.</span>');
+  } else if (bonus < 0.7) {
+    state.morale = Math.min(100, state.morale + 8);
+    log('The glyph is ambiguous. Debate enlivens the council.');
+  } else {
+    state.faith = Math.max(0, state.faith - 5);
+    log('<span class="loss">The glyph darkens. Faith wavers.</span>');
+  }
+  if (state.rabbitAppeared && Math.random() < 0.5) {
+    log('<span class="nokomis">The Rabbit appears on the battlement wall. He looks at the glyph. He looks at you. He vanishes.</span>');
+    state.rabbitAppeared = false;
+  }
+}
+
+function doTrade() {
+  if (state.tradeCooldown > 0) {
+    log('The envoys are not expected back yet. Wait another season.');
+    return;
+  }
+  state.tradeCooldown = 3;
+  const targets = ['Tsarnigrad','Kichigamswak','Haldor'];
+  const target = targets[Math.floor(Math.random() * targets.length)];
+  const k = KINGDOMS[target];
+  const theirSurplus = Object.entries(k.resources).filter(([r,c]) => c >= 3);
+  if (theirSurplus.length === 0) {
+    log(`Trade envoy to ${target}: They have nothing to spare.`);
+    return;
+  }
+  const [theirRes, theirCount] = theirSurplus[Math.floor(Math.random() * theirSurplus.length)];
+  const ourRes = RESOURCES[Math.floor(Math.random() * RESOURCES.length)];
+  const ourCount = Math.min(state.playerResources[ourRes] || 0, 2);
+  if (ourCount === 0) {
+    log(`Trade envoy to ${target}: We have nothing to offer.`);
+    return;
+  }
+  const received = Math.min(theirCount, 2);
+  state.playerResources[ourRes] -= ourCount;
+  state.playerResources[theirRes] = (state.playerResources[theirRes] || 0) + received;
+  k.resources[theirRes] -= received;
+  k.resources[ourRes] = (k.resources[ourRes] || 0) + ourCount;
+  log(`Trade with ${target}: Sent ${ourCount} ${ourRes}, received ${received} ${theirRes}.`);
+}
+
+function doManageResources() {
+  // Simple crafting: player can convert resources
+  // For now, show inventory and allow one conversion
+  const canCraft = state.playerResources.Timber >= 2;
+  const canForge = state.playerResources.Iron >= 1;
+  if (canCraft) {
+    state.playerResources.Timber -= 2;
+    state.playerResources.Cloth = (state.playerResources.Cloth || 0) + 1;
+    log('<span class="gain">Workshop: 2 Timber → 1 Cloth. The looms turn.</span>');
+  } else if (canForge) {
+    state.playerResources.Iron -= 1;
+    state.playerResources.Stone = (state.playerResources.Stone || 0) + 2;
+    log('<span class="gain">Forge: 1 Iron → 2 Stone. The hammer rings.</span>');
+  } else {
+    log('Not enough materials. Need 2 Timber or 1 Iron to craft.');
+  }
+}
+
+function doConveneThing() {
+  if (state.thingCooldown > 0) {
+    log('The Thing has already convened this season. Let time pass.');
+    return;
+  }
+  state.thingCooldown = 2;
+  const success = Math.random() < 0.6;
+  if (success) {
+    state.morale = Math.min(100, state.morale + 10);
+    state.faith = Math.min(100, state.faith + 5);
+    log('The Thing convenes. Voices rise, fall, settle. A decision is reached.');
+    log('<span class="nokomis">"The assembly entrusted to the land itself." — Nešatta Codex, Tablet 3</span>');
+  } else {
+    state.morale = Math.max(0, state.morale - 5);
+    log('The Thing deadlocks. Voices rise. None settle.');
+  }
+}
+
+function doStudyGlyphs() {
+  drawGlyph();
+  state.tabletFragments = Math.min(7, state.tabletFragments + 1);
+  log(`The floor-glyphs shimmer. You trace the carvings. Tablet fragments: ${state.tabletFragments}/7.`);
+  if (state.tabletFragments >= 7 && state.faith >= 50) {
+    log('<span class="gain">The Seventh Tablet begins to write itself. The glyphs align.</span>');
+    log('<span class="nokomis">"What is written cannot be unwritten. What is held cannot be unheld."</span>');
+  }
+}
+
+function doTendFire() {
+  if (state.playerResources.Timber < 1) {
+    log('No timber to feed the fire. The Silent Brother watches you, expressionless.');
+    return;
+  }
+  state.playerResources.Timber -= 1;
+  state.morale = Math.min(100, state.morale + 5);
+  state.faith = Math.min(100, state.faith + 3);
+  log('You place timber on the Ātravan Coal. The flames rise. The Silent Brother nods — once.');
+  if (!state.silentBrotherSpoke && state.ice > 60 && Math.random() < 0.3) {
+    state.silentBrotherSpoke = true;
+    log('<span class="nokomis">The Silent Brother opens his mouth. One word: "Threshold." Then silence, for the eighty-eighth year.</span>');
+    state.faith = Math.min(100, state.faith + 15);
+  }
+}
+
+function doWaitInChambers() {
+  const roll = Math.random();
+  if (state.rabbitAppeared && roll < 0.6) {
+    log('<span class="nokomis">The Rabbit is here. In the King\'s Chambers. Sitting on the empty bed. He looks at the pillow, then at you. "Not yet," his silence says. He leaves.</span>');
+    state.rabbitAppeared = false;
+    state.faith = Math.min(100, state.faith + 8);
+  } else if (roll < 0.3) {
+    log('You sit by the window. The wild wood rustles. Nothing happens. But the waiting itself feels like something.');
+    state.morale = Math.min(100, state.morale + 3);
+  } else if (roll < 0.5) {
+    drawGlyph();
+    log('A glyph is scratched into the windowsill. Fresh. You study it.');
+  } else {
+    log('The room is quiet. The fire crackles. The bed remains empty.');
+  }
+}
+
+// ═══════════════════════════════════════
+// ADVANCE SEASON
+// ═══════════════════════════════════════
+
+function advanceSeason() {
+  state.season = (state.season + 1) % 4;
+  if (state.season === 0) state.year++;
+  state.actionPoints = state.maxActionPoints;
+
+  // Cooldowns
+  if (state.thingCooldown > 0) state.thingCooldown--;
+  if (state.tradeCooldown > 0) state.tradeCooldown--;
+  if (state.omenCooldown > 0) state.omenCooldown--;
+
+  // Ice
+  const iceGain = state.season === 3 ? Math.floor(Math.random() * 8) + 4 : Math.floor(Math.random() * 4) + 1;
+  state.ice = Math.min(100, state.ice + iceGain);
+  
+  if (state.ice >= 100) {
+    log('<span class="crisis">The ice has closed the fjords. Ealdor is cut off. The kingdom falls into silence.</span>');
+    log('<span class="nokomis">' + NOKOMIS[3] + '</span>');
+    render();
+    return;
+  }
+
+  // Player draws
+  const draw1 = drawResource();
+  const draw2 = drawResource();
+  const draws = [draw1, draw2];
+  draws.sort((a, b) => a.count - b.count);
+  const redraw = drawResource();
+  for (const d of [draws[1], redraw]) {
+    state.playerResources[d.resource] = (state.playerResources[d.resource] || 0) + d.count;
+  }
+
+  log(`<strong>${SEASONS[state.season]}, Year ${state.year} AC</strong>`);
+  log(`<span class="gain">Ealdor draws: ${draw1.resource} (${draw1.count}), ${draw2.resource} (${draw2.count})</span>`);
+  log(`<span class="loss">Council rerolls ${draws[0].resource} → ${redraw.resource} (${redraw.count})</span>`);
+  log(`Ice advances +${iceGain}%. Fjords at ${state.ice}%.`);
+
+  // AI turns
+  for (const key of Object.keys(KINGDOMS)) {
+    if (!KINGDOMS[key].player) aiKingdomTurn(key);
+  }
+
+  // Crisis
+  const crisis = drawCrisis();
+  state.crisisHistory.push(crisis.id);
+  log(`<span class="crisis">CRISIS: ${crisis.name}</span> — ${crisis.desc}`);
+
+  if (crisis.effect.ice) state.ice = Math.min(100, state.ice + crisis.effect.ice);
+  if (crisis.effect.population) state.population = Math.max(0, state.population + (crisis.effect.population || 0));
+  if (crisis.effect.morale) state.morale = Math.max(0, Math.min(100, state.morale + (crisis.effect.morale || 0)));
+  if (crisis.effect.faith) state.faith = Math.max(0, Math.min(100, state.faith + (crisis.effect.faith || 0)));
+  if (crisis.effect.resource && crisis.effect.lose) {
+    state.playerResources[crisis.effect.resource] = Math.max(0, (state.playerResources[crisis.effect.resource] || 0) - crisis.effect.lose);
+    log(`<span class="loss">Lost ${crisis.effect.lose} ${crisis.effect.resource}.</span>`);
+  }
+  if (crisis.effect.resource && crisis.effect.gain) {
+    state.playerResources[crisis.effect.resource] = (state.playerResources[crisis.effect.resource] || 0) + crisis.effect.gain;
+    log(`<span class="gain">Gained ${crisis.effect.gain} ${crisis.effect.resource}.</span>`);
+  }
+  if (crisis.effect.special === 'rabbit') state.rabbitAppeared = true;
+  if (crisis.effect.special === 'coal') log('<span class="nokomis">The silent brother adds nothing. The coal steadies.</span>');
+  if (crisis.effect.special === 'omen') drawGlyph();
+  if (crisis.effect.special === 'succession') {
+    log('<span class="crisis">Tsarnigrad\'s court fractures.</span>');
+    KINGDOMS.Tsarnigrad.resources.Grain = Math.max(1, KINGDOMS.Tsarnigrad.resources.Grain - 3);
+  }
+
+  // Population drift
+  if (state.morale < 30 && state.season === 3) {
+    state.population = Math.max(10, state.population - 3);
+    log('<span class="loss">Winter takes the weakest.</span>');
+  }
+  if (state.faith < 20 && Math.random() < 0.3) {
+    state.population = Math.max(10, state.population - 2);
+    log('<span class="loss">Some leave Ealdor, seeking warmer gods.</span>');
+  }
+
+  // Spring planting
+  if (state.playerResources.Grain > 0 && state.season === 0 && state.population < 150) {
+    const growth = Math.min(state.playerResources.Grain, 4);
+    state.population = Math.min(150, state.population + growth);
+    state.playerResources.Grain -= growth;
+    log(`<span class="gain">Spring planting. ${growth} grain feeds the people. Population grows.</span>`);
+  }
+
+  if (Math.random() < 0.25) {
+    log(`<span class="nokomis">Nokomis whispers: ${NOKOMIS[Math.floor(Math.random() * NOKOMIS.length)]}</span>`);
+  }
+
+  if (state.population <= 0) {
+    log('<span class="crisis">Ealdor is empty. The Threshold is unheld.</span>');
+  }
+
+  render();
+}
+
+function aiKingdomTurn(key) {
+  const k = KINGDOMS[key];
+  if (k.player) return;
+  const draw = drawResource();
+  switch (k.rule) {
+    case 'hoard':
+      k.resources[draw.resource] = (k.resources[draw.resource] || 0) + draw.count + 1;
+      if (Math.random() < 0.6) k.resources['Grain'] = (k.resources['Grain'] || 0) + 1;
+      break;
+    case 'cycle':
+      const d2 = drawResource();
+      k.resources[draw.resource] = (k.resources[draw.resource] || 0) + draw.count;
+      k.resources[d2.resource] = (k.resources[d2.resource] || 0) + d2.count;
+      for (const r of RESOURCES) { if (k.resources[r] > 5) k.resources[r] = Math.max(2, k.resources[r] - 3); }
+      break;
+    case 'prophecy':
+      k.resources[draw.resource] = (k.resources[draw.resource] || 0) + draw.count;
+      k.resources['Salt'] = Math.max(k.resources['Salt'], 2);
+      break;
+    default:
+      k.resources[draw.resource] = (k.resources[draw.resource] || 0) + draw.count;
+  }
+}
+
+// ═══════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════
+
+function render() {
+  document.getElementById('yearDisplay').textContent = state.year;
+  document.getElementById('seasonDisplay').textContent = `${SEASONS[state.season]} · Ice: ${state.ice}%`;
+  document.getElementById('apText').textContent = state.actionPoints;
+  document.getElementById('pop').textContent = state.population;
+  document.getElementById('morale').textContent = state.morale;
+  document.getElementById('faith').textContent = state.faith;
+  document.getElementById('ice').textContent = state.ice + '%';
+
+  // Color stats
+  ['pop','morale','faith'].forEach(id => {
+    const el = document.getElementById(id);
+    const val = parseInt(el.textContent);
+    el.className = 'value';
+    if (val < 30) el.className += ' low';
+    else if (val < 50) el.className += ' warn';
+  });
+
+  // AP dots
+  const apDots = document.getElementById('apDots');
+  apDots.innerHTML = '';
+  for (let i = 0; i < state.maxActionPoints; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'ap-dot' + (i < state.actionPoints ? ' active' : '');
+    apDots.appendChild(dot);
+  }
+
+  // Map
+  renderMap();
+
+  // Room label
+  const zone = ZONES[state.playerZone];
+  document.getElementById('room-label').textContent = `${zone.icon} ${zone.ealdorName} — ${zone.name}`;
+  document.getElementById('room-action-hint').textContent = `Click here: ${zone.actionName}`;
+
+  // Log
+  const logDiv = document.getElementById('log');
+  logDiv.innerHTML = '';
+  for (const entry of state.log.slice(-30)) {
+    const div = document.createElement('div');
+    div.className = 'entry';
+    div.innerHTML = entry;
+    logDiv.appendChild(div);
+  }
+  logDiv.scrollTop = logDiv.scrollHeight;
+}
+
+function renderMap() {
+  const mapEl = document.getElementById('castle-map');
+  mapEl.innerHTML = '';
+
+  for (let r = 0; r < MAP_ROWS; r++) {
+    for (let c = 0; c < MAP_COLS; c++) {
+      const cell = document.createElement('div');
+      const key = `${r},${c}`;
+      const cellData = cellMap[key];
+      cell.className = 'cell';
+      cell.dataset.row = r;
+      cell.dataset.col = c;
+
+      if (cellData.type === 'wall') {
+        cell.classList.add('wall');
+      } else if (cellData.type === 'fjord') {
+        cell.classList.add('fjord');
+        if (state.ice >= 40 && r === 0) cell.classList.add('frozen');
+        if (state.ice >= 60 && r <= 1) cell.classList.add('frozen');
+        if (state.ice >= 80 && r <= 2) cell.classList.add('frozen');
+      } else if (cellData.type === 'room') {
+        cell.classList.add('room');
+        cell.dataset.zone = cellData.zone;
+        if (cellData.zone === state.playerZone) {
+          cell.classList.add('player-here');
+        }
+        // Add zone icons to center cell
+        const zone = ZONES[cellData.zone];
+        const centerCell = zone.cells[Math.floor(zone.cells.length / 2)];
+        if (r === centerCell[0] && c === centerCell[1]) {
+          const icon = document.createElement('span');
+          icon.className = 'icon';
+          icon.textContent = zone.icon;
+          cell.appendChild(icon);
+        }
+        // NPC indicators
+        if (cellData.zone === 'chapel' && r === 9 && c === 3) {
+          const npc = document.createElement('span');
+          npc.className = 'npc';
+          npc.textContent = state.silentBrotherSpoke ? '🕯️' : '🧘';
+          cell.appendChild(npc);
+        }
+        if (cellData.zone === 'kingsChambers' && state.rabbitAppeared && r === 8 && c === 10) {
+          const npc = document.createElement('span');
+          npc.className = 'npc';
+          npc.textContent = '🐇';
+          cell.appendChild(npc);
+        }
+
+        // Click handler
+        cell.addEventListener('click', () => moveToZone(cellData.zone));
+        cell.addEventListener('mouseenter', (e) => showTooltip(e, cellData.zone));
+        cell.addEventListener('mouseleave', hideTooltip);
+      }
+
+      mapEl.appendChild(cell);
+    }
+  }
+}
+
+// ═══════════════════════════════════════
+// TOOLTIP
+// ═══════════════════════════════════════
+
+function showTooltip(e, zoneId) {
+  const zone = ZONES[zoneId];
+  const tooltip = document.getElementById('map-tooltip');
+  tooltip.innerHTML = `
+    <div class="tt-name">${zone.icon} ${zone.ealdorName}</div>
+    <div class="tt-status">${zone.description}</div>
+    <div class="tt-action">🖱️ ${zone.actionName}</div>
+  `;
+  tooltip.style.display = 'block';
+  tooltip.style.left = (e.pageX + 15) + 'px';
+  tooltip.style.top = (e.pageY - 10) + 'px';
+}
+
+function hideTooltip() {
+  document.getElementById('map-tooltip').style.display = 'none';
+}
+document.addEventListener('mousemove', (e) => {
+  const tooltip = document.getElementById('map-tooltip');
+  if (tooltip.style.display === 'block') {
+    tooltip.style.left = (e.pageX + 15) + 'px';
+    tooltip.style.top = (e.pageY - 10) + 'px';
+  }
+});
+
+// ═══════════════════════════════════════
+// INVENTORY MODAL
+// ═══════════════════════════════════════
+
+function showResources() {
+  let msg = '📦 <strong>Ealdor\'s Stores:</strong><br>';
+  for (const [name, count] of Object.entries(state.playerResources)) {
+    msg += `${name}: ${count}<br>`;
+  }
+  msg += `<br><strong>Tablet Fragments:</strong> ${state.tabletFragments}/7`;
+  log(msg);
+  render();
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+
+function init() {
+  log('Year 3450 AC. The Little Ice Age advances. The Pankus convenes at Nešatta — perhaps for the last time.');
+  log('<span class="nokomis">"The fire holds. The vault is open. The seventh tablet is still blank."</span>');
+  log('Ealdor holds the castle. No king sits the throne. The Thing governs. The ice waits.');
+  render();
+}
+
+init();
+</script>
+</body>
+</html>
