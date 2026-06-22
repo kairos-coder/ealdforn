@@ -1,0 +1,203 @@
+{
+    "id": "coal_chapel",
+    "name": "The Coal Chapel",
+    "width": 750,
+    "height": 550,
+    "layers": [
+        {
+            "class": "vault-shadow",
+            "z": 0,
+            "style": {
+                "background": "radial-gradient(ellipse at 50% 30%, rgba(26,20,16,0.1) 0%, rgba(15,12,8,0.7) 70%)"
+            }
+        },
+        {
+            "class": "far-wall",
+            "position": { "x": "5%", "y": "10%", "z": 1 },
+            "width": "90%", "height": "35%",
+            "style": {
+                "background": "linear-gradient(to bottom, #3d362f 0%, #2a2520 100%)",
+                "border": "3px solid #4a4138",
+                "borderBottom": "none",
+                "boxShadow": "inset 0 0 80px rgba(0,0,0,0.5)"
+            }
+        },
+        {
+            "class": "floor",
+            "position": { "x": "5%", "y": "45%", "z": 1 },
+            "width": "90%", "height": "50%",
+            "style": {
+                "background": "linear-gradient(to bottom, #5c4f42 0%, #4a3f35 30%, #3d342b 100%)",
+                "border": "3px solid #4a4138",
+                "borderTop": "none",
+                "boxShadow": "inset 0 30px 60px rgba(0,0,0,0.4)"
+            }
+        }
+    ],
+    "objects": [
+        {
+            "id": "window",
+            "type": "container",
+            "name": "Chapel Window",
+            "zone": "window",
+            "position": { "x": "center", "y": "15%", "z": 5 },
+            "interaction": {
+                "label": "Look out upon the fjord",
+                "action": "lookOutWindow"
+            },
+            "children": [
+                {
+                    "type": "rect",
+                    "class": "chapel-window-frame",
+                    "width": 140, "height": 200,
+                    "style": {
+                        "background": "linear-gradient(180deg, #1a3040 0%, #2a4a6a 40%, #3a5a7a 100%)",
+                        "border": "8px solid #3d362f",
+                        "borderRadius": "70px 70px 0 0",
+                        "boxShadow": "0 0 30px rgba(58,90,122,0.3), inset 0 0 40px rgba(0,0,0,0.6)"
+                    }
+                },
+                {
+                    "id": "frost-overlay",
+                    "type": "rect",
+                    "width": 124, "height": 184,
+                    "position": { "x": 8, "y": 8 },
+                    "bind": {
+                        "height": "$ice + '%'",
+                        "opacity": "$ice > 20 ? 0.7 : 0"
+                    },
+                    "style": {
+                        "background": "linear-gradient(to top, rgba(200,216,228,0.9) 0%, transparent 100%)",
+                        "transition": "height 1.5s ease"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "brazier",
+            "type": "container",
+            "name": "Ātravan Coal",
+            "zone": "brazier",
+            "position": { "x": "center", "y": "55%", "z": 10 },
+            "interaction": {
+                "label": "Tend the Coal",
+                "action": "tendFire",
+                "cost": { "resource": "Timber", "amount": 1 },
+                "rewards": { "faith": 5, "morale": 5 }
+            },
+            "children": [
+                {
+                    "type": "rect",
+                    "class": "plinth",
+                    "width": 100, "height": 35,
+                    "style": {
+                        "background": "linear-gradient(#5c4f42, #4a3f35)",
+                        "border": "3px solid #3d362f",
+                        "borderRadius": "4px"
+                    }
+                },
+                {
+                    "type": "rect",
+                    "class": "brazier-bowl",
+                    "width": 70, "height": 55,
+                    "position": { "x": "center", "y": -10 },
+                    "style": {
+                        "background": "linear-gradient(#2a2018, #1a1410)",
+                        "border": "4px solid #3d362f",
+                        "borderRadius": "8px 8px 4px 4px"
+                    }
+                },
+                {
+                    "type": "circle",
+                    "class": "coal-glow",
+                    "radius": 20,
+                    "position": { "x": "center", "y": 12 },
+                    "bind": {
+                        "opacity": "1",
+                        "boxShadow": "$faith > 70 ? '0 0 40px #e85d2c, 0 0 80px rgba(196,79,28,0.6)' : '0 0 25px #c44f1c, 0 0 50px rgba(196,79,28,0.3)'"
+                    },
+                    "animation": "coalPulse 3s ease-in-out infinite"
+                }
+            ]
+        },
+        {
+            "id": "silent_brother",
+            "type": "container",
+            "name": "The Silent Brother",
+            "zone": "brother",
+            "position": { "x": "20%", "y": "55%", "z": 8 },
+            "interaction": {
+                "label": "Observe the Brother",
+                "action": "observeBrother"
+            },
+            "children": [
+                {
+                    "type": "rect",
+                    "class": "brother-body",
+                    "width": 30, "height": 45,
+                    "position": { "x": "center", "y": 25 },
+                    "style": {
+                        "background": "linear-gradient(#3d362f, #2a2018)",
+                        "borderRadius": "15px 15px 8px 8px"
+                    }
+                },
+                {
+                    "type": "circle",
+                    "class": "brother-hood",
+                    "radius": 16,
+                    "position": { "x": "center", "y": 5 },
+                    "animation": "brotherBreathe 6s ease-in-out infinite",
+                    "bind": {
+                        "boxShadow": "$silentBrotherSpoke ? '0 0 8px rgba(184,134,11,0.3)' : 'none'"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "wood_stack",
+            "type": "container",
+            "name": "Wood Stack",
+            "zone": "wood",
+            "position": { "x": "8%", "y": "75%", "z": 8 },
+            "interaction": {
+                "label": "Check wood stores",
+                "action": "checkWood"
+            },
+            "children": [
+                {
+                    "id": "log-visual",
+                    "type": "container",
+                    "position": { "x": 0, "y": 0 },
+                    "bind": {
+                        "children": "generateLogs($Timber)"
+                    }
+                }
+            ]
+        }
+    ],
+    "particles": [
+        {
+            "id": "dust",
+            "z": 2,
+            "count": 60,
+            "minSize": 1,
+            "maxSize": 3,
+            "color": "rgba(232,216,176,0.4)",
+            "animationName": "dustDrift",
+            "continuous": false
+        },
+        {
+            "id": "embers",
+            "z": 4,
+            "count": 8,
+            "minSize": 2,
+            "maxSize": 5,
+            "color": "radial-gradient(circle, #ff6b2b, #c44f1c)",
+            "originX": "50%",
+            "originY": "52%",
+            "animationName": "emberRise",
+            "continuous": true,
+            "interval": 4000
+        }
+    ]
+}
