@@ -1,0 +1,531 @@
+{
+  "id": "ealdor_castle",
+  "name": "The Castle of Ealdor",
+  "description": "A castle built for a king, held by a council that refuses to crown one. The fjord freezes to the north. The wild wood watches from the south. The Ātravan Coal burns in the chapel. The throne sits empty.",
+  "version": "1.0.0",
+  "width": 800,
+  "height": 520,
+  
+  "sky": {
+    "type": "gradient",
+    "top": "#1a1820",
+    "mid": "#3a4050",
+    "bottom": "#6b6b7a",
+    "overlay": "ice_creep",
+    "overlayProperty": "ice",
+    "stars": true,
+    "starsCount": 40,
+    "aurora": {
+      "condition": "faith",
+      "threshold": 70,
+      "colors": ["#4a6b8a", "#6b9b6b", "#8a6b9b"],
+      "opacity": 0.3
+    }
+  },
+
+  "weather": {
+    "type": "seasonal",
+    "spring": { "skyMod": 0, "particles": "rain_light", "particleColor": "#8a9baa" },
+    "summer": { "skyMod": 15, "particles": null },
+    "autumn": { "skyMod": -10, "particles": "leaves", "particleColor": "#b8860b" },
+    "winter": { "skyMod": -20, "particles": "snow", "particleColor": "#c8d8e4" }
+  },
+
+  "terrain": [
+    {
+      "id": "fjord",
+      "name": "The Northern Fjord",
+      "type": "water",
+      "x": 0, "y": 0,
+      "w": 800, "h": 90,
+      "color": "#2a4a6a",
+      "deepColor": "#1a3040",
+      "waveAnimation": true,
+      "freezable": true,
+      "freezeThresholds": [
+        { "ice": 30, "y": 0, "h": 15 },
+        { "ice": 50, "y": 0, "h": 40 },
+        { "ice": 70, "y": 0, "h": 65 },
+        { "ice": 90, "y": 0, "h": 90 }
+      ],
+      "iceColor": "#c8d8e4",
+      "iceEdgeColor": "#e8f0f8",
+      "features": [
+        { "type": "ship_trapped", "x": 120, "y": 55, "visibleWhen": { "ice": 60 } },
+        { "type": "ship_trapped", "x": 650, "y": 45, "visibleWhen": { "ice": 60 } },
+        { "type": "ice_fisher", "x": 400, "y": 30, "visibleWhen": { "ice": 70 } }
+      ]
+    },
+    {
+      "id": "cliffs",
+      "name": "Castle Cliffs",
+      "type": "cliff",
+      "x": 0, "y": 85,
+      "w": 800, "h": 25,
+      "color": "#3d362f",
+      "texture": "rock_face",
+      "strata": ["#4a4138", "#3d362f", "#5c4f42"]
+    },
+    {
+      "id": "castle_grounds",
+      "name": "Castle Grounds",
+      "type": "ground",
+      "x": 0, "y": 110,
+      "w": 800, "h": 330,
+      "color": "#5c4f42",
+      "pathColor": "#6b5d4f",
+      "paths": [
+        { "from": [400, 440], "to": [400, 200], "width": 30 },
+        { "from": [400, 200], "to": [180, 200], "width": 20 },
+        { "from": [400, 200], "to": [620, 200], "width": 20 },
+        { "from": [180, 200], "to": [180, 370], "width": 18 },
+        { "from": [620, 200], "to": [620, 370], "width": 18 },
+        { "from": [400, 200], "to": [400, 145], "width": 25 }
+      ]
+    },
+    {
+      "id": "wild_wood",
+      "name": "The Wild Wood",
+      "type": "forest",
+      "x": 0, "y": 440,
+      "w": 800, "h": 80,
+      "color": "#1a2a0f",
+      "treeColor": "#2d3a1f",
+      "treeHighlight": "#3d5a2a",
+      "treeDensity": 0.7,
+      "mist": true,
+      "mistColor": "#8a9baa",
+      "mistOpacity": 0.15,
+      "features": [
+        { "type": "clearing", "x": 380, "y": 455, "r": 25, "name": "Rabbit's Clearing" },
+        { "type": "path", "from": [400, 440], "to": [400, 480], "width": 12, "name": "Wood Path" }
+      ]
+    }
+  ],
+
+  "structures": [
+    {
+      "id": "outer_wall",
+      "name": "Castle Walls",
+      "type": "wall",
+      "x": 30, "y": 108,
+      "w": 740, "h": 12,
+      "color": "#3d362f",
+      "highlightColor": "#4a4138",
+      "crenellations": true,
+      "crenellationSpacing": 22,
+      "crenellationHeight": 10,
+      "clickable": false
+    },
+    {
+      "id": "inner_wall",
+      "name": "Inner Ward Wall",
+      "type": "wall",
+      "x": 250, "y": 175,
+      "w": 300, "h": 8,
+      "color": "#4a4138",
+      "crenellations": false,
+      "clickable": false
+    },
+    {
+      "id": "battlements",
+      "name": "The Threshold Wall",
+      "ealdorName": "Battlements",
+      "type": "platform",
+      "x": 0, "y": 105,
+      "w": 800, "h": 35,
+      "color": "#3d362f",
+      "clickable": true,
+      "zone": "battlements",
+      "icon": "🏰",
+      "description": "The wind bites hardest here. From the Threshold Wall, you can see what comes across the fjord — ships, ice, or nothing at all. The watch never sleeps.",
+      "actionName": "Scan the Horizon",
+      "action": "seekOmen",
+      "actionCost": 1,
+      "features": [
+        { "type": "watchtower", "x": 700, "y": 95, "w": 30, "h": 45 },
+        { "type": "watchtower", "x": 70, "y": 95, "w": 30, "h": 45 },
+        { "type": "brazier", "x": 400, "y": 108, "lit": true, "color": "#c44f1c" }
+      ]
+    },
+    {
+      "id": "gatehouse",
+      "name": "The Open Gate",
+      "ealdorName": "Gatehouse",
+      "type": "building",
+      "x": 340, "y": 118,
+      "w": 120, "h": 58,
+      "color": "#5c4f42",
+      "roof": "peaked",
+      "roofColor": "#3d362f",
+      "roofHeight": 28,
+      "clickable": true,
+      "zone": "gatehouse",
+      "icon": "🚪",
+      "description": "The portcullis has not been lowered since the council took the castle. Envoys from Tsarnigrad, Kichigamswak, and Haldor arrive here. The gate remains open — a statement.",
+      "actionName": "Receive Envoys",
+      "action": "tradeWithKingdom",
+      "actionCost": 1,
+      "features": [
+        { "type": "door", "x": 380, "y": 148, "w": 40, "h": 28, "open": true },
+        { "type": "portcullis", "x": 360, "y": 118, "w": 80, "h": 10, "raised": true },
+        { "type": "banner", "x": 395, "y": 100, "text": "𐤃", "color": "#b8860b" }
+      ],
+      "interior": {
+        "visible": true,
+        "depth": 20,
+        "color": "#2a2018",
+        "features": [
+          { "type": "guard_post", "x": 360, "y": 155 },
+          { "type": "guard_post", "x": 420, "y": 155 }
+        ]
+      }
+    },
+    {
+      "id": "great_hall",
+      "name": "The Thing-Stead",
+      "ealdorName": "Great Hall",
+      "type": "building",
+      "x": 70, "y": 210,
+      "w": 180, "h": 130,
+      "color": "#5c4f42",
+      "roof": "vaulted",
+      "roofColor": "#4a3a2f",
+      "roofHeight": 35,
+      "clickable": true,
+      "zone": "greatHall",
+      "icon": "🪨",
+      "description": "No throne. A circle of twelve stones surrounds a fire pit. Charcoal tally marks cover the walls — every vote ever taken, some centuries old. The Thing governs here.",
+      "actionName": "Convene the Thing",
+      "action": "conveneThing",
+      "actionCost": 2,
+      "features": [
+        { "type": "door", "x": 140, "y": 312, "w": 35, "h": 28, "open": true },
+        { "type": "window", "x": 100, "y": 225, "w": 16, "h": 20, "lit": true, "color": "#daa520" },
+        { "type": "window", "x": 200, "y": 225, "w": 16, "h": 20, "lit": true, "color": "#daa520" },
+        { "type": "smoke", "x": 160, "y": 195, "visible": true, "color": "#8b7d6b" }
+      ],
+      "interior": {
+        "visible": true,
+        "depth": 40,
+        "color": "#2a2018",
+        "features": [
+          { "type": "round_table", "x": 140, "y": 260, "r": 25 },
+          { "type": "fire_pit", "x": 160, "y": 280, "r": 8, "lit": true, "color": "#c44f1c" },
+          { "type": "council_stone", "x": 115, "y": 245, "r": 5 },
+          { "type": "council_stone", "x": 165, "y": 245, "r": 5 },
+          { "type": "tally_marks", "x": 90, "y": 230, "w": 50, "h": 40 }
+        ]
+      }
+    },
+    {
+      "id": "court",
+      "name": "The Empty Court",
+      "ealdorName": "Court",
+      "type": "building",
+      "x": 550, "y": 210,
+      "w": 180, "h": 130,
+      "color": "#5c4f42",
+      "roof": "domed",
+      "roofColor": "#4a3a2f",
+      "roofHeight": 40,
+      "clickable": true,
+      "zone": "court",
+      "icon": "👑",
+      "description": "A throne sits against the far wall. It is clean. It is empty. The council refuses to fill it. Glyphs are carved into the stone floor — some ancient, some newly cut. The seventh tablet waits.",
+      "actionName": "Study the Glyphs",
+      "action": "studyGlyphs",
+      "actionCost": 1,
+      "features": [
+        { "type": "door", "x": 620, "y": 312, "w": 35, "h": 28, "open": true },
+        { "type": "window", "x": 580, "y": 225, "w": 16, "h": 20, "lit": false },
+        { "type": "window", "x": 680, "y": 225, "w": 16, "h": 20, "lit": false },
+        { "type": "dome_oculus", "x": 640, "y": 190, "r": 12, "color": "#6b6b7a" }
+      ],
+      "interior": {
+        "visible": true,
+        "depth": 40,
+        "color": "#1a1818",
+        "features": [
+          { "type": "empty_throne", "x": 640, "y": 250, "w": 30, "h": 50, "color": "#b8860b" },
+          { "type": "glyph_floor", "x": 580, "y": 280, "w": 120, "h": 60, "glyphs": ["𐤃","𐤀","𐤕","𐤔","𐤐","𐤌","𐤇"] },
+          { "type": "tablet_stand", "x": 610, "y": 265, "w": 15, "h": 25, "tabletCount": 6 },
+          { "type": "candle", "x": 590, "y": 240, "lit": true },
+          { "type": "candle", "x": 690, "y": 240, "lit": true }
+        ]
+      }
+    },
+    {
+      "id": "chapel",
+      "name": "The Coal Chapel",
+      "ealdorName": "Chapel",
+      "type": "building",
+      "x": 70, "y": 365,
+      "w": 160, "h": 80,
+      "color": "#4a3a2f",
+      "roof": "steeple",
+      "roofColor": "#3d3028",
+      "roofHeight": 50,
+      "clickable": true,
+      "zone": "chapel",
+      "icon": "🔥",
+      "description": "The Ātravan Coal burns in an iron brazier. It has never gone out. The Silent Brother — eighty-seventh of his line — tends it. He has never spoken. The fire has never failed.",
+      "actionName": "Tend the Fire",
+      "action": "tendFire",
+      "actionCost": 1,
+      "features": [
+        { "type": "door", "x": 130, "y": 417, "w": 30, "h": 28, "open": true },
+        { "type": "steeple_cross", "x": 150, "y": 320, "w": 8, "h": 20 },
+        { "type": "window", "x": 100, "y": 380, "w": 16, "h": 24, "lit": true, "color": "#c44f1c" },
+        { "type": "window", "x": 180, "y": 380, "w": 16, "h": 24, "lit": true, "color": "#c44f1c" },
+        { "type": "glow", "x": 150, "y": 400, "r": 50, "color": "#c44f1c", "pulse": true }
+      ],
+      "interior": {
+        "visible": true,
+        "depth": 30,
+        "color": "#1a1410",
+        "features": [
+          { "type": "brazier", "x": 150, "y": 390, "r": 12, "lit": true, "color": "#c44f1c", "pulse": true },
+          { "type": "npc_spot", "x": 135, "y": 400, "npc": "silent_brother" },
+          { "type": "wood_stack", "x": 95, "y": 410, "w": 20, "h": 15 }
+        ]
+      }
+    },
+    {
+      "id": "kings_chambers",
+      "name": "The Unoccupied Room",
+      "ealdorName": "King's Chambers",
+      "type": "building",
+      "x": 570, "y": 365,
+      "w": 160, "h": 80,
+      "color": "#5c4f42",
+      "roof": "gabled",
+      "roofColor": "#4a3a2f",
+      "roofHeight": 22,
+      "clickable": true,
+      "zone": "kingsChambers",
+      "icon": "🛏️",
+      "description": "The bed is made. A fire burns in the grate — the servants keep it lit, though no one sleeps here. The window looks south, toward the wild wood. Sometimes the Rabbit sits on the pillow.",
+      "actionName": "Wait and Watch",
+      "action": "waitInChambers",
+      "actionCost": 1,
+      "features": [
+        { "type": "door", "x": 630, "y": 417, "w": 30, "h": 28, "open": false },
+        { "type": "window", "x": 600, "y": 380, "w": 16, "h": 20, "lit": true, "color": "#daa520" },
+        { "type": "window", "x": 700, "y": 380, "w": 16, "h": 20, "lit": true, "color": "#daa520" },
+        { "type": "chimney", "x": 690, "y": 355, "w": 18, "h": 25 },
+        { "type": "smoke", "x": 699, "y": 350, "visible": true }
+      ],
+      "interior": {
+        "visible": true,
+        "depth": 30,
+        "color": "#2a2018",
+        "features": [
+          { "type": "bed", "x": 680, "y": 390, "w": 35, "h": 22, "empty": true },
+          { "type": "fireplace", "x": 610, "y": 385, "w": 20, "h": 25, "lit": true },
+          { "type": "npc_spot", "x": 665, "y": 395, "npc": "rabbit", "condition": "rabbitAppeared" }
+        ]
+      }
+    },
+    {
+      "id": "courtyard",
+      "name": "The People's Yard",
+      "ealdorName": "Courtyard",
+      "type": "courtyard",
+      "x": 280, "y": 230,
+      "w": 240, "h": 215,
+      "color": "#6b5d4f",
+      "clickable": true,
+      "zone": "courtyard",
+      "icon": "🌾",
+      "description": "Markets, workshops, the granary tower. Smoke rises from the forge. Grain sacks lean against the tower. The people of Ealdor work here — the castle's beating heart.",
+      "actionName": "Manage Resources",
+      "action": "manageResources",
+      "actionCost": 1,
+      "features": [
+        { "type": "well", "x": 400, "y": 410, "r": 10 },
+        { "type": "market_stall", "x": 310, "y": 260, "w": 40, "h": 20, "color": "#8b7d6b" },
+        { "type": "market_stall", "x": 450, "y": 265, "w": 40, "h": 20, "color": "#8b7d6b" },
+        { "type": "granary_tower", "x": 460, "y": 370, "w": 45, "h": 60, "color": "#5c4f42", "roof": "conical", "fillLevel": 0.6 },
+        { "type": "forge", "x": 310, "y": 380, "w": 35, "h": 25, "color": "#4a3a2f", "smoke": true },
+        { "type": "woodpile", "x": 340, "y": 430, "w": 30, "h": 12 },
+        { "type": "people", "x": 370, "y": 290, "count": 4, "scattered": true }
+      ]
+    }
+  ],
+
+  "npcs": [
+    {
+      "id": "silent_brother",
+      "name": "The Silent Brother",
+      "title": "Eighty-Seventh Keeper of the Coal",
+      "glyph": "🧘",
+      "zone": "chapel",
+      "x": 135, "y": 400,
+      "visible": true,
+      "condition": null,
+      "interactions": [
+        {
+          "trigger": "tendFire",
+          "response": "nods once",
+          "dialogue": "He does not speak. He has never spoken. But his nod carries weight."
+        },
+        {
+          "trigger": "firstSpeak",
+          "condition": { "ice": 60, "faith": 40, "random": 0.3 },
+          "response": "speaks one word",
+          "dialogue": "\"Threshold.\" One word. The eighty-seventh keeper speaks. Then silence resumes.",
+          "effect": { "faith": 15, "morale": 5 }
+        }
+      ]
+    },
+    {
+      "id": "rabbit",
+      "name": "The Rabbit",
+      "title": "Watcher at the Edge",
+      "glyph": "🐇",
+      "zone": "kings_chambers",
+      "x": 665, "y": 395,
+      "visible": false,
+      "condition": "rabbitAppeared",
+      "movement": {
+        "type": "wander",
+        "zones": ["kings_chambers", "courtyard", "court", "wild_wood"],
+        "frequency": "seasonal"
+      },
+      "interactions": [
+        {
+          "trigger": "waitInChambers",
+          "condition": "rabbitAppeared",
+          "dialogue": "The Rabbit sits on the empty bed. He looks at the pillow, then at you. 'Not yet,' his silence says. He leaves.",
+          "effect": { "faith": 8, "rabbitAppeared": false }
+        },
+        {
+          "trigger": "seekOmen",
+          "condition": "rabbitAppeared",
+          "dialogue": "The Rabbit appears on the battlement. He looks at the glyph. He looks at you. He vanishes.",
+          "effect": { "rabbitAppeared": false }
+        }
+      ]
+    },
+    {
+      "id": "nokomis",
+      "name": "Nokomis",
+      "title": "The Whisper",
+      "glyph": "👁️",
+      "zone": null,
+      "x": 0, "y": 0,
+      "visible": false,
+      "condition": "nokomisAppears",
+      "movement": {
+        "type": "appear",
+        "zones": ["battlements", "wild_wood", "chapel", "court"],
+        "frequency": "rare",
+        "duration": "moment"
+      },
+      "interactions": [
+        {
+          "trigger": "appear",
+          "dialogue": "Nokomis whispers from nowhere: \"{random_saying}\""
+        }
+      ]
+    }
+  ],
+
+  "playerStart": {
+    "zone": "courtyard",
+    "x": 400,
+    "y": 330
+  },
+
+  "overlays": [
+    {
+      "id": "ice_creep_fjord",
+      "type": "gradient_overlay",
+      "target": "fjord",
+      "property": "ice",
+      "fromColor": "rgba(200,216,228,0)",
+      "toColor": "rgba(200,216,228,0.9)",
+      "direction": "top-down",
+      "steps": [
+        { "value": 0, "opacity": 0 },
+        { "value": 20, "opacity": 0.1, "height": "15%" },
+        { "value": 40, "opacity": 0.3, "height": "35%" },
+        { "value": 60, "opacity": 0.6, "height": "60%" },
+        { "value": 80, "opacity": 0.85, "height": "85%" },
+        { "value": 100, "opacity": 1.0, "height": "100%" }
+      ]
+    },
+    {
+      "id": "season_tint",
+      "type": "color_overlay",
+      "target": "all",
+      "property": "season",
+      "colors": {
+        "0": "rgba(180,200,120,0.05)",
+        "1": "rgba(255,220,100,0.08)",
+        "2": "rgba(180,120,60,0.1)",
+        "3": "rgba(180,200,220,0.15)"
+      }
+    },
+    {
+      "id": "nightfall",
+      "type": "gradient_overlay",
+      "target": "all",
+      "property": "hour",
+      "static": true,
+      "fromColor": "rgba(10,8,20,0.4)",
+      "toColor": "rgba(10,8,20,0.0)",
+      "direction": "top-down"
+    },
+    {
+      "id": "fog_of_war",
+      "type": "vignette",
+      "target": "edges",
+      "property": null,
+      "static": true,
+      "color": "rgba(26,20,16,0.6)",
+      "innerRadius": 0.6,
+      "outerRadius": 1.0
+    }
+  ],
+
+  "transitions": [
+    {
+      "from": "gatehouse",
+      "to": "vista:fjord",
+      "label": "Walk to the Fjord",
+      "condition": { "ice": { "max": 90 } }
+    },
+    {
+      "from": "greatHall",
+      "to": "vista:ealdor_great_hall",
+      "label": "Enter the Thing-Stead"
+    },
+    {
+      "from": "court",
+      "to": "vista:ealdor_court",
+      "label": "Enter the Empty Court"
+    },
+    {
+      "from": "chapel",
+      "to": "vista:ealdor_chapel",
+      "label": "Enter the Coal Chapel"
+    },
+    {
+      "from": "kingsChambers",
+      "to": "vista:ealdor_chambers",
+      "label": "Enter the King's Chambers"
+    }
+  ],
+
+  "ambient": {
+    "sounds": [
+      { "id": "wind", "type": "loop", "volume": 0.3, "variance": 0.1 },
+      { "id": "waves", "type": "loop", "volume": 0.2, "condition": { "ice": { "max": 60 } } },
+      { "id": "fire_crackle", "type": "loop", "zone": "chapel", "proximity": true, "volume": 0.4 },
+      { "id": "market_murmur", "type": "loop", "zone": "courtyard", "proximity": true, "volume": 0.25 },
+      { "id": "ice_creak", "type": "random", "volume": 0.5, "condition": { "ice": { "min": 40 } }, "interval": [8, 20] }
+    ]
+  }
+}
