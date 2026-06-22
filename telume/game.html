@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kingdom of Ealdor · Telumë</title>
+<style>
+  :root {
+    --stone: #2a2520;
+    --parchment: #f4e4c1;
+    --ember: #c44f1c;
+    --ash: #8b7d6b;
+    --frost: #c8d8e4;
+    --blood: #7a1c1c;
+    --gold: #b8860b;
+    --deep: #1a1410;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--deep);
+    color: var(--parchment);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+  }
+  #game {
+    max-width: 720px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  header {
+    text-align: center;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 0.75rem;
+  }
+  header h1 {
+    font-size: 1.8rem;
+    letter-spacing: 0.05em;
+    color: var(--gold);
+  }
+  header .subtitle {
+    font-style: italic;
+    color: var(--ash);
+    font-size: 0.9rem;
+  }
+  .panel {
+    background: rgba(42,37,32,0.7);
+    border: 1px solid var(--ash);
+    border-radius: 6px;
+    padding: 1rem;
+  }
+  .panel h2 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--frost);
+    margin-bottom: 0.5rem;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.5rem;
+  }
+  .stat {
+    text-align: center;
+    padding: 0.4rem;
+    background: rgba(0,0,0,0.3);
+    border-radius: 4px;
+  }
+  .stat .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--ash);
+  }
+  .stat .value {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--parchment);
+  }
+  .stat .value.low { color: var(--blood); }
+  .stat .value.warn { color: var(--ember); }
+  .resources {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .resource {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--ash);
+    border-radius: 4px;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .resource .count {
+    font-weight: bold;
+    color: var(--gold);
+  }
+  .kingdoms-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.4rem;
+    font-size: 0.75rem;
+  }
+  .kingdom-card {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--ash);
+    border-radius: 4px;
+    padding: 0.5rem;
+    text-align: center;
+  }
+  .kingdom-card .k-name {
+    font-weight: bold;
+    color: var(--frost);
+  }
+  .kingdom-card .k-gov {
+    font-style: italic;
+    color: var(--ash);
+    font-size: 0.7rem;
+  }
+  .kingdom-card .k-res {
+    color: var(--gold);
+    font-size: 0.75rem;
+  }
+  #log {
+    max-height: 280px;
+    overflow-y: auto;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    padding-right: 0.5rem;
+  }
+  #log .entry {
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(139,125,107,0.3);
+  }
+  #log .glyph {
+    font-size: 1.8rem;
+    color: var(--gold);
+    display: inline;
+  }
+  #log .nokomis {
+    color: var(--frost);
+    font-style: italic;
+  }
+  #log .crisis {
+    color: var(--blood);
+  }
+  #log .gain {
+    color: #6b8e23;
+  }
+  #log .loss {
+    color: var(--ember);
+  }
+  #actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  button {
+    background: var(--stone);
+    color: var(--parchment);
+    border: 1px solid var(--ash);
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+  }
+  button:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  button.primary {
+    background: var(--ember);
+    border-color: var(--ember);
+  }
+  button.primary:hover {
+    background: #d45a2a;
+  }
+  .glyph-draw {
+    text-align: center;
+    font-size: 3rem;
+    color: var(--gold);
+    padding: 0.5rem;
+  }
+  #footer {
+    text-align: center;
+    font-size: 0.7rem;
+    color: var(--ash);
+    margin-top: 0.5rem;
+  }
+</style>
+</head>
+<body>
+<div id="game">
+  <header>
+    <h1>𐤀 Kingdom of Ealdor 𐤕</h1>
+    <div class="subtitle">Year <span id="yearDisplay">3450</span> AC · The Cooling · Little Ice Age</div>
+    <div class="subtitle" id="seasonDisplay">Spring · The Pankus convenes</div>
+  </header>
+
+  <div class="panel">
+    <h2>Ealdor · The Threshold</h2>
+    <div class="stats">
+      <div class="stat"><span class="label">Population</span><span class="value" id="pop">100</span></div>
+      <div class="stat"><span class="label">Morale</span><span class="value" id="morale">70</span></div>
+      <div class="stat"><span class="label">Faith</span><span class="value" id="faith">60</span></div>
+      <div class="stat"><span class="label">Ice</span><span class="value warn" id="ice">15</span></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Resources</h2>
+    <div class="resources" id="resources"></div>
+  </div>
+
+  <div class="panel">
+    <h2>The Four Kingdoms</h2>
+    <div class="kingdoms-row" id="kingdoms"></div>
+  </div>
+
+  <div class="panel" id="glyphPanel" style="display:none;">
+    <h2>Adzmyst Glyph</h2>
+    <div class="glyph-draw" id="glyphDisplay"></div>
+    <div style="text-align:center;font-style:italic;color:var(--ash);" id="glyphHint"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Chronicle</h2>
+    <div id="log"></div>
+  </div>
+
+  <div class="panel">
+    <div id="actions">
+      <button class="primary" onclick="advanceSeason()">Advance Season</button>
+      <button onclick="conveneThing()" id="btnThing">Convene Thing</button>
+      <button onclick="tradeWithKingdom()" id="btnTrade">Trade</button>
+      <button onclick="seekOmen()" id="btnOmen">Seek Omen</button>
+    </div>
+  </div>
+
+  <div id="footer">
+    The fire holds. The vault is open. The seventh tablet is still blank.<br>
+    <em>Se deret, se deretai.</em> Whoever holds is held.
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// KINGDOM OF EALDOR · Game Engine
+// ealdforn/telume/ealdor/game.html
+// ═══════════════════════════════════════
+
+const GLYPHS = [
+  { char: '𐤀', hint: 'the ox, the beginning, the burden carried' },
+  { char: '𐤁', hint: 'the house, the container, what holds' },
+  { char: '𐤂', hint: 'the camel, the journey, what crosses' },
+  { char: '𐤃', hint: 'the door, the threshold, what opens' },
+  { char: '𐤄', hint: 'the window, the breath, what sees' },
+  { char: '𐤅', hint: 'the nail, the fastened, what binds' },
+  { char: '𐤆', hint: 'the weapon, the cut, what divides' },
+  { char: '𐤇', hint: 'the wall, the boundary, what protects' },
+  { char: '𐤈', hint: 'the wheel, the cycle, what returns' },
+  { char: '𐤉', hint: 'the hand, the work, what builds' },
+  { char: '𐤊', hint: 'the palm, the open, what receives' },
+  { char: '𐤋', hint: 'the goad, the prod, what drives' },
+  { char: '𐤌', hint: 'the water, the chaos, what flows' },
+  { char: '𐤍', hint: 'the fish, the hidden, what swims beneath' },
+  { char: '𐤎', hint: 'the pillar, the support, what stands' },
+  { char: '𐤏', hint: 'the eye, the witness, what sees all' },
+  { char: '𐤐', hint: 'the mouth, the word, what speaks' },
+  { char: '𐤑', hint: 'the serpent, the coil, what encircles' },
+  { char: '𐤒', hint: 'the needle, the pierce, what mends' },
+  { char: '𐤓', hint: 'the head, the crown, what rules' },
+  { char: '𐤔', hint: 'the tooth, the consume, what devours' },
+  { char: '𐤕', hint: 'the mark, the signature, what seals' },
+];
+
+const RESOURCES = ['Stone','Timber','Grain','Iron','Salt','Cloth'];
+const SEASONS = ['Spring','Summer','Autumn','Winter'];
+
+const KINGDOMS = {
+  Ealdor: {
+    name: 'Ealdor',
+    full: 'Kingdom of Ealdor',
+    gov: 'Council (Thing/Pankus)',
+    pillar: 'The Threshold',
+    glyph: '𐤃',
+    color: 'var(--gold)',
+    resources: { Stone: 4, Timber: 2, Grain: 3, Iron: 1, Salt: 1, Cloth: 2 },
+    rule: 'reroll', // May reroll one resource draw per season
+    ruleDesc: 'Council: May reroll one draw per season.',
+    player: true
+  },
+  Tsarnigrad: {
+    name: 'Tsarnigrad',
+    full: 'Tsarnigrad Monarchy',
+    gov: 'Monarchy',
+    pillar: 'The Flame',
+    glyph: '𐤔',
+    color: 'var(--blood)',
+    resources: { Stone: 2, Timber: 1, Grain: 8, Iron: 2, Salt: 1, Cloth: 1 },
+    rule: 'hoard', // Doubles one resource, but vulnerability to succession crisis
+    ruleDesc: 'Monarchy: Hoards grain. Preparing for "the winter that will not end." Stole Tablet 4.',
+    player: false
+  },
+  Kichigamswak: {
+    name: 'Kichigamswak',
+    full: 'Kichigamswak Confederacy',
+    gov: 'Confederacy',
+    pillar: 'Water / Cycles',
+    glyph: '𐤌',
+    color: '#4a90d9',
+    resources: { Stone: 1, Timber: 3, Grain: 4, Iron: 1, Salt: 3, Cloth: 3 },
+    rule: 'cycle', // Extra draw, cannot store
+    ruleDesc: 'Confederacy: Draws extra. Cannot store—must use or trade each season.',
+    player: false
+  },
+  Haldor: {
+    name: 'Haldor',
+    full: 'Haldorian Republic',
+    gov: 'Post-Theocracy',
+    pillar: 'The Word (silent)',
+    glyph: '𐤐',
+    color: 'var(--frost)',
+    resources: { Stone: 3, Timber: 2, Grain: 2, Iron: 3, Salt: 2, Cloth: 1 },
+    rule: 'prophecy', // Sees next crisis, one resource untouchable
+    ruleDesc: 'Republic: Sees omens. God departed. The stela still stands.',
+    player: false
+  }
+};
+
+let state = {
+  year: 3450,
+  season: 0, // 0=Spring, 1=Summer, 2=Autumn, 3=Winter
+  ice: 15, // 0-100, game over at 100
+  playerResources: { Stone: 4, Timber: 3, Grain: 5, Iron: 2, Salt: 2, Cloth: 3 },
+  population: 100,
+  morale: 70,
+  faith: 60,
+  log: [],
+  currentGlyph: null,
+  pendingCrisis: null,
+  crisisHistory: [],
+  rabbitAppeared: false,
+  thingCooldown: 0,
+  tradeCooldown: 0,
+  omenCooldown: 0
+};
+
+// ═══════════════════════════════════════
+// CRISIS DECK
+// ═══════════════════════════════════════
+
+const CRISES = [
+  { id: 'ice_advance', name: 'The Ice Advances', desc: 'Sea ice creeps closer to the northern fjords. Ships cannot pass.', effect: { ice: 8, morale: -5 }, tale: 6 },
+  { id: 'grain_blight', name: 'Blight in the Grain', desc: 'A wet summer. The grain spoils in the fields.', effect: { resource: 'Grain', lose: 3, population: -5 }, tale: 1 },
+  { id: 'border_raid', name: 'Raiders from the East', desc: 'Unknown raiders strike the eastern villages.', effect: { population: -8, morale: -10, resource: 'Iron', lose: 1 }, tale: 5 },
+  { id: 'tsarnigrad_hoarding', name: 'Tsarnigrad Hoards', desc: 'The Monarchy stockpiles grain. Prices rise. Neighbors grow hungry.', effect: { morale: -5, faith: -3 }, tale: 7 },
+  { id: 'pankus_deadlock', name: 'The Thing Deadlocks', desc: 'The council cannot agree. Voices rise. No decision comes.', effect: { morale: -10, faith: -5 }, tale: 4 },
+  { id: 'prophecy_silence', name: 'Haldor Sees Nothing', desc: 'The Republic\'s augurs read the sky. The sky is empty. The god has not returned.', effect: { faith: -8 }, tale: 8 },
+  { id: 'rabbit_sighting', name: 'The Rabbit Runs', desc: 'A yellow-footed hare is seen at the edge of the forest. It does not speak. It watches.', effect: { faith: 5, morale: 5, special: 'rabbit' }, tale: 0 },
+  { id: 'coal_flicker', name: 'The Coal Flickers', desc: 'The Ātravan Coal at the Ring dims for three heartbeats. The silent brother tends it. It steadies.', effect: { faith: -5, special: 'coal' }, tale: 1 },
+  { id: 'kichi_trade', name: 'Kichigamswak Canoes', desc: 'Canoes from the Great Lake arrive with fish and salt. The Confederacy offers trade.', effect: { resource: 'Salt', gain: 2, morale: 3 }, tale: 8 },
+  { id: 'storm_omens', name: 'Storm Omens', desc: 'Lightning over Sūryapura. The Dawnstone glows. Priests argue over the meaning.', effect: { faith: 5, special: 'omen' }, tale: 2 },
+  { id: 'succession_crisis', name: 'Tsarnigrad Succession', desc: 'The old monarch dies. The heir is young. The court fractures.', effect: { special: 'succession' }, tale: 3 },
+  { id: 'blank_tablet_dream', name: 'The Seventh Tablet', desc: 'A dream spreads through the kingdoms. In it, the seventh tablet is written. No one remembers what it said.', effect: { faith: 8, morale: 3 }, tale: 6 },
+];
+
+// ═══════════════════════════════════════
+// NOKOMIS SAYINGS
+// ═══════════════════════════════════════
+
+const NOKOMIS = [
+  '"You are not Otter. You are not Woodpecker. You are not Bear. You are the one who carries."',
+  '"Fear is not the enemy. Fear is the door. What you do with it — that is what matters."',
+  '"The fire does not go to the happy. The fire goes to the ones who have sat in the dark and learned to make their own light."',
+  '"You give something. You do not get it back. That does not mean you should stop leaping."',
+  '"The ones who know where they are going never find anything worth finding."',
+  '"The truth holds. The lie scatters."',
+  '"Helping is not the same as saving. Carrying is not the same as keeping. Leaping is not the same as flying."',
+  '"The Rabbit does not want them to agree. The Rabbit wants you to listen to all of them and decide nothing."',
+];
+
+// ═══════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════
+
+function render() {
+  document.getElementById('yearDisplay').textContent = state.year;
+  document.getElementById('seasonDisplay').textContent = SEASONS[state.season] + ' · Ice: ' + state.ice + '%';
+  document.getElementById('pop').textContent = state.population;
+  document.getElementById('morale').textContent = state.morale;
+  document.getElementById('faith').textContent = state.faith;
+  document.getElementById('ice').textContent = state.ice + '%';
+
+  // Color-code stats
+  ['pop','morale','faith'].forEach(id => {
+    const el = document.getElementById(id);
+    const val = parseInt(el.textContent);
+    el.className = 'value';
+    if (val < 30) el.className += ' low';
+    else if (val < 50) el.className += ' warn';
+  });
+
+  // Resources
+  const resDiv = document.getElementById('resources');
+  resDiv.innerHTML = '';
+  for (const [name, count] of Object.entries(state.playerResources)) {
+    const div = document.createElement('div');
+    div.className = 'resource';
+    div.innerHTML = `<span>${name}</span><span class="count">${count}</span>`;
+    resDiv.appendChild(div);
+  }
+
+  // Kingdoms
+  const kingDiv = document.getElementById('kingdoms');
+  kingDiv.innerHTML = '';
+  for (const [key, k] of Object.entries(KINGDOMS)) {
+    const card = document.createElement('div');
+    card.className = 'kingdom-card';
+    card.style.borderColor = k.color;
+    const resStr = Object.entries(k.resources).map(([r,c]) => `${r}:${c}`).join(' ');
+    card.innerHTML = `
+      <div class="k-name">${k.glyph} ${k.name}</div>
+      <div class="k-gov">${k.gov}</div>
+      <div class="k-gov">${k.pillar}</div>
+      <div class="k-res">${resStr}</div>
+      <div style="font-size:0.65rem;color:var(--ash);margin-top:2px;">${k.ruleDesc}</div>
+    `;
+    kingDiv.appendChild(card);
+  }
+
+  // Glyph
+  if (state.currentGlyph) {
+    document.getElementById('glyphPanel').style.display = 'block';
+    document.getElementById('glyphDisplay').textContent = state.currentGlyph.char;
+    document.getElementById('glyphHint').textContent = state.currentGlyph.hint;
+  } else {
+    document.getElementById('glyphPanel').style.display = 'none';
+  }
+
+  // Log
+  const logDiv = document.getElementById('log');
+  logDiv.innerHTML = '';
+  for (const entry of state.log.slice(-30)) {
+    const div = document.createElement('div');
+    div.className = 'entry';
+    div.innerHTML = entry;
+    logDiv.appendChild(div);
+  }
+  logDiv.scrollTop = logDiv.scrollHeight;
+
+  // Buttons
+  document.getElementById('btnThing').disabled = state.thingCooldown > 0;
+  document.getElementById('btnTrade').disabled = state.tradeCooldown > 0;
+  document.getElementById('btnOmen').disabled = state.omenCooldown > 0;
+}
+
+// ═══════════════════════════════════════
+// LOG HELPERS
+// ═══════════════════════════════════════
+
+function log(msg, cls = '') {
+  const prefix = cls ? `<span class="${cls}">` : '';
+  const suffix = cls ? '</span>' : '';
+  state.log.push(prefix + msg + suffix);
+}
+
+function logGlyph(glyph) {
+  state.log.push(`<span class="glyph">${glyph.char}</span> — ${glyph.hint}`);
+}
+
+// ═══════════════════════════════════════
+// DRAW
+// ═══════════════════════════════════════
+
+function drawResource() {
+  const r = RESOURCES[Math.floor(Math.random() * RESOURCES.length)];
+  const count = Math.floor(Math.random() * 3) + 1;
+  return { resource: r, count };
+}
+
+function drawGlyph() {
+  const g = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+  state.currentGlyph = g;
+  logGlyph(g);
+}
+
+function drawCrisis() {
+  const available = CRISES.filter(c => !state.crisisHistory.slice(-6).includes(c.id));
+  if (available.length === 0) {
+    state.crisisHistory = [];
+    return CRISES[Math.floor(Math.random() * CRISES.length)];
+  }
+  return available[Math.floor(Math.random() * available.length)];
+}
+
+// ═══════════════════════════════════════
+// AI KINGDOM ACTIONS
+// ═══════════════════════════════════════
+
+function aiKingdomTurn(key) {
+  const k = KINGDOMS[key];
+  if (k.player) return;
+
+  const draw = drawResource();
+  
+  switch (k.rule) {
+    case 'hoard': // Tsarnigrad
+      k.resources[draw.resource] = (k.resources[draw.resource] || 0) + draw.count + 1;
+      // Prioritize grain
+      if (Math.random() < 0.6) k.resources['Grain'] = (k.resources['Grain'] || 0) + 1;
+      break;
+    case 'cycle': // Kichigamswak
+      const draw2 = drawResource();
+      k.resources[draw.resource] = (k.resources[draw.resource] || 0) + draw.count;
+      k.resources[draw2.resource] = (k.resources[draw2.resource] || 0) + draw2.count;
+      // Must use most of it — simulate trading
+      for (const r of RESOURCES) {
+        if (k.resources[r] > 5) {
+          k.resources[r] = Math.max(2, k.resources[r] - 3);
+        }
+      }
+      break;
+    case 'prophecy': // Haldor
+      k.resources[draw.resource] = (k.resources[draw.resource] || 0) + draw.count;
+      // Salt is untouchable
+      k.resources['Salt'] = Math.max(k.resources['Salt'], 2);
+      break;
+    default:
+      k.resources[draw.resource] = (k.resources[draw.resource] || 0) + draw.count;
+  }
+}
+
+// ═══════════════════════════════════════
+// MAIN LOOP
+// ═══════════════════════════════════════
+
+function advanceSeason() {
+  // Advance season
+  state.season = (state.season + 1) % 4;
+  if (state.season === 0) state.year++;
+
+  // Ice advances (faster in winter)
+  const iceGain = state.season === 3 ? 
+    Math.floor(Math.random() * 8) + 4 : 
+    Math.floor(Math.random() * 4) + 1;
+  state.ice = Math.min(100, state.ice + iceGain);
+  
+  if (state.ice >= 100) {
+    log('<span class="crisis">The ice has closed the fjords. Ealdor is cut off. The kingdom falls into silence.</span>');
+    log('<span class="nokomis">' + NOKOMIS[3] + '</span>');
+    render();
+    document.querySelectorAll('button').forEach(b => b.disabled = true);
+    return;
+  }
+
+  // Cooldowns
+  if (state.thingCooldown > 0) state.thingCooldown--;
+  if (state.tradeCooldown > 0) state.tradeCooldown--;
+  if (state.omenCooldown > 0) state.omenCooldown--;
+
+  // Player draws resources
+  const draw1 = drawResource();
+  const draw2 = drawResource();
+  
+  // Council rule: reroll one?
+  let rerolled = null;
+  // Auto-reroll lowest value
+  const draws = [draw1, draw2];
+  draws.sort((a, b) => a.count - b.count);
+  rerolled = draws[0].resource;
+  const redraw = drawResource();
+  const finalDraws = [draws[1], redraw];
+  
+  for (const d of finalDraws) {
+    state.playerResources[d.resource] = (state.playerResources[d.resource] || 0) + d.count;
+  }
+
+  log(`Season of ${SEASONS[state.season]}, Year ${state.year} AC`);
+  log(`<span class="gain">Ealdor draws: ${draw1.resource} (${draw1.count}), ${draw2.resource} (${draw2.count})</span>`);
+  log(`<span class="loss">Council rerolls ${rerolled} → ${redraw.resource} (${redraw.count})</span>`);
+  log(`Ice advances +${iceGain}%. Fjords at ${state.ice}%.`);
+
+  // AI kingdoms act
+  for (const key of Object.keys(KINGDOMS)) {
+    if (!KINGDOMS[key].player) aiKingdomTurn(key);
+  }
+
+  // Crisis
+  const crisis = drawCrisis();
+  state.crisisHistory.push(crisis.id);
+  state.pendingCrisis = crisis;
+  
+  log(`<span class="crisis">CRISIS: ${crisis.name}</span> — ${crisis.desc}`);
+
+  // Apply crisis effects
+  if (crisis.effect.ice) {
+    state.ice = Math.min(100, state.ice + crisis.effect.ice);
+  }
+  if (crisis.effect.population) {
+    state.population = Math.max(0, state.population + (crisis.effect.population || 0));
+  }
+  if (crisis.effect.morale) {
+    state.morale = Math.max(0, Math.min(100, state.morale + (crisis.effect.morale || 0)));
+  }
+  if (crisis.effect.faith) {
+    state.faith = Math.max(0, Math.min(100, state.faith + (crisis.effect.faith || 0)));
+  }
+  if (crisis.effect.resource && crisis.effect.lose) {
+    state.playerResources[crisis.effect.resource] = Math.max(0, 
+      (state.playerResources[crisis.effect.resource] || 0) - crisis.effect.lose);
+    log(`<span class="loss">Lost ${crisis.effect.lose} ${crisis.effect.resource}.</span>`);
+  }
+  if (crisis.effect.resource && crisis.effect.gain) {
+    state.playerResources[crisis.effect.resource] = 
+      (state.playerResources[crisis.effect.resource] || 0) + crisis.effect.gain;
+    log(`<span class="gain">Gained ${crisis.effect.gain} ${crisis.effect.resource}.</span>`);
+  }
+
+  // Special events
+  if (crisis.effect.special === 'rabbit') {
+    state.rabbitAppeared = true;
+    log('<span class="nokomis">The Rabbit watches from the treeline. Yellow feet. Split lip. Short tail. He does not speak. He does not need to.</span>');
+  }
+  if (crisis.effect.special === 'coal') {
+    log('<span class="nokomis">The silent brother — eighty-seventh of the line — adds nothing to the fire. The coal steadies. He has still never spoken.</span>');
+  }
+  if (crisis.effect.special === 'omen') {
+    drawGlyph();
+  }
+  if (crisis.effect.special === 'succession') {
+    log('<span class="crisis">Tsarnigrad\'s court fractures. The Flame flickers. The other kingdoms watch closely.</span>');
+    KINGDOMS.Tsarnigrad.resources.Grain = Math.max(1, KINGDOMS.Tsarnigrad.resources.Grain - 3);
+  }
+
+  // Population drift from morale/faith
+  if (state.morale < 30 && state.season === 3) {
+    state.population = Math.max(10, state.population - 3);
+    log('<span class="loss">Winter takes the weakest. Population falls.</span>');
+  }
+  if (state.faith < 20 && Math.random() < 0.3) {
+    state.population = Math.max(10, state.population - 2);
+    log('<span class="loss">Some leave Ealdor, seeking warmer gods.</span>');
+  }
+
+  // Nokomis wisdom (occasional)
+  if (Math.random() < 0.25) {
+    const saying = NOKOMIS[Math.floor(Math.random() * NOKOMIS.length)];
+    log(`<span class="nokomis">Nokomis whispers: ${saying}</span>`);
+  }
+
+  // Population from grain
+  if (state.playerResources.Grain > 0 && state.season === 0) {
+    const growth = Math.min(state.playerResources.Grain, 4);
+    state.population = Math.min(150, state.population + growth);
+    state.playerResources.Grain -= growth;
+    log(`<span class="gain">Spring planting. ${growth} grain feeds the people. Population grows.</span>`);
+  }
+
+  // Game over checks
+  if (state.population <= 0) {
+    log('<span class="crisis">Ealdor is empty. The Threshold is unheld. The fire goes out.</span>');
+    document.querySelectorAll('button').forEach(b => b.disabled = true);
+  }
+
+  render();
+}
+
+// ═══════════════════════════════════════
+// PLAYER ACTIONS
+// ═══════════════════════════════════════
+
+function conveneThing() {
+  if (state.thingCooldown > 0) return;
+  state.thingCooldown = 3;
+
+  const success = Math.random() < 0.6;
+  if (success) {
+    state.morale = Math.min(100, state.morale + 10);
+    state.faith = Math.min(100, state.faith + 5);
+    log('The Thing convenes. Voices rise, fall, settle. A decision is reached. The council holds.');
+    log('<span class="nokomis">"The assembly entrusted to the land itself." — Nešatta Codex, Tablet 3</span>');
+  } else {
+    state.morale = Math.max(0, state.morale - 5);
+    log('The Thing convenes. Voices rise. None settle. The council deadlocks. Another season lost.');
+    log('<span class="loss">"A king shall not be." — But sometimes the assembly cannot be either.</span>');
+  }
+  render();
+}
+
+function tradeWithKingdom() {
+  if (state.tradeCooldown > 0) return;
+  state.tradeCooldown = 4;
+
+  const targets = ['Tsarnigrad','Kichigamswak','Haldor'];
+  const target = targets[Math.floor(Math.random() * targets.length)];
+  const k = KINGDOMS[target];
+  
+  // Find something they have plenty of
+  const theirSurplus = Object.entries(k.resources).filter(([r,c]) => c >= 3);
+  if (theirSurplus.length === 0) {
+    log(`Trade envoy to ${target}: They have nothing to spare. The Cooling bites deep.`);
+    render();
+    return;
+  }
+  
+  const [theirRes, theirCount] = theirSurplus[Math.floor(Math.random() * theirSurplus.length)];
+  const ourRes = RESOURCES[Math.floor(Math.random() * RESOURCES.length)];
+  const ourCount = Math.min(state.playerResources[ourRes] || 0, 2);
+  
+  if (ourCount === 0) {
+    log(`Trade envoy to ${target}: We have nothing to offer.`);
+    render();
+    return;
+  }
+
+  state.playerResources[ourRes] -= ourCount;
+  state.playerResources[theirRes] = (state.playerResources[theirRes] || 0) + Math.min(theirCount, 2);
+  k.resources[theirRes] -= Math.min(theirCount, 2);
+  k.resources[ourRes] = (k.resources[ourRes] || 0) + ourCount;
+  
+  log(`Trade with ${target}: Sent ${ourCount} ${ourRes}, received ${Math.min(theirCount, 2)} ${theirRes}.`);
+  
+  if (target === 'Tsarnigrad' && theirRes === 'Grain') {
+    log('<span class="nokomis">Tsarnigrad parts with grain reluctantly. "For the winter that will not end," their envoy mutters.</span>');
+  }
+  render();
+}
+
+function seekOmen() {
+  if (state.omenCooldown > 0) return;
+  state.omenCooldown = 6;
+
+  drawGlyph();
+  const bonus = Math.random();
+  
+  if (bonus < 0.4) {
+    state.faith = Math.min(100, state.faith + 10);
+    log('<span class="gain">The glyph resonates. Faith strengthens. The council interprets favorably.</span>');
+  } else if (bonus < 0.7) {
+    state.morale = Math.min(100, state.morale + 8);
+    log('The glyph is ambiguous. Debate enlivens the Thing. Morale rises with uncertainty.');
+  } else {
+    state.faith = Math.max(0, state.faith - 5);
+    log('<span class="loss">The glyph darkens. Some say it means nothing. Others say it means everything. Faith wavers.</span>');
+  }
+  
+  if (state.rabbitAppeared && Math.random() < 0.5) {
+    log('<span class="nokomis">The Rabbit appears at the edge of the firelight. He looks at the glyph. He looks at you. He vanishes. The glyph remains.</span>');
+    state.rabbitAppeared = false;
+  }
+  
+  render();
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+
+function init() {
+  log('Year 3450 AC. The Little Ice Age advances. The Pankus convenes at Nešatta — perhaps for the last time.');
+  log('<span class="nokomis">"The fire holds. The vault is open. The seventh tablet is still blank."</span>');
+  log('Ealdor stands at the Threshold. The Coal burns. The fjords freeze. The Thing must decide.');
+  render();
+}
+
+init();
+</script>
+</body>
+</html>
