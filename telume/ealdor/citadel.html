@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ealdforn Citadel</title>
+<style>
+/* ─── PALETTE ─────────────────────────────────────────────── */
+:root {
+  --vellum:     #e8dfc8;
+  --vellum-dk:  #d4c9ac;
+  --stone:      #3a3530;
+  --stone-lt:   #5a534a;
+  --ash:        #7a7268;
+  --chalk:      #f2ece0;
+  --fjord:      #2a4d6e;
+  --fjord-lt:   #4a7a9b;
+  --ice:        #c8dde8;
+  --ice-lt:     #e4f0f7;
+  --ember:      #c4561a;
+  --ember-glow: #e87a3a;
+  --gold:       #b8922a;
+  --gold-lt:    #d4aa40;
+  --rune:       #1a1610;
+  --moss:       #4a6040;
+  --moss-lt:    #6a8858;
+
+  --font-map:   'Courier New', 'Lucida Console', monospace;
+  --font-body:  Georgia, 'Times New Roman', serif;
+  --font-ui:    'Palatino Linotype', Palatino, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--stone);
+  color: var(--vellum);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ─── LAYOUT ──────────────────────────────────────────────── */
+#shell {
+  width: 100%;
+  max-width: 1100px;
+  padding: 12px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+  gap: 10px;
+}
+
+/* ─── HEADER ──────────────────────────────────────────────── */
+#header {
+  grid-area: header;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--ash);
+  padding-bottom: 8px;
+}
+#title-block h1 {
+  font-family: var(--font-ui);
+  font-size: 1.4rem;
+  letter-spacing: 0.12em;
+  color: var(--gold-lt);
+  text-transform: uppercase;
+}
+#title-block p {
+  font-size: 0.7rem;
+  color: var(--ash);
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+#season-block {
+  text-align: right;
+  font-family: var(--font-ui);
+}
+#season-label {
+  font-size: 0.65rem;
+  color: var(--ash);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+#season-name {
+  font-size: 1.1rem;
+  color: var(--vellum);
+}
+#turn-label { font-size: 0.7rem; color: var(--ash); }
+
+/* ─── STAT BAR ────────────────────────────────────────────── */
+#stat-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 6px 10px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--stone-lt);
+  border-radius: 3px;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 60px;
+}
+.stat-label {
+  font-size: 0.58rem;
+  color: var(--ash);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.stat-value {
+  font-family: var(--font-map);
+  font-size: 1rem;
+  color: var(--vellum);
+  font-weight: bold;
+}
+.stat-value.danger { color: #e85a3a; }
+.stat-value.warn   { color: var(--ember-glow); }
+.stat-value.good   { color: #7ab87a; }
+
+/* AP pips */
+#ap-display { display: flex; gap: 4px; align-items: center; }
+.ap-pip {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  background: var(--gold-lt);
+  transition: background 0.3s;
+}
+.ap-pip.spent { background: transparent; }
+
+/* ─── MAIN AREA ───────────────────────────────────────────── */
+#main {
+  grid-area: main;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 10px;
+}
+
+/* ─── MAP ─────────────────────────────────────────────────── */
+#map-container {
+  position: relative;
+}
+#map-title {
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  color: var(--ash);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+#map-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(12, 44px);
+  gap: 1px;
+  background: var(--rune);
+  border: 2px solid var(--stone-lt);
+  border-radius: 3px;
+  width: 100%;
+}
+
+/* ─── CELLS ───────────────────────────────────────────────── */
+.cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-map);
+  font-size: 0.7rem;
+  cursor: default;
+  transition: background 0.4s, filter 0.3s;
+  overflow: hidden;
+  user-select: none;
+}
+.cell-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* TYPE STYLES */
+.cell[data-type="floor"] { background: #2d2820; }
+.cell[data-type="wall"]  { background: #1e1b16; color: var(--stone-lt); }
+.cell[data-type="gate"]  { background: #1e1b16; color: var(--ash); }
+
+/* Fjord — signature ice creep */
+.cell[data-type="fjord"] {
+  background: var(--fjord);
+  animation: fjord-ripple 4s ease-in-out infinite alternate;
+}
+@keyframes fjord-ripple {
+  0%   { background: #2a4d6e; }
+  100% { background: #2e556e; }
+}
+.cell[data-type="fjord"].ice-partial {
+  background: #4a7090 !important;
+  animation: none;
+}
+.cell[data-type="fjord"].ice-frozen {
+  background: var(--ice) !important;
+  color: #8ab0c8;
+  animation: frost-shimmer 3s ease-in-out infinite alternate;
+}
+@keyframes frost-shimmer {
+  0%   { filter: brightness(1); }
+  100% { filter: brightness(1.1); }
+}
+
+/* ZONE STYLES */
+.cell.zone {
+  cursor: pointer;
+  transition: filter 0.15s, outline 0.1s;
+}
+.cell.zone:hover {
+  filter: brightness(1.35);
+  z-index: 2;
+}
+.cell.zone:active { filter: brightness(1.6); }
+
+.cell[data-zone="T"] { background: #2a2235; }  /* Thing-Stead — deep violet */
+.cell[data-zone="H"] { background: #2d1a10; }  /* Hearth — dark ember */
+.cell[data-zone="G"] { background: #1e2810; }  /* Granary — deep green */
+.cell[data-zone="B"] { background: #152035; }  /* Harbor — navy */
+.cell[data-zone="W"] { background: #201c28; }  /* Watchtower — slate */
+.cell[data-zone="S"] { background: #1a2220; }  /* Scriptorium — teal-dark */
+.cell[data-zone="K"] { background: #28201a; }  /* Workshops — rust-dark */
+.cell[data-zone="V"] { background: #201818; }  /* Vault — crimson-dark */
+.cell[data-zone="F"] { background: #182010; }  /* Forest — pine dark */
+
+/* Active zone highlight */
+.cell.zone.zone-active {
+  outline: 2px solid var(--gold-lt);
+  outline-offset: -2px;
+  filter: brightness(1.3);
+  z-index: 2;
+}
+
+/* Hearth glow — dynamic */
+.cell[data-zone="H"].hearth-glow { animation: hearth-pulse 2s ease-in-out infinite; }
+@keyframes hearth-pulse {
+  0%, 100% { background: #2d1a10; }
+  50%       { background: #3d2415; }
+}
+
+/* Player token */
+.cell.player-here .cell-inner::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold-lt);
+  box-shadow: 0 0 6px var(--gold-lt);
+  animation: player-pulse 1.5s ease-in-out infinite;
+}
+@keyframes player-pulse {
+  0%, 100% { box-shadow: 0 0 4px var(--gold); }
+  50%       { box-shadow: 0 0 10px var(--gold-lt); }
+}
+
+/* NPC tokens */
+.npc-dot {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+.npc-brother { background: #8888aa; }
+.npc-rabbit  { background: #c8c0b0; }
+.npc-nokomis { background: #b07848; }
+
+/* ─── SIDEBAR ─────────────────────────────────────────────── */
+#sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Zone Panel */
+#zone-panel {
+  background: rgba(0,0,0,0.35);
+  border: 1px solid var(--stone-lt);
+  border-radius: 3px;
+  padding: 12px;
+  min-height: 140px;
+}
+#zone-name {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  color: var(--gold-lt);
+  margin-bottom: 4px;
+}
+#zone-desc {
+  font-size: 0.75rem;
+  color: var(--vellum-dk);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+#zone-status {
+  font-size: 0.7rem;
+  color: var(--ash);
+  font-style: italic;
+  margin-bottom: 10px;
+}
+#zone-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.zone-btn {
+  background: rgba(184,146,42,0.15);
+  border: 1px solid var(--gold);
+  color: var(--gold-lt);
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 2px;
+  text-align: left;
+  transition: background 0.15s;
+  letter-spacing: 0.04em;
+}
+.zone-btn:hover { background: rgba(184,146,42,0.3); }
+.zone-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.zone-btn .cost {
+  color: var(--ash);
+  font-size: 0.65rem;
+  display: block;
+  margin-top: 2px;
+}
+
+/* Chronicle */
+#chronicle-panel {
+  background: rgba(0,0,0,0.35);
+  border: 1px solid var(--stone-lt);
+  border-radius: 3px;
+  padding: 10px;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+#chronicle-title {
+  font-family: var(--font-ui);
+  font-size: 0.62rem;
+  color: var(--ash);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--stone-lt);
+  padding-bottom: 4px;
+}
+#chronicle-log {
+  flex: 1;
+  overflow-y: auto;
+  font-size: 0.73rem;
+  color: var(--vellum-dk);
+  line-height: 1.55;
+  padding-right: 4px;
+}
+#chronicle-log::-webkit-scrollbar { width: 4px; }
+#chronicle-log::-webkit-scrollbar-track { background: transparent; }
+#chronicle-log::-webkit-scrollbar-thumb { background: var(--stone-lt); }
+.log-entry { margin-bottom: 4px; padding-bottom: 4px; border-bottom: 1px solid rgba(90,83,74,0.3); }
+.log-entry .log-tag {
+  font-size: 0.6rem;
+  color: var(--ash);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.log-entry.log-crisis .log-tag { color: #c85a3a; }
+.log-entry.log-event  .log-tag { color: var(--gold); }
+
+/* AP display in sidebar */
+#ap-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid var(--stone-lt);
+  border-radius: 3px;
+  font-size: 0.7rem;
+  color: var(--ash);
+  font-family: var(--font-ui);
+}
+#ap-bar-label { flex: 1; }
+
+/* ─── FOOTER ──────────────────────────────────────────────── */
+#footer {
+  grid-area: footer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+  border-top: 1px solid var(--stone-lt);
+  font-size: 0.65rem;
+  color: var(--ash);
+}
+#pass-btn {
+  background: rgba(90,83,74,0.3);
+  border: 1px solid var(--ash);
+  color: var(--vellum-dk);
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  padding: 6px 16px;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  transition: background 0.15s, border-color 0.15s;
+  border-radius: 2px;
+}
+#pass-btn:hover { background: rgba(122,114,104,0.4); border-color: var(--vellum-dk); }
+
+/* ─── TOOLTIP ─────────────────────────────────────────────── */
+#tooltip {
+  position: fixed;
+  pointer-events: none;
+  background: rgba(26,22,16,0.96);
+  border: 1px solid var(--ash);
+  padding: 8px 12px;
+  font-size: 0.72rem;
+  color: var(--vellum);
+  border-radius: 3px;
+  max-width: 200px;
+  z-index: 100;
+  display: none;
+  line-height: 1.5;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+}
+#tooltip .tt-name {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--gold-lt);
+  display: block;
+  margin-bottom: 4px;
+}
+#tooltip .tt-ap { color: var(--ember-glow); font-size: 0.65rem; }
+
+/* ─── MODAL (events) ──────────────────────────────────────── */
+#modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+#modal-overlay.open { display: flex; }
+#modal {
+  background: #1e1a14;
+  border: 1px solid var(--ash);
+  border-radius: 4px;
+  padding: 24px;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.8);
+}
+#modal h2 {
+  font-family: var(--font-ui);
+  color: var(--gold-lt);
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  letter-spacing: 0.06em;
+}
+#modal p {
+  font-size: 0.8rem;
+  color: var(--vellum-dk);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+#modal-choices { display: flex; flex-direction: column; gap: 8px; }
+.modal-choice {
+  background: rgba(184,146,42,0.12);
+  border: 1px solid var(--stone-lt);
+  color: var(--vellum);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  padding: 9px 14px;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 2px;
+  transition: background 0.15s, border-color 0.15s;
+  line-height: 1.45;
+}
+.modal-choice:hover { background: rgba(184,146,42,0.25); border-color: var(--gold); }
+
+/* ─── ICE OVERLAY (fjord row 0 creep label) ──────────────── */
+#ice-overlay {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  font-size: 0.58rem;
+  color: var(--ice);
+  font-family: var(--font-map);
+  letter-spacing: 0.06em;
+  pointer-events: none;
+  opacity: 0.7;
+}
+</style>
+</head>
+<body>
+
+<div id="shell">
+
+  <!-- HEADER -->
+  <header id="header">
+    <div id="title-block">
+      <h1>Ealdforn Citadel</h1>
+      <p>Chronicle of the North Hold · Ice Year</p>
+    </div>
+    <div id="stat-bar">
+      <div class="stat"><span class="stat-label">Morale</span><span class="stat-value" id="stat-morale">70</span></div>
+      <div class="stat"><span class="stat-label">Grain</span><span class="stat-value" id="stat-grain">40</span></div>
+      <div class="stat"><span class="stat-label">Timber</span><span class="stat-value" id="stat-timber">20</span></div>
+      <div class="stat"><span class="stat-label">Iron</span><span class="stat-value" id="stat-iron">8</span></div>
+      <div class="stat"><span class="stat-label">Cloth</span><span class="stat-value" id="stat-cloth">5</span></div>
+      <div class="stat"><span class="stat-label">Tools</span><span class="stat-value" id="stat-tools">3</span></div>
+      <div class="stat"><span class="stat-label">Ice</span><span class="stat-value" id="stat-ice">15</span></div>
+    </div>
+    <div id="season-block">
+      <div id="season-label">Season</div>
+      <div id="season-name">Early Autumn</div>
+      <div id="turn-label">Year I · Turn <span id="turn-num">1</span></div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main id="main">
+
+    <!-- MAP -->
+    <div id="map-container">
+      <div id="map-title">The Citadel & Fjord</div>
+      <div id="map-grid"></div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div id="sidebar">
+
+      <div id="ap-bar">
+        <span id="ap-bar-label">Action Points</span>
+        <div id="ap-pips"></div>
+      </div>
+
+      <div id="zone-panel">
+        <div id="zone-name">The Citadel</div>
+        <div id="zone-desc">Move to a zone by clicking it. Each action costs one Action Point.</div>
+        <div id="zone-status"></div>
+        <div id="zone-actions"></div>
+      </div>
+
+      <div id="chronicle-panel">
+        <div id="chronicle-title">Chronicle</div>
+        <div id="chronicle-log"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <span id="footer-hint">Click a zone to move. Actions cost AP. Pass the season when ready.</span>
+    <button id="pass-btn">Let the Season Pass →</button>
+  </footer>
+
+</div>
+
+<!-- TOOLTIP -->
+<div id="tooltip">
+  <span class="tt-name" id="tt-name"></span>
+  <span id="tt-desc"></span><br>
+  <span class="tt-ap" id="tt-ap"></span>
+</div>
+
+<!-- MODAL -->
+<div id="modal-overlay">
+  <div id="modal">
+    <h2 id="modal-title"></h2>
+    <p id="modal-body"></p>
+    <div id="modal-choices"></div>
+  </div>
+</div>
+
+<script>
+// ─── STATE ───────────────────────────────────────────────────
+const state = {
+  morale: 70,
+  grain: 40,
+  timber: 20,
+  iron: 8,
+  cloth: 5,
+  tools: 3,
+  ice: 15,
+  season: 0,  // 0=Early Autumn, 1=Late Autumn, 2=Winter, 3=Early Spring, 4=Spring
+  turn: 1,
+  actionPoints: 3,
+  maxAP: 3,
+  playerZone: null,  // current zone key
+  hearthTended: false,
+  thingConvened: false,
+  tabletFragments: 0,
+  vaultUnlocked: false,
+  rabbitAppeared: false,
+  nokomisVisits: 0,
+  tradeAvailable: true,
+  omenSeen: false,
+  harborFrozen: false,
+  silentBrotherZone: 'H',
+  nokomisZone: null,
+};
+
+const SEASONS = [
+  'Early Autumn', 'Late Autumn', 'Deep Winter', 'Early Spring', 'Late Spring'
+];
+
+// ─── MAP DEFINITION ──────────────────────────────────────────
+// 12 cols × 12 rows
+// Each cell: [type, zone?, icon?, label?, npc?]
+// type: floor|wall|gate|fjord
+// zone: T|H|G|B|W|S|K|V|F (clickable named zones)
+
+const MAP = [
+  // row 0 — fjord
+  ['~','~','~','~','~','~','~','~','~','~','~','~'],
+  // row 1 — fjord + harbor + watchtower
+  ['~','~','B','B','~','~','~','W','W','~','~','~'],
+  // row 2 — harbor + watchtower continued
+  ['~','B','B','B','~','~','W','W','~','~','~','~'],
+  // row 3 — outer wall
+  ['#','#','#','#','#','#','#','#','#','#','#','#'],
+  // row 4 — inner: Thing-Stead left, floor mid, Granary right
+  ['#','.','T','T','.','.','.','.','G','G','.','#'],
+  // row 5 — Thing-Stead, Granary
+  ['#','T','T','.','.','.','.','.','G','.', '.','#'],
+  // row 6 — wall with gates
+  ['#','#','+','#','#','#','#','#','+','#','#','#'],
+  // row 7 — lower courtyard: Hearth left, Scriptorium right
+  ['#','.','H','H','.','.','S','S','.','.', '.','#'],
+  // row 8 — Hearth + Scriptorium
+  ['#','H','H','.','.','.','.','S','S','.', '.','#'],
+  // row 9 — wall + Workshops right
+  ['#','#','+','#','#','#','K','K','K','.', '.','#'],
+  // row 10 — Workshops + Vault
+  ['#','.','.','.','.','.','K','.','.','.', 'V','#'],
+  // row 11 — Forest edge
+  ['#','F','F','F','F','.','.','.','.','.', '.','#'],
+];
+
+// Zone definitions
+const ZONES = {
+  T: {
+    label: 'Thing-Stead',
+    icon: '⚖',
+    color: '#4a3a6a',
+    desc: 'The council ring where jarls and karls speak. Here the Ealdor calls the Thing and laws are made.',
+    statusFn: () => state.thingConvened ? 'The Thing is in session. Voices are raised.' : 'The hall is quiet. Benches wait.',
+    tooltipAP: '1 AP · Convene Thing',
+    actions: [
+      {
+        label: 'Convene the Thing',
+        costDesc: '1 AP · +5 Morale',
+        ap: 1,
+        condition: () => !state.thingConvened,
+        fn: () => {
+          state.morale = Math.min(100, state.morale + 5);
+          state.thingConvened = true;
+          log('The Thing is called. The folk gather, voices mingling with torch-smoke.', 'event');
+        }
+      },
+      {
+        label: 'Deliberate on the Ice',
+        costDesc: '1 AP · requires Thing',
+        ap: 1,
+        condition: () => state.thingConvened && state.ice >= 30,
+        fn: () => {
+          state.morale = Math.min(100, state.morale + 3);
+          log('The council weighs the fjord ice. A plan is debated — there is comfort in speaking together.', 'event');
+        }
+      }
+    ]
+  },
+  H: {
+    label: 'Hearth Hall',
+    icon: '🜂',
+    color: '#5a2a10',
+    desc: 'The ancient hearth where the Ātravan Coal burns. The Silent Brother tends it. Fire is memory here.',
+    statusFn: () => {
+      if (state.hearthTended) return 'The coal burns strong. Warmth fills the hall.';
+      if (state.morale < 40) return 'The fire burns low. The Silent Brother watches, unmoving.';
+      return 'The hearth glows amber. The Silent Brother is here.';
+    },
+    tooltipAP: '1 AP · Tend Fire / Speak',
+    actions: [
+      {
+        label: 'Tend the Fire',
+        costDesc: '1 AP · costs 1 Timber → +3 Morale',
+        ap: 1,
+        condition: () => state.timber >= 1 && !state.hearthTended,
+        fn: () => {
+          state.timber--;
+          state.morale = Math.min(100, state.morale + 3);
+          state.hearthTended = true;
+          log('You feed the Ātravan Coal. The hall brightens. The Silent Brother nods once.', 'event');
+        }
+      },
+      {
+        label: 'Speak with the Silent Brother',
+        costDesc: '1 AP · wisdom (no cost)',
+        ap: 1,
+        condition: () => true,
+        fn: () => {
+          const lines = [
+            'He says nothing. But his stillness is an answer.',
+            'He points to the coal. You understand: tend the fire before all else.',
+            'He marks a glyph in the ash with one finger, then smooths it away.',
+            '"The ice remembers," he has told you before. You wonder what it means.',
+          ];
+          const l = lines[Math.floor(Math.random() * lines.length)];
+          log(`You approach the Silent Brother. ${l}`, 'event');
+          if (state.tabletFragments === 0 && Math.random() < 0.4) {
+            state.tabletFragments = 1;
+            log('Among the hearthstones, you notice a carved fragment — the corner of a tablet.', 'event');
+          }
+        }
+      }
+    ]
+  },
+  G: {
+    label: 'Granary',
+    icon: '⟁',
+    color: '#2a4a18',
+    desc: 'The stone granary holds what stands between the hold and hunger. Count carefully.',
+    statusFn: () => {
+      const g = state.grain;
+      if (g > 60) return 'Stores are full. The winter looks manageable.';
+      if (g > 30) return 'Grain is adequate. Careful rationing will serve.';
+      if (g > 10) return 'Stores are low. Hunger threatens.';
+      return 'The granary is nearly empty. Crisis is near.';
+    },
+    tooltipAP: '1 AP · Ration or Inspect',
+    actions: [
+      {
+        label: 'Impose Rationing',
+        costDesc: '1 AP · halves grain loss next season',
+        ap: 1,
+        condition: () => state.grain < 30,
+        fn: () => {
+          state._rationing = true;
+          state.morale = Math.max(0, state.morale - 4);
+          log('You declare rationing. The folk grumble, but grain will last longer. Morale suffers.', 'crisis');
+        }
+      },
+      {
+        label: 'Inspect the Stores',
+        costDesc: '1 AP · view grain status',
+        ap: 1,
+        condition: () => true,
+        fn: () => {
+          log(`Granary holds ${state.grain} units of grain. Season consumption will be ~${seasonGrainCost()} next turn.`, 'event');
+        }
+      }
+    ]
+  },
+  B: {
+    label: 'Harbor',
+    icon: '⚓',
+    color: '#1a3a5a',
+    desc: 'The harbor opens onto the fjord. When the ice holds off, ships may trade. When it advances — silence.',
+    statusFn: () => {
+      if (state.harborFrozen) return 'The fjord is frozen. No ship can pass. The harbor is sealed.';
+      if (!state.tradeAvailable) return 'No traders are expected this season.';
+      return 'A trader's sail is visible on the fjord.';
+    },
+    tooltipAP: '1 AP · Trade',
+    actions: [
+      {
+        label: 'Trade: Grain for Timber',
+        costDesc: '1 AP · costs 10 Grain → +5 Timber',
+        ap: 1,
+        condition: () => !state.harborFrozen && state.tradeAvailable && state.grain >= 10,
+        fn: () => {
+          state.grain -= 10;
+          state.timber += 5;
+          log('A Frisian trader takes grain and leaves timber. The hold smells of sawdust.', 'event');
+        }
+      },
+      {
+        label: 'Trade: Iron for Cloth',
+        costDesc: '1 AP · costs 3 Iron → +4 Cloth',
+        ap: 1,
+        condition: () => !state.harborFrozen && state.tradeAvailable && state.iron >= 3,
+        fn: () => {
+          state.iron -= 3;
+          state.cloth += 4;
+          log('You exchange iron ingots for bolts of southern cloth. The weavers are pleased.', 'event');
+        }
+      },
+      {
+        label: 'Watch the Fjord Ice',
+        costDesc: '1 AP · observe ice advance',
+        ap: 1,
+        condition: () => true,
+        fn: () => {
+          log(`Fjord ice is at ${state.ice}. ${state.ice > 60 ? 'The ice is spreading fast — harbor may close soon.' : state.ice > 30 ? 'Ice crystals rim the shallows.' : 'The water is still mostly open.'}`, 'event');
+        }
+      }
+    ]
+  },
+  W: {
+    label: 'Watchtower',
+    icon: '☽',
+    color: '#2a2838',
+    desc: 'From the tower you see the fjord, the treeline, and beyond — and what may be coming.',
+    statusFn: () => state.omenSeen ? 'A rune-mark is chalked on the tower wall. An omen was read here.' : 'The watchmen keep vigil.',
+    tooltipAP: '1 AP · Seek Omen / Survey',
+    actions: [
+      {
+        label: 'Seek an Omen',
+        costDesc: '1 AP · reveals next event',
+        ap: 1,
+        condition: () => !state.omenSeen,
+        fn: () => {
+          state.omenSeen = true;
+          const omens = [
+            'A crow lands on the eastern rampart — three times. The karls whisper of early frost.',
+            'The auroras shift green to red over the treeline. The Nokomis woman reads it as a warning.',
+            'You find a dead fish on the dock, its scales the color of old silver. The ice will come early.',
+            'A ship that should not be there — its lantern visible for one breath, then gone.',
+          ];
+          log(`From the tower: ${omens[Math.floor(Math.random() * omens.length)]}`, 'event');
+        }
+      },
+      {
+        label: 'Survey the Ice',
+        costDesc: '1 AP · +info, may spot event',
+        ap: 1,
+        condition: () => true,
+        fn: () => {
+          state.omenSeen = false; // reset so next seek is fresh
+          log(`Ice level: ${state.ice}/100. From this height, you can see ${state.ice > 50 ? 'the fjord is half-choked — perhaps another ${Math.floor((100-state.ice)/10)} turns before harbor closes.' : 'open water to the horizon. Time remains.'}`, 'event');
+        }
+      }
+    ]
+  },
+  S: {
+    label: 'Scriptorium',
+    icon: '𐤔',
+    color: '#1a3030',
+    desc: 'Tablet-fragments, runic inscriptions, the memory of older winters. Knowledge lives here, if you look.',
+    statusFn: () => {
+      if (state.tabletFragments >= 7) return 'Seven fragments gathered. The Seventh Tablet is complete.';
+      return `Tablet fragments: ${state.tabletFragments} / 7`;
+    },
+    tooltipAP: '1 AP · Study / Search',
+    actions: [
+      {
+        label: 'Study the Glyphs',
+        costDesc: '1 AP · may find fragment',
+        ap: 1,
+        condition: () => state.tabletFragments < 7,
+        fn: () => {
+          if (Math.random() < 0.35) {
+            state.tabletFragments = Math.min(7, state.tabletFragments + 1);
+            log(`Among the tablets you find another carved fragment — the inscription is older than any living memory. (${state.tabletFragments}/7)`, 'event');
+            if (state.tabletFragments >= 7) {
+              state.vaultUnlocked = true;
+              log('The Seventh Tablet is complete. The Vault stirs — it may now be opened.', 'event');
+            }
+          } else {
+            log('You spend an hour among the tablets. The glyphs resist translation, but you feel closer.', 'event');
+          }
+        }
+      }
+    ]
+  },
+  K: {
+    label: 'Workshops',
+    icon: '⚒',
+    color: '#382820',
+    desc: 'The forge, the loom, the cooper\'s bench. Resources become goods here.',
+    statusFn: () => 'The forge is cold but ready.',
+    tooltipAP: '1 AP · Craft',
+    actions: [
+      {
+        label: 'Craft: Timber → Cloth Frame',
+        costDesc: '1 AP · 2 Timber → 1 Cloth',
+        ap: 1,
+        condition: () => state.timber >= 2,
+        fn: () => {
+          state.timber -= 2;
+          state.cloth += 1;
+          log('The weavers shape a loom-frame from timber and stretch cloth on it.', 'event');
+        }
+      },
+      {
+        label: 'Forge: Iron → Tools',
+        costDesc: '1 AP · 1 Iron → 1 Tool',
+        ap: 1,
+        condition: () => state.iron >= 1,
+        fn: () => {
+          state.iron -= 1;
+          state.tools += 1;
+          log('The smith works the iron into tools. The anvil-ring echoes in the courtyard.', 'event');
+        }
+      },
+      {
+        label: 'Repair with Tools',
+        costDesc: '1 AP · 1 Tool → +5 Morale',
+        ap: 1,
+        condition: () => state.tools >= 1,
+        fn: () => {
+          state.tools -= 1;
+          state.morale = Math.min(100, state.morale + 5);
+          log('Workers repair the hall roof and reinforce shutters. The hold feels more secure.', 'event');
+        }
+      }
+    ]
+  },
+  V: {
+    label: 'Vault',
+    icon: '𐤀',
+    color: '#2a1818',
+    desc: 'The sealed Vault holds old things. Something inside awaits when the Seventh Tablet is gathered.',
+    statusFn: () => state.vaultUnlocked ? 'The Vault is open. Light spills from inside.' : 'The Vault is locked. Seven fragments of the Tablet must be gathered first.',
+    tooltipAP: '1 AP · Enter Vault',
+    actions: [
+      {
+        label: 'Open the Vault',
+        costDesc: '1 AP · requires 7 Tablet Fragments',
+        ap: 1,
+        condition: () => state.vaultUnlocked,
+        fn: () => {
+          showModal(
+            'The Vault Opens',
+            'Inside: a carved stone box, a length of chain no metal you know, and a single candle that burns without wax. In the stone box is a folded vellum, the writing in a hand older than Ealdforn. It reads: "What endures is what is chosen to endure." You sit a long time with this.',
+            [{ label: 'Carry it back to the Hearth', fn: () => { state.morale = Math.min(100, state.morale + 15); log('You bring the vellum to the Hearth Hall. The Silent Brother reads it. He touches his chest once.', 'event'); } }]
+          );
+        }
+      },
+      {
+        label: 'Examine the Vault Door',
+        costDesc: '1 AP · observe',
+        ap: 1,
+        condition: () => !state.vaultUnlocked,
+        fn: () => {
+          log(`The Vault door is marked with seven glyph-slots. You have ${state.tabletFragments} of 7 fragments. The glyphs are cold to the touch.`, 'event');
+        }
+      }
+    ]
+  },
+  F: {
+    label: 'Forest Edge',
+    icon: '𐤁',
+    color: '#183018',
+    desc: 'The great pines begin here, beyond the Citadel wall. The Rabbit has been seen in the shadows.',
+    statusFn: () => {
+      if (state.rabbitAppeared) return 'The Rabbit is here. Its eyes are old.';
+      return 'The treeline is still. Perhaps something watches.';
+    },
+    tooltipAP: '1 AP · Encounter / Gather',
+    actions: [
+      {
+        label: 'Seek the Rabbit',
+        costDesc: '1 AP · chance encounter',
+        ap: 1,
+        condition: () => true,
+        fn: () => {
+          if (Math.random() < 0.4 || state.rabbitAppeared) {
+            state.rabbitAppeared = true;
+            showModal(
+              'The Rabbit',
+              'It sits at the treeline, still as carved wood. Its fur is the color of old snow. It does not flee. When you take one step closer, it speaks — not in words you hear, but in something below sound. You understand: there is a thing buried under the third pine from the eastern wall.',
+              [
+                {
+                  label: 'Dig under the pine', fn: () => {
+                    const r = Math.random();
+                    if (r < 0.4) { state.timber += 3; log('Beneath the pine: a cache of seasoned timber, wrapped in oilcloth. Old. Left by whom?', 'event'); }
+                    else if (r < 0.7) { state.tabletFragments = Math.min(7, state.tabletFragments + 1); log(`Under the root: a carved stone fragment. Part of something larger. (${state.tabletFragments}/7)`, 'event'); }
+                    else { state.grain += 8; log('A buried clay vessel, sealed tight — grain, dried and still good. Winter grain.', 'event'); }
+                    state.rabbitAppeared = false;
+                  }
+                },
+                { label: 'Only watch', fn: () => { log('You watch the Rabbit until it moves, slow, back into the trees. You feel you have missed something, or perhaps passed a test.', 'event'); } }
+              ]
+            );
+          } else {
+            log('The forest is quiet. Tracks in the soft ground — small, three-toed. The Rabbit was here.', 'event');
+          }
+        }
+      },
+      {
+        label: 'Gather Deadwood',
+        costDesc: '1 AP · +2 Timber',
+        ap: 1,
+        condition: () => true,
+        fn: () => {
+          state.timber += 2;
+          log('Folk gather fallen branches from the forest edge. Two units of timber recovered.', 'event');
+        }
+      }
+    ]
+  }
+};
+
+// Zone tooltips for non-zone cells
+const CELL_TOOLTIPS = {
+  '~': { name: 'The Fjord', desc: 'Cold water and colder ice. Cannot be entered.' },
+  '#': { name: 'Wall', desc: 'Stone rampart. Cannot be passed.' },
+  '+': { name: 'Gate', desc: 'Iron-banded gate. Passage between courts.' },
+  '.': { name: 'Courtyard', desc: 'Stone flags. Open ground.' },
+};
+
+// ─── MAP RENDER ───────────────────────────────────────────────
+function buildMap() {
+  const grid = document.getElementById('map-grid');
+  grid.innerHTML = '';
+
+  MAP.forEach((row, r) => {
+    row.forEach((cell, c) => {
+      const div = document.createElement('div');
+      div.className = 'cell';
+      div.dataset.row = r;
+      div.dataset.col = c;
+
+      const inner = document.createElement('div');
+      inner.className = 'cell-inner';
+      inner.dataset.row = r;
+      inner.dataset.col = c;
+
+      if (cell === '~') {
+        div.dataset.type = 'fjord';
+        div.dataset.fjordRow = r;
+        inner.textContent = '~';
+      } else if (cell === '#') {
+        div.dataset.type = 'wall';
+        inner.textContent = '▪';
+      } else if (cell === '+') {
+        div.dataset.type = 'gate';
+        inner.textContent = '+';
+      } else if (cell === '.') {
+        div.dataset.type = 'floor';
+      } else {
+        // Zone
+        const z = ZONES[cell];
+        div.dataset.type = 'zone';
+        div.dataset.zone = cell;
+        div.classList.add('zone');
+        inner.textContent = z.icon;
+        div.title = '';
+        div.addEventListener('click', () => handleZoneClick(cell));
+      }
+
+      // Tooltip for all
+      div.addEventListener('mouseenter', (e) => showTooltip(e, cell, r, c));
+      div.addEventListener('mousemove', moveTooltip);
+      div.addEventListener('mouseleave', hideTooltip);
+
+      div.appendChild(inner);
+      grid.appendChild(div);
+    });
+  });
+
+  updateMapState();
+}
+
+function updateMapState() {
+  // Ice creep
+  const iceLevel = state.ice;
+  document.querySelectorAll('.cell[data-type="fjord"]').forEach(cell => {
+    const r = parseInt(cell.dataset.row);
+    cell.classList.remove('ice-partial', 'ice-frozen');
+    if (r === 0) {
+      if (iceLevel > 20) cell.classList.add('ice-partial');
+      if (iceLevel > 60) cell.classList.add('ice-frozen');
+    } else if (r === 1) {
+      if (iceLevel > 40) cell.classList.add('ice-partial');
+      if (iceLevel > 80) cell.classList.add('ice-frozen');
+    } else if (r === 2) {
+      if (iceLevel > 70) cell.classList.add('ice-partial');
+      if (iceLevel > 95) cell.classList.add('ice-frozen');
+    }
+  });
+
+  // Hearth glow
+  document.querySelectorAll('.cell[data-zone="H"]').forEach(c => {
+    c.classList.toggle('hearth-glow', state.hearthTended && state.morale > 40);
+  });
+
+  // Harbor frozen state
+  state.harborFrozen = state.ice >= 90;
+  document.querySelectorAll('.cell[data-zone="B"]').forEach(c => {
+    c.style.opacity = state.harborFrozen ? '0.4' : '1';
+  });
+
+  // Vault glow
+  document.querySelectorAll('.cell[data-zone="V"]').forEach(c => {
+    c.style.boxShadow = state.vaultUnlocked ? 'inset 0 0 10px rgba(184,146,42,0.5)' : '';
+  });
+
+  // Active zone
+  document.querySelectorAll('.cell.zone').forEach(c => {
+    c.classList.toggle('zone-active', c.dataset.zone === state.playerZone);
+  });
+
+  // NPC dots
+  document.querySelectorAll('.npc-dot').forEach(d => d.remove());
+  addNPCDot('H', 'brother', 'npc-brother');
+  if (state.rabbitAppeared) addNPCDot('F', 'rabbit', 'npc-rabbit');
+
+  updateStats();
+  updateAPPips();
+}
+
+function addNPCDot(zone, id, cls) {
+  const cells = document.querySelectorAll(`.cell[data-zone="${zone}"]`);
+  if (cells.length) {
+    const cell = cells[0];
+    const dot = document.createElement('div');
+    dot.className = `npc-dot ${cls}`;
+    dot.id = `npc-${id}`;
+    cell.appendChild(dot);
+  }
+}
+
+// ─── ZONE INTERACTION ─────────────────────────────────────────
+function handleZoneClick(zoneKey) {
+  state.playerZone = zoneKey;
+  updateMapState();
+  renderZonePanel(zoneKey);
+}
+
+function renderZonePanel(zoneKey) {
+  const z = ZONES[zoneKey];
+  document.getElementById('zone-name').textContent = z.label;
+  document.getElementById('zone-desc').textContent = z.desc;
+  document.getElementById('zone-status').textContent = z.statusFn();
+
+  const actionsDiv = document.getElementById('zone-actions');
+  actionsDiv.innerHTML = '';
+
+  z.actions.forEach(action => {
+    const btn = document.createElement('button');
+    btn.className = 'zone-btn';
+    btn.innerHTML = `${action.label}<span class="cost">${action.costDesc}</span>`;
+    const canAffordAP = state.actionPoints >= action.ap;
+    const condMet = action.condition();
+    btn.disabled = !canAffordAP || !condMet;
+    btn.addEventListener('click', () => {
+      if (state.actionPoints < action.ap) { log('No Action Points remain. Let the season pass.', 'crisis'); return; }
+      state.actionPoints -= action.ap;
+      action.fn();
+      renderZonePanel(zoneKey); // refresh
+      updateMapState();
+      updateStats();
+      updateAPPips();
+    });
+    actionsDiv.appendChild(btn);
+  });
+}
+
+// ─── ACTION POINTS ────────────────────────────────────────────
+function updateAPPips() {
+  const container = document.getElementById('ap-pips');
+  container.innerHTML = '';
+  for (let i = 0; i < state.maxAP; i++) {
+    const pip = document.createElement('div');
+    pip.className = 'ap-pip' + (i >= state.actionPoints ? ' spent' : '');
+    container.appendChild(pip);
+  }
+}
+
+// ─── SEASON ADVANCE ───────────────────────────────────────────
+function advanceSeason() {
+  state.season = (state.season + 1) % SEASONS.length;
+  state.turn++;
+  state.actionPoints = state.maxAP;
+  state.thingConvened = false;
+  state.hearthTended = false;
+  state.omenSeen = false;
+  state.tradeAvailable = Math.random() > 0.3;
+  state.playerZone = null;
+
+  // Ice progression by season
+  const iceChange = [8, 14, 20, -10, -16][state.season] || 8;
+  state.ice = Math.max(0, Math.min(100, state.ice + iceChange + Math.floor((Math.random()-0.4)*6)));
+
+  // Grain consumption
+  const grainCost = seasonGrainCost();
+  state.grain = Math.max(0, state.grain - grainCost);
+  if (state.grain < 10) {
+    state.morale = Math.max(0, state.morale - 10);
+    log('Grain stores are critically low. Hunger spreads through the hold.', 'crisis');
+  }
+
+  // Morale drift
+  if (state.morale > 50) state.morale--;
+  else if (state.morale < 30) state.morale = Math.max(0, state.morale - 2);
+
+  // Rationing effect
+  if (state._rationing) {
+    state.grain += Math.floor(grainCost * 0.4); // saved half
+    state._rationing = false;
+    log('Rationing kept the granary from emptying entirely.', 'event');
+  }
+
+  // Random event
+  if (Math.random() < 0.4) triggerRandomEvent();
+
+  // Rabbit may appear
+  if (Math.random() < 0.25) {
+    state.rabbitAppeared = true;
+    log('Something moves at the treeline. The Rabbit has returned.', 'event');
+  }
+
+  const sName = SEASONS[state.season];
+  document.getElementById('season-name').textContent = sName;
+  document.getElementById('turn-num').textContent = state.turn;
+  log(`— ${sName} arrives. ${grainCost} grain consumed. Ice: ${state.ice}. AP restored. —`, 'event');
+
+  updateMapState();
+  updateStats();
+  updateAPPips();
+
+  // Clear zone panel
+  document.getElementById('zone-name').textContent = 'The Citadel';
+  document.getElementById('zone-desc').textContent = 'A new season. Where will you go first?';
+  document.getElementById('zone-status').textContent = '';
+  document.getElementById('zone-actions').innerHTML = '';
+}
+
+function seasonGrainCost() {
+  return [6, 9, 14, 7, 5][state.season] || 8;
+}
+
+// ─── RANDOM EVENTS ────────────────────────────────────────────
+const EVENTS = [
+  {
+    title: 'The Frost Comes Early',
+    body: 'An unexpected cold snap advances the fjord ice. The harbor may be at risk.',
+    choices: [
+      { label: 'Reinforce the quay (2 Timber)', fn: () => { if(state.timber>=2){state.timber-=2;log('The quay is reinforced. The harbor holds another season.','event');}else{state.ice+=8;log('No timber to spare. The ice takes the quay.','crisis');} } },
+      { label: 'Accept the loss', fn: () => { state.ice += 12; log('The frost advances unchecked.', 'crisis'); } }
+    ]
+  },
+  {
+    title: 'A Stranger at the Gate',
+    body: 'A cloaked figure asks entry at the south gate. They carry no weapon you can see.',
+    choices: [
+      { label: 'Grant entry', fn: () => {
+        const r = Math.random();
+        if (r < 0.5) { state.morale += 5; log('The stranger is a wandering healer. She tends the sick and leaves quietly.', 'event'); }
+        else if (r < 0.8) { state.tabletFragments = Math.min(7, state.tabletFragments+1); log(`The stranger gives you a tablet-shard before vanishing. (${state.tabletFragments}/7)`, 'event'); }
+        else { state.grain -= 8; log('By morning, the stranger is gone — and eight units of grain with them.', 'crisis'); }
+      }},
+      { label: 'Turn them away', fn: () => { state.morale = Math.max(0, state.morale-2); log('The gate stays shut. The folk murmur of hard-heartedness.','crisis'); } }
+    ]
+  },
+  {
+    title: 'The Thing Demands',
+    body: 'A karl speaks loudly in the yard: the folk want a feast, even a small one. Morale is fraying.',
+    choices: [
+      { label: 'Hold a feast (10 Grain)', fn: () => { if(state.grain>=10){state.grain-=10;state.morale=Math.min(100,state.morale+12);log('The feast is held. Song and fire, if only for a night.','event');}else{log('No grain to spare for a feast. The karl falls silent, resentful.','crisis');} } },
+      { label: 'Refuse', fn: () => { state.morale=Math.max(0,state.morale-6); log('The feast is denied. The yard is cold and quiet.','crisis'); } }
+    ]
+  },
+  {
+    title: 'Driftwood on the Shore',
+    body: 'Ice-borne timber has washed onto the fjord shore. It can be salvaged — if you move quickly.',
+    choices: [
+      { label: 'Send folk to gather it', fn: () => { state.timber+=5; log('Five units of driftwood reclaimed. Good timber.','event'); } },
+      { label: 'Leave it — too dangerous', fn: () => { log('You watch the timber float past. It is gone by evening.','event'); } }
+    ]
+  }
+];
+
+function triggerRandomEvent() {
+  const ev = EVENTS[Math.floor(Math.random() * EVENTS.length)];
+  showModal(ev.title, ev.body, ev.choices);
+}
+
+// ─── STATS UPDATE ─────────────────────────────────────────────
+function updateStats() {
+  const statMap = {
+    morale: 'stat-morale',
+    grain: 'stat-grain',
+    timber: 'stat-timber',
+    iron: 'stat-iron',
+    cloth: 'stat-cloth',
+    tools: 'stat-tools',
+    ice: 'stat-ice',
+  };
+  Object.entries(statMap).forEach(([key, id]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = state[key];
+    el.className = 'stat-value';
+    if (key === 'morale') {
+      if (state[key] < 30) el.classList.add('danger');
+      else if (state[key] < 50) el.classList.add('warn');
+      else el.classList.add('good');
+    }
+    if (key === 'grain') {
+      if (state[key] < 15) el.classList.add('danger');
+      else if (state[key] < 30) el.classList.add('warn');
+    }
+    if (key === 'ice') {
+      if (state[key] > 70) el.classList.add('danger');
+      else if (state[key] > 40) el.classList.add('warn');
+    }
+  });
+}
+
+// ─── CHRONICLE ────────────────────────────────────────────────
+function log(text, type = 'event') {
+  const log = document.getElementById('chronicle-log');
+  const entry = document.createElement('div');
+  entry.className = `log-entry log-${type}`;
+  const tag = type === 'crisis' ? '⚠ CRISIS' : '◈ EVENT';
+  entry.innerHTML = `<span class="log-tag">${tag}</span> ${text}`;
+  log.prepend(entry);
+  // Trim to last 40 entries
+  while (log.children.length > 40) log.removeChild(log.lastChild);
+}
+
+// ─── TOOLTIP ──────────────────────────────────────────────────
+function showTooltip(e, cell, r, c) {
+  const tt = document.getElementById('tooltip');
+  let name, desc, ap = '';
+
+  if (ZONES[cell]) {
+    const z = ZONES[cell];
+    name = z.label;
+    desc = z.statusFn ? z.statusFn() : z.desc;
+    ap = z.tooltipAP;
+  } else if (CELL_TOOLTIPS[cell]) {
+    name = CELL_TOOLTIPS[cell].name;
+    desc = CELL_TOOLTIPS[cell].desc;
+  } else { return; }
+
+  document.getElementById('tt-name').textContent = name;
+  document.getElementById('tt-desc').textContent = desc;
+  document.getElementById('tt-ap').textContent = ap;
+  tt.style.display = 'block';
+  moveTooltip(e);
+}
+
+function moveTooltip(e) {
+  const tt = document.getElementById('tooltip');
+  tt.style.left = (e.clientX + 14) + 'px';
+  tt.style.top  = (e.clientY - 10) + 'px';
+}
+
+function hideTooltip() {
+  document.getElementById('tooltip').style.display = 'none';
+}
+
+// ─── MODAL ────────────────────────────────────────────────────
+function showModal(title, body, choices) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').textContent = body;
+  const mc = document.getElementById('modal-choices');
+  mc.innerHTML = '';
+  choices.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'modal-choice';
+    btn.textContent = c.label;
+    btn.addEventListener('click', () => {
+      closeModal();
+      c.fn();
+      updateStats();
+      updateMapState();
+    });
+    mc.appendChild(btn);
+  });
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+// ─── INIT ─────────────────────────────────────────────────────
+document.getElementById('pass-btn').addEventListener('click', advanceSeason);
+
+buildMap();
+updateStats();
+updateAPPips();
+
+// Opening log entry
+log('The Citadel stands at the fjord mouth. Ice gathers at the edges of things. You are the Ealdor.', 'event');
+log('Move through the citadel by clicking zones. Each action costs one Action Point. Let the season pass when ready.', 'event');
+</script>
+</body>
+</html>
