@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kingdom of Ealdor · The People's Yard</title>
+<style>
+  :root {
+    --stone: #2a2520;
+    --parchment: #f4e4c1;
+    --ember: #c44f1c;
+    --ash: #8b7d6b;
+    --frost: #c8d8e4;
+    --blood: #7a1c1c;
+    --gold: #b8860b;
+    --deep: #1a1410;
+    --wall: #3d362f;
+    --floor: #5c4f42;
+    --grass: #2d3a1f;
+    --sky: #3a4050;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--deep);
+    color: var(--parchment);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
+  }
+  #game {
+    max-width: 780px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  /* ── HEADER ── */
+  header {
+    text-align: center;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 0.4rem;
+  }
+  header h1 {
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
+    color: var(--gold);
+  }
+  header .subtitle {
+    font-style: italic;
+    color: var(--ash);
+    font-size: 0.8rem;
+  }
+
+  /* ── STATS ROW ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.3rem;
+  }
+  .stat-card {
+    background: rgba(42,37,32,0.7);
+    border: 1px solid var(--ash);
+    border-radius: 4px;
+    padding: 0.35rem 0.25rem;
+    text-align: center;
+    font-size: 0.7rem;
+  }
+  .stat-card .label {
+    text-transform: uppercase;
+    color: var(--ash);
+    letter-spacing: 0.04em;
+    font-size: 0.6rem;
+  }
+  .stat-card .value {
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+  .stat-card .value.low { color: var(--blood); }
+  .stat-card .value.warn { color: var(--ember); }
+
+  /* ── COURTYARD MAP ── */
+  #courtyard-container {
+    background: var(--deep);
+    border: 3px solid var(--ash);
+    border-radius: 8px;
+    padding: 3px;
+  }
+  #courtyard-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: auto;
+    gap: 3px;
+    min-height: 340px;
+  }
+  .yard-cell {
+    background: var(--floor);
+    border: 1px solid #6b5d4f;
+    border-radius: 4px;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 80px;
+  }
+  .yard-cell:hover {
+    border-color: var(--gold);
+    box-shadow: 0 0 10px rgba(184,134,11,0.3);
+    z-index: 2;
+  }
+  .yard-cell .icon {
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+  .yard-cell .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--frost);
+    margin-top: 0.2rem;
+  }
+  .yard-cell .detail {
+    font-size: 0.6rem;
+    color: var(--ash);
+    font-style: italic;
+  }
+  .yard-cell.empty {
+    background: transparent;
+    border: 1px dashed rgba(139,125,107,0.2);
+    cursor: default;
+  }
+  .yard-cell.empty:hover {
+    border-color: rgba(139,125,107,0.3);
+    box-shadow: none;
+  }
+  .yard-cell.path {
+    background: #6b5d4f;
+    border: 1px solid #7a6b5d;
+    cursor: pointer;
+  }
+  .yard-cell.exit {
+    background: var(--wall);
+    border: 1px solid var(--ash);
+  }
+  .yard-cell.exit:hover {
+    border-color: var(--ember);
+    box-shadow: 0 0 8px rgba(196,79,28,0.3);
+  }
+
+  /* ── NOTICE BOARD ── */
+  .notice-board {
+    background: rgba(42,37,32,0.7);
+    border: 1px solid var(--ash);
+    border-radius: 6px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    min-height: 3em;
+  }
+  .notice-board .crisis-tag {
+    color: var(--blood);
+    font-weight: bold;
+  }
+  .notice-board .rumor-tag {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  /* ── RESOURCES ROW ── */
+  .resources-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    justify-content: center;
+  }
+  .resource-token {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--ash);
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .resource-token .count {
+    font-weight: bold;
+    color: var(--gold);
+  }
+  .resource-token .count.zero { color: var(--blood); }
+
+  /* ── AP DOTS ── */
+  .ap-row {
+    display: flex;
+    gap: 0.3rem;
+    justify-content: center;
+  }
+  .ap-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--ash);
+    transition: all 0.3s;
+  }
+  .ap-dot.active { background: var(--gold); box-shadow: 0 0 6px var(--gold); }
+
+  /* ── BUTTONS ── */
+  #actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    justify-content: center;
+  }
+  button {
+    background: var(--stone);
+    color: var(--parchment);
+    border: 1px solid var(--ash);
+    padding: 0.45rem 0.9rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.78rem;
+    transition: all 0.2s;
+  }
+  button:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  button.primary {
+    background: var(--ember);
+    border-color: var(--ember);
+  }
+  button.primary:hover { background: #d45a2a; }
+
+  /* ── TOAST ── */
+  #toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(26,20,16,0.95);
+    border: 1px solid var(--gold);
+    border-radius: 6px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    text-align: center;
+    max-width: 400px;
+  }
+  #toast.show { opacity: 1; }
+
+  #footer {
+    text-align: center;
+    font-size: 0.6rem;
+    color: var(--ash);
+    margin-top: 0.25rem;
+  }
+</style>
+</head>
+<body>
+<div id="game">
+  <header>
+    <h1>𐤃 The People's Yard · Ealdor 𐤃</h1>
+    <div class="subtitle">Year <span id="yearDisplay">3450</span> AC · <span id="seasonDisplay">Spring</span> · Ice: <span id="iceDisplay">15</span>%</div>
+    <div class="subtitle" style="margin-top:2px;">Action Points: <span id="apDots" class="ap-row"></span></div>
+  </header>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card"><span class="label">Population</span><span class="value" id="pop">100</span></div>
+    <div class="stat-card"><span class="label">Morale</span><span class="value" id="morale">70</span></div>
+    <div class="stat-card"><span class="label">Faith</span><span class="value" id="faith">60</span></div>
+    <div class="stat-card"><span class="label">Grain</span><span class="value" id="grainStat">5</span></div>
+    <div class="stat-card"><span class="label">Tablets</span><span class="value" id="tabletStat">0</span>/7</div>
+    <div class="stat-card"><span class="label">Season</span><span class="value" id="seasonIcon">🌸</span></div>
+  </div>
+
+  <!-- RESOURCES -->
+  <div class="resources-row" id="resourcesRow"></div>
+
+  <!-- COURTYARD MAP -->
+  <div id="courtyard-container">
+    <div id="courtyard-grid">
+      <!-- Row 1: Forge, Empty, Granary, Empty, Market, Empty -->
+      <div class="yard-cell" data-zone="forge">
+        <span class="icon">🔨</span>
+        <span class="label">Forge</span>
+        <span class="detail">Craft goods</span>
+      </div>
+      <div class="yard-cell empty"></div>
+      <div class="yard-cell" data-zone="granary">
+        <span class="icon">🌾</span>
+        <span class="label">Granary</span>
+        <span class="detail" id="granaryDetail">5 grain stored</span>
+      </div>
+      <div class="yard-cell empty"></div>
+      <div class="yard-cell" data-zone="market">
+        <span class="icon">🧵</span>
+        <span class="label">Market Stall</span>
+        <span class="detail">Trade goods</span>
+      </div>
+      <div class="yard-cell empty"></div>
+
+      <!-- Row 2: Path, Path, Well, Path, Path, Path -->
+      <div class="yard-cell path" data-zone="path">═</div>
+      <div class="yard-cell path" data-zone="path">═</div>
+      <div class="yard-cell" data-zone="well">
+        <span class="icon">💧</span>
+        <span class="label">Well</span>
+        <span class="detail">Draw water</span>
+      </div>
+      <div class="yard-cell path" data-zone="path">═</div>
+      <div class="yard-cell path" data-zone="path">═</div>
+      <div class="yard-cell path" data-zone="path">═</div>
+
+      <!-- Row 3: Notice Board (spans full width) -->
+      <div class="notice-board" id="noticeBoard" style="grid-column: 1 / -1;">
+        📋 <span id="noticeText">The yard is quiet. The ice creeps. The Thing will convene soon.</span>
+      </div>
+
+      <!-- Row 4: People visualization (spans 3 cols), Stats detail (spans 3 cols) -->
+      <div class="yard-cell" id="peopleCell" style="grid-column: 1 / 4; cursor: default;">
+        <span class="icon" id="peopleIcons">👤👤👤👤👤</span>
+        <span class="label" id="peopleLabel">The People</span>
+        <span class="detail" id="peopleMood">Content</span>
+      </div>
+      <div class="yard-cell" style="grid-column: 4 / 7; cursor: default;">
+        <span class="icon">📊</span>
+        <span class="label">Resources</span>
+        <span class="detail" id="resourceSummary">Stone:4 · Timber:3 · Iron:2 · Salt:2 · Cloth:3</span>
+      </div>
+
+      <!-- Row 5: Exits to other locations -->
+      <div class="yard-cell exit" data-exit="battlements">
+        <span class="icon">🏰</span>
+        <span class="label">Battlements</span>
+        <span class="detail">The Threshold Wall</span>
+      </div>
+      <div class="yard-cell exit" data-exit="gatehouse">
+        <span class="icon">🚪</span>
+        <span class="label">Gatehouse</span>
+        <span class="detail">The Open Gate</span>
+      </div>
+      <div class="yard-cell exit" data-exit="greatHall">
+        <span class="icon">🪨</span>
+        <span class="label">Great Hall</span>
+        <span class="detail">The Thing-Stead</span>
+      </div>
+      <div class="yard-cell exit" data-exit="chapel">
+        <span class="icon">🔥</span>
+        <span class="label">Chapel</span>
+        <span class="detail">The Coal Chapel</span>
+      </div>
+      <div class="yard-cell exit" data-exit="court">
+        <span class="icon">👑</span>
+        <span class="label">Court</span>
+        <span class="detail">The Empty Court</span>
+      </div>
+      <div class="yard-cell exit" data-exit="kingsChambers">
+        <span class="icon">🛏️</span>
+        <span class="label">Chambers</span>
+        <span class="detail">Unoccupied Room</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="panel" style="background:rgba(42,37,32,0.7);border:1px solid var(--ash);border-radius:6px;padding:0.6rem;">
+    <div id="actions">
+      <button class="primary" onclick="advanceSeason()">⏳ Let the Season Pass</button>
+      <button onclick="saveGame()">💾 Save</button>
+      <button onclick="resetGame()">🔄 New Game</button>
+    </div>
+  </div>
+
+  <div id="footer">
+    The fire holds. The vault is open. The seventh tablet is still blank.<br>
+    <em>Se deret, se deretai.</em> Whoever holds is held.
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════
+// EALDOR · COURTYARD HUB · index.html
+// ealdforn/telume/ealdor/index.html
+// ═══════════════════════════════════════
+
+const RESOURCES = ['Stone','Timber','Grain','Iron','Salt','Cloth'];
+const SEASONS = ['Spring','Summer','Autumn','Winter'];
+const SEASON_ICONS = { 0: '🌸', 1: '☀️', 2: '🍂', 3: '❄️' };
+
+const GLYPHS = [
+  { char: '𐤀', hint: 'the ox, the beginning' },
+  { char: '𐤁', hint: 'the house, the container' },
+  { char: '𐤂', hint: 'the camel, the journey' },
+  { char: '𐤃', hint: 'the door, the threshold' },
+  { char: '𐤄', hint: 'the window, the breath' },
+  { char: '𐤅', hint: 'the nail, the fastened' },
+  { char: '𐤆', hint: 'the weapon, the cut' },
+  { char: '𐤇', hint: 'the wall, the boundary' },
+  { char: '𐤈', hint: 'the wheel, the cycle' },
+  { char: '𐤉', hint: 'the hand, the work' },
+  { char: '𐤊', hint: 'the palm, the open' },
+  { char: '𐤋', hint: 'the goad, the prod' },
+  { char: '𐤌', hint: 'the water, the chaos' },
+  { char: '𐤍', hint: 'the fish, the hidden' },
+  { char: '𐤎', hint: 'the pillar, the support' },
+  { char: '𐤏', hint: 'the eye, the witness' },
+  { char: '𐤐', hint: 'the mouth, the word' },
+  { char: '𐤑', hint: 'the serpent, the coil' },
+  { char: '𐤒', hint: 'the needle, the pierce' },
+  { char: '𐤓', hint: 'the head, the crown' },
+  { char: '𐤔', hint: 'the tooth, the consume' },
+  { char: '𐤕', hint: 'the mark, the signature' },
+];
+
+const CRISES = [
+  { id: 'ice_advance', name: 'The Ice Advances', desc: 'Sea ice creeps closer to the northern fjords. Ships cannot pass.', effect: { ice: 8, morale: -5 } },
+  { id: 'grain_blight', name: 'Blight in the Grain', desc: 'A wet summer. The grain spoils in the fields.', effect: { resource: 'Grain', lose: 3, population: -5 } },
+  { id: 'border_raid', name: 'Raiders from the East', desc: 'Unknown raiders strike the eastern villages.', effect: { population: -8, morale: -10, resource: 'Iron', lose: 1 } },
+  { id: 'tsarnigrad_hoarding', name: 'Tsarnigrad Hoards', desc: 'The Monarchy stockpiles grain. Prices rise.', effect: { morale: -5, faith: -3 } },
+  { id: 'pankus_deadlock', name: 'The Thing Deadlocks', desc: 'The council cannot agree. Voices rise.', effect: { morale: -10, faith: -5 } },
+  { id: 'prophecy_silence', name: 'Haldor Sees Nothing', desc: 'The augurs read the sky. Empty. The god has not returned.', effect: { faith: -8 } },
+  { id: 'rabbit_sighting', name: 'The Rabbit Runs', desc: 'A yellow-footed hare watches from the forest edge.', effect: { faith: 5, morale: 5, special: 'rabbit' } },
+  { id: 'coal_flicker', name: 'The Coal Flickers', desc: 'The Ātravan Coal dims for three heartbeats. The silent brother tends it.', effect: { faith: -5, special: 'coal' } },
+  { id: 'kichi_trade', name: 'Kichigamswak Canoes', desc: 'Canoes from the Great Lake arrive with fish and salt.', effect: { resource: 'Salt', gain: 2, morale: 3 } },
+  { id: 'storm_omens', name: 'Storm Omens', desc: 'Lightning over Sūryapura. The Dawnstone glows.', effect: { faith: 5, special: 'omen' } },
+  { id: 'succession_crisis', name: 'Tsarnigrad Succession', desc: 'The old monarch dies. The court fractures.', effect: { special: 'succession' } },
+  { id: 'blank_tablet_dream', name: 'The Seventh Tablet', desc: 'A dream spreads: the seventh tablet is written. No one remembers what it said.', effect: { faith: 8, morale: 3 } },
+];
+
+const NOKOMIS = [
+  '"You are not Otter. You are not Woodpecker. You are not Bear. You are the one who carries."',
+  '"Fear is not the enemy. Fear is the door."',
+  '"The fire does not go to the happy. The fire goes to the ones who have sat in the dark."',
+  '"You give something. You do not get it back. That does not mean you should stop leaping."',
+  '"The ones who know where they are going never find anything worth finding."',
+  '"The truth holds. The lie scatters."',
+  '"Helping is not the same as saving. Carrying is not the same as keeping."',
+  '"The Rabbit does not want them to agree. The Rabbit wants you to listen to all of them and decide nothing."',
+];
+
+function freshState() {
+  return {
+    year: 3450,
+    season: 0,
+    ice: 15,
+    playerResources: { Stone: 4, Timber: 3, Grain: 5, Iron: 2, Salt: 2, Cloth: 3 },
+    population: 100,
+    morale: 70,
+    faith: 60,
+    actionPoints: 3,
+    maxActionPoints: 3,
+    crisisHistory: [],
+    rabbitAppeared: false,
+    thingCooldown: 0,
+    tradeCooldown: 0,
+    omenCooldown: 0,
+    tabletFragments: 0,
+    silentBrotherSpoke: false,
+    pendingCrisis: null,
+  };
+}
+
+let state = freshState();
+
+// ═══════════════════════════════════════
+// SAVE / LOAD
+// ═══════════════════════════════════════
+
+function saveGame() {
+  localStorage.setItem('ealdor_save', JSON.stringify(state));
+  toast('💾 Game saved to the Chronicle.');
+}
+
+function loadGame() {
+  const saved = localStorage.getItem('ealdor_save');
+  if (saved) {
+    try {
+      state = JSON.parse(saved);
+      toast('📜 Game loaded from the Chronicle.');
+      return true;
+    } catch(e) {
+      toast('⚠️ Save corrupted. Starting fresh.');
+    }
+  }
+  return false;
+}
+
+function resetGame() {
+  if (confirm('Begin a new game? The old Chronicle will be lost.')) {
+    state = freshState();
+    localStorage.removeItem('ealdor_save');
+    toast('🔄 A new Pankus convenes. Year 3450 AC.');
+    render();
+  }
+}
+
+// ═══════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════
+
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(el._timeout);
+  el._timeout = setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+// ═══════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════
+
+function drawResource() {
+  const r = RESOURCES[Math.floor(Math.random() * RESOURCES.length)];
+  return { resource: r, count: Math.floor(Math.random() * 3) + 1 };
+}
+
+function drawCrisis() {
+  const available = CRISES.filter(c => !state.crisisHistory.slice(-6).includes(c.id));
+  if (available.length === 0) { state.crisisHistory = []; return CRISES[Math.floor(Math.random() * CRISES.length)]; }
+  return available[Math.floor(Math.random() * available.length)];
+}
+
+function useAP(amount) {
+  if (state.actionPoints >= amount) {
+    state.actionPoints -= amount;
+    render();
+    return true;
+  }
+  toast('⚠️ Not enough action points. Let the season pass.');
+  return false;
+}
+
+// ═══════════════════════════════════════
+// COURTYARD ACTIONS
+// ═══════════════════════════════════════
+
+function forgeAction() {
+  if (!useAP(1)) return;
+  if (state.playerResources.Iron >= 1) {
+    state.playerResources.Iron -= 1;
+    state.playerResources.Stone = (state.playerResources.Stone || 0) + 2;
+    toast('🔨 Forge: 1 Iron → 2 Stone. The hammer rings across the yard.');
+  } else if (state.playerResources.Timber >= 2) {
+    state.playerResources.Timber -= 2;
+    state.playerResources.Cloth = (state.playerResources.Cloth || 0) + 1;
+    toast('🪵 Workshop: 2 Timber → 1 Cloth. The looms turn.');
+  } else {
+    state.actionPoints += 1; // refund
+    toast('⚠️ Not enough materials. Need 1 Iron or 2 Timber.');
+  }
+  render();
+}
+
+function granaryAction() {
+  // View only — no AP cost
+  const grain = state.playerResources.Grain || 0;
+  const pop = state.population;
+  const seasonsWorth = grain > 0 ? Math.floor(grain / Math.max(1, Math.ceil(pop / 25))) : 0;
+  toast(`🌾 Granary: ${grain} grain stored. Feeds ${pop} people for ~${seasonsWorth} seasons.`);
+}
+
+function marketAction() {
+  if (!useAP(1)) return;
+  // Simple trade: random deal
+  const deal = drawResource();
+  const cost = Math.min(state.playerResources['Salt'] || 0, 1);
+  if (cost > 0 && state.playerResources['Salt'] >= 1) {
+    state.playerResources['Salt'] -= 1;
+    state.playerResources[deal.resource] = (state.playerResources[deal.resource] || 0) + deal.count;
+    toast(`🧵 Market: 1 Salt → ${deal.count} ${deal.resource}. A merchant from the lake passes through.`);
+  } else {
+    state.actionPoints += 1;
+    toast('⚠️ Nothing to trade. Merchants want Salt.');
+  }
+  render();
+}
+
+function wellAction() {
+  if (!useAP(1)) return;
+  state.morale = Math.min(100, state.morale + 3);
+  toast('💧 You draw water from the well. The people gather. Talk is good. Morale +3.');
+  render();
+}
+
+// ═══════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════
+
+const EXIT_PAGES = {
+  battlements: 'citadel.html?zone=battlements',
+  gatehouse: 'citadel.html?zone=gatehouse',
+  greatHall: 'citadel.html?zone=greatHall',
+  chapel: 'citadel.html?zone=chapel',
+  court: 'court.html',
+  kingsChambers: 'citadel.html?zone=kingsChambers',
+};
+
+function walkTo(exit) {
+  saveGame();
+  const url = EXIT_PAGES[exit];
+  if (url) {
+    toast(`🚶 Walking to the ${exit.replace(/([A-Z])/g, ' $1').trim()}...`);
+    setTimeout(() => { window.location.href = url; }, 800);
+  }
+}
+
+// ═══════════════════════════════════════
+// ADVANCE SEASON
+// ═══════════════════════════════════════
+
+function advanceSeason() {
+  state.season = (state.season + 1) % 4;
+  if (state.season === 0) state.year++;
+  state.actionPoints = state.maxActionPoints;
+
+  // Cooldowns
+  if (state.thingCooldown > 0) state.thingCooldown--;
+  if (state.tradeCooldown > 0) state.tradeCooldown--;
+  if (state.omenCooldown > 0) state.omenCooldown--;
+
+  // Ice advance
+  const iceGain = state.season === 3 ? Math.floor(Math.random() * 8) + 4 : Math.floor(Math.random() * 4) + 1;
+  state.ice = Math.min(100, state.ice + iceGain);
+
+  if (state.ice >= 100) {
+    state.pendingCrisis = { name: 'The Ice Has Won', desc: 'The fjords are sealed. Ealdor is cut off. The kingdom falls into silence.' };
+    toast('❄️ The ice has closed the fjords. Ealdor falls silent.');
+    render();
+    return;
+  }
+
+  // Player draws (Council reroll)
+  const draw1 = drawResource();
+  const draw2 = drawResource();
+  const draws = [draw1, draw2];
+  draws.sort((a, b) => a.count - b.count);
+  const redraw = drawResource();
+  for (const d of [draws[1], redraw]) {
+    state.playerResources[d.resource] = (state.playerResources[d.resource] || 0) + d.count;
+  }
+
+  // Crisis
+  const crisis = drawCrisis();
+  state.crisisHistory.push(crisis.id);
+  state.pendingCrisis = crisis;
+
+  // Apply crisis effects
+  if (crisis.effect.ice) state.ice = Math.min(100, state.ice + crisis.effect.ice);
+  if (crisis.effect.population) state.population = Math.max(0, state.population + (crisis.effect.population || 0));
+  if (crisis.effect.morale) state.morale = Math.max(0, Math.min(100, state.morale + (crisis.effect.morale || 0)));
+  if (crisis.effect.faith) state.faith = Math.max(0, Math.min(100, state.faith + (crisis.effect.faith || 0)));
+  if (crisis.effect.resource && crisis.effect.lose) {
+    state.playerResources[crisis.effect.resource] = Math.max(0, (state.playerResources[crisis.effect.resource] || 0) - crisis.effect.lose);
+  }
+  if (crisis.effect.resource && crisis.effect.gain) {
+    state.playerResources[crisis.effect.resource] = (state.playerResources[crisis.effect.resource] || 0) + crisis.effect.gain;
+  }
+  if (crisis.effect.special === 'rabbit') state.rabbitAppeared = true;
+  if (crisis.effect.special === 'coal') {
+    toast('🔥 The Ātravan Coal flickered. The silent brother steadied it.');
+  }
+  if (crisis.effect.special === 'omen') {
+    const g = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+    toast(`✨ Glyph appears: ${g.char} — ${g.hint}`);
+  }
+  if (crisis.effect.special === 'succession') {
+    toast('👑 Tsarnigrad\'s court fractures. The Flame flickers.');
+  }
+
+  // Population drift
+  if (state.morale < 30 && state.season === 3) {
+    state.population = Math.max(10, state.population - 3);
+    toast('💀 Winter takes the weakest. Population falls.');
+  }
+  if (state.faith < 20 && Math.random() < 0.3) {
+    state.population = Math.max(10, state.population - 2);
+    toast('🚶 Some leave Ealdor, seeking warmer gods.');
+  }
+
+  // Spring planting
+  if (state.playerResources.Grain > 0 && state.season === 0 && state.population < 150) {
+    const growth = Math.min(state.playerResources.Grain, 4);
+    state.population = Math.min(150, state.population + growth);
+    state.playerResources.Grain -= growth;
+    toast(`🌱 Spring planting. ${growth} grain feeds the people. Population +${growth}.`);
+  }
+
+  // Nokomis whisper
+  if (Math.random() < 0.3) {
+    const saying = NOKOMIS[Math.floor(Math.random() * NOKOMIS.length)];
+    toast(`👁️ Nokomis whispers: ${saying}`);
+  }
+
+  // Game over
+  if (state.population <= 0) {
+    state.pendingCrisis = { name: 'Ealdor is Empty', desc: 'The Threshold is unheld. The fire goes out.' };
+    toast('💀 Ealdor is empty. The Threshold is unheld.');
+  }
+
+  saveGame();
+  render();
+}
+
+// ═══════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════
+
+function render() {
+  document.getElementById('yearDisplay').textContent = state.year;
+  document.getElementById('seasonDisplay').textContent = SEASONS[state.season];
+  document.getElementById('iceDisplay').textContent = state.ice;
+  document.getElementById('seasonIcon').textContent = SEASON_ICONS[state.season];
+
+  document.getElementById('pop').textContent = state.population;
+  document.getElementById('morale').textContent = state.morale;
+  document.getElementById('faith').textContent = state.faith;
+  document.getElementById('grainStat').textContent = state.playerResources.Grain || 0;
+  document.getElementById('tabletStat').textContent = state.tabletFragments;
+
+  // Color stats
+  ['pop','morale','faith'].forEach(id => {
+    const el = document.getElementById(id);
+    const val = parseInt(el.textContent);
+    el.className = 'value';
+    if (val < 30) el.className += ' low';
+    else if (val < 50) el.className += ' warn';
+  });
+
+  // AP dots
+  const apDots = document.getElementById('apDots');
+  apDots.innerHTML = '';
+  for (let i = 0; i < state.maxActionPoints; i++) {
+    const dot = document.createElement('span');
+    dot.className = 'ap-dot' + (i < state.actionPoints ? ' active' : '');
+    apDots.appendChild(dot);
+  }
+
+  // Resources row
+  const resRow = document.getElementById('resourcesRow');
+  resRow.innerHTML = '';
+  for (const [name, count] of Object.entries(state.playerResources)) {
+    const token = document.createElement('span');
+    token.className = 'resource-token';
+    const cls = count === 0 ? 'count zero' : 'count';
+    token.innerHTML = `${name} <span class="${cls}">${count}</span>`;
+    resRow.appendChild(token);
+  }
+
+  // Notice board
+  const noticeText = document.getElementById('noticeText');
+  if (state.pendingCrisis) {
+    noticeText.innerHTML = `<span class="crisis-tag">⚠ ${state.pendingCrisis.name}:</span> ${state.pendingCrisis.desc}`;
+  } else if (state.ice > 60) {
+    noticeText.innerHTML = '<span class="crisis-tag">❄️ The ice thickens.</span> The fjord groans under its weight.';
+  } else if (state.rabbitAppeared) {
+    noticeText.innerHTML = '<span class="rumor-tag">🐇 Word in the yard:</span> The Rabbit was seen near the wood. Yellow feet. Split lip.';
+  } else {
+    const rumors = [
+      'The yard is quiet. The ice creeps. The Thing will convene soon.',
+      'A merchant from Kichigamswak passed through. "The lake still flows," she said.',
+      'Tsarnigrad hoards grain. Their granaries overflow while neighbors tighten belts.',
+      'Haldor\'s augurs read the sky. No one asks what they see anymore.',
+      'The silent brother added nothing to the fire today. He never does.',
+      'Children play near the well. They do not know the ice is coming.',
+    ];
+    noticeText.innerHTML = `📋 ${rumors[Math.floor(Math.random() * rumors.length)]}`;
+  }
+
+  // Granary detail
+  document.getElementById('granaryDetail').textContent = `${state.playerResources.Grain || 0} grain stored`;
+
+  // People visualization
+  const peopleIcons = document.getElementById('peopleIcons');
+  const peopleMood = document.getElementById('peopleMood');
+  const peopleLabel = document.getElementById('peopleLabel');
+  const popCount = Math.min(10, Math.ceil(state.population / 15));
+  peopleIcons.textContent = Array(popCount).fill('👤').join('');
+  peopleLabel.textContent = `The People (${state.population})`;
+
+  if (state.morale >= 70) {
+    peopleMood.textContent = 'Content — the yard hums with talk';
+  } else if (state.morale >= 40) {
+    peopleMood.textContent = 'Uneasy — voices are low';
+  } else {
+    peopleMood.textContent = 'Desperate — some have stopped speaking';
+  }
+
+  // Resource summary
+  document.getElementById('resourceSummary').textContent = Object.entries(state.playerResources)
+    .map(([n,c]) => `${n}:${c}`).join(' · ');
+
+  // Season icon color
+  const seasonIcon = document.getElementById('seasonIcon');
+  if (state.season === 3) seasonIcon.style.color = 'var(--frost)';
+  else if (state.season === 1) seasonIcon.style.color = '#daa520';
+  else seasonIcon.style.color = 'var(--parchment)';
+}
+
+// ═══════════════════════════════════════
+// CLICK HANDLERS
+// ═══════════════════════════════════════
+
+document.getElementById('courtyard-grid').addEventListener('click', (e) => {
+  const cell = e.target.closest('.yard-cell');
+  if (!cell) return;
+
+  const zone = cell.dataset.zone;
+  const exit = cell.dataset.exit;
+
+  if (exit) {
+    walkTo(exit);
+  } else if (zone === 'forge') {
+    forgeAction();
+  } else if (zone === 'granary') {
+    granaryAction();
+  } else if (zone === 'market') {
+    marketAction();
+  } else if (zone === 'well') {
+    wellAction();
+  }
+});
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+
+function init() {
+  const loaded = loadGame();
+  if (!loaded) {
+    toast('🏰 Year 3450 AC. The courtyard bustles. The ice waits. The Thing governs.');
+  }
+
+  // Check URL params for returning from another page
+  const params = new URLSearchParams(window.location.search);
+  const returned = params.get('from');
+  if (returned) {
+    toast(`🚶 You return to the courtyard from the ${returned}.`);
+    // Clean URL
+    window.history.replaceState({}, '', 'index.html');
+  }
+
+  render();
+}
+
+init();
+</script>
+</body>
+</html>
