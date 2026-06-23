@@ -8,100 +8,374 @@
     <style>
         :root {
             --stone: #3d362f; --deep-stone: #2a2520; --parchment: #f4e4c1;
-            --ember: #c44f1c; --gold: #b8860b; --ash: #8b7d6b; --void: #0a0806;
+            --ember: #c44f1c; --ember-bright: #e85d2c; --gold: #b8860b;
+            --ash: #8b7d6b; --void: #0a0806; --deep: #1a1410;
         }
         * { margin:0; padding:0; box-sizing:border-box; }
         body {
-            background: var(--void); color: var(--parchment);
+            background: var(--void);
+            color: var(--parchment);
             font-family: 'Georgia','Times New Roman',serif;
             display: flex; flex-direction: column; align-items: center;
             min-height: 100vh; overflow-x: hidden;
+            background-image:
+                radial-gradient(ellipse at 50% 0%, rgba(196,79,28,0.06) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 100%, rgba(26,20,16,0.9) 0%, transparent 55%);
         }
-        #scene { position:relative; width:820px; max-width:98vw; height:600px; margin:1rem auto; overflow:hidden; background:var(--void); border:4px solid var(--deep-stone); border-radius:4px; box-shadow:0 0 80px rgba(0,0,0,0.6); }
-        @media(max-width:840px){ #scene{width:98vw;height:calc(98vw*0.73);} }
-        .zone{cursor:pointer;transition:filter 0.25s,transform 0.25s}
-        .zone:hover{filter:brightness(1.35);z-index:50!important}
-        .zone:active{transform:scale(0.94)}
-        #toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:rgba(10,8,6,0.94);border:1px solid var(--gold);border-radius:6px;padding:0.5rem 1.2rem;font-family:'Georgia',serif;font-size:0.78rem;z-index:200;opacity:0;transition:opacity 0.35s;pointer-events:none;text-align:center;max-width:420px;box-shadow:0 6px 20px rgba(0,0,0,0.5);white-space:pre-line}
-        #toast.show{opacity:1}
-        @keyframes sparkFade{0%{transform:scale(0.5);opacity:1}100%{transform:scale(2.5);opacity:0}}
+
+        .hall-header {
+            text-align: center; padding: 1.2rem 1rem 0.2rem; width: 100%; z-index: 10;
+        }
+        .hall-header h1 {
+            font-family: 'UnifrakturMaguntia',cursive;
+            font-size: clamp(1.8rem,4.5vw,2.8rem);
+            color: var(--gold);
+            text-shadow: 0 0 15px rgba(184,134,11,0.4), 2px 2px 0 var(--void);
+            letter-spacing: 4px;
+        }
+        .hall-header .subtitle {
+            font-family: 'Cinzel',serif; font-size: 0.7rem; color: var(--ash);
+            letter-spacing: 5px; text-transform: uppercase;
+        }
+
+        .stats-bar {
+            display: flex; flex-wrap: wrap; gap: 0.3rem;
+            justify-content: center; padding: 0.4rem; z-index: 10; width: 100%;
+        }
+        .stat-pill {
+            background: rgba(26,20,16,0.75);
+            border: 1px solid rgba(139,125,107,0.4);
+            border-radius: 20px; padding: 0.2rem 0.6rem;
+            font-size: 0.6rem; display: flex; align-items: center; gap: 0.2rem;
+            font-family: 'Cinzel',serif; backdrop-filter: blur(4px);
+        }
+        .stat-pill .stat-icon { font-size: 0.75rem; }
+        .stat-pill .stat-value { font-weight: bold; color: var(--gold); }
+        .stat-pill .stat-value.low { color: #7a1c1c; }
+        .stat-pill .stat-value.warn { color: var(--ember); }
+
+        #scene {
+            position: relative; width: 860px; max-width: 98vw;
+            height: 550px; margin: 0.3rem auto 1rem; overflow: hidden;
+            background: var(--void);
+            border: 4px solid var(--deep-stone); border-radius: 4px;
+            box-shadow: 0 0 80px rgba(0,0,0,0.6), 0 0 160px rgba(0,0,0,0.3), inset 0 0 40px rgba(0,0,0,0.2);
+        }
+        @media (max-width: 880px) {
+            #scene { width: 98vw; height: calc(98vw * 0.64); }
+        }
+
+        .zone { cursor: pointer; transition: filter 0.25s, transform 0.25s; }
+        .zone:hover { filter: brightness(1.35); z-index: 50 !important; }
+        .zone:active { transform: scale(0.94); }
+
+        #toast {
+            position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+            background: rgba(10,8,6,0.94); border: 1px solid var(--gold);
+            border-radius: 6px; padding: 0.5rem 1.2rem;
+            font-family: 'Georgia',serif; font-size: 0.78rem;
+            z-index: 200; opacity: 0; transition: opacity 0.35s;
+            pointer-events: none; text-align: center; max-width: 420px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5); white-space: pre-line;
+        }
+        #toast.show { opacity: 1; }
+
+        @keyframes sparkFade {
+            0%{transform:scale(0.5);opacity:1}
+            100%{transform:scale(2.5);opacity:0}
+        }
+        @keyframes fireGlow {
+            0%,100%{box-shadow:0 0 15px var(--ember),0 0 35px rgba(196,79,28,0.3)}
+            50%{box-shadow:0 0 28px var(--ember-bright),0 0 55px rgba(196,79,28,0.5)}
+        }
+        @keyframes torchFlicker {
+            0%,100%{opacity:0.8;transform:scaleY(1)}
+            25%{opacity:1;transform:scaleY(1.1)}
+            50%{opacity:0.75;transform:scaleY(0.95)}
+            75%{opacity:0.9;transform:scaleY(1.05)}
+        }
     </style>
 </head>
 <body>
+
+    <header class="hall-header">
+        <h1>The Great Hall</h1>
+        <div class="subtitle">Thing-Stead of Ealdor · The Council Chamber</div>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stat-pill"><span class="stat-icon">🌾</span> Timber: <span class="stat-value" id="timberStat">3</span></div>
+        <div class="stat-pill"><span class="stat-icon">❤️</span> Faith: <span class="stat-value" id="faithStat">60</span></div>
+        <div class="stat-pill"><span class="stat-icon">☀️</span> Morale: <span class="stat-value" id="moraleStat">70</span></div>
+        <div class="stat-pill"><span class="stat-icon">❄️</span> Ice: <span class="stat-value warn" id="iceStat">15%</span></div>
+        <div class="stat-pill"><span class="stat-icon">📜</span> Tablets: <span class="stat-value" id="tabletStat">0</span>/7</div>
+    </div>
+
     <div id="scene"></div>
     <div id="toast"></div>
+
     <script src="js/font-mason.js"></script>
     <script src="js/scene-loader.js"></script>
     <script>
-        const DEFAULT_STATE = {
-            year:3450, season:0, ice:15,
-            playerResources:{Stone:4,Timber:3,Grain:5,Iron:2,Salt:2,Cloth:3},
-            population:100, morale:70, faith:60,
-            tabletFragments:0, crisisHistory:[], thingConvened:false,
+    /*
+     * ═══════════════════════════════════════════════
+     * THE GREAT HALL · Thing-Stead of Ealdor
+     * Council chamber. Empty throne. Round table.
+     * Fire pit. Torches. Tally wall.
+     * ═══════════════════════════════════════════════
+     */
+
+    // ── STATE ──
+    const DEFAULT_STATE = {
+        year: 3450, season: 0, ice: 15,
+        playerResources: { Stone: 4, Timber: 3, Grain: 5, Iron: 2, Salt: 2, Cloth: 3 },
+        population: 100, morale: 70, faith: 60,
+        tabletFragments: 0, crisisHistory: [], thingConvened: false,
+    };
+    let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+
+    function loadState() {
+        const raw = localStorage.getItem('ealdor_save');
+        if (!raw) return false;
+        try { state = { ...DEFAULT_STATE, ...JSON.parse(raw) }; return true; } catch(e) { return false; }
+    }
+    function saveState() { localStorage.setItem('ealdor_save', JSON.stringify(state)); }
+
+    const toastEl = document.getElementById('toast');
+    let toastTimer;
+    function toast(msg, d = 2800) {
+        toastEl.textContent = msg; toastEl.classList.add('show');
+        clearTimeout(toastTimer); toastTimer = setTimeout(() => toastEl.classList.remove('show'), d);
+    }
+
+    function renderStats() {
+        document.getElementById('timberStat').textContent = state.playerResources.Timber || 0;
+        document.getElementById('faithStat').textContent = state.faith;
+        document.getElementById('moraleStat').textContent = state.morale;
+        document.getElementById('iceStat').textContent = state.ice + '%';
+        document.getElementById('tabletStat').textContent = state.tabletFragments || 0;
+
+        ['faithStat','moraleStat'].forEach(id => {
+            const el = document.getElementById(id);
+            const v = parseInt(el.textContent) || 0;
+            el.className = 'stat-value' + (v < 30 ? ' low' : v < 50 ? ' warn' : '');
+        });
+        const iceEl = document.getElementById('iceStat');
+        iceEl.className = 'stat-value' + (state.ice > 70 ? ' low' : state.ice > 40 ? ' warn' : '');
+    }
+
+    // ── ADD TORCH FLICKER POST-LOAD ──
+    function addTorchEffects() {
+        const container = document.getElementById('scene');
+        if (!container) return;
+
+        // Find torch sconce elements and add flicker overlays
+        const torches = [
+            { x: 158, y: 255 },  // left wall torch
+            { x: 748, y: 255 },  // right wall torch
+        ];
+
+        torches.forEach(pos => {
+            const flame = document.createElement('div');
+            flame.style.cssText = `
+                position: absolute;
+                left: ${pos.x}px; top: ${pos.y}px;
+                width: 14px; height: 20px;
+                background: radial-gradient(ellipse at 50% 30%, #ffaa33, #ff6b2b 40%, #c44f1c 80%);
+                border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+                z-index: 20;
+                pointer-events: none;
+                animation: torchFlicker ${0.6 + Math.random() * 0.4}s ease-in-out infinite;
+            `;
+            container.appendChild(flame);
+
+            // Glow
+            const glow = document.createElement('div');
+            glow.style.cssText = `
+                position: absolute;
+                left: ${pos.x - 15}px; top: ${pos.y - 10}px;
+                width: 44px; height: 50px;
+                background: radial-gradient(circle, rgba(196,79,28,0.3) 0%, transparent 70%);
+                border-radius: 50%;
+                z-index: 19;
+                pointer-events: none;
+            `;
+            container.appendChild(glow);
+        });
+    }
+
+    function addFirePitGlow() {
+        const container = document.getElementById('scene');
+        if (!container) return;
+
+        const glow = document.createElement('div');
+        glow.style.cssText = `
+            position: absolute;
+            left: 365px; top: 375px;
+            width: 120px; height: 60px;
+            background: radial-gradient(ellipse at 50% 30%, rgba(196,79,28,0.25) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 9;
+            pointer-events: none;
+            animation: fireGlow 3s ease-in-out infinite;
+        `;
+        container.appendChild(glow);
+
+        // Embers
+        for (let i = 0; i < 12; i++) {
+            const ember = document.createElement('div');
+            const dx = (Math.random() - 0.5) * 50;
+            ember.style.cssText = `
+                position: absolute;
+                left: ${395 + Math.random() * 30}px;
+                top: ${380 + Math.random() * 10}px;
+                width: ${2 + Math.random() * 3}px;
+                height: ${2 + Math.random() * 3}px;
+                background: #ff6b2b;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 11;
+                animation: emberRise ${1.5 + Math.random() * 2}s ease-out ${Math.random() * 0.5}s infinite;
+            `;
+            container.appendChild(ember);
+        }
+
+        // Inject ember animation if not present
+        if (!document.getElementById('ember-keyframes')) {
+            const style = document.createElement('style');
+            style.id = 'ember-keyframes';
+            style.textContent = `
+                @keyframes emberRise {
+                    0% { transform: translateY(0) translateX(0) scale(1); opacity: 0.9; }
+                    100% { transform: translateY(-80px) translateX(var(--dx, 10px)) scale(0); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    }
+
+    // ═══════════════════════════════════
+    // BUILD THE HALL
+    // ═══════════════════════════════════
+
+    async function buildHall() {
+        const loader = new SceneLoader('scene');
+
+        // ── Interaction handler ──
+        loader.onInteract = (objectName, action) => {
+            switch (action) {
+                case 'observe_throne':
+                    const throneLines = state.thingConvened
+                        ? ['The throne is empty. The Thing has convened — the council governs, not the crown.',
+                           '"A king shall not be." The first law holds. The seat remains clean and vacant.',
+                           'Someone dusts the throne every morning. No one has ever sat in it.']
+                        : ['The throne is empty. It has always been empty.',
+                           '"A king shall not be." — The first law of the Thing, carved into the floor.',
+                           'The seat is clean. Someone dusts it. No one sits.'];
+                    toast('👑 ' + throneLines[Math.floor(Math.random() * throneLines.length)]);
+                    state.faith = Math.min(100, state.faith + 1);
+                    break;
+
+                case 'convene_thing':
+                    if (state.thingConvened) {
+                        toast('🪨 The Thing has already convened. The stones are warm. Voices have settled.\n\nReturn next season.');
+                        break;
+                    }
+                    state.thingConvened = true;
+                    state.morale = Math.min(100, state.morale + 8);
+                    state.faith = Math.min(100, state.faith + 3);
+                    const outcomes = [
+                        'The council convenes. Twelve voices rise around the circle. A decision forms — fjord patrols will increase. The ice will be watched.',
+                        'The Thing gathers. Debate fills the hall until dusk. A compromise: the granary will be shared with the harbor quarter.',
+                        'Voices echo through the hall. No clear decision comes — but the talking itself is the thing. The Thing is the talking. The council holds.',
+                    ];
+                    toast('🪨 ' + outcomes[Math.floor(Math.random() * outcomes.length)] + '\n\nMorale +8, Faith +3');
+                    addFirePitGlow();
+                    break;
+
+                case 'tend_fire':
+                    const timber = state.playerResources.Timber || 0;
+                    if (timber < 1) {
+                        toast('No timber. The council fire dwindles to embers.');
+                        break;
+                    }
+                    state.playerResources.Timber -= 1;
+                    state.morale = Math.min(100, state.morale + 3);
+                    toast('🔥 You add timber to the council fire. Flames rise. The hall warms. Morale +3');
+                    break;
+
+                case 'read_tallies':
+                    const count = state.crisisHistory?.length || 0;
+                    const recentCrises = state.crisisHistory?.slice(-3).join(', ') || 'none recorded';
+                    toast(`📋 Tally Wall\n\n${count} crises recorded in the charcoal marks.\n\nRecent: ${recentCrises}\n\nThe oldest marks are centuries deep — carved when the first Thing convened.`);
+                    break;
+            }
+            saveState();
+            renderStats();
         };
-        let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
-        
-        function loadState(){
-            const raw = localStorage.getItem('ealdor_save');
-            if(!raw) return false;
-            try{state={...DEFAULT_STATE,...JSON.parse(raw)};return true}catch(e){return false}
+
+        // ── Exit handler ──
+        loader.onExit = (exit) => {
+            saveState();
+            toast(`🚶 Leaving the Thing-Stead for the ${exit.label || exit.target}...`);
+        };
+
+        // ── Load scene ──
+        await loader.load('json/scenes/great_hall.json');
+
+        // ── Set state AFTER load ──
+        loader.setState(state);
+
+        // ── Post-load effects ──
+        addTorchEffects();
+        if (state.thingConvened) addFirePitGlow();
+
+        return loader;
+    }
+
+    // ═══════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════
+
+    async function init() {
+        const loaded = loadState();
+        if (!loaded) saveState();
+
+        const params = new URLSearchParams(window.location.search);
+        const from = params.get('from');
+        if (from) {
+            const locationNames = { courtyard: 'Courtyard', chapel: 'Coal Chapel', scriptorium: 'Scriptorium' };
+            toast(`🚶 You enter the Great Hall from the ${locationNames[from] || from}. The fire pit glows. The throne waits.`);
+            window.history.replaceState({}, '', 'great_hall.html');
+        } else {
+            toast('🪨 The Great Hall. Twelve stones. One empty throne. The Thing governs here.');
         }
-        function saveState(){localStorage.setItem('ealdor_save',JSON.stringify(state))}
-        
-        const toastEl = document.getElementById('toast');
-        let toastTimer;
-        function toast(msg,d=2800){toastEl.textContent=msg;toastEl.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toastEl.classList.remove('show'),d)}
-        
-        async function init(){
-            loadState();
-            const loader = new SceneLoader('scene');
-            loader.setState(state);
-            
-            loader.onInteract = (objectName, action) => {
-                switch(action){
-                    case 'observe_throne':
-                        toast('👑 The throne is empty. It has always been empty.\n\n"A king shall not be." — The first law of the Thing.\n\nThe seat is clean. Someone dusts it. No one sits.');
-                        state.faith = Math.min(100, state.faith + 1);
-                        break;
-                    case 'convene_thing':
-                        if(state.thingConvened){
-                            toast('🪨 The Thing has already convened this season. The stones are warm. The voices have settled.');
-                            break;
-                        }
-                        state.thingConvened = true;
-                        state.morale = Math.min(100, state.morale + 8);
-                        state.faith = Math.min(100, state.faith + 3);
-                        const outcomes = [
-                            'The council convenes. Twelve voices rise. A decision is reached — the fjord patrols will increase.',
-                            'The Thing gathers. Debate is fierce. By dusk, a compromise holds. The granary will be shared.',
-                            'Voices echo through the hall. No clear decision — but the talking itself is the thing. The Thing is the talking.',
-                        ];
-                        toast('🪨 ' + outcomes[Math.floor(Math.random()*outcomes.length)] + '\n\nMorale +8, Faith +3');
-                        break;
-                    case 'tend_fire':
-                        const timber = state.playerResources.Timber || 0;
-                        if(timber < 1){toast('No timber. The fire dwindles.');break;}
-                        state.playerResources.Timber -= 1;
-                        state.morale = Math.min(100, state.morale + 3);
-                        toast('🔥 You add timber to the council fire. The flames rise. The hall warms. Morale +3');
-                        break;
-                }
-                saveState();
-            };
-            
-            await loader.load('json/scenes/great_hall.json');
-            
-            document.addEventListener('click',(e)=>{
-                if(Math.random()>0.75 && !e.target.closest('.zone')){
-                    const spark = document.createElement('div');
-                    spark.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:3px;height:3px;background:#d4af37;border-radius:50%;box-shadow:0 0 10px #d4af37;pointer-events:none;z-index:150;animation:sparkFade 1.2s ease-out forwards;`;
-                    document.body.appendChild(spark);
-                    setTimeout(()=>spark.remove(),1300);
-                }
-            });
-        }
-        
-        init();
+
+        renderStats();
+        await buildHall();
+
+        // Prayer sparks
+        document.addEventListener('click', (e) => {
+            if (Math.random() > 0.72 && !e.target.closest('.zone')) {
+                const spark = document.createElement('div');
+                spark.style.cssText = `
+                    position: fixed;
+                    left: ${e.clientX}px; top: ${e.clientY}px;
+                    width: 3px; height: 3px;
+                    background: #d4af37;
+                    border-radius: 50%;
+                    box-shadow: 0 0 10px #d4af37, 0 0 20px rgba(196,79,28,0.3);
+                    pointer-events: none;
+                    z-index: 150;
+                    animation: sparkFade 1.4s ease-out forwards;
+                `;
+                document.body.appendChild(spark);
+                setTimeout(() => spark.remove(), 1500);
+            }
+        });
+    }
+
+    init();
     </script>
 </body>
 </html>
