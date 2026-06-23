@@ -1,0 +1,589 @@
+{
+  "name": "Ealdor Farm",
+  "description": "The farm fields of Ealdor. Barn, silo, well, scarecrow. Crop rows of radishes, wheat, carrots, and cabbages. Each plant harvestable. State tracks every pull.",
+  "scene": {
+    "size": { "width": 900, "height": 730 },
+    "background": {
+      "type": "sky",
+      "height": 130,
+      "skyColor": "#c8d8e8",
+      "horizonColor": "#e8f0f8",
+      "birds": { "count": 4, "glyph": "⌣", "color": "#6a7a8a" }
+    },
+    "ground": {
+      "material": "barren_soil",
+      "y": 130,
+      "height": 600
+    }
+  },
+
+  "materials": {
+    "field_soil": {
+      "characters": ["▓","░","▒","▓","░"],
+      "textColor": "#5a4030",
+      "mortarColor": "#3d2a18",
+      "fontSize": 28,
+      "lineHeight": 0.48,
+      "letterSpacing": -2,
+      "fontFamily": "'Georgia','Times New Roman',serif",
+      "weathering": 0.1
+    },
+    "fence_wood": {
+      "characters": ["╎","│","╎","│","╎"],
+      "textColor": "#3d2b1f",
+      "mortarColor": "#2a1f15",
+      "fontSize": 14,
+      "lineHeight": 0.5,
+      "letterSpacing": 1,
+      "fontFamily": "monospace",
+      "weathering": 0.2
+    },
+    "silo_stone": {
+      "characters": ["▓","▒","░","▓","▒"],
+      "textColor": "#4a3f35",
+      "mortarColor": "#2a2520",
+      "fontSize": 30,
+      "lineHeight": 0.5,
+      "letterSpacing": -2,
+      "fontFamily": "monospace",
+      "weathering": 0.08
+    },
+    "radish_red": {
+      "characters": ["◉"],
+      "textColor": "#c84444",
+      "mortarColor": "transparent",
+      "fontSize": 14,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    },
+    "carrot_orange": {
+      "characters": ["▼"],
+      "textColor": "#e87830",
+      "mortarColor": "transparent",
+      "fontSize": 14,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    },
+    "cabbage_green": {
+      "characters": ["◆"],
+      "textColor": "#6a8a4a",
+      "mortarColor": "transparent",
+      "fontSize": 16,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    }
+  },
+
+  "objects": [
+    {
+      "id": "fence-top",
+      "name": "Fence",
+      "zone": "fence",
+      "build": "wall",
+      "material": "fence_wood",
+      "position": { "x": 0, "y": 128, "z": 3 },
+      "dimensions": { "width": 900, "height": 10 }
+    },
+    {
+      "id": "fence-left",
+      "build": "wall",
+      "material": "fence_wood",
+      "position": { "x": 0, "y": 128, "z": 3 },
+      "dimensions": { "width": 10, "height": 300 }
+    },
+    {
+      "id": "fence-right",
+      "build": "wall",
+      "material": "fence_wood",
+      "position": { "x": 890, "y": 128, "z": 3 },
+      "dimensions": { "width": 10, "height": 300 }
+    },
+    {
+      "id": "fence-posts",
+      "build": "pillars",
+      "material": "fence_wood",
+      "count": 11,
+      "spacing": 80,
+      "startX": 50,
+      "position": { "y": 122, "z": 4 },
+      "dimensions": { "width": 6, "height": 22 },
+      "chars": ["╎"],
+      "fontSize": 16
+    },
+
+    {
+      "id": "barn",
+      "name": "Barn",
+      "zone": "barn",
+      "build": "wall",
+      "material": "oak_weathered",
+      "position": { "x": 15, "y": 150, "z": 3 },
+      "dimensions": { "width": 200, "height": 160 },
+      "weathering": 0.12,
+      "components": [
+        {
+          "id": "barn-roof",
+          "type": "wall",
+          "material": "thatch_dark",
+          "position": { "x": 10, "y": 138, "z": 4 },
+          "dimensions": { "width": 210, "height": 16 }
+        },
+        {
+          "id": "barn-door-wall",
+          "type": "wall",
+          "material": "oak_weathered",
+          "position": { "x": 80, "y": 220, "z": 5 },
+          "dimensions": { "width": 70, "height": 90 },
+          "openings": [{ "x": 15, "y": 10, "width": 40, "height": 80, "arch": true }]
+        },
+        {
+          "id": "barn-hayloft",
+          "type": "wall",
+          "material": "darkness",
+          "position": { "x": 130, "y": 160, "z": 5 },
+          "dimensions": { "width": 30, "height": 25 }
+        },
+        {
+          "id": "barn-label",
+          "type": "inscription",
+          "text": "BARN",
+          "position": { "x": 85, "y": 208, "z": 6 },
+          "fontSize": 7,
+          "color": "#8b7d6b",
+          "fontFamily": "'Cinzel',serif"
+        }
+      ],
+      "interaction": {
+        "label": "Enter the barn",
+        "zone": { "x": 95, "y": 230, "width": 40, "height": 80 },
+        "toast": "The barn is cool and dark. Tools on the wall. Sacks of seed. Timber stacked: $Timber. Radishes stored: $Radishes."
+      }
+    },
+
+    {
+      "id": "silo",
+      "name": "Silo",
+      "zone": "silo",
+      "build": "wall",
+      "material": "silo_stone",
+      "position": { "x": 690, "y": 150, "z": 3 },
+      "dimensions": { "width": 100, "height": 180 },
+      "shape": "circle",
+      "components": [
+        {
+          "id": "silo-roof",
+          "type": "wall",
+          "material": "thatch_dark",
+          "position": { "x": 700, "y": 138, "z": 4 },
+          "dimensions": { "width": 80, "height": 16 }
+        },
+        {
+          "id": "silo-cap",
+          "type": "wall",
+          "material": "silo_stone",
+          "position": { "x": 720, "y": 145, "z": 5 },
+          "dimensions": { "width": 40, "height": 8 }
+        },
+        {
+          "id": "silo-label",
+          "type": "inscription",
+          "text": "SILO",
+          "position": { "x": 715, "y": 135, "z": 6 },
+          "fontSize": 7,
+          "color": "#8b7d6b",
+          "fontFamily": "'Cinzel',serif"
+        }
+      ],
+      "interaction": {
+        "label": "Check the silo",
+        "zone": { "x": 690, "y": 150, "width": 100, "height": 180 },
+        "toast": "The silo holds $Grain measures of grain. $Grain > 20 ? 'Full. The harvest was good.' : $Grain > 5 ? 'Half-full. Room for more.' : 'Nearly empty. Time to harvest.'"
+      }
+    },
+
+    {
+      "id": "scarecrow",
+      "name": "Scarecrow",
+      "zone": "scarecrow",
+      "build": "pillar",
+      "material": "oak_dark",
+      "chars": ["║","║","║"],
+      "fontSize": 14,
+      "position": { "x": 315, "y": 190, "z": 4 },
+      "dimensions": { "width": 8, "height": 70 },
+      "components": [
+        {
+          "id": "scarecrow-arms",
+          "type": "wall",
+          "material": "timber_beam",
+          "position": { "x": 300, "y": 205, "z": 5 },
+          "dimensions": { "width": 40, "height": 6 }
+        },
+        {
+          "id": "scarecrow-head",
+          "type": "circle",
+          "position": { "x": 305, "y": 180 },
+          "radius": 14,
+          "style": {
+            "background": "radial-gradient(circle, #f4e4c1, #c8b898)",
+            "animation": "scarecrowBob 4s ease-in-out infinite"
+          }
+        },
+        {
+          "id": "scarecrow-eyes",
+          "type": "inscription",
+          "text": "· ·",
+          "position": { "x": 312, "y": 188 },
+          "fontSize": 6,
+          "color": "#1a1410",
+          "fontFamily": "monospace",
+          "z": 7
+        },
+        {
+          "id": "scarecrow-mouth",
+          "type": "inscription",
+          "text": "⌣",
+          "position": { "x": 316, "y": 192 },
+          "fontSize": 6,
+          "color": "#1a1410",
+          "fontFamily": "Georgia",
+          "z": 7
+        }
+      ],
+      "interaction": {
+        "label": "The scarecrow",
+        "zone": { "x": 295, "y": 175, "width": 50, "height": 100 },
+        "toast": [
+          "The scarecrow sways. Straw pokes from its sleeves. It has no face, but it watches.",
+          "A crow sits on the scarecrow's hat. It knows this is no threat.",
+          "The scarecrow's coat is patched with old cloth. Someone mended it recently."
+        ]
+      }
+    },
+
+    {
+      "id": "well",
+      "name": "Well",
+      "zone": "well",
+      "build": "wall",
+      "material": "dressed_granite",
+      "position": { "x": 120, "y": 420, "z": 5 },
+      "dimensions": { "width": 70, "height": 50 },
+      "shape": "circle",
+      "components": [
+        {
+          "id": "well-water",
+          "type": "wall",
+          "material": "darkness",
+          "position": { "x": 130, "y": 428, "z": 6 },
+          "dimensions": { "width": 50, "height": 38 },
+          "shape": "circle"
+        },
+        {
+          "id": "well-shimmer",
+          "type": "circle",
+          "position": { "x": 138, "y": 436 },
+          "radius": 17,
+          "style": {
+            "background": "radial-gradient(circle, rgba(90,138,184,0.4), rgba(40,80,120,0.6))",
+            "animation": "wellGlow 3s ease-in-out infinite"
+          }
+        },
+        {
+          "id": "well-roof",
+          "type": "wall",
+          "material": "thatch_dark",
+          "position": { "x": 130, "y": 408, "z": 6 },
+          "dimensions": { "width": 50, "height": 10 }
+        },
+        {
+          "id": "well-post-left",
+          "type": "pillar",
+          "material": "oak_dark",
+          "chars": ["╎"],
+          "fontSize": 8,
+          "position": { "x": 145, "y": 418, "z": 6 },
+          "dimensions": { "width": 4, "height": 16 }
+        },
+        {
+          "id": "well-post-right",
+          "type": "pillar",
+          "material": "oak_dark",
+          "chars": ["╎"],
+          "fontSize": 8,
+          "position": { "x": 165, "y": 418, "z": 6 },
+          "dimensions": { "width": 4, "height": 16 }
+        },
+        {
+          "id": "well-label",
+          "type": "inscription",
+          "text": "WELL",
+          "position": { "x": 134, "y": 476, "z": 8 },
+          "fontSize": 6,
+          "color": "#8b7d6b",
+          "fontFamily": "'Cinzel',serif"
+        }
+      ],
+      "interaction": {
+        "action": "drawWater",
+        "label": "Draw water from the well",
+        "zone": { "x": 120, "y": 420, "width": 70, "height": 55 },
+        "toast_success": "Cool water rises. The bucket is heavy. The field drinks."
+      }
+    },
+
+    {
+      "id": "compost",
+      "name": "Compost Heap",
+      "zone": "compost",
+      "build": "wall",
+      "chars": ["░","▒","▓","▒","░"],
+      "textColor": "#3d2f1f",
+      "mortarColor": "#2a1a10",
+      "fontSize": 20,
+      "position": { "x": 620, "y": 440, "z": 4 },
+      "dimensions": { "width": 100, "height": 35 },
+      "weathering": 0.3,
+      "components": [
+        {
+          "id": "compost-label",
+          "type": "inscription",
+          "text": "COMPOST",
+          "position": { "x": 638, "y": 435, "z": 6 },
+          "fontSize": 5,
+          "color": "rgba(139,125,107,0.4)",
+          "fontFamily": "'Cinzel',serif"
+        }
+      ],
+      "interaction": {
+        "label": "Turn the compost",
+        "zone": { "x": 620, "y": 440, "width": 100, "height": 35 },
+        "toast": "Rich, dark earth. Worms working. The smell is honest. Next season's food starts here."
+      }
+    },
+
+    {
+      "id": "tool-shed",
+      "name": "Tool Shed",
+      "zone": "tools",
+      "build": "wall",
+      "material": "oak_weathered",
+      "position": { "x": 370, "y": 590, "z": 4 },
+      "dimensions": { "width": 160, "height": 80 },
+      "weathering": 0.18,
+      "components": [
+        {
+          "id": "shed-roof",
+          "type": "wall",
+          "material": "thatch_dark",
+          "position": { "x": 365, "y": 580, "z": 5 },
+          "dimensions": { "width": 170, "height": 14 }
+        },
+        {
+          "id": "shed-door",
+          "type": "wall",
+          "material": "oak_weathered",
+          "position": { "x": 420, "y": 620, "z": 5 },
+          "dimensions": { "width": 60, "height": 50 },
+          "openings": [{ "x": 12, "y": 8, "width": 36, "height": 42, "arch": true }]
+        },
+        {
+          "id": "shed-label",
+          "type": "inscription",
+          "text": "TOOLS",
+          "position": { "x": 425, "y": 608, "z": 6 },
+          "fontSize": 6,
+          "color": "#8b7d6b",
+          "fontFamily": "'Cinzel',serif"
+        },
+        {
+          "id": "tool-hoe-shaft",
+          "type": "pillar",
+          "chars": ["╎"],
+          "textColor": "#6b5d4f",
+          "fontSize": 10,
+          "position": { "x": 385, "y": 610, "z": 6 },
+          "dimensions": { "width": 4, "height": 40 }
+        },
+        {
+          "id": "tool-hoe-head",
+          "type": "inscription",
+          "text": "▬",
+          "position": { "x": 390, "y": 608, "z": 7 },
+          "fontSize": 8,
+          "color": "#6b5d4f",
+          "fontFamily": "monospace"
+        },
+        {
+          "id": "tool-spade-shaft",
+          "type": "pillar",
+          "chars": ["╎"],
+          "textColor": "#6b5d4f",
+          "fontSize": 10,
+          "position": { "x": 400, "y": 615, "z": 6 },
+          "dimensions": { "width": 4, "height": 35 }
+        },
+        {
+          "id": "tool-spade-head",
+          "type": "inscription",
+          "text": "▼",
+          "position": { "x": 395, "y": 610, "z": 7 },
+          "fontSize": 7,
+          "color": "#8b7d6b",
+          "fontFamily": "monospace"
+        }
+      ],
+      "interaction": {
+        "label": "Take a tool",
+        "zone": { "x": 370, "y": 590, "width": 160, "height": 80 },
+        "toast": [
+          "A hoe. The handle is worn smooth by many hands.",
+          "A spade. Sharp. Ready for digging.",
+          "A rake. Wooden tines. Good for turning soil.",
+          "A trowel. Small. Perfect for radishes."
+        ]
+      }
+    },
+
+    {
+      "id": "field",
+      "name": "Crop Field",
+      "build": "floor",
+      "material": "field_soil",
+      "position": { "x": 30, "y": 360, "z": 2 },
+      "dimensions": { "width": 840, "height": 230 },
+      "perspectiveStrength": 6
+    },
+
+    {
+      "id": "path",
+      "name": "Path",
+      "build": "floor",
+      "material": "flagstone_worn",
+      "position": { "x": 0, "y": 680, "z": 3 },
+      "dimensions": { "width": 900, "height": 40 },
+      "perspectiveStrength": 3,
+      "components": [
+        {
+          "id": "path-harbor",
+          "type": "inscription",
+          "text": "HARBOR →",
+          "position": { "x": 60, "y": 692, "z": 6 },
+          "fontSize": 7,
+          "color": "#8b7d6b",
+          "fontFamily": "'Cinzel',serif"
+        },
+        {
+          "id": "path-chapel",
+          "type": "inscription",
+          "text": "← CHAPEL",
+          "position": { "x": 680, "y": 705, "z": 6 },
+          "fontSize": 7,
+          "color": "#8b7d6b",
+          "fontFamily": "'Cinzel',serif"
+        }
+      ]
+    },
+
+    {
+      "id": "nav-harbor",
+      "zone": "harbor-nav",
+      "interaction": {
+        "label": "Walk to the harbor",
+        "zone": { "x": 20, "y": 680, "width": 150, "height": 40 },
+        "transition": "harbor.html?from=farm"
+      }
+    },
+
+    {
+      "id": "nav-chapel",
+      "zone": "chapel-nav",
+      "interaction": {
+        "label": "Walk to the Coal Chapel",
+        "zone": { "x": 630, "y": 690, "width": 150, "height": 35 },
+        "transition": "chapel.html?from=farm"
+      }
+    }
+  ],
+
+  "crops": [
+    {
+      "id": "radishes",
+      "name": "Radishes",
+      "glyph": "◉",
+      "color": "#c84444",
+      "resource": "Radishes",
+      "row": { "x": 80, "y": 370, "count": 8, "spacing": 30 },
+      "whispers": [
+        "You pull a radish. Small, round, red. The earth clings to it.",
+        "A perfect radish. Cool from the ground. Sharp and clean.",
+        "Pop! The radish comes free. White inside. Ready to eat.",
+        "You tug gently. The radish releases. Another will grow in its place."
+      ]
+    },
+    {
+      "id": "wheat",
+      "name": "Wheat",
+      "glyph": "╎",
+      "color": "#e8c878",
+      "resource": "Grain",
+      "row": { "x": 80, "y": 420, "count": 14, "spacing": 20 },
+      "whispers": [
+        "You cut a sheaf of wheat. Golden. Heavy with grain.",
+        "The wheat rustles. A good harvest. The bread will be plenty.",
+        "You gather the stalks. They whisper against each other.",
+        "A sheaf in hand. The field gives freely."
+      ]
+    },
+    {
+      "id": "carrots",
+      "name": "Carrots",
+      "glyph": "▼",
+      "color": "#e87830",
+      "resource": "Carrots",
+      "row": { "x": 80, "y": 465, "count": 10, "spacing": 25 },
+      "whispers": [
+        "You pull a carrot. Long and orange. It snaps from the soil.",
+        "The carrot comes up clean. Sweet smell. The rabbits will be jealous.",
+        "A fine carrot. Still cool. The earth holds its flavor.",
+        "You brush the dirt off. Crunchy. Fresh. Perfect for stew."
+      ]
+    },
+    {
+      "id": "cabbages",
+      "name": "Cabbages",
+      "glyph": "◆",
+      "color": "#6a8a4a",
+      "resource": "Cabbages",
+      "row": { "x": 80, "y": 505, "count": 7, "spacing": 35 },
+      "whispers": [
+        "You lift a cabbage. Heavy. Layer after layer of green.",
+        "The cabbage comes free with a twist. Solid. Good weight.",
+        "A beautiful cabbage. Tight leaves. The core is pale and sweet.",
+        "You cradle the cabbage. It's a whole meal in your hands."
+      ]
+    }
+  ],
+
+  "atmosphere": {
+    "lights": [
+      { "color": "#ffd599", "radius": 120, "x": "50%", "y": "8%", "pulse": true, "z": 0 }
+    ],
+    "particles": {
+      "type": "dust",
+      "count": 10,
+      "color": "rgba(244,228,193,0.1)",
+      "minSize": 1,
+      "maxSize": 2,
+      "zone": { "x": 30, "y": 360, "width": 840, "height": 230 },
+      "duration": { "min": 15, "max": 30 },
+      "z": 2
+    }
+  }
+}
