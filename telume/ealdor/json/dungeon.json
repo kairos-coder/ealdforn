@@ -1,0 +1,312 @@
+{
+  "name": "The Tablet Vault",
+  "description": "Beneath the Coal Chapel, older than the castle, a crypt carved from cyclopean stone where the six tablets are kept and the seventh waits to be written.",
+  "dimensions": {
+    "width": 5,
+    "height": 1,
+    "depth": 5
+  },
+  "cellSize": {
+    "width": 400,
+    "height": 300
+  },
+  "startPosition": {
+    "x": 2,
+    "y": 0,
+    "z": 4,
+    "facing": "north"
+  },
+  "materials": {
+    "cyclopean": {
+      "chars": ["█","▓","▒","█","▓"],
+      "textColor": "#3d362f",
+      "mortarColor": "#1a1410",
+      "fontSize": 44,
+      "lineHeight": 0.55,
+      "letterSpacing": -1,
+      "fontFamily": "monospace"
+    },
+    "cyclopean_moss": {
+      "chars": ["▓","░","▒","▓","░"],
+      "textColor": "#4a5a3a",
+      "mortarColor": "#2a3020",
+      "fontSize": 44,
+      "lineHeight": 0.55,
+      "letterSpacing": -1,
+      "fontFamily": "monospace"
+    },
+    "flagstone_ancient": {
+      "chars": ["▓","░","▒","█","░"],
+      "textColor": "#5c4f42",
+      "mortarColor": "#3a3028",
+      "fontSize": 40,
+      "lineHeight": 0.47,
+      "letterSpacing": -2,
+      "fontFamily": "'Georgia','Times New Roman',serif"
+    },
+    "vault_stone": {
+      "chars": ["⌢","⌣","~","⋅"," "],
+      "textColor": "#2a2520",
+      "mortarColor": "transparent",
+      "fontSize": 14,
+      "lineHeight": 0.85,
+      "letterSpacing": 2,
+      "fontFamily": "'Georgia','Times New Roman',serif"
+    },
+    "void": {
+      "chars": [" "],
+      "textColor": "transparent",
+      "mortarColor": "transparent",
+      "fontSize": 10,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "monospace"
+    },
+    "darkness": {
+      "chars": [" "],
+      "textColor": "#0a0806",
+      "mortarColor": "#0a0806",
+      "fontSize": 10,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "monospace"
+    },
+    "crystal_vein": {
+      "chars": ["◆","◇","◈","◆","◇"],
+      "textColor": "#a0d8f0",
+      "mortarColor": "#2a4a5a",
+      "fontSize": 24,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "'Georgia',serif"
+    },
+    "water_seep": {
+      "chars": ["~","⋅","~","⋅","~"],
+      "textColor": "#1a3040",
+      "mortarColor": "#0f1a20",
+      "fontSize": 20,
+      "lineHeight": 0.5,
+      "letterSpacing": 1,
+      "fontFamily": "'Georgia',serif"
+    }
+  },
+  "cells": [
+    {
+      "x": 0, "y": 0, "z": 0,
+      "faces": {
+        "north": "darkness",
+        "south": "cyclopean_moss",
+        "east": "cyclopean",
+        "west": "darkness",
+        "floor": "water_seep",
+        "ceiling": "vault_stone"
+      },
+      "description": "A dead end. Water drips from the ceiling. The walls are slick with moss."
+    },
+    {
+      "x": 1, "y": 0, "z": 0,
+      "faces": {
+        "north": "darkness",
+        "south": "cyclopean",
+        "east": "void",
+        "west": "cyclopean",
+        "floor": "flagstone_ancient",
+        "ceiling": "vault_stone"
+      }
+    },
+    {
+      "x": 2, "y": 0, "z": 0,
+      "faces": {
+        "north": "darkness",
+        "south": "cyclopean",
+        "east": "void",
+        "west": "void",
+        "floor": "flagstone_ancient",
+        "ceiling": "vault_stone"
+      }
+    },
+    {
+      "x": 3, "y": 0, "z": 0,
+      "faces": {
+        "north": "darkness",
+        "south": "cyclopean",
+        "east": "darkness",
+        "west": "void",
+        "floor": "flagstone_ancient",
+        "ceiling": "vault_stone"
+      }
+    },
+    {
+      "x": 4, "y": 0, "z": 0,
+      "faces": {
+        "north": "darkness",
+        "south": "cyclopean",
+        "east": "darkness",
+        "west": "darkness",
+        "floor": "flagstone_ancient",
+        "ceiling": "vault_stone"
+      }
+    },
+    {
+      "x": 2, "y": 0, "z": 1,
+      "faces": {
+        "north": "cyclopean",
+        "south": "void",
+        "east": "void",
+        "west": "cyclopean",
+        "floor": "flagstone_ancient",
+        "ceiling": "vault_stone"
+      }
+    },
+    {
+      "x": 2, "y": 0, "z": 2,
+      "faces": {
+        "north": "void",
+        "south": "cyclopean",
+        "east": "cyclopean",
+        "west": "void",
+        "floor": "flagstone_ancient",
+        "ceiling": "vault_stone"
+      },
+      "description": "The Vault Chamber. Six alcoves line the walls. The seventh alcove is empty. The air hums with something ancient.",
+      "objects": [
+        {
+          "type": "tablet_alcove",
+          "id": "tablet_1",
+          "wall": "east",
+          "position": { "x": 80, "y": 120 },
+          "tablet": 1,
+          "glyph": "𐤀",
+          "inscription": "The ox carries the burden. The beginning is heavy."
+        },
+        {
+          "type": "tablet_alcove",
+          "id": "tablet_2",
+          "wall": "east",
+          "position": { "x": 80, "y": 170 },
+          "tablet": 2,
+          "glyph": "𐤁",
+          "inscription": "The house holds. What is contained is sacred."
+        },
+        {
+          "type": "tablet_alcove",
+          "id": "tablet_3",
+          "wall": "east",
+          "position": { "x": 80, "y": 220 },
+          "tablet": 3,
+          "glyph": "𐤂",
+          "inscription": "The camel crosses. The journey is the covenant."
+        },
+        {
+          "type": "tablet_alcove",
+          "id": "tablet_4",
+          "wall": "west",
+          "position": { "x": 80, "y": 120 },
+          "tablet": 4,
+          "glyph": "𐤃",
+          "inscription": "The door opens. The threshold must be held."
+        },
+        {
+          "type": "tablet_alcove",
+          "id": "tablet_5",
+          "wall": "west",
+          "position": { "x": 80, "y": 170 },
+          "tablet": 5,
+          "glyph": "𐤄",
+          "inscription": "The window sees. Breath moves through."
+        },
+        {
+          "type": "tablet_alcove",
+          "id": "tablet_6",
+          "wall": "west",
+          "position": { "x": 80, "y": 220 },
+          "tablet": 6,
+          "glyph": "𐤅",
+          "inscription": "The nail binds. What is fastened holds fast."
+        },
+        {
+          "type": "empty_alcove",
+          "id": "tablet_7",
+          "wall": "north",
+          "position": { "x": 200, "y": 100 },
+          "tablet": 7,
+          "glyph": "𐤕",
+          "inscription": "The mark seals. The seventh is not yet written."
+        }
+      ],
+      "light": {
+        "source": "crystal",
+        "color": "#a0d8f0",
+        "radius": 200,
+        "pulse": true
+      }
+    },
+    {
+      "x": 2, "y": 0, "z": 3,
+      "faces": {
+        "north": "cyclopean",
+        "south": "cyclopean",
+        "east": "void",
+        "west": "cyclopean",
+        "floor": "flagstone_ancient",
+        "ceiling": "vault_stone"
+      }
+    },
+    {
+      "x": 1, "y": 0, "z": 3,
+      "faces": {
+        "north": "cyclopean",
+        "south": "void",
+        "east": "void",
+        "west": "darkness",
+        "floor": "flagstone_ancient",
+        "ceiling": "vault_stone"
+      },
+      "description": "A side passage. Glyphs are carved into the north wall — warnings, or promises."
+    },
+    {
+      "x": 0, "y": 0, "z": 3,
+      "faces": {
+        "north": "cyclopean",
+        "south": "darkness",
+        "east": "void",
+        "west": "darkness",
+        "floor": "flagstone_ancient",
+        "ceiling": "vault_stone"
+      },
+      "description": "A small chamber. The bones of something large rest against the far wall. Not human."
+    },
+    {
+      "x": 2, "y": 0, "z": 4,
+      "faces": {
+        "north": "cyclopean",
+        "south": "void",
+        "east": "cyclopean",
+        "west": "void",
+        "floor": "flagstone_ancient",
+        "ceiling": "vault_stone"
+      },
+      "description": "The entrance. A stone ladder leads up to the chapel. Cold air spills down from above.",
+      "objects": [
+        {
+          "type": "ladder_up",
+          "id": "ladder_exit",
+          "wall": "south",
+          "position": { "x": 180, "y": 80 },
+          "destination": "chapel",
+          "label": "Climb to the Coal Chapel"
+        }
+      ],
+      "light": {
+        "source": "above",
+        "color": "#c44f1c",
+        "radius": 120
+      }
+    }
+  ],
+  "ambient": {
+    "sound": "dripping_water",
+    "particles": ["dust_motes", "crystal_sparkles"],
+    "temperature": "cold"
+  }
+}
