@@ -331,33 +331,32 @@
         m.buildFloor({ ...FontMason.mat('field_soil'), x:30, y:370, width:840, height:230, z:2, perspectiveStrength:6 });
 
         // Crop rows
-        const cropData = [
-            { name:'RADISHES', glyph:'◉', color:var(--radish-red), harvestKey:'radishesHarvested', x:80, y:380, count:8, spacing:30, whispers:[
-                'You pull a radish. Small, round, red. The earth clings to it.',
-                'A perfect radish. Cool from the ground. Sharp and clean.',
-                'Pop! The radish comes free. White inside. Ready to eat.',
-                'You tug gently. The radish releases. Another will grow in its place.'
-            ]},
-            { name:'WHEAT', glyph:'╎', color:var(--wheat-pale), harvestKey:'wheatHarvested', x:80, y:430, count:14, spacing:20, whispers:[
-                'You cut a sheaf of wheat. Golden. Heavy with grain.',
-                'The wheat rustles. A good harvest. The bread will be plenty.',
-                'You gather the stalks. They whisper against each other.',
-                'A sheaf in hand. The field gives freely.'
-            ]},
-            { name:'CARROTS', glyph:'▼', color:var(--carrot), harvestKey:'carrotsHarvested', x:80, y:475, count:10, spacing:25, whispers:[
-                'You pull a carrot. Long and orange. It snaps from the soil.',
-                'The carrot comes up clean. Sweet smell. The rabbits will be jealous.',
-                'A fine carrot. Still cool. The earth holds its flavor.',
-                'You brush the dirt off. Crunchy. Fresh. Perfect for stew.'
-            ]},
-            { name:'CABBAGES', glyph:'◆', color:var(--cabbage), harvestKey:'cabbagesHarvested', x:80, y:515, count:7, spacing:35, whispers:[
-                'You lift a cabbage. Heavy. Layer after layer of green.',
-                'The cabbage comes free with a twist. Solid. Good weight.',
-                'A beautiful cabbage. Tight leaves. The core is pale and sweet.',
-                'You cradle the cabbage. It\'s a whole meal in your hands.'
-            ]},
-        ];
-
+       const cropData = [
+    { name:'RADISHES', glyph:'◉', color:'#c84444', harvestKey:'radishesHarvested', x:80, y:380, count:8, spacing:30, whispers:[
+        'You pull a radish. Small, round, red. The earth clings to it.',
+        'A perfect radish. Cool from the ground. Sharp and clean.',
+        'Pop! The radish comes free. White inside. Ready to eat.',
+        'You tug gently. The radish releases. Another will grow in its place.'
+    ]},
+    { name:'WHEAT', glyph:'╎', color:'#e8c878', harvestKey:'wheatHarvested', x:80, y:430, count:14, spacing:20, whispers:[
+        'You cut a sheaf of wheat. Golden. Heavy with grain.',
+        'The wheat rustles. A good harvest. The bread will be plenty.',
+        'You gather the stalks. They whisper against each other.',
+        'A sheaf in hand. The field gives freely.'
+    ]},
+    { name:'CARROTS', glyph:'▼', color:'#e87830', harvestKey:'carrotsHarvested', x:80, y:475, count:10, spacing:25, whispers:[
+        'You pull a carrot. Long and orange. It snaps from the soil.',
+        'The carrot comes up clean. Sweet smell. The rabbits will be jealous.',
+        'A fine carrot. Still cool. The earth holds its flavor.',
+        'You brush the dirt off. Crunchy. Fresh. Perfect for stew.'
+    ]},
+    { name:'CABBAGES', glyph:'◆', color:'#6a8a4a', harvestKey:'cabbagesHarvested', x:80, y:515, count:7, spacing:35, whispers:[
+        'You lift a cabbage. Heavy. Layer after layer of green.',
+        'The cabbage comes free with a twist. Solid. Good weight.',
+        'A beautiful cabbage. Tight leaves. The core is pale and sweet.',
+        'You cradle the cabbage. It\'s a whole meal in your hands.'
+    ]},
+];
         cropData.forEach(crop => {
             // Row label
             m.buildInscription({
