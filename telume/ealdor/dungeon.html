@@ -1,312 +1,499 @@
-{
-  "name": "The Tablet Vault",
-  "description": "Beneath the Coal Chapel, older than the castle, a crypt carved from cyclopean stone where the six tablets are kept and the seventh waits to be written.",
-  "dimensions": {
-    "width": 5,
-    "height": 1,
-    "depth": 5
-  },
-  "cellSize": {
-    "width": 400,
-    "height": 300
-  },
-  "startPosition": {
-    "x": 2,
-    "y": 0,
-    "z": 4,
-    "facing": "north"
-  },
-  "materials": {
-    "cyclopean": {
-      "chars": ["█","▓","▒","█","▓"],
-      "textColor": "#3d362f",
-      "mortarColor": "#1a1410",
-      "fontSize": 44,
-      "lineHeight": 0.55,
-      "letterSpacing": -1,
-      "fontFamily": "monospace"
-    },
-    "cyclopean_moss": {
-      "chars": ["▓","░","▒","▓","░"],
-      "textColor": "#4a5a3a",
-      "mortarColor": "#2a3020",
-      "fontSize": 44,
-      "lineHeight": 0.55,
-      "letterSpacing": -1,
-      "fontFamily": "monospace"
-    },
-    "flagstone_ancient": {
-      "chars": ["▓","░","▒","█","░"],
-      "textColor": "#5c4f42",
-      "mortarColor": "#3a3028",
-      "fontSize": 40,
-      "lineHeight": 0.47,
-      "letterSpacing": -2,
-      "fontFamily": "'Georgia','Times New Roman',serif"
-    },
-    "vault_stone": {
-      "chars": ["⌢","⌣","~","⋅"," "],
-      "textColor": "#2a2520",
-      "mortarColor": "transparent",
-      "fontSize": 14,
-      "lineHeight": 0.85,
-      "letterSpacing": 2,
-      "fontFamily": "'Georgia','Times New Roman',serif"
-    },
-    "void": {
-      "chars": [" "],
-      "textColor": "transparent",
-      "mortarColor": "transparent",
-      "fontSize": 10,
-      "lineHeight": 0.5,
-      "letterSpacing": 0,
-      "fontFamily": "monospace"
-    },
-    "darkness": {
-      "chars": [" "],
-      "textColor": "#0a0806",
-      "mortarColor": "#0a0806",
-      "fontSize": 10,
-      "lineHeight": 0.5,
-      "letterSpacing": 0,
-      "fontFamily": "monospace"
-    },
-    "crystal_vein": {
-      "chars": ["◆","◇","◈","◆","◇"],
-      "textColor": "#a0d8f0",
-      "mortarColor": "#2a4a5a",
-      "fontSize": 24,
-      "lineHeight": 0.5,
-      "letterSpacing": 0,
-      "fontFamily": "'Georgia',serif"
-    },
-    "water_seep": {
-      "chars": ["~","⋅","~","⋅","~"],
-      "textColor": "#1a3040",
-      "mortarColor": "#0f1a20",
-      "fontSize": 20,
-      "lineHeight": 0.5,
-      "letterSpacing": 1,
-      "fontFamily": "'Georgia',serif"
-    }
-  },
-  "cells": [
-    {
-      "x": 0, "y": 0, "z": 0,
-      "faces": {
-        "north": "darkness",
-        "south": "cyclopean_moss",
-        "east": "cyclopean",
-        "west": "darkness",
-        "floor": "water_seep",
-        "ceiling": "vault_stone"
-      },
-      "description": "A dead end. Water drips from the ceiling. The walls are slick with moss."
-    },
-    {
-      "x": 1, "y": 0, "z": 0,
-      "faces": {
-        "north": "darkness",
-        "south": "cyclopean",
-        "east": "void",
-        "west": "cyclopean",
-        "floor": "flagstone_ancient",
-        "ceiling": "vault_stone"
-      }
-    },
-    {
-      "x": 2, "y": 0, "z": 0,
-      "faces": {
-        "north": "darkness",
-        "south": "cyclopean",
-        "east": "void",
-        "west": "void",
-        "floor": "flagstone_ancient",
-        "ceiling": "vault_stone"
-      }
-    },
-    {
-      "x": 3, "y": 0, "z": 0,
-      "faces": {
-        "north": "darkness",
-        "south": "cyclopean",
-        "east": "darkness",
-        "west": "void",
-        "floor": "flagstone_ancient",
-        "ceiling": "vault_stone"
-      }
-    },
-    {
-      "x": 4, "y": 0, "z": 0,
-      "faces": {
-        "north": "darkness",
-        "south": "cyclopean",
-        "east": "darkness",
-        "west": "darkness",
-        "floor": "flagstone_ancient",
-        "ceiling": "vault_stone"
-      }
-    },
-    {
-      "x": 2, "y": 0, "z": 1,
-      "faces": {
-        "north": "cyclopean",
-        "south": "void",
-        "east": "void",
-        "west": "cyclopean",
-        "floor": "flagstone_ancient",
-        "ceiling": "vault_stone"
-      }
-    },
-    {
-      "x": 2, "y": 0, "z": 2,
-      "faces": {
-        "north": "void",
-        "south": "cyclopean",
-        "east": "cyclopean",
-        "west": "void",
-        "floor": "flagstone_ancient",
-        "ceiling": "vault_stone"
-      },
-      "description": "The Vault Chamber. Six alcoves line the walls. The seventh alcove is empty. The air hums with something ancient.",
-      "objects": [
-        {
-          "type": "tablet_alcove",
-          "id": "tablet_1",
-          "wall": "east",
-          "position": { "x": 80, "y": 120 },
-          "tablet": 1,
-          "glyph": "𐤀",
-          "inscription": "The ox carries the burden. The beginning is heavy."
-        },
-        {
-          "type": "tablet_alcove",
-          "id": "tablet_2",
-          "wall": "east",
-          "position": { "x": 80, "y": 170 },
-          "tablet": 2,
-          "glyph": "𐤁",
-          "inscription": "The house holds. What is contained is sacred."
-        },
-        {
-          "type": "tablet_alcove",
-          "id": "tablet_3",
-          "wall": "east",
-          "position": { "x": 80, "y": 220 },
-          "tablet": 3,
-          "glyph": "𐤂",
-          "inscription": "The camel crosses. The journey is the covenant."
-        },
-        {
-          "type": "tablet_alcove",
-          "id": "tablet_4",
-          "wall": "west",
-          "position": { "x": 80, "y": 120 },
-          "tablet": 4,
-          "glyph": "𐤃",
-          "inscription": "The door opens. The threshold must be held."
-        },
-        {
-          "type": "tablet_alcove",
-          "id": "tablet_5",
-          "wall": "west",
-          "position": { "x": 80, "y": 170 },
-          "tablet": 5,
-          "glyph": "𐤄",
-          "inscription": "The window sees. Breath moves through."
-        },
-        {
-          "type": "tablet_alcove",
-          "id": "tablet_6",
-          "wall": "west",
-          "position": { "x": 80, "y": 220 },
-          "tablet": 6,
-          "glyph": "𐤅",
-          "inscription": "The nail binds. What is fastened holds fast."
-        },
-        {
-          "type": "empty_alcove",
-          "id": "tablet_7",
-          "wall": "north",
-          "position": { "x": 200, "y": 100 },
-          "tablet": 7,
-          "glyph": "𐤕",
-          "inscription": "The mark seals. The seventh is not yet written."
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Tablet Vault · Ealdor</title>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --stone: #3d362f; --deep-stone: #2a2520; --mortar: #1a1612;
+            --parchment: #f4e4c1; --ember: #c44f1c; --ember-bright: #e85d2c;
+            --ash: #8b7d6b; --frost: #c8d8e4; --gold: #b8860b; --deep: #1a1410; --void: #0a0806;
+            --crystal: #a0d8f0;
         }
-      ],
-      "light": {
-        "source": "crystal",
-        "color": "#a0d8f0",
-        "radius": 200,
-        "pulse": true
-      }
-    },
-    {
-      "x": 2, "y": 0, "z": 3,
-      "faces": {
-        "north": "cyclopean",
-        "south": "cyclopean",
-        "east": "void",
-        "west": "cyclopean",
-        "floor": "flagstone_ancient",
-        "ceiling": "vault_stone"
-      }
-    },
-    {
-      "x": 1, "y": 0, "z": 3,
-      "faces": {
-        "north": "cyclopean",
-        "south": "void",
-        "east": "void",
-        "west": "darkness",
-        "floor": "flagstone_ancient",
-        "ceiling": "vault_stone"
-      },
-      "description": "A side passage. Glyphs are carved into the north wall — warnings, or promises."
-    },
-    {
-      "x": 0, "y": 0, "z": 3,
-      "faces": {
-        "north": "cyclopean",
-        "south": "darkness",
-        "east": "void",
-        "west": "darkness",
-        "floor": "flagstone_ancient",
-        "ceiling": "vault_stone"
-      },
-      "description": "A small chamber. The bones of something large rest against the far wall. Not human."
-    },
-    {
-      "x": 2, "y": 0, "z": 4,
-      "faces": {
-        "north": "cyclopean",
-        "south": "void",
-        "east": "cyclopean",
-        "west": "void",
-        "floor": "flagstone_ancient",
-        "ceiling": "vault_stone"
-      },
-      "description": "The entrance. A stone ladder leads up to the chapel. Cold air spills down from above.",
-      "objects": [
-        {
-          "type": "ladder_up",
-          "id": "ladder_exit",
-          "wall": "south",
-          "position": { "x": 180, "y": 80 },
-          "destination": "chapel",
-          "label": "Climb to the Coal Chapel"
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--void);
+            color: var(--parchment);
+            font-family: 'Georgia','Times New Roman',serif;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; overflow: hidden;
         }
-      ],
-      "light": {
-        "source": "above",
-        "color": "#c44f1c",
-        "radius": 120
-      }
+
+        /* ── HEADER ── */
+        .dungeon-header {
+            text-align: center; padding: 0.8rem 1rem 0.2rem; width: 100%; z-index: 10;
+        }
+        .dungeon-header h1 {
+            font-family: 'UnifrakturMaguntia',cursive;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(184,134,11,0.3), 2px 2px 0 var(--void);
+            letter-spacing: 3px;
+        }
+        .dungeon-header .subtitle {
+            font-family: 'Cinzel',serif; font-size: 0.6rem; color: var(--ash);
+            letter-spacing: 4px; text-transform: uppercase;
+        }
+        .dungeon-header .location {
+            font-size: 0.7rem; color: var(--crystal); margin-top: 0.2rem;
+            font-style: italic;
+        }
+
+        /* ── VIEWPORT ── */
+        #dungeon-viewport {
+            position: relative;
+            width: 820px; max-width: 98vw;
+            height: 420px;
+            margin: 0.3rem auto;
+            overflow: hidden;
+            border: 4px solid var(--deep-stone);
+            border-radius: 4px;
+            box-shadow: 0 0 60px rgba(0,0,0,0.7), inset 0 0 30px rgba(0,0,0,0.3);
+            background: var(--void);
+        }
+        @media (max-width: 840px) {
+            #dungeon-viewport { width: 98vw; height: calc(98vw * 0.51); }
+        }
+
+        /* ── CONTROLS ── */
+        .dungeon-controls {
+            display: flex; gap: 8px; justify-content: center; padding: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .ctrl-btn {
+            width: 50px; height: 50px;
+            background: var(--deep-stone);
+            border: 2px solid var(--ash);
+            border-radius: 8px;
+            color: var(--parchment);
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Cinzel',serif;
+        }
+        .ctrl-btn:hover { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 12px rgba(184,134,11,0.2); }
+        .ctrl-btn:active { transform: scale(0.93); background: var(--stone); }
+        .ctrl-btn.forward { width: 70px; }
+        .ctrl-btn.updown { background: #1a2a30; border-color: #3a5a6a; }
+
+        /* ── INFO PANEL ── */
+        .info-panel {
+            width: 90%; max-width: 500px; margin: 0 auto 1rem;
+            background: rgba(10,8,6,0.85); border: 1px solid var(--ash);
+            border-radius: 6px; padding: 0.5rem 0.8rem;
+            font-size: 0.7rem; text-align: center; line-height: 1.5;
+            min-height: 2.5em;
+        }
+        .info-panel .desc { color: var(--ash); font-style: italic; }
+        .info-panel .coord { color: var(--crystal); font-size: 0.6rem; margin-top: 0.2rem; }
+
+        /* ── MINIMAP ── */
+        .minimap {
+            width: 90%; max-width: 300px; margin: 0 auto 1rem;
+            display: grid; gap: 2px;
+            background: var(--deep); border: 2px solid var(--deep-stone);
+            border-radius: 4px; padding: 4px;
+        }
+        .minimap-cell {
+            aspect-ratio: 1;
+            border-radius: 2px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.5rem; color: rgba(255,255,255,0.5);
+        }
+        .minimap-cell.wall { background: #2a2520; }
+        .minimap-cell.passage { background: #3d362f; }
+        .minimap-cell.vault { background: #2a4a5a; }
+        .minimap-cell.player { background: var(--gold); box-shadow: 0 0 8px rgba(184,134,11,0.5); }
+
+        /* ── ZONES ── */
+        .zone { cursor: pointer; transition: filter 0.25s, transform 0.25s; }
+        .zone:hover { filter: brightness(1.4); z-index: 50 !important; }
+        .zone:active { transform: scale(0.93); transition: transform 0.1s; }
+
+        /* ── TOAST ── */
+        #toast {
+            position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+            background: rgba(10,8,6,0.94); border: 1px solid var(--gold);
+            border-radius: 6px; padding: 0.5rem 1.2rem;
+            font-family: 'Georgia',serif; font-size: 0.75rem;
+            z-index: 200; opacity: 0; transition: opacity 0.35s;
+            pointer-events: none; text-align: center; max-width: 400px; line-height: 1.4;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5); white-space: pre-line;
+        }
+        #toast.show { opacity: 1; }
+
+        @keyframes coalPulse {
+            0%,100%{box-shadow:0 0 12px var(--ember),0 0 28px rgba(196,79,28,0.25)}
+            50%{box-shadow:0 0 22px var(--ember-bright),0 0 45px rgba(196,79,28,0.45)}
+        }
+        @keyframes crystalPulse {
+            0%,100%{box-shadow:0 0 12px #a0d8f0,0 0 28px rgba(160,216,240,0.25)}
+            50%{box-shadow:0 0 22px #c0e8ff,0 0 45px rgba(160,216,240,0.45)}
+        }
+        @keyframes sparkFade {
+            0%{transform:scale(0.5);opacity:1}
+            100%{transform:scale(2.5);opacity:0}
+        }
+    </style>
+</head>
+<body>
+
+    <header class="dungeon-header">
+        <h1>The Tablet Vault</h1>
+        <div class="subtitle">Beneath the Coal Chapel</div>
+        <div class="location" id="locationText">The Entrance</div>
+    </header>
+
+    <div id="dungeon-viewport"></div>
+
+    <div class="dungeon-controls">
+        <button class="ctrl-btn" onclick="dungeon.turn('left')" title="Turn Left">↰</button>
+        <button class="ctrl-btn forward" onclick="dungeon.moveForward()" title="Move Forward">▲</button>
+        <button class="ctrl-btn" onclick="dungeon.turn('right')" title="Turn Right">↱</button>
+        <button class="ctrl-btn updown" onclick="dungeon.ascend()" title="Ascend">↑</button>
+        <button class="ctrl-btn updown" onclick="dungeon.descend()" title="Descend">↓</button>
+    </div>
+
+    <div class="info-panel" id="infoPanel">
+        <span class="desc">The entrance. A stone ladder leads up to the chapel. Cold air spills down from above.</span>
+        <div class="coord" id="coordText">x:2 y:0 z:4 · facing north</div>
+    </div>
+
+    <div class="minimap" id="minimap"></div>
+
+    <div id="toast"></div>
+
+    <script src="js/font-mason.js"></script>
+    <script>
+    /*
+     * ═══════════════════════════════════════════════
+     * DUNGEON RENDERER · The Tablet Vault
+     * ealdforn/telume/ealdor/dungeon.html
+     *
+     * Reads dungeon.json. Renders current cell as FontMason scene.
+     * Every wall is typography. Every room is a JSON cell.
+     * ═══════════════════════════════════════════════
+     */
+
+    // ── TOAST ──
+    const toastEl = document.getElementById('toast');
+    let toastTimer;
+    function toast(msg, d = 2500) {
+        toastEl.textContent = msg; toastEl.classList.add('show');
+        clearTimeout(toastTimer); toastTimer = setTimeout(() => toastEl.classList.remove('show'), d);
     }
-  ],
-  "ambient": {
-    "sound": "dripping_water",
-    "particles": ["dust_motes", "crystal_sparkles"],
-    "temperature": "cold"
-  }
-}
+
+    // ── DUNGEON STATE ──
+    class DungeonCrawler {
+        constructor(viewportId) {
+            this.viewport = document.getElementById(viewportId);
+            this.mason = null;
+            this.dungeon = null;
+            this.pos = { x: 0, y: 0, z: 0 };
+            this.facing = 'north';
+        }
+
+        async load(jsonUrl) {
+            const resp = await fetch(jsonUrl);
+            this.dungeon = await resp.json();
+            this.pos = { ...this.dungeon.startPosition };
+            this.facing = this.dungeon.startPosition.facing || 'north';
+            this.render();
+        }
+
+        getCell(x, y, z) {
+            return this.dungeon.cells.find(c => c.x === x && c.y === y && c.z === z);
+        }
+
+        getCellInDirection(pos, dir) {
+            const off = { north:[0,0,-1], south:[0,0,1], east:[1,0,0], west:[-1,0,0] }[dir];
+            return this.getCell(pos.x + off[0], pos.y + off[1], pos.z + off[2]);
+        }
+
+        oppositeFace(dir) {
+            return { north:'south', south:'north', east:'west', west:'east' }[dir];
+        }
+
+        turnLeft(dir) { return { north:'west', west:'south', south:'east', east:'north' }[dir]; }
+        turnRight(dir) { return { north:'east', east:'south', south:'west', west:'north' }[dir]; }
+
+        moveForward() {
+            const off = { north:[0,0,-1], south:[0,0,1], east:[1,0,0], west:[-1,0,0] }[this.facing];
+            const next = this.getCell(this.pos.x + off[0], this.pos.y + off[1], this.pos.z + off[2]);
+            if (next) {
+                this.pos.x += off[0]; this.pos.z += off[2];
+                this.render();
+                if (next.description) toast(next.description, 3000);
+                return true;
+            }
+            toast('Solid rock. No passage.');
+            return false;
+        }
+
+        turn(dir) {
+            this.facing = dir === 'left' ? this.turnLeft(this.facing) : this.turnRight(this.facing);
+            this.render();
+        }
+
+        ascend() {
+            const next = this.getCell(this.pos.x, this.pos.y + 1, this.pos.z);
+            if (next) { this.pos.y += 1; this.render(); toast('You climb upward.'); }
+            else { toast('Nothing above but stone.'); }
+        }
+
+        descend() {
+            const next = this.getCell(this.pos.x, this.pos.y - 1, this.pos.z);
+            if (next) { this.pos.y -= 1; this.render(); toast('You descend deeper.'); }
+            else { toast('Nothing below but bedrock.'); }
+        }
+
+        // ═══════════════════════════════════════
+        // RENDER
+        // ═══════════════════════════════════════
+
+        render() {
+            this.viewport.innerHTML = '';
+            this.mason = new FontMason(this.viewport.id);
+
+            const cell = this.getCell(this.pos.x, this.pos.y, this.pos.z);
+            if (!cell) { this.viewport.innerHTML = '<div style="color:#c44f1c;text-align:center;padding:3rem;">VOID</div>'; return; }
+
+            const dims = this.dungeon.cellSize;
+            const matLib = this.dungeon.materials;
+            const faces = cell.faces;
+
+            // Determine visible faces
+            const farFace = this.facing;
+            const leftFace = this.turnLeft(this.facing);
+            const rightFace = this.turnRight(this.facing);
+
+            // What's on the far side?
+            const farCell = this.getCellInDirection(this.pos, this.facing);
+            const farMatName = farCell ? farCell.faces[this.oppositeFace(this.facing)] : 'darkness';
+            const farMat = matLib[farMatName] || matLib['cyclopean'];
+
+            // FAR WALL
+            if (farMatName !== 'void') {
+                this.mason.buildWall({
+                    ...farMat,
+                    x: 30, y: 15,
+                    width: dims.width - 60, height: dims.height - 30,
+                    z: 0,
+                });
+            }
+
+            // LEFT WALL
+            const leftCell = this.getCellInDirection(this.pos, leftFace);
+            const leftMatName = leftCell ? leftCell.faces[this.oppositeFace(leftFace)] : 'darkness';
+            const leftMat = matLib[leftMatName] || matLib['cyclopean'];
+            if (leftMatName !== 'void') {
+                this.mason.buildWall({
+                    ...leftMat,
+                    x: 5, y: 15,
+                    width: 40, height: dims.height - 30,
+                    z: 0,
+                    perspective: 'recede-left',
+                });
+            }
+
+            // RIGHT WALL
+            const rightCell = this.getCellInDirection(this.pos, rightFace);
+            const rightMatName = rightCell ? rightCell.faces[this.oppositeFace(rightFace)] : 'darkness';
+            const rightMat = matLib[rightMatName] || matLib['cyclopean'];
+            if (rightMatName !== 'void') {
+                this.mason.buildWall({
+                    ...rightMat,
+                    x: dims.width - 45, y: 15,
+                    width: 40, height: dims.height - 30,
+                    z: 0,
+                    perspective: 'recede-right',
+                });
+            }
+
+            // FLOOR
+            const floorMat = matLib[faces.floor] || matLib['flagstone_ancient'];
+            this.mason.buildFloor({
+                ...floorMat,
+                x: 30, y: dims.height - 55,
+                width: dims.width - 60, height: 50,
+                z: 0,
+                perspectiveStrength: 12,
+            });
+
+            // CEILING
+            const ceilMat = matLib[faces.ceiling] || matLib['vault_stone'];
+            this.mason.buildVault({
+                ...ceilMat,
+                x: 30, y: -5,
+                width: dims.width - 60, height: 25,
+                z: -1,
+            });
+
+            // Objects
+            if (cell.objects) {
+                for (const obj of cell.objects) {
+                    this.renderObject(obj, dims);
+                }
+            }
+
+            // Light
+            if (cell.light) {
+                this.renderLight(cell.light, dims);
+            }
+
+            // Update UI
+            document.getElementById('locationText').textContent = cell.description || 'A passage in the vault.';
+            document.getElementById('coordText').textContent = `x:${this.pos.x} y:${this.pos.y} z:${this.pos.z} · facing ${this.facing}`;
+            this.renderMinimap();
+        }
+
+        renderObject(obj, dims) {
+            const container = this.viewport;
+            switch (obj.type) {
+                case 'tablet_alcove': {
+                    const el = document.createElement('div');
+                    el.className = 'zone';
+                    el.title = `Tablet ${obj.tablet}: ${obj.inscription}`;
+                    // Position based on wall
+                    let left = obj.position.x;
+                    if (obj.wall === 'west') left = 10;
+                    if (obj.wall === 'east') left = dims.width - 70;
+                    if (obj.wall === 'north') left = dims.width / 2 - 30;
+                    el.style.cssText = `position:absolute;left:${left}px;top:${obj.position.y}px;width:60px;height:70px;z-index:20;cursor:pointer;`;
+                    el.innerHTML = `
+                        <div style="width:50px;height:60px;background:#1a1410;border:3px solid #3d362f;border-radius:25px 25px 4px 4px;box-shadow:inset 0 0 15px rgba(0,0,0,0.5);margin:0 auto;"></div>
+                        <div style="position:absolute;left:50%;top:20px;transform:translateX(-50%);font-size:20px;color:rgba(184,134,11,0.6);">${obj.glyph}</div>
+                    `;
+                    el.addEventListener('click', () => {
+                        toast(`📜 Tablet ${obj.tablet}: "${obj.inscription}"\n\nGlyph: ${obj.glyph}`);
+                    });
+                    container.appendChild(el);
+                    break;
+                }
+                case 'empty_alcove': {
+                    const el = document.createElement('div');
+                    el.className = 'zone';
+                    el.title = 'The Seventh Alcove — empty, waiting';
+                    let left = obj.position.x;
+                    if (obj.wall === 'north') left = dims.width / 2 - 30;
+                    el.style.cssText = `position:absolute;left:${left}px;top:${obj.position.y}px;width:60px;height:70px;z-index:20;cursor:pointer;`;
+                    el.innerHTML = `
+                        <div style="width:50px;height:60px;background:#0a0806;border:3px dashed rgba(184,134,11,0.3);border-radius:25px 25px 4px 4px;box-shadow:inset 0 0 20px rgba(184,134,11,0.05);margin:0 auto;"></div>
+                        <div style="position:absolute;left:50%;top:20px;transform:translateX(-50%);font-size:20px;color:rgba(184,134,11,0.2);">${obj.glyph}</div>
+                    `;
+                    el.addEventListener('click', () => {
+                        toast('📜 The Seventh Alcove is empty.\n\n"The mark seals. The seventh is not yet written."\n\nFragments collected: ' + (state?.tabletFragments || 0) + '/7');
+                    });
+                    container.appendChild(el);
+                    break;
+                }
+                case 'ladder_up': {
+                    const el = document.createElement('div');
+                    el.className = 'zone';
+                    el.title = obj.label;
+                    el.style.cssText = `position:absolute;left:${obj.position.x}px;top:${obj.position.y}px;width:40px;height:90px;z-index:25;cursor:pointer;`;
+                    el.innerHTML = `
+                        <div style="width:6px;height:80px;background:#3d2b1f;margin:0 auto;"></div>
+                        <div style="position:absolute;left:14px;top:0;width:6px;height:80px;background:#3d2b1f;"></div>
+                        <div style="position:absolute;left:6px;top:8px;width:28px;height:3px;background:#4a3020;"></div>
+                        <div style="position:absolute;left:6px;top:28px;width:28px;height:3px;background:#4a3020;"></div>
+                        <div style="position:absolute;left:6px;top:48px;width:28px;height:3px;background:#4a3020;"></div>
+                        <div style="position:absolute;left:6px;top:68px;width:28px;height:3px;background:#4a3020;"></div>
+                    `;
+                    el.addEventListener('click', () => {
+                        toast('🪜 You climb the ladder...');
+                        setTimeout(() => { window.location.href = 'chapel.html?from=vault'; }, 1200);
+                    });
+                    container.appendChild(el);
+                    break;
+                }
+            }
+        }
+
+        renderLight(light, dims) {
+            const el = document.createElement('div');
+            const color = light.color || '#c44f1c';
+            el.style.cssText = `
+                position: absolute;
+                left: 50%; top: 40%;
+                transform: translate(-50%, -50%);
+                width: ${light.radius * 2}px;
+                height: ${light.radius * 2}px;
+                background: radial-gradient(circle, ${color}22 0%, ${color}08 40%, transparent 70%);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 0;
+                animation: ${light.pulse ? (light.source === 'crystal' ? 'crystalPulse' : 'coalPulse') : 'none'} 3s ease-in-out infinite;
+            `;
+            this.viewport.appendChild(el);
+        }
+
+        // ═══════════════════════════════════════
+        // MINIMAP
+        // ═══════════════════════════════════════
+
+        renderMinimap() {
+            const map = document.getElementById('minimap');
+            const cells = this.dungeon.cells.filter(c => c.y === this.pos.y);
+            const minX = Math.min(...cells.map(c => c.x));
+            const maxX = Math.max(...cells.map(c => c.x));
+            const minZ = Math.min(...cells.map(c => c.z));
+            const maxZ = Math.max(...cells.map(c => c.z));
+            const cols = maxX - minX + 1;
+            const rows = maxZ - minZ + 1;
+
+            map.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+            map.innerHTML = '';
+
+            for (let z = minZ; z <= maxZ; z++) {
+                for (let x = minX; x <= maxX; x++) {
+                    const cell = this.getCell(x, this.pos.y, z);
+                    const el = document.createElement('div');
+                    el.className = 'minimap-cell';
+
+                    if (!cell) {
+                        el.classList.add('wall');
+                    } else if (x === this.pos.x && z === this.pos.z) {
+                        el.classList.add('player');
+                        el.textContent = { north:'▲', south:'▼', east:'▶', west:'◀' }[this.facing];
+                    } else if (cell.description && cell.description.includes('Vault Chamber')) {
+                        el.classList.add('vault');
+                        el.textContent = '◆';
+                    } else {
+                        el.classList.add('passage');
+                        el.textContent = '·';
+                    }
+                    map.appendChild(el);
+                }
+            }
+        }
+    }
+
+    // ── STATE (shared with chapel) ──
+    let state = { tabletFragments: 0 };
+    const saved = localStorage.getItem('ealdor_save');
+    if (saved) {
+        try { state = JSON.parse(saved); } catch(e) {}
+    }
+
+    // ── INIT ──
+    const dungeon = new DungeonCrawler('dungeon-viewport');
+    dungeon.load('dungeon.json');
+
+    // Keyboard controls
+    document.addEventListener('keydown', (e) => {
+        switch (e.key) {
+            case 'ArrowUp': case 'w': e.preventDefault(); dungeon.moveForward(); break;
+            case 'ArrowLeft': case 'a': e.preventDefault(); dungeon.turn('left'); break;
+            case 'ArrowRight': case 'd': e.preventDefault(); dungeon.turn('right'); break;
+            case 'ArrowDown': case 's': e.preventDefault(); dungeon.turn('left'); dungeon.turn('left'); break;
+            case 'q': dungeon.ascend(); break;
+            case 'e': dungeon.descend(); break;
+        }
+    });
+    </script>
+</body>
+</html>
