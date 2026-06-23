@@ -6,16 +6,12 @@
     <title>The Coal Chapel · Ealdor</title>
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* ═══════════════════════════════════════════════════════════
-           THE COAL CHAPEL · Proto-Cathedral of Ealdor
-           One continuous stone surface from spire to foundation.
-           Built entirely from typography. Font-Mason architecture.
-           ═══════════════════════════════════════════════════════════ */
-
         :root {
             --stone: #3d362f; --deep-stone: #2a2520; --mortar: #1a1612;
             --parchment: #f4e4c1; --ember: #c44f1c; --ember-bright: #e85d2c;
-            --ash: #8b7d6b; --frost: #c8d8e4; --gold: #b8860b; --deep: #1a1410; --void: #0a0806;
+            --ash: #8b7d6b; --frost: #c8d8e4; --gold: #b8860b;
+            --deep: #1a1410; --void: #0a0806; --water: #3a6b8c;
+            --leaf: #2d3a1f; --leaf-light: #4a6b35;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -29,28 +25,22 @@
                 radial-gradient(ellipse at 50% 100%, rgba(26,20,16,0.95) 0%, transparent 50%);
         }
 
-        /* ── THE MONOLITH CONTAINER ── */
         #chapel-monolith {
-            position: relative;
-            width: 820px; max-width: 98vw;
-            height: 1050px;
-            margin: 0 auto 1rem;
-            overflow: hidden;
+            position: relative; width: 820px; max-width: 98vw;
+            height: 1200px; margin: 0 auto 1rem; overflow: hidden;
             background: var(--void);
             border-left: 4px solid var(--deep-stone);
             border-right: 4px solid var(--deep-stone);
             box-shadow: 0 0 100px rgba(0,0,0,0.7), 0 0 200px rgba(0,0,0,0.3);
         }
         @media (max-width: 840px) {
-            #chapel-monolith { width: 98vw; height: calc(98vw * 1.28); }
+            #chapel-monolith { width: 98vw; height: calc(98vw * 1.46); }
         }
 
-        /* ── ZONES ── */
         .zone { cursor: pointer; transition: filter 0.25s, transform 0.25s; }
         .zone:hover { filter: brightness(1.35); z-index: 50 !important; }
         .zone:active { transform: scale(0.94); transition: transform 0.1s; }
 
-        /* ── TOAST ── */
         #toast {
             position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
             background: rgba(10,8,6,0.94); border: 1px solid var(--gold);
@@ -62,15 +52,14 @@
         }
         #toast.show { opacity: 1; }
 
-        /* ── ANIMATIONS ── */
         @keyframes coalPulse {
             0%,100%{box-shadow:0 0 15px var(--ember),0 0 35px rgba(196,79,28,0.3)}
             50%{box-shadow:0 0 28px var(--ember-bright),0 0 55px rgba(196,79,28,0.5)}
         }
-        @keyframes brotherBreathe { 0%,100%{transform:scale(1)} 50%{transform:scale(1.01)} }
+        @keyframes brotherBreathe { 0%,100%{transform:scale(1)} 50%{transform:scale(1.012)} }
         @keyframes emberRise {
             0%{transform:translateY(0) translateX(0) scale(1);opacity:0.9}
-            100%{transform:translateY(-140px) translateX(var(--dx)) scale(0);opacity:0}
+            100%{transform:translateY(-160px) translateX(var(--dx)) scale(0);opacity:0}
         }
         @keyframes sparkFade {
             0%{transform:scale(0.5);opacity:1}
@@ -80,8 +69,30 @@
             0%,100%{text-shadow:0 0 6px rgba(184,134,11,0.15)}
             50%{text-shadow:0 0 14px rgba(184,134,11,0.4)}
         }
-        @keyframes frostCreep {
-            0%{height:0%}
+        @keyframes waterShimmer {
+            0%,100%{opacity:0.3} 50%{opacity:0.7}
+        }
+        @keyframes rippleExpand {
+            0%{transform:scale(0.5);opacity:0.6}
+            100%{transform:scale(2.5);opacity:0}
+        }
+        @keyframes flameFlicker {
+            0%,100%{transform:scaleY(1) translateY(0);opacity:0.9}
+            25%{transform:scaleY(1.1) translateY(-3px);opacity:1}
+            50%{transform:scaleY(0.95) translateY(2px);opacity:0.85}
+            75%{transform:scaleY(1.05) translateY(-1px);opacity:0.95}
+        }
+        @keyframes emberFloat {
+            0%{transform:translateY(0) translateX(0);opacity:0.8}
+            100%{transform:translateY(-90px) translateX(var(--ex));opacity:0}
+        }
+        @keyframes snowfall {
+            0%{transform:translateY(-20px) translateX(0)}
+            100%{transform:translateY(105vh) translateX(30px)}
+        }
+        @keyframes canopySway {
+            0%,100%{transform:translateX(0)}
+            50%{transform:translateX(3px)}
         }
     </style>
 </head>
@@ -94,21 +105,18 @@
     <script>
     /*
      * ═══════════════════════════════════════════════════════════════
-     * THE COAL CHAPEL · Proto-Cathedral · Monolith
-     * ealdforn/telume/ealdor/chapel.html
-     *
-     * One continuous stone surface. Spire → Facade → Interior → Crypt.
-     * Built by a single FontMason instance.
-     * Every letter is a stone. Every line-height is mortar.
+     * THE COAL CHAPEL · Complete Monolith
+     * Spire → Facade → Fountain → Tree → Interior → Brazier → Brother
+     * All built from typography. One FontMason instance.
      * ═══════════════════════════════════════════════════════════════
      */
 
-    // ── STATE ──
     const DEFAULT_STATE = {
         year: 3450, season: 0, ice: 15,
         playerResources: { Stone: 4, Timber: 3, Grain: 5, Iron: 2, Salt: 2, Cloth: 3 },
         population: 100, morale: 70, faith: 60,
         tabletFragments: 0, silentBrotherSpoke: false, crisisHistory: [],
+        rabbitAppeared: false,
     };
     let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
 
@@ -126,10 +134,6 @@
         clearTimeout(toastTimer); toastTimer = setTimeout(() => toastEl.classList.remove('show'), d);
     }
 
-    function renderStats() {
-        // Stats are carved into the notice board below — updated via inscription refresh
-    }
-
     function spawnEmbers(n = 10) {
         const c = document.getElementById('chapel-monolith');
         if (!c) return;
@@ -137,7 +141,7 @@
             const ember = document.createElement('div');
             const dx = (Math.random() - 0.5) * 60;
             ember.style.cssText = `
-                position:absolute; left:${44+Math.random()*12}%; top:${62+Math.random()*3}%;
+                position:absolute; left:${44+Math.random()*12}%; top:74%;
                 width:${2+Math.random()*4}px; height:${2+Math.random()*4}px;
                 background:radial-gradient(circle,#ff6b2b,var(--ember));
                 border-radius:50%; pointer-events:none; z-index:80;
@@ -148,209 +152,201 @@
         }
     }
 
-    // ═══════════════════════════════════════════
-    // MATERIALS
-    // ═══════════════════════════════════════════
+    function spawnSnow() {
+        const c = document.getElementById('chapel-monolith');
+        if (!c || state.ice < 30) return;
+        const count = Math.floor(state.ice / 2);
+        for (let i = 0; i < count; i++) {
+            const flake = document.createElement('div');
+            const size = 2 + Math.random() * 3;
+            flake.style.cssText = `
+                position:absolute; left:${Math.random()*100}%; top:-10px;
+                width:${size}px; height:${size}px;
+                background:rgba(200,216,228,${0.3+Math.random()*0.4});
+                border-radius:50%; pointer-events:none; z-index:90;
+                animation:snowfall ${5+Math.random()*8}s linear ${Math.random()*6}s infinite;
+            `;
+            c.appendChild(flake);
+        }
+    }
 
-    const M = {
-        ashlar:       { chars:['M','W','H','N','M'], textColor:'#4a3f35', mortarColor:'#242018', fontSize:41, lineHeight:0.52, letterSpacing:-3, fontFamily:"'UnifrakturMaguntia','Cinzel','Georgia',serif" },
-        ashlarDark:   { chars:['M','W','H','N','M'], textColor:'#3d362f', mortarColor:'#1f1a15', fontSize:33, lineHeight:0.54, letterSpacing:-3, fontFamily:"'UnifrakturMaguntia','Cinzel','Georgia',serif" },
-        granite:      { chars:['H','H','H','N','N'], textColor:'#5c4f42', mortarColor:'#3d362f', fontSize:42, lineHeight:0.5, letterSpacing:-4, fontFamily:"'Cinzel','Georgia',serif" },
-        flagstone:    { chars:['▓','░','▒','█','░'], textColor:'#5c4f42', mortarColor:'#3a3028', fontSize:48, lineHeight:0.47, letterSpacing:-2, fontFamily:"'Georgia','Times New Roman',serif" },
-        pillar:       { chars:['H','H','H'], textColor:'#4a3f35', mortarColor:'#2a2520', fontSize:20, lineHeight:0.55, letterSpacing:-2, fontFamily:"'UnifrakturMaguntia','Cinzel',serif" },
-        vault:        { chars:['⌢','⌣','~','⋅',' '], textColor:'#2a2520', mortarColor:'transparent', fontSize:15, lineHeight:0.85, letterSpacing:2, fontFamily:"'Georgia','Times New Roman',serif" },
-        arch:         { chars:['H','N','M','W','H'], textColor:'#4a3f35', fontSize:27, lineHeight:1, letterSpacing:-2, fontFamily:"'UnifrakturMaguntia','Cinzel',serif" },
-        darkness:     { chars:[' '], textColor:'#0a0806', mortarColor:'#0a0806', fontSize:10, lineHeight:0.5, letterSpacing:0, fontFamily:'monospace' },
-        stainedGlass: { chars:['◈','◇','◈','◇','◈'], textColor:'#2a4a6a', mortarColor:'#1a3040', fontSize:26, lineHeight:0.55, letterSpacing:0, fontFamily:"'Georgia',serif" },
-        frostGlass:   { chars:['░','▒','░','▒','░'], textColor:'#c8d8e4', mortarColor:'#a0b8c8', fontSize:26, lineHeight:0.55, letterSpacing:0, fontFamily:'monospace' },
-        goldText:     { chars:[], textColor:'#b8860b', fontSize:9, lineHeight:1, letterSpacing:2, fontFamily:"'Cinzel',serif" },
-        tallyText:    { chars:[], textColor:'rgba(244,228,193,0.16)', fontSize:7, lineHeight:1, letterSpacing:1, fontFamily:"'Courier New',monospace" },
-        glyphText:    { chars:[], textColor:'rgba(184,134,11,0.1)', fontSize:20, lineHeight:1, letterSpacing:5, fontFamily:"'Georgia',serif" },
-        labelText:    { chars:[], textColor:'#8b7d6b', fontSize:7, lineHeight:1, letterSpacing:2, fontFamily:"'Cinzel',serif" },
-    };
-
-    // ═══════════════════════════════════════════
+    // ═══════════════════════════════════════
     // BUILD THE MONOLITH
-    // ═══════════════════════════════════════════
+    // ═══════════════════════════════════════
 
     function buildMonolith() {
         const container = document.getElementById('chapel-monolith');
         container.innerHTML = '';
         const m = new FontMason('chapel-monolith');
 
-        // ═══════════════════════════════════════
-        // REGISTER 0: SPIRE (y: -130 to 30)
-        // ═══════════════════════════════════════
+        // ═══════════════════════════════════
+        // SKY & SPIRE (y: -140 to 30)
+        // ═══════════════════════════════════
 
-        // Spire base block
-        m.buildWall({ ...M.ashlar, x:340, y:0, width:140, height:20, z:1 });
+        if (state.ice > 40) {
+            m.buildWall({ chars:['░','▒','░','▒','░'], textColor:'#c8d8e4', mortarColor:'#a0b8c8', fontSize:18, lineHeight:0.55, letterSpacing:2, fontFamily:'monospace', x:0, y:-140, width:820, height:30, z:-2 });
+        }
 
-        // Main spire body (tapered — built as stacked narrowing walls)
-        m.buildWall({ ...M.ashlar, x:360, y:-30, width:100, height:30, z:1 });
-        m.buildWall({ ...M.ashlar, x:370, y:-55, width:80, height:25, z:1 });
-        m.buildWall({ ...M.ashlar, x:378, y:-78, width:64, height:23, z:1 });
-        m.buildWall({ ...M.ashlar, x:385, y:-100, width:50, height:22, z:1 });
-        m.buildWall({ ...M.ashlar, x:392, y:-122, width:36, height:22, z:1 });
+        m.buildWall({ chars:['M','W','H','N','M'], textColor:'#4a3f35', mortarColor:'#242018', fontSize:41, lineHeight:0.52, letterSpacing:-3, fontFamily:"'UnifrakturMaguntia','Cinzel','Georgia',serif", x:340, y:0, width:140, height:18, z:1 });
+        m.buildWall({ chars:['M','W','H','N','M'], textColor:'#4a3f35', mortarColor:'#242018', fontSize:41, lineHeight:0.52, letterSpacing:-3, fontFamily:"'UnifrakturMaguntia','Cinzel','Georgia',serif", x:360, y:-28, width:100, height:28, z:1 });
+        m.buildWall({ chars:['M','W','H','N','M'], textColor:'#4a3f35', mortarColor:'#242018', fontSize:38, lineHeight:0.52, letterSpacing:-3, fontFamily:"'UnifrakturMaguntia','Cinzel','Georgia',serif", x:370, y:-52, width:80, height:24, z:1 });
+        m.buildWall({ chars:['M','W','H','N','M'], textColor:'#4a3f35', mortarColor:'#242018', fontSize:36, lineHeight:0.52, letterSpacing:-3, fontFamily:"'UnifrakturMaguntia','Cinzel','Georgia',serif", x:378, y:-74, width:64, height:22, z:1 });
+        m.buildWall({ chars:['M','W','H','N','M'], textColor:'#4a3f35', mortarColor:'#242018', fontSize:34, lineHeight:0.52, letterSpacing:-3, fontFamily:"'UnifrakturMaguntia','Cinzel','Georgia',serif", x:385, y:-95, width:50, height:21, z:1 });
+        m.buildWall({ chars:['M','W','H','N','M'], textColor:'#4a3f35', mortarColor:'#242018', fontSize:32, lineHeight:0.52, letterSpacing:-3, fontFamily:"'UnifrakturMaguntia','Cinzel','Georgia',serif", x:392, y:-115, width:36, height:20, z:1 });
 
-        // Cross finial
-        m.buildInscription({ ...M.goldText, x:407, y:-130, text:'†', fontSize:22, color:'#b8860b', fontFamily:"'Georgia',serif", z:2 });
+        m.buildInscription({ text:'†', x:407, y:-122, fontSize:22, color:'#b8860b', fontFamily:"'Georgia',serif", z:2 });
 
-        // Small pinnacles flanking
-        m.buildPillar({ ...M.pillar, x:320, y:-15, width:14, height:35, z:1, capital:true, capitalHeight:10, fontSize:12 });
-        m.buildPillar({ ...M.pillar, x:486, y:-15, width:14, height:35, z:1, capital:true, capitalHeight:10, fontSize:12 });
+        // ═══════════════════════════════════
+        // FACADE (y: 20 to 420)
+        // ═══════════════════════════════════
 
-        // ═══════════════════════════════════════
-        // REGISTER 1: FACADE WALL (y: 20 to 380)
-        // ═══════════════════════════════════════
+        m.buildWall({ chars:['M','W','H','N','M'], textColor:'#4a3f35', mortarColor:'#242018', fontSize:41, lineHeight:0.52, letterSpacing:-3, fontFamily:"'UnifrakturMaguntia','Cinzel','Georgia',serif", x:30, y:20, width:760, height:400, z:0,
+            openings:[{ x:50, y:40, width:660, height:360, arch:true }] });
 
-        // Main facade wall with gothic arch opening
-        m.buildWall({ ...M.ashlar, x:30, y:20, width:760, height:360, z:0,
-            openings: [{ x:50, y:40, width:660, height:320, arch:true }] });
+        m.buildArch({ chars:['H','N','M','W','H'], textColor:'#4a3f35', fontSize:28, fontFamily:"'UnifrakturMaguntia','Cinzel',serif", cx:410, cy:60, innerRadius:330, stoneCount:29, stoneDepth:30, z:5, keystoneChar:'M', keystoneOversize:1.6 });
 
-        // Facade arch (the great outer arch)
-        m.buildArch({ ...M.arch, cx:410, cy:60, innerRadius:330, stoneCount:29, stoneDepth:30, z:5, fontSize:28, keystoneChar:'M', keystoneOversize:1.6 });
+        m.buildPillar({ chars:['H','H','H'], textColor:'#5c4f42', mortarColor:'#3d362f', fontSize:22, fontFamily:"'UnifrakturMaguntia','Cinzel',serif", x:22, y:15, width:38, height:410, z:1, capital:true, capitalHeight:20 });
+        m.buildPillar({ chars:['H','H','H'], textColor:'#5c4f42', mortarColor:'#3d362f', fontSize:22, fontFamily:"'UnifrakturMaguntia','Cinzel',serif", x:760, y:15, width:38, height:410, z:1, capital:true, capitalHeight:20 });
 
-        // Cornerstone pillars
-        m.buildPillar({ ...M.pillar, x:22, y:15, width:38, height:370, z:1, fontSize:22, capital:true, capitalHeight:20 });
-        m.buildPillar({ ...M.pillar, x:760, y:15, width:38, height:370, z:1, fontSize:22, capital:true, capitalHeight:20 });
+        // Rose window
+        m.buildArch({ chars:['H','N','M','W','H'], textColor:'#4a3f35', fontSize:24, fontFamily:"'UnifrakturMaguntia','Cinzel',serif", cx:410, cy:145, innerRadius:62, stoneCount:20, stoneDepth:20, z:4, fullCircle:true, keystoneChar:'M' });
+        m.buildWall({ chars:['◈','◇','◈','◇','◈'], textColor:'#2a4a6a', mortarColor:'#1a3040', fontSize:24, lineHeight:0.55, letterSpacing:0, fontFamily:"'Georgia',serif", x:352, y:87, width:116, height:116, z:2, shape:'circle' });
+        m.buildInscription({ text:'𐤇', x:395, y:136, fontSize:30, color:'rgba(184,134,11,0.5)', fontFamily:"'Georgia',serif", z:3 });
 
-        // ═══════════════════════════════════════
-        // REGISTER 2: ROSE WINDOW (y: 70 to 170)
-        // ═══════════════════════════════════════
+        // Title panel
+        m.buildWall({ chars:['H','H','H','N','N'], textColor:'#5c4f42', mortarColor:'#3d362f', fontSize:42, lineHeight:0.5, letterSpacing:-4, fontFamily:"'Cinzel','Georgia',serif", x:210, y:250, width:400, height:50, z:2 });
+        m.buildInscription({ text:'THE  COAL  CHAPEL', x:230, y:260, fontSize:16, color:'#b8860b', fontFamily:"'UnifrakturMaguntia',cursive", z:3, animation:'inscriptionGlow 4s ease-in-out infinite' });
+        m.buildInscription({ text:'Sanctuary  of  the  Ātravan  Flame', x:245, y:280, fontSize:7, color:'#8b7d6b', fontFamily:"'Cinzel',serif", z:3 });
 
-        // Circular wall for the rose
-        m.buildWall({ ...M.ashlar, x:335, y:65, width:150, height:150, z:2, shape:'circle' });
-
-        // Rose arch ring
-        m.buildArch({ ...M.arch, cx:410, cy:140, innerRadius:68, stoneCount:20, stoneDepth:22, z:4, fontSize:24, fullCircle:true, keystoneChar:'M', keystoneOversize:1.3 });
-
-        // Stained glass
-        m.buildWall({ ...M.stainedGlass, x:348, y:78, width:124, height:124, z:1, shape:'circle' });
-
-        // Mullions (cross)
-        const mullH = document.createElement('div');
-        mullH.style.cssText = 'position:absolute;left:348px;top:137px;width:124px;height:4px;background:#3d362f;z-index:3;pointer-events:none;';
-        container.appendChild(mullH);
-        const mullV = document.createElement('div');
-        mullV.style.cssText = 'position:absolute;left:407px;top:78px;width:4px;height:124px;background:#3d362f;z-index:3;pointer-events:none;';
-        container.appendChild(mullV);
-
-        // Glyph in center
-        m.buildInscription({ ...M.glyphText, x:394, y:132, text:'𐤇', fontSize:32, color:'rgba(184,134,11,0.5)', fontFamily:"'Georgia',serif", z:4 });
-
-        // ═══════════════════════════════════════
-        // REGISTER 3: TITLE PANEL (y: 220 to 280)
-        // ═══════════════════════════════════════
-
-        // Stone panel
-        m.buildWall({ ...M.granite, x:200, y:235, width:420, height:55, z:2 });
-
-        // Title
-        m.buildInscription({ ...M.goldText, x:225, y:244, text:'THE  COAL  CHAPEL', fontSize:16, color:'#b8860b', fontFamily:"'UnifrakturMaguntia',cursive", z:3, animation:'inscriptionGlow 4s ease-in-out infinite' });
-
-        // Subtitle
-        m.buildInscription({ ...M.labelText, x:245, y:265, text:'Sanctuary  of  the  Ātravan  Flame', fontSize:7, z:3 });
-
-        // ═══════════════════════════════════════
-        // REGISTER 4: THREE DOORS (y: 300 to 440)
-        // ═══════════════════════════════════════
-
+        // Three doors
         const doors = [
-            { x:170, y:310, w:110, h:130, label:'ENTER', action:() => { document.getElementById('chapel-monolith').scrollTo({ top:440, behavior:'smooth' }); } },
-            { x:355, y:305, w:110, h:135, label:'SANCTUARY', action:() => { document.getElementById('chapel-monolith').scrollTo({ top:440, behavior:'smooth' }); } },
-            { x:540, y:310, w:110, h:130, label:'COURTYARD', action:() => { saveState(); setTimeout(()=>{ window.location.href='index.html?from=chapel'; },800); } },
+            { x:180, y:315, w:110, h:120, label:'ENTER', action:()=>{ container.scrollTo({ top:900, behavior:'smooth' }); } },
+            { x:355, y:310, w:110, h:125, label:'SANCTUARY', action:()=>{ container.scrollTo({ top:900, behavior:'smooth' }); } },
+            { x:530, y:315, w:110, h:120, label:'COURTYARD', action:()=>{ saveState(); setTimeout(()=>{ window.location.href='index.html?from=chapel'; },800); } },
         ];
-
         doors.forEach(d => {
-            m.buildWall({ ...M.ashlar, x:d.x, y:d.y, width:d.w, height:d.h, z:2,
-                openings: [{ x:10, y:10, width:d.w-20, height:d.h-20, arch:true, archRadius:(d.w-20)/2 }] });
-            m.buildWall({ ...M.darkness, x:d.x+12, y:d.y+12, width:d.w-24, height:d.h-22, z:1 });
-            m.buildInscription({ ...M.labelText, x:d.x+8, y:d.y-12, text:d.label, fontSize:7, z:3 });
-
+            m.buildWall({ chars:['M','W','H','N','M'], textColor:'#4a3f35', mortarColor:'#242018', fontSize:34, lineHeight:0.54, letterSpacing:-3, fontFamily:"'UnifrakturMaguntia','Cinzel','Georgia',serif", x:d.x, y:d.y, width:d.w, height:d.h, z:2,
+                openings:[{ x:10, y:10, width:d.w-20, height:d.h-20, arch:true }] });
+            m.buildWall({ chars:[' '], textColor:'#0a0806', mortarColor:'#0a0806', fontSize:10, lineHeight:0.5, letterSpacing:0, fontFamily:'monospace', x:d.x+12, y:d.y+12, width:d.w-24, height:d.h-22, z:1 });
+            m.buildInscription({ text:d.label, x:d.x+14, y:d.y-10, fontSize:7, color:'#8b7d6b', fontFamily:"'Cinzel',serif", z:3 });
             const zone = document.createElement('div');
             zone.style.cssText = `position:absolute;left:${d.x+10}px;top:${d.y+10}px;width:${d.w-20}px;height:${d.h-20}px;cursor:pointer;z-index:30;`;
             zone.addEventListener('click', d.action);
             container.appendChild(zone);
         });
 
-        // ═══════════════════════════════════════
-        // REGISTER 5: INTERIOR (y: 460 to 830)
-        // ═══════════════════════════════════════
+        // ═══════════════════════════════════
+        // COURTYARD FOUNTAIN (y: 440 to 600)
+        // ═══════════════════════════════════
 
-        // Ceiling vault
-        m.buildVault({ ...M.vault, x:110, y:450, width:600, height:70, z:0,
+        m.buildWall({ chars:['▓','░','▒','█','░'], textColor:'#5c4f42', mortarColor:'#3a3028', fontSize:36, lineHeight:0.47, letterSpacing:-2, fontFamily:"'Georgia','Times New Roman',serif", x:60, y:440, width:700, height:80, z:0 });
+        m.buildInscription({ text:'·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·', x:180, y:470, fontSize:10, color:'rgba(0,0,0,0.2)', fontFamily:"'Georgia',serif", z:1 });
+
+        // Fountain basin
+        m.buildWall({ chars:['M','W','H','N','M'], textColor:'#4a3f35', mortarColor:'#242018', fontSize:28, lineHeight:0.52, letterSpacing:-2, fontFamily:"'UnifrakturMaguntia','Cinzel','Georgia',serif", x:280, y:495, width:240, height:80, z:2 });
+        m.buildWall({ chars:['~','≈','≋','~','≈'], textColor:'#3a6b8c', mortarColor:'#2a4a6a', fontSize:18, lineHeight:0.45, letterSpacing:1, fontFamily:"'Georgia',serif", x:295, y:510, width:210, height:30, z:3 });
+
+        // Water shimmer
+        const shimmer = document.createElement('div');
+        shimmer.style.cssText = 'position:absolute;left:295px;top:510px;width:210px;height:30px;z-index:4;color:#8ac8e8;font-size:16px;font-family:Georgia,serif;line-height:0.45;letter-spacing:1px;pointer-events:none;animation:waterShimmer 2s ease-in-out infinite;';
+        shimmer.textContent = '~ · ~ · ≋ · ~ · ≈ · ~ · ≋ · ~';
+        container.appendChild(shimmer);
+
+        // Fountain column
+        m.buildPillar({ chars:['H','H','H'], textColor:'#5c4f42', mortarColor:'#3d362f', fontSize:14, fontFamily:'monospace', x:385, y:445, width:30, height:60, z:5, capital:true, capitalHeight:16 });
+
+        // Water spout
+        const spout = document.createElement('div');
+        spout.style.cssText = 'position:absolute;left:380px;top:435px;z-index:6;color:#8ac8e8;font-size:12px;font-family:Georgia,serif;pointer-events:none;';
+        spout.textContent = '│  │  │  ╎  │  ╎  │';
+        container.appendChild(spout);
+
+        // Ripples
+        const ripples = document.createElement('div');
+        ripples.style.cssText = 'position:absolute;left:365px;top:518px;z-index:4;color:rgba(200,230,255,0.5);font-size:10px;font-family:Georgia,serif;pointer-events:none;animation:rippleExpand 3s ease-out infinite;';
+        ripples.textContent = '○  ◌  ○  ◌  ○';
+        container.appendChild(ripples);
+
+        // ═══════════════════════════════════
+        // WILD WOOD TREE (y: 530 to 700)
+        // ═══════════════════════════════════
+
+        // Ground
+        m.buildWall({ chars:['╱','╲','╱','╲','│'], textColor:'#3d5a2a', mortarColor:'#2d3a1f', fontSize:18, lineHeight:0.5, letterSpacing:0, fontFamily:'monospace', x:620, y:560, width:160, height:60, z:0 });
+
+        // Trunk
+        m.buildPillar({ chars:['║','║','║'], textColor:'#3d2b1f', mortarColor:'#2a1f15', fontSize:16, fontFamily:'monospace', x:690, y:480, width:30, height:100, z:2 });
+
+        // Roots
+        m.buildInscription({ text:'╽ ╿ ╽ ╿ ╽', x:670, y:575, fontSize:12, color:'#3d2b1f', fontFamily:'monospace', z:1 });
+        m.buildInscription({ text:'╿ ╽ ╿ ╽ ╿', x:665, y:585, fontSize:10, color:'#2a1f15', fontFamily:'monospace', z:1 });
+
+        // Canopy
+        m.buildWall({ chars:['▲','▼','◆','▲','▼'], textColor:'#2d3a1f', mortarColor:'#1a2a0f', fontSize:18, lineHeight:0.4, letterSpacing:-1, fontFamily:'monospace', x:630, y:430, width:150, height:60, z:3 });
+        m.buildWall({ chars:['▲','◆','▲','▼','▲'], textColor:'#3d5a2a', mortarColor:'#2d3a1f', fontSize:20, lineHeight:0.38, letterSpacing:-2, fontFamily:'monospace', x:645, y:400, width:120, height:42, z:4 });
+        m.buildWall({ chars:['▲','▲','◆','▲','▲'], textColor:'#4a6b35', mortarColor:'#3d5a2a', fontSize:16, lineHeight:0.35, letterSpacing:-2, fontFamily:'monospace', x:665, y:375, width:80, height:32, z:5 });
+
+        // Dappled light
+        const dapple = document.createElement('div');
+        dapple.style.cssText = 'position:absolute;left:650px;top:450px;z-index:6;color:rgba(255,240,180,0.15);font-size:12px;font-family:Georgia,serif;pointer-events:none;';
+        dapple.textContent = '·  ✦  ·  ✧  ·  ✦  ·';
+        container.appendChild(dapple);
+
+        // Rabbit (if appeared)
+        if (state.rabbitAppeared) {
+            const rabbit = document.createElement('div');
+            rabbit.style.cssText = 'position:absolute;left:720px;top:555px;z-index:7;font-size:16px;cursor:pointer;';
+            rabbit.textContent = '🐇';
+            rabbit.title = 'The Rabbit watches.';
+            rabbit.addEventListener('click', () => {
+                toast('🐇 The Rabbit looks at you. Yellow feet. Split lip. Short tail.\n\n"Not yet," his silence says. He vanishes.');
+                state.rabbitAppeared = false;
+                saveState();
+                rabbit.remove();
+            });
+            container.appendChild(rabbit);
+        }
+
+        // ═══════════════════════════════════
+        // INTERIOR (y: 620 to 1050)
+        // ═══════════════════════════════════
+
+        m.buildVault({ chars:['⌢','⌣','~','⋅',' '], textColor:'#2a2520', fontSize:15, lineHeight:0.85, letterSpacing:2, fontFamily:"'Georgia','Times New Roman',serif", x:110, y:610, width:600, height:65, z:-1,
             ribs:[{x:245,depth:7,color:'#3d362f'},{x:410,depth:10,color:'#4a4138'},{x:575,depth:7,color:'#3d362f'}] });
 
-        // Far wall with window
-        m.buildWall({ ...M.ashlar, x:110, y:490, width:600, height:290, z:1,
-            openings: [{ x:215, y:18, width:170, height:195, arch:true, glass:true, glassFrost:state.ice }] });
+        m.buildWall({ chars:['M','W','H','N','M'], textColor:'#4a3f35', mortarColor:'#242018', fontSize:41, lineHeight:0.52, letterSpacing:-3, fontFamily:"'UnifrakturMaguntia','Cinzel','Georgia',serif", x:110, y:640, width:600, height:280, z:1,
+            openings:[{ x:215, y:15, width:170, height:185, arch:true, glass:true, glassFrost:state.ice }] });
 
-        // Window arch
-        m.buildArch({ ...M.arch, cx:410, cy:515, innerRadius:85, stoneCount:19, stoneDepth:24, z:7, keystoneChar:'M', voussoirChars:M.arch.chars, keystoneOversize:1.55 });
+        m.buildArch({ chars:['H','N','M','W','H'], textColor:'#4a3f35', fontSize:27, fontFamily:"'UnifrakturMaguntia','Cinzel',serif", cx:410, cy:665, innerRadius:85, stoneCount:19, stoneDepth:24, z:7, keystoneChar:'M', keystoneOversize:1.55 });
 
-        // Left wall
-        m.buildWall({ ...M.ashlarDark, x:0, y:490, width:118, height:340, z:0, perspective:'recede-left' });
+        m.buildWall({ chars:['M','W','H','N','M'], textColor:'#3d362f', mortarColor:'#1f1a15', fontSize:33, lineHeight:0.54, letterSpacing:-3, fontFamily:"'UnifrakturMaguntia','Cinzel','Georgia',serif", x:0, y:640, width:118, height:330, z:0, perspective:'recede-left' });
 
-        // Right wall with niche
-        m.buildWall({ ...M.ashlarDark, x:702, y:490, width:118, height:340, z:0, perspective:'recede-right',
-            openings: [{ x:30, y:170, width:55, height:70, arch:true }] });
+        m.buildWall({ chars:['M','W','H','N','M'], textColor:'#3d362f', mortarColor:'#1f1a15', fontSize:33, lineHeight:0.54, letterSpacing:-3, fontFamily:"'UnifrakturMaguntia','Cinzel','Georgia',serif", x:702, y:640, width:118, height:330, z:0, perspective:'recede-right',
+            openings:[{ x:30, y:165, width:55, height:68, arch:true }] });
 
-        // Niche arch
-        m.buildArch({ ...M.arch, cx:750, cy:675, innerRadius:28, stoneCount:9, stoneDepth:14, z:7, fontSize:18, keystoneChar:'N', keystoneOversize:1.3 });
+        m.buildArch({ chars:['H','N','M','W','H'], textColor:'#4a3f35', fontSize:18, fontFamily:"'UnifrakturMaguntia','Cinzel',serif", cx:750, cy:825, innerRadius:28, stoneCount:9, stoneDepth:14, z:7, keystoneChar:'N', keystoneOversize:1.3 });
 
-        // Floor
-        m.buildFloor({ ...M.flagstone, x:55, y:770, width:710, height:180, z:0, perspectiveStrength:15,
-            glyphCarving:{ text:'𐤃  𐤀  𐤕  𐤔  𐤐  𐤌  𐤇', x:155, y:50, size:18, spacing:38, color:'rgba(184,134,11,0.08)' } });
+        m.buildFloor({ chars:['▓','░','▒','█','░'], textColor:'#5c4f42', mortarColor:'#3a3028', fontSize:48, lineHeight:0.47, letterSpacing:-2, fontFamily:"'Georgia','Times New Roman',serif", x:55, y:910, width:710, height:170, z:0, perspectiveStrength:15,
+            glyphCarving:{ text:'𐤃  𐤀  𐤕  𐤔  𐤐  𐤌  𐤇', x:155, y:45, size:18, spacing:38, color:'rgba(184,134,11,0.08)' } });
 
-        // Pillars
-        m.buildPillar({ ...M.pillar, x:238, y:675, width:30, height:105, z:3, capital:true, capitalHeight:24 });
-        m.buildPillar({ ...M.pillar, x:552, y:675, width:30, height:105, z:3, capital:true, capitalHeight:24 });
+        m.buildPillar({ chars:['H','H','H'], textColor:'#4a3f35', mortarColor:'#2a2520', fontSize:20, lineHeight:0.55, fontFamily:"'UnifrakturMaguntia','Cinzel',serif", x:238, y:825, width:30, height:100, z:3, capital:true, capitalHeight:24 });
+        m.buildPillar({ chars:['H','H','H'], textColor:'#4a3f35', mortarColor:'#2a2520', fontSize:20, lineHeight:0.55, fontFamily:"'UnifrakturMaguntia','Cinzel',serif", x:552, y:825, width:30, height:100, z:3, capital:true, capitalHeight:24 });
 
-        // Plinth inscription
-        m.buildInscription({ ...M.goldText, x:340, y:785, text:'THE  FLAME  ENDURES', fontSize:9, color:'rgba(184,134,11,0.45)', z:9, animation:'inscriptionGlow 4s ease-in-out infinite' });
+        m.buildInscription({ text:'THE  FLAME  ENDURES', x:340, y:935, fontSize:9, color:'rgba(184,134,11,0.45)', fontFamily:"'Cinzel',serif", z:9, animation:'inscriptionGlow 4s ease-in-out infinite' });
 
-        // Tally marks
         const tc = state.crisisHistory ? state.crisisHistory.length : 0;
         let tt = tc === 0 ? '·  ·  ·  ·  ·' : '';
         for (let i = 0; i < Math.min(tc, 45); i++) tt += (i % 5 === 4) ? '|  ' : '|';
-        m.buildInscription({ ...M.tallyText, x:18, y:640, text:tt, z:5, rotation:-2.5 });
+        m.buildInscription({ text:tt, x:18, y:790, fontSize:7, color:'rgba(244,228,193,0.16)', fontFamily:"'Courier New',monospace", z:5, rotation:-2.5 });
 
-        // Floor approach
-        m.buildInscription({ ...M.labelText, x:340, y:860, text:'·  ·  ·  ·  ·  ·  ·  ·  ·  ·', fontSize:10, color:'rgba(0,0,0,0.25)', fontFamily:"'Georgia',serif", z:2 });
+        m.buildInscription({ text:'·  ·  ·  ·  ·  ·  ·  ·  ·  ·', x:340, y:1010, fontSize:10, color:'rgba(0,0,0,0.25)', fontFamily:"'Georgia',serif", z:2 });
 
-        // ═══════════════════════════════════════
-        // REGISTER 6: NOTICE BOARD (y: 960 to 1020)
-        // ═══════════════════════════════════════
+        // ═══════════════════════════════════
+        // INTERACTIVE ZONES
+        // ═══════════════════════════════════
 
-        // Stone board
-        m.buildWall({ ...M.granite, x:120, y:955, width:580, height:65, z:2 });
-
-        // Nail rivets
-        m.buildInscription({ ...M.goldText, x:130, y:950, text:'✦', fontSize:10, color:'#2a2018', z:3 });
-        m.buildInscription({ ...M.goldText, x:680, y:950, text:'✦', fontSize:10, color:'#2a2018', z:3 });
-
-        // Stats line
-        const statsText = `🌾 ${state.playerResources.Timber||0}    ❤️ ${state.faith}    ☀️ ${state.morale}    ❄️ ${state.ice}%    📜 ${state.tabletFragments||0}/7`;
-        m.buildInscription({ ...M.labelText, x:160, y:968, text:statsText, fontSize:8, color:'#f4e4c1', z:3 });
-
-        // Quote
-        m.buildInscription({ ...M.labelText, x:200, y:990, text:'"The fire holds. The vault is open. The seventh tablet is still blank."', fontSize:7, color:'rgba(244,228,193,0.5)', z:3, fontFamily:"'Georgia',serif" });
-
-        // ═══════════════════════════════════════
-        // INTERACTIVE ZONES (overlaid on interior)
-        // ═══════════════════════════════════════
-
-        buildInteractiveZones(container);
-        return m;
-    }
-
-    // ═══════════════════════════════════════
-    // INTERACTIVE ZONES
-    // ═══════════════════════════════════════
-
-    function buildInteractiveZones(container) {
         // Brazier
-        const brazier = makeZone(365, 700, 108, 82, 'Tend the Ātravan Coal', () => {
+        const brazier = makeZone(365, 855, 108, 78, 'Tend the Ātravan Coal', () => {
             const timber = state.playerResources.Timber || 0;
             if (timber < 1) { toast('No timber. The Silent Brother watches, expressionless.'); return; }
             state.playerResources.Timber -= 1;
@@ -365,14 +361,14 @@
             toast(msg); spawnEmbers(18); saveState();
         });
         brazier.innerHTML = `
-            <div style="width:108px;height:34px;background:linear-gradient(#5c4f42,#4a3f35);border:3px solid #3d362f;border-radius:4px;box-shadow:0 6px 16px rgba(0,0,0,0.5);margin-top:48px;"></div>
-            <div style="position:absolute;left:18px;top:4px;width:72px;height:48px;background:linear-gradient(#2a2018,#1a1410);border:4px solid #3d362f;border-radius:8px 8px 4px 4px;box-shadow:0 4px 12px rgba(0,0,0,0.5);"></div>
+            <div style="width:108px;height:32px;background:linear-gradient(#5c4f42,#4a3f35);border:3px solid #3d362f;border-radius:4px;box-shadow:0 6px 16px rgba(0,0,0,0.5);margin-top:46px;"></div>
+            <div style="position:absolute;left:18px;top:4px;width:72px;height:46px;background:linear-gradient(#2a2018,#1a1410);border:4px solid #3d362f;border-radius:8px 8px 4px 4px;box-shadow:0 4px 12px rgba(0,0,0,0.5);"></div>
             <div style="position:absolute;left:33px;top:10px;width:42px;height:42px;border-radius:50%;background:radial-gradient(ellipse at 45% 35%,#ff7b3b,#e85d2c 25%,#c44f1c 55%,#1a1410);box-shadow:0 0 20px #c44f1c,0 0 45px rgba(196,79,28,0.3);animation:coalPulse 3s ease-in-out infinite;"></div>
         `;
         container.appendChild(brazier);
 
-        // Silent Brother
-        const brother = makeZone(225, 780, 40, 70, 'Observe the Silent Brother', () => {
+        // Silent Brother (font-built figure)
+        const brother = makeZone(225, 930, 50, 85, 'Observe the Silent Brother', () => {
             state.faith = Math.min(100, state.faith + 2);
             const lines = state.silentBrotherSpoke
                 ? ['He has not spoken since. But his presence is heavier.','The eighty-seventh keeper. His silence is a kind of tending.','You watch him. He watches the Coal. The Coal watches nothing.']
@@ -381,28 +377,28 @@
             saveState();
         });
         brother.innerHTML = `
-            <div style="width:30px;height:44px;margin:20px 0 0 5px;background:linear-gradient(#3d362f,#2a2018);border-radius:14px 14px 6px 6px;"></div>
-            <div style="position:absolute;left:4px;top:0;width:32px;height:32px;border-radius:50%;background:linear-gradient(#2a2018,#1a1410);animation:brotherBreathe 6s ease-in-out infinite;box-shadow:${state.silentBrotherSpoke?'0 0 8px rgba(184,134,11,0.25)':'none'};"></div>
-            <div style="width:32px;height:6px;margin-left:4px;background:rgba(0,0,0,0.35);border-radius:50%;"></div>
+            <div style="width:26px;height:30px;border-radius:50%;background:linear-gradient(#2a2018,#1a1410);margin:0 auto;animation:brotherBreathe 6s ease-in-out infinite;box-shadow:${state.silentBrotherSpoke?'0 0 8px rgba(184,134,11,0.25)':'none'};"></div>
+            <div style="width:30px;height:40px;background:linear-gradient(#3d362f,#2a2018);border-radius:14px 14px 6px 6px;margin:2px auto 0;"></div>
+            <div style="width:32px;height:5px;background:rgba(0,0,0,0.35);border-radius:50%;margin:0 auto;"></div>
         `;
         container.appendChild(brother);
 
         // Wood Stack
-        const wood = makeZone(72, 850, 50, 40, 'Take Timber', () => {
+        const wood = makeZone(72, 1000, 50, 36, 'Take Timber', () => {
             if ((state.playerResources.Timber || 0) > 0) {
                 state.playerResources.Timber -= 1;
                 toast(`🪵 Timber taken. ${state.playerResources.Timber} remaining.`);
             } else { toast('Empty. Only dust and splinters.'); }
             saveState();
         });
-        const tc2 = Math.max(1, Math.min(6, state.playerResources.Timber || 0));
+        const tc2 = Math.max(1, Math.min(5, state.playerResources.Timber || 0));
         let wh = '';
-        for (let i = 0; i < tc2; i++) wh += `<div style="width:44px;height:7px;background:${['#5c3a1f','#4a2f18','#3d2b1f'][i%3]};border-radius:2px;margin-bottom:2px;box-shadow:0 1px 2px rgba(0,0,0,0.3);opacity:${state.playerResources.Timber>0?1:0.2};"></div>`;
+        for (let i = 0; i < tc2; i++) wh += `<div style="width:40px;height:6px;background:${['#5c3a1f','#4a2f18','#3d2b1f'][i%3]};border-radius:2px;margin-bottom:2px;box-shadow:0 1px 2px rgba(0,0,0,0.3);opacity:${state.playerResources.Timber>0?1:0.2};"></div>`;
         wood.innerHTML = wh;
         container.appendChild(wood);
 
         // Niche
-        const niche = makeZone(645, 730, 50, 70, 'Study the fragments', () => {
+        const niche = makeZone(645, 880, 50, 65, 'Study the fragments', () => {
             state.tabletFragments = Math.min(7, (state.tabletFragments || 0) + 1);
             state.faith = Math.min(100, state.faith + 3);
             const g = '𐤀𐤁𐤂𐤃𐤄𐤅𐤆𐤇𐤈𐤉𐤊𐤋𐤌𐤍𐤎𐤏𐤐𐤑𐤒𐤓𐤔𐤕'[state.tabletFragments % 22];
@@ -410,17 +406,28 @@
             if (state.tabletFragments >= 7) msg += '\n\n✨ The fragments align. The Seventh Tablet stirs.';
             toast(msg); saveState();
         });
-        niche.innerHTML = `<div style="width:44px;height:58px;background:#0f0c08;border:3px solid #2a2520;border-radius:22px 22px 5px 5px;box-shadow:inset 0 0 20px rgba(0,0,0,0.6);"></div>${state.tabletFragments>0?`<div style="position:absolute;left:14px;top:16px;font-size:16px;color:rgba(184,134,11,${0.3+(state.tabletFragments/7)*0.6});">${'𐤀𐤁𐤂𐤃𐤄𐤅𐤆𐤇𐤈𐤉𐤊𐤋𐤌𐤍𐤎𐤏𐤐𐤑𐤒𐤓𐤔𐤕'[state.tabletFragments%22]}</div>`:''}`;
+        niche.innerHTML = `<div style="width:42px;height:55px;background:#0f0c08;border:3px solid #2a2520;border-radius:21px 21px 5px 5px;box-shadow:inset 0 0 20px rgba(0,0,0,0.6);"></div>${state.tabletFragments>0?`<div style="position:absolute;left:13px;top:14px;font-size:16px;color:rgba(184,134,11,${0.3+(state.tabletFragments/7)*0.6});">${'𐤀𐤁𐤂𐤃𐤄𐤅𐤆𐤇𐤈𐤉𐤊𐤋𐤌𐤍𐤎𐤏𐤐𐤑𐤒𐤓𐤔𐤕'[state.tabletFragments%22]}</div>`:''}`;
         container.appendChild(niche);
 
         // Window
-        const win = makeZone(320, 490, 170, 195, 'Look out upon the fjord', () => {
+        const win = makeZone(320, 640, 170, 185, 'Look out upon the fjord', () => {
             const ice = state.ice;
             const desc = ice<30?`The fjord glitters. Dark water. Ships could still pass.`:ice<60?`Ice fingers reach across the fjord. Cold bites the glass.`:ice<85?'The fjord is white. Ice sheets groan. No ships.':'Sealed. A white plain where water once was.';
             toast(`🪟 ${desc} Ice: ${ice}%.`);
         });
         win.style.background = 'transparent';
         container.appendChild(win);
+
+        // Door
+        const door = makeZone(365, 1050, 90, 55, 'Return to courtyard', () => {
+            saveState();
+            toast('🚶 You bow to the Coal and step backward...');
+            setTimeout(() => { window.location.href = 'index.html?from=chapel'; }, 1000);
+        });
+        door.innerHTML = `<div style="width:90px;height:55px;background:linear-gradient(#4a3a2f,#3d3028);border:4px solid #2a2018;border-radius:45px 45px 5px 5px;box-shadow:0 5px 16px rgba(0,0,0,0.5);"></div>`;
+        container.appendChild(door);
+
+        return m;
     }
 
     function makeZone(x, y, w, h, title, action) {
@@ -432,9 +439,9 @@
         return el;
     }
 
-    // ═══════════════════════════════════════
+    // ═══════════════════════════════════
     // INIT
-    // ═══════════════════════════════════════
+    // ═══════════════════════════════════
 
     function init() {
         const loaded = loadState();
@@ -445,13 +452,13 @@
             toast(`🚶 You arrive from the ${params.get('from')}. The chapel rises before you.`);
             window.history.replaceState({}, '', 'chapel.html');
         } else {
-            toast('🔥 The Ātravan Coal burns. The Silent Brother kneels. The monolith holds its breath.');
+            toast('🔥 The Ātravan Coal burns. The fountain waters flow. The wild wood watches.');
         }
 
         buildMonolith();
-        spawnEmbers(8);
+        spawnEmbers(10);
+        spawnSnow();
 
-        // Prayer sparks
         document.addEventListener('click', (e) => {
             if (Math.random() > 0.7 && !e.target.closest('.zone')) {
                 const spark = document.createElement('div');
@@ -461,7 +468,6 @@
             }
         });
 
-        // Space bar = tend fire
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space' && !e.target.closest('input,textarea')) {
                 e.preventDefault();
