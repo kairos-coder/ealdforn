@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Fjord Harbor · Ealdor</title>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --stone: #3d362f; --deep-stone: #2a2520; --mortar: #1a1612;
+            --parchment: #f4e4c1; --ember: #c44f1c; --ember-bright: #e85d2c;
+            --ash: #8b7d6b; --frost: #c8d8e4; --gold: #b8860b;
+            --deep: #1a1410; --void: #0a0806;
+            --water-deep: #1a3040; --water-mid: #2a4a6a; --water-shallow: #3a6b8c;
+            --wood: #3d2b1f; --wood-light: #5c3a1f;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--void);
+            color: var(--parchment);
+            font-family: 'Georgia','Times New Roman',serif;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; overflow-x: hidden;
+            background-image:
+                radial-gradient(ellipse at 50% 20%, rgba(58,107,140,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(26,20,16,0.95) 0%, transparent 50%);
+        }
+
+        #harbor-view {
+            position: relative; width: 900px; max-width: 98vw;
+            height: 700px; margin: 0 auto 1rem; overflow: hidden;
+            background: var(--void);
+            border: 4px solid var(--deep-stone); border-radius: 4px;
+            box-shadow: 0 0 100px rgba(0,0,0,0.7), 0 0 200px rgba(0,0,0,0.3);
+        }
+        @media (max-width: 920px) {
+            #harbor-view { width: 98vw; height: calc(98vw * 0.78); }
+        }
+
+        .zone { cursor: pointer; transition: filter 0.25s, transform 0.25s; }
+        .zone:hover { filter: brightness(1.35); z-index: 50 !important; }
+        .zone:active { transform: scale(0.94); transition: transform 0.1s; }
+
+        #toast {
+            position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+            background: rgba(10,8,6,0.94); border: 1px solid var(--gold);
+            border-radius: 6px; padding: 0.5rem 1.2rem;
+            font-family: 'Georgia',serif; font-size: 0.78rem;
+            z-index: 200; opacity: 0; transition: opacity 0.35s;
+            pointer-events: none; text-align: center; max-width: 420px; line-height: 1.4;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5); white-space: pre-line;
+        }
+        #toast.show { opacity: 1; }
+
+        @keyframes waveDrift {
+            0%{transform:translateX(0)}
+            50%{transform:translateX(8px)}
+            100%{transform:translateX(0)}
+        }
+        @keyframes waveShimmer {
+            0%,100%{opacity:0.25}
+            50%{opacity:0.55}
+        }
+        @keyframes shipBob {
+            0%,100%{transform:translateY(0)}
+            50%{transform:translateY(-3px)}
+        }
+        @keyframes iceCreak {
+            0%,100%{opacity:0.7}
+            50%{opacity:1}
+        }
+        @keyframes gullGlide {
+            0%{transform:translate(0,0) rotate(0deg)}
+            25%{transform:translate(40px,-15px) rotate(3deg)}
+            50%{transform:translate(80px,5px) rotate(-2deg)}
+            75%{transform:translate(120px,-10px) rotate(1deg)}
+            100%{transform:translate(160px,0) rotate(0deg)}
+        }
+        @keyframes lanternGlow {
+            0%,100%{box-shadow:0 0 8px #daa520,0 0 16px rgba(218,165,32,0.3)}
+            50%{box-shadow:0 0 14px #ffd700,0 0 28px rgba(218,165,32,0.5)}
+        }
+        @keyframes sparkFade {
+            0%{transform:scale(0.5);opacity:1}
+            100%{transform:scale(2.5);opacity:0}
+        }
+        @keyframes smokeRise {
+            0%{transform:translateY(0);opacity:0.4}
+            100%{transform:translateY(-40px);opacity:0}
+        }
+    </style>
+</head>
+<body>
+
+    <div id="harbor-view"></div>
+    <div id="toast"></div>
+
+    <script src="js/font-mason.js"></script>
+    <script>
+    /*
+     * ═══════════════════════════════════════════════════
+     * THE FJORD HARBOR · Ealdor
+     * Water, ships, docks, ice, castle wall, watchtower.
+     * All built from typography. One FontMason instance.
+     * ═══════════════════════════════════════════════════
+     */
+
+    const DEFAULT_STATE = {
+        year: 3450, season: 0, ice: 15,
+        playerResources: { Stone: 4, Timber: 3, Grain: 5, Iron: 2, Salt: 2, Cloth: 3 },
+        population: 100, morale: 70, faith: 60,
+        tabletFragments: 0, crisisHistory: [],
+    };
+    let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+
+    function loadState() {
+        const raw = localStorage.getItem('ealdor_save');
+        if (!raw) return false;
+        try { state = { ...DEFAULT_STATE, ...JSON.parse(raw) }; return true; } catch(e) { return false; }
+    }
+    function saveState() { localStorage.setItem('ealdor_save', JSON.stringify(state)); }
+
+    const toastEl = document.getElementById('toast');
+    let toastTimer;
+    function toast(msg, d = 2800) {
+        toastEl.textContent = msg; toastEl.classList.add('show');
+        clearTimeout(toastTimer); toastTimer = setTimeout(() => toastEl.classList.remove('show'), d);
+    }
+
+    function buildHarbor() {
+        const container = document.getElementById('harbor-view');
+        container.innerHTML = '';
+        const m = new FontMason('harbor-view');
+        const ice = state.ice;
+        const season = state.season; // 0=spring, 1=summer, 2=autumn, 3=winter
+
+        // ═══════════════════════════════════════
+        // SKY (y: 0 to 120)
+        // ═══════════════════════════════════════
+
+        const skyTop = season === 3 ? '#1a2028' : season === 1 ? '#2a3040' : '#1a2230';
+        const skyBot = season === 3 ? '#8a9baa' : season === 1 ? '#4a6b8a' : '#3a5068';
+        
+        // Sky gradient via stacked walls
+        m.buildWall({ chars:[' '], textColor:skyTop, mortarColor:skyTop, fontSize:20, lineHeight:0.5, letterSpacing:0, fontFamily:'monospace', x:0, y:0, width:900, height:40, z:-5 });
+        m.buildWall({ chars:['·','·','·','·','·'], textColor:skyBot, mortarColor:'transparent', fontSize:14, lineHeight:0.8, letterSpacing:4, fontFamily:"'Georgia',serif", x:0, y:35, width:900, height:30, z:-4 });
+
+        // Stars (night/winter)
+        if (season === 3 || season === 0) {
+            for (let i = 0; i < 20; i++) {
+                const star = document.createElement('div');
+                star.style.cssText = `position:absolute;left:${Math.random()*880}px;top:${5+Math.random()*60}px;color:rgba(200,216,228,${0.3+Math.random()*0.5});font-size:${4+Math.random()*8}px;pointer-events:none;z-index:0;`;
+                star.textContent = Math.random() > 0.5 ? '✦' : '·';
+                container.appendChild(star);
+            }
+        }
+
+        // Gulls
+        for (let i = 0; i < 3; i++) {
+            const gull = document.createElement('div');
+            gull.style.cssText = `position:absolute;left:${100+i*250}px;top:${20+i*25}px;color:#8b9baa;font-size:10px;font-family:Georgia,serif;pointer-events:none;z-index:1;animation:gullGlide ${8+i*3}s ease-in-out ${i*2}s infinite;`;
+            gull.textContent = '⌣';
+            container.appendChild(gull);
+        }
+
+        // ═══════════════════════════════════════
+        // DISTANT SHORE / CASTLE WALL (y: 70 to 200)
+        // ═══════════════════════════════════════
+
+        // Far castle wall silhouette
+        m.buildWall({ chars:['▓','▒','░','▓','▒'], textColor:'#2a2520', mortarColor:'#1a1410', fontSize:28, lineHeight:0.48, letterSpacing:-2, fontFamily:'monospace', x:0, y:70, width:900, height:50, z:1 });
+        
+        // Battlements on the far wall
+        m.buildWall({ chars:['█','▓','█','▓','█'], textColor:'#3d362f', mortarColor:'#2a2520', fontSize:16, lineHeight:0.45, letterSpacing:2, fontFamily:'monospace', x:0, y:55, width:900, height:22, z:2 });
+
+        // Watchtower (left)
+        m.buildPillar({ chars:['▓','▓','▓'], textColor:'#3d362f', mortarColor:'#2a2520', fontSize:20, fontFamily:'monospace', x:120, y:25, width:35, height:70, z:3, capital:true, capitalHeight:12 });
+        // Watchtower window (lit)
+        const towerWindow = document.createElement('div');
+        towerWindow.style.cssText = 'position:absolute;left:130px;top:40px;width:14px;height:14px;background:#daa520;border-radius:50%;z-index:4;box-shadow:0 0 8px #daa520;animation:lanternGlow 3s ease-in-out infinite;pointer-events:none;';
+        container.appendChild(towerWindow);
+
+        // Watchtower (right)
+        m.buildPillar({ chars:['▓','▓','▓'], textColor:'#3d362f', mortarColor:'#2a2520', fontSize:20, fontFamily:'monospace', x:745, y:25, width:35, height:70, z:3, capital:true, capitalHeight:12 });
+        const towerWindow2 = document.createElement('div');
+        towerWindow2.style.cssText = 'position:absolute;left:755px;top:40px;width:14px;height:14px;background:#daa520;border-radius:50%;z-index:4;box-shadow:0 0 8px #daa520;animation:lanternGlow 3s ease-in-out infinite;pointer-events:none;';
+        container.appendChild(towerWindow2);
+
+        // Gatehouse (center, larger)
+        m.buildWall({ chars:['█','▓','█','▓','█'], textColor:'#3d362f', mortarColor:'#2a2520', fontSize:22, lineHeight:0.5, letterSpacing:-1, fontFamily:'monospace', x:380, y:45, width:140, height:60, z:3,
+            openings:[{ x:35, y:15, width:70, height:45, arch:true }] });
+        m.buildInscription({ text:'GATE', x:420, y:30, fontSize:7, color:'#8b7d6b', fontFamily:"'Cinzel',serif", z:4 });
+
+        // ═══════════════════════════════════════
+        // THE FJORD — WATER (y: 120 to 450)
+        // ═══════════════════════════════════════
+
+        // Deep water
+        m.buildWall({ chars:['~','≈','≋','~','≈'], textColor:'#1a3040', mortarColor:'#0f1a24', fontSize:30, lineHeight:0.45, letterSpacing:1, fontFamily:"'Georgia',serif", x:0, y:120, width:900, height:330, z:1 });
+
+        // Mid water (lighter, shimmer layer)
+        const waterMid = document.createElement('div');
+        waterMid.style.cssText = 'position:absolute;left:0;top:140px;width:900px;height:310px;z-index:2;color:#2a4a6a;font-size:26px;font-family:Georgia,serif;line-height:0.5;letter-spacing:2px;pointer-events:none;animation:waveShimmer 3s ease-in-out infinite;';
+        let waterText = '';
+        for (let r = 0; r < 20; r++) {
+            const off = Math.floor(r * 0.7) % 3;
+            for (let c = 0; c < 50; c++) {
+                waterText += ['~','≈','·','≋','~'][(c + off) % 5];
+            }
+            waterText += '\n';
+        }
+        waterMid.textContent = waterText;
+        container.appendChild(waterMid);
+
+        // Wave highlights (white crests)
+        const waves = document.createElement('div');
+        waves.style.cssText = 'position:absolute;left:0;top:200px;width:900px;height:200px;z-index:3;color:rgba(200,216,228,0.3);font-size:18px;font-family:Georgia,serif;line-height:0.8;letter-spacing:8px;pointer-events:none;animation:waveDrift 4s ease-in-out infinite;';
+        waves.textContent = '~     ≋     ~     ≈     ~     ≋     ~     ≈\n\n≈     ~     ≋     ~     ≈     ~     ≋     ~\n\n~     ≈     ~     ≋     ~     ≈     ~     ≋';
+        container.appendChild(waves);
+
+        // ═══════════════════════════════════════
+        // ICE (overlays water based on ice level)
+        // ═══════════════════════════════════════
+
+        if (ice > 20) {
+            const iceOpacity = Math.min(0.9, ice / 100);
+            // Ice sheet from the top (north)
+            const iceSheet = document.createElement('div');
+            iceSheet.style.cssText = `position:absolute;left:0;top:120px;width:900px;height:${Math.min(330, ice*4)}px;z-index:4;background:linear-gradient(to bottom,rgba(200,216,228,${iceOpacity}),rgba(200,216,228,${iceOpacity*0.5}),transparent);pointer-events:none;animation:iceCreak 8s ease-in-out infinite;`;
+            container.appendChild(iceSheet);
+
+            // Ice edge (jagged)
+            if (ice > 30) {
+                const iceEdge = document.createElement('div');
+                const edgeY = 120 + Math.min(280, ice * 3.5);
+                iceEdge.style.cssText = `position:absolute;left:0;top:${edgeY}px;width:900px;z-index:5;color:rgba(232,240,248,0.8);font-size:14px;font-family:monospace;letter-spacing:-1px;pointer-events:none;`;
+                iceEdge.textContent = '▔▁▔▁▔▁▔▁▔▁▔▁▔▁▔▁▔▁▔▁▔▁▔▁▔▁▔▁▔▁▔▁▔▁▔▁▔▁▔▁▔▁▔▁▔';
+                container.appendChild(iceEdge);
+            }
+
+            // Trapped ship in ice
+            if (ice > 55) {
+                const trappedShip = document.createElement('div');
+                trappedShip.style.cssText = 'position:absolute;left:600px;top:145px;z-index:5;pointer-events:none;';
+                trappedShip.innerHTML = `
+                    <div style="color:#4a3020;font-size:16px;font-family:monospace;transform:rotate(-8deg);">▬▬▬▬▬</div>
+                    <div style="color:#3d2b1f;font-size:12px;font-family:monospace;margin-left:14px;margin-top:-4px;">│</div>
+                    <div style="color:#6b4f3d;font-size:10px;font-family:monospace;margin-left:8px;margin-top:-6px;transform:rotate(-5deg);">▬▬▬</div>
+                `;
+                container.appendChild(trappedShip);
+                if (ice > 70) {
+                    const frozenMast = document.createElement('div');
+                    frozenMast.style.cssText = 'position:absolute;left:622px;top:128px;color:#c8d8e4;font-size:10px;font-family:monospace;z-index:6;pointer-events:none;';
+                    frozenMast.textContent = '│';
+                    container.appendChild(frozenMast);
+                }
+            }
+        }
+
+        // ═══════════════════════════════════════
+        // DOCKS (y: 350 to 500)
+        // ═══════════════════════════════════════
+
+        // Stone dock wall
+        m.buildWall({ chars:['▓','▒','░','█','▓'], textColor:'#5c4f42', mortarColor:'#3a3028', fontSize:34, lineHeight:0.47, letterSpacing:-2, fontFamily:"'Georgia','Times New Roman',serif", x:0, y:370, width:900, height:30, z:6 });
+
+        // Dock surface
+        m.buildFloor({ chars:['▓','░','▒','█','░'], textColor:'#5c4f42', mortarColor:'#3a3028', fontSize:30, lineHeight:0.47, letterSpacing:-2, fontFamily:"'Georgia','Times New Roman',serif", x:30, y:390, width:840, height:60, z:7, perspectiveStrength:8 });
+
+        // Wooden pier extending into water
+        m.buildWall({ chars:['║','│','╎','│','║'], textColor:'#3d2b1f', mortarColor:'#2a1f15', fontSize:14, lineHeight:0.5, letterSpacing:0, fontFamily:'monospace', x:350, y:310, width:50, height:65, z:8 });
+        m.buildWall({ chars:['▬','▬','▬','▬','▬'], textColor:'#4a3020', mortarColor:'#3d2b1f', fontSize:12, lineHeight:0.5, letterSpacing:0, fontFamily:'monospace', x:340, y:330, width:70, height:15, z:9 });
+
+        // Mooring posts
+        m.buildPillar({ chars:['║','║','║'], textColor:'#3d2b1f', mortarColor:'#2a1f15', fontSize:10, fontFamily:'monospace', x:340, y:320, width:8, height:35, z:9 });
+        m.buildPillar({ chars:['║','║','║'], textColor:'#3d2b1f', mortarColor:'#2a1f15', fontSize:10, fontFamily:'monospace', x:400, y:320, width:8, height:35, z:9 });
+
+        // Docked ship (small fishing vessel)
+        const ship = document.createElement('div');
+        ship.className = 'zone';
+        ship.title = 'A fishing vessel. The hull is weathered. Nets hang from the side.';
+        ship.style.cssText = 'position:absolute;left:280px;top:295px;z-index:10;animation:shipBob 4s ease-in-out infinite;';
+        ship.innerHTML = `
+            <div style="color:#4a3020;font-size:18px;font-family:monospace;">▬▬▬▬▬▬▬</div>
+            <div style="color:#3d2b1f;font-size:14px;font-family:monospace;margin-left:10px;margin-top:-6px;">▬▬▬▬▬</div>
+            <div style="color:#5c3a1f;font-size:12px;font-family:monospace;margin-left:4px;margin-top:-4px;">▬▬▬</div>
+            <div style="color:#3d2b1f;font-size:10px;font-family:monospace;margin-left:20px;margin-top:-12px;">│</div>
+            <div style="color:#6b4f3d;font-size:8px;font-family:monospace;margin-left:16px;margin-top:-2px;">▬▬</div>
+        `;
+        ship.addEventListener('click', () => {
+            const salt = state.playerResources?.Salt || 0;
+            if (salt > 0) {
+                toast('🚢 The fishing vessel bobs quietly. Nets hang drying. A sailor nods at you.\n\n"You heading out? Ice is coming. Not many fish left near shore."');
+            } else {
+                toast('🚢 An empty fishing vessel. The crew is at the market. Nets hang drying in the cold air.');
+            }
+        });
+        container.appendChild(ship);
+
+        // ═══════════════════════════════════════
+        // HARBOR BUILDINGS (y: 420 to 580)
+        // ═══════════════════════════════════════
+
+        // Harbor master's hut (left)
+        m.buildWall({ chars:['▓','▒','░','▓','▒'], textColor:'#4a3f35', mortarColor:'#2a2520', fontSize:20, lineHeight:0.5, letterSpacing:-1, fontFamily:'monospace', x:60, y:430, width:120, height:90, z:8,
+            openings:[{ x:40, y:35, width:40, height:55, arch:true }] });
+        m.buildWall({ chars:['⌣','⌢','~','⋅','⌣'], textColor:'#3d3028', mortarColor:'#2a2018', fontSize:14, lineHeight:0.6, letterSpacing:1, fontFamily:"'Georgia',serif", x:55, y:420, width:130, height:15, z:9 });
+        m.buildInscription({ text:'HARBOR', x:85, y:460, fontSize:7, color:'#8b7d6b', fontFamily:"'Cinzel',serif", z:10 });
+
+        // Smoke from chimney
+        const smoke = document.createElement('div');
+        smoke.style.cssText = 'position:absolute;left:155px;top:415px;color:rgba(139,125,107,0.3);font-size:8px;font-family:Georgia,serif;pointer-events:none;z-index:10;animation:smokeRise 3s ease-out infinite;';
+        smoke.textContent = '░\n▒\n░';
+        container.appendChild(smoke);
+
+        // Warehouse (right)
+        m.buildWall({ chars:['▓','▒','▓','▒','▓'], textColor:'#4a3f35', mortarColor:'#2a2520', fontSize:22, lineHeight:0.5, letterSpacing:-1, fontFamily:'monospace', x:680, y:440, width:160, height:80, z:8,
+            openings:[{ x:60, y:25, width:50, height:55, arch:true }] });
+        m.buildWall({ chars:['⌣','⌢','~','⋅','⌣'], textColor:'#3d3028', mortarColor:'#2a2018', fontSize:14, lineHeight:0.6, letterSpacing:1, fontFamily:"'Georgia',serif", x:675, y:430, width:170, height:15, z:9 });
+        m.buildInscription({ text:'WAREHOUSE', x:715, y:470, fontSize:7, color:'#8b7d6b', fontFamily:"'Cinzel',serif", z:10 });
+
+        // Crane/hoist on the dock
+        m.buildPillar({ chars:['║','║','║'], textColor:'#3d2b1f', mortarColor:'#2a1f15', fontSize:12, fontFamily:'monospace', x:520, y:370, width:10, height:50, z:9 });
+        m.buildWall({ chars:['▬','▬','▬'], textColor:'#4a3020', mortarColor:'#3d2b1f', fontSize:10, lineHeight:0.5, letterSpacing:0, fontFamily:'monospace', x:505, y:365, width:40, height:8, z:10 });
+        // Rope
+        const rope = document.createElement('div');
+        rope.style.cssText = 'position:absolute;left:525px;top:372px;color:#6b5d4f;font-size:8px;font-family:monospace;z-index:10;pointer-events:none;';
+        rope.textContent = '│';
+        container.appendChild(rope);
+
+        // ═══════════════════════════════════════
+        // MARKET STALLS (y: 500 to 600)
+        // ═══════════════════════════════════════
+
+        m.buildFloor({ chars:['▓','░','▒','█','░'], textColor:'#6b5d4f', mortarColor:'#4a3f35', fontSize:28, lineHeight:0.47, letterSpacing:-2, fontFamily:"'Georgia','Times New Roman',serif", x:60, y:500, width:780, height:50, z:7, perspectiveStrength:6 });
+
+        // Fish stall
+        m.buildWall({ chars:['▬','▬','▬'], textColor:'#5c4f42', mortarColor:'#3d362f', fontSize:12, lineHeight:0.5, letterSpacing:0, fontFamily:'monospace', x:120, y:510, width:60, height:20, z:8 });
+        m.buildInscription({ text:'FISH', x:130, y:505, fontSize:6, color:'#8b7d6b', fontFamily:"'Cinzel',serif", z:9 });
+        // Fish glyphs on the stall
+        m.buildInscription({ text:'≋ ≋ ≋', x:122, y:518, fontSize:8, color:'#3a6b8c', fontFamily:'monospace', z:9 });
+
+        // Salt stall
+        m.buildWall({ chars:['▬','▬','▬'], textColor:'#5c4f42', mortarColor:'#3d362f', fontSize:12, lineHeight:0.5, letterSpacing:0, fontFamily:'monospace', x:220, y:510, width:60, height:20, z:8 });
+        m.buildInscription({ text:'SALT', x:228, y:505, fontSize:6, color:'#8b7d6b', fontFamily:"'Cinzel',serif", z:9 });
+        m.buildInscription({ text:'◇ ◇ ◇', x:225, y:518, fontSize:8, color:'#c8d8e4', fontFamily:'monospace', z:9 });
+
+        // Cloth stall
+        m.buildWall({ chars:['▬','▬','▬'], textColor:'#5c4f42', mortarColor:'#3d362f', fontSize:12, lineHeight:0.5, letterSpacing:0, fontFamily:'monospace', x:320, y:510, width:60, height:20, z:8 });
+        m.buildInscription({ text:'CLOTH', x:325, y:505, fontSize:6, color:'#8b7d6b', fontFamily:"'Cinzel',serif", z:9 });
+        m.buildInscription({ text:'║ ╎ │ ╎', x:325, y:518, fontSize:8, color:'#f4e4c1', fontFamily:'monospace', z:9 });
+
+        // Timber stall
+        m.buildWall({ chars:['▬','▬','▬'], textColor:'#5c4f42', mortarColor:'#3d362f', fontSize:12, lineHeight:0.5, letterSpacing:0, fontFamily:'monospace', x:420, y:510, width:60, height:20, z:8 });
+        m.buildInscription({ text:'TIMBER', x:422, y:505, fontSize:6, color:'#8b7d6b', fontFamily:"'Cinzel',serif", z:9 });
+
+        // ═══════════════════════════════════════
+        // FOREGROUND / PATHS (y: 550 to 680)
+        // ═══════════════════════════════════════
+
+        m.buildFloor({ chars:['▓','░','▒','█','░'], textColor:'#5c4f42', mortarColor:'#3a3028', fontSize:36, lineHeight:0.47, letterSpacing:-2, fontFamily:"'Georgia','Times New Roman',serif", x:0, y:550, width:900, height:80, z:6, perspectiveStrength:4 });
+
+        // Path to chapel (left, winding up)
+        m.buildInscription({ text:'·  ·  ·  ·  ·  ·  ·', x:100, y:570, fontSize:8, color:'rgba(0,0,0,0.3)', fontFamily:"'Georgia',serif", z:7 });
+        m.buildInscription({ text:'CHAPEL →', x:80, y:555, fontSize:7, color:'#8b7d6b', fontFamily:"'Cinzel',serif", z:8 });
+
+        // Path to courtyard (right)
+        m.buildInscription({ text:'·  ·  ·  ·  ·  ·  ·', x:620, y:600, fontSize:8, color:'rgba(0,0,0,0.3)', fontFamily:"'Georgia',serif", z:7 });
+        m.buildInscription({ text:'← COURTYARD', x:630, y:585, fontSize:7, color:'#8b7d6b', fontFamily:"'Cinzel',serif", z:8 });
+
+        // Notice post
+        m.buildPillar({ chars:['║','║','║'], textColor:'#3d2b1f', mortarColor:'#2a1f15', fontSize:8, fontFamily:'monospace', x:440, y:570, width:8, height:40, z:9 });
+        const noticeBoard = document.createElement('div');
+        noticeBoard.className = 'zone';
+        noticeBoard.title = 'Harbor notices';
+        noticeBoard.style.cssText = 'position:absolute;left:420px;top:555px;width:50px;height:25px;background:#f4e4c1;border:2px solid #3d2b1f;z-index:10;cursor:pointer;font-size:5px;color:#1a1410;font-family:monospace;text-align:center;padding:2px;';
+        noticeBoard.textContent = 'ICE\nWARNING';
+        noticeBoard.addEventListener('click', () => {
+            const iceLevel = state.ice;
+            const warning = iceLevel < 30 ? 'Ice: Light. Fjord open. Ships may pass.'
+                : iceLevel < 55 ? 'Ice: Moderate. Caution advised. Some passages narrowing.'
+                : iceLevel < 80 ? 'Ice: Heavy. Most fjord passages closed. Dock traffic halted.'
+                : 'Ice: Severe. Fjord frozen. No ships. The harbor is locked in.';
+            toast(`📋 Harbor Notice\n\n${warning}\n\nIce: ${iceLevel}%`);
+        });
+        container.appendChild(noticeBoard);
+
+        // Return path (clickable)
+        const returnZone = document.createElement('div');
+        returnZone.className = 'zone';
+        returnZone.title = 'Return to the courtyard';
+        returnZone.style.cssText = 'position:absolute;left:620px;top:580px;width:150px;height:40px;z-index:20;';
+        returnZone.addEventListener('click', () => {
+            saveState();
+            toast('🚶 You walk up the path toward the courtyard...');
+            setTimeout(() => { window.location.href = 'index.html?from=harbor'; }, 1000);
+        });
+        container.appendChild(returnZone);
+
+        // Chapel path (clickable)
+        const chapelZone = document.createElement('div');
+        chapelZone.className = 'zone';
+        chapelZone.title = 'Walk to the Coal Chapel';
+        chapelZone.style.cssText = 'position:absolute;left:40px;top:560px;width:120px;height:40px;z-index:20;';
+        chapelZone.addEventListener('click', () => {
+            saveState();
+            toast('🚶 You follow the path up to the chapel...');
+            setTimeout(() => { window.location.href = 'chapel.html?from=harbor'; }, 1000);
+        });
+        container.appendChild(chapelZone);
+
+        // ═══════════════════════════════════════
+        // ATMOSPHERE
+        // ═══════════════════════════════════════
+
+        // Lantern on the dock
+        const lantern = document.createElement('div');
+        lantern.style.cssText = 'position:absolute;left:528px;top:358px;width:6px;height:6px;background:#daa520;border-radius:50%;z-index:11;animation:lanternGlow 2s ease-in-out infinite;pointer-events:none;';
+        container.appendChild(lantern);
+
+        // Fire barrel near warehouse
+        const fireBarrel = document.createElement('div');
+        fireBarrel.style.cssText = 'position:absolute;left:660px;top:500px;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle,#c44f1c,#1a1410);z-index:8;animation:lanternGlow 2.5s ease-in-out infinite;pointer-events:none;';
+        container.appendChild(fireBarrel);
+
+        return m;
+    }
+
+    // ═══════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════
+
+    function init() {
+        const loaded = loadState();
+        if (!loaded) saveState();
+
+        toast('🚢 The Fjord Harbor. Ice: ' + state.ice + '%. ' + (state.ice < 40 ? 'Ships still pass.' : state.ice < 70 ? 'The ice closes in.' : 'The harbor freezes.'));
+
+        buildHarbor();
+
+        document.addEventListener('click', (e) => {
+            if (Math.random() > 0.8 && !e.target.closest('.zone')) {
+                const spark = document.createElement('div');
+                spark.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:3px;height:3px;background:#d4af37;border-radius:50%;box-shadow:0 0 10px #d4af37;pointer-events:none;z-index:150;animation:sparkFade 1.2s ease-out forwards;`;
+                document.body.appendChild(spark);
+                setTimeout(() => spark.remove(), 1300);
+            }
+        });
+    }
+
+    init();
+    </script>
+</body>
+</html>
