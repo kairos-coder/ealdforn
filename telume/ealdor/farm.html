@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ealdor Farm · Radish Fields</title>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --void: #0a0806; --deep: #1a1410;
+            --earth: #3d2f1f; --earth-dark: #2a1f12;
+            --soil: #4a3520; --soil-rich: #5a4030;
+            --wood: #3d2b1f; --wood-light: #5c3a1f; --wood-dark: #2a1f15;
+            --stone: #4a3f35; --stone-dark: #3d362f;
+            --wheat: #c8a848; --wheat-pale: #e8c878;
+            --radish-red: #c84444; --radish-white: #f0d8d8;
+            --carrot: #e87830; --cabbage: #6a8a4a;
+            --sky: #c8d8e8; --sky-pale: #e8f0f8;
+            --gold: #b8860b; --parchment: #f4e4c1;
+            --water: #5a8ab8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--void);
+            color: var(--parchment);
+            font-family: 'Georgia','Times New Roman',serif;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; overflow-x: hidden;
+            background-image:
+                radial-gradient(ellipse at 50% 0%, rgba(200,168,72,0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(10,8,6,0.98) 0%, transparent 50%);
+        }
+
+        #farm-field {
+            position: relative; width: 900px; max-width: 98vw;
+            height: 800px; margin: 0 auto;
+            overflow: hidden; background: linear-gradient(180deg, #c8d8e8 0%, #e8f0f8 18%, #3d2f1f 18%, #4a3520 100%);
+            border-left: 4px solid var(--stone-dark);
+            border-right: 4px solid var(--stone-dark);
+            box-shadow: 0 0 120px rgba(0,0,0,0.6), 0 0 240px rgba(0,0,0,0.3);
+        }
+        @media (max-width: 920px) {
+            #farm-field { width: 98vw; height: calc(98vw * 0.89); }
+        }
+
+        .zone { cursor: pointer; transition: filter 0.25s, transform 0.25s; }
+        .zone:hover { filter: brightness(1.3); z-index: 50 !important; }
+        .zone:active { transform: scale(0.94); transition: transform 0.1s; }
+
+        #toast {
+            position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+            background: rgba(10,8,6,0.94); border: 1px solid var(--gold);
+            border-radius: 6px; padding: 0.5rem 1.2rem;
+            font-family: 'Georgia',serif; font-size: 0.78rem;
+            z-index: 200; opacity: 0; transition: opacity 0.35s;
+            pointer-events: none; text-align: center; max-width: 420px; line-height: 1.4;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5); white-space: pre-line;
+        }
+        #toast.show { opacity: 1; }
+
+        @keyframes cropSway {
+            0%,100% { transform: translateX(0); }
+            50% { transform: translateX(2px); }
+        }
+        @keyframes scarecrowBob {
+            0%,100% { transform: rotate(-1deg); }
+            50% { transform: rotate(1deg); }
+        }
+        @keyframes wellGlow {
+            0%,100% { box-shadow: 0 0 4px rgba(90,138,184,0.2); }
+            50% { box-shadow: 0 0 12px rgba(90,138,184,0.5); }
+        }
+        @keyframes sparkFade {
+            0% { transform: scale(0.5); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+        @keyframes birdGlide {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(60px, -8px); }
+            100% { transform: translate(120px, 0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="farm-field"></div>
+    <div id="toast"></div>
+
+    <script src="js/font-mason.js"></script>
+    <script>
+    /*
+     * ═══════════════════════════════════════════════════════
+     * THE EALDOR FARM · Radish Fields
+     * Barn. Silo. Well. Crop rows. Scarecrow.
+     * Pull radishes. Draw water. Store grain.
+     * All built from typography. FontMason v2.
+     * ═══════════════════════════════════════════════════════
+     */
+
+    const DEFAULT_STATE = {
+        year: 3450, season: 0,
+        radishesHarvested: 0,
+        wheatHarvested: 0,
+        carrotsHarvested: 0,
+        cabbagesHarvested: 0,
+        waterDrawn: 0,
+        farmVisits: 0,
+        playerResources: { Stone: 4, Timber: 3, Grain: 5, Iron: 2, Salt: 2, Cloth: 3, Radishes: 0, Carrots: 0, Cabbages: 0 },
+    };
+    let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+
+    function loadState() {
+        const raw = localStorage.getItem('ealdor_save');
+        if (!raw) return false;
+        try {
+            const saved = JSON.parse(raw);
+            state = { ...DEFAULT_STATE, ...saved };
+            if (!state.playerResources) state.playerResources = { ...DEFAULT_STATE.playerResources };
+            if (state.playerResources.Radishes === undefined) state.playerResources.Radishes = state.radishesHarvested || 0;
+            if (state.playerResources.Carrots === undefined) state.playerResources.Carrots = state.carrotsHarvested || 0;
+            if (state.playerResources.Cabbages === undefined) state.playerResources.Cabbages = state.cabbagesHarvested || 0;
+            return true;
+        } catch(e) { return false; }
+    }
+    function saveState() {
+        state.playerResources.Radishes = state.radishesHarvested;
+        state.playerResources.Carrots = state.carrotsHarvested;
+        state.playerResources.Cabbages = state.cabbagesHarvested;
+        state.playerResources.Grain = state.wheatHarvested;
+        localStorage.setItem('ealdor_save', JSON.stringify(state));
+    }
+
+    const toastEl = document.getElementById('toast');
+    let toastTimer;
+    function toast(msg, d = 2800) {
+        toastEl.textContent = msg; toastEl.classList.add('show');
+        clearTimeout(toastTimer); toastTimer = setTimeout(() => toastEl.classList.remove('show'), d);
+    }
+
+    // ═══════════════════════════════════
+    // BUILD THE FARM
+    // ═══════════════════════════════════
+
+    function buildFarm() {
+        const container = document.getElementById('farm-field');
+        container.innerHTML = '';
+        const m = new FontMason('farm-field');
+
+        // ── Register farm materials ──
+        FontMason.MATERIALS['field_soil'] = {
+            chars: ['▓','░','▒','▓','░'], textColor:'#5a4030', mortarColor:'#3d2a18',
+            fontSize:28, lineHeight:0.48, letterSpacing:-2, fontFamily:"'Georgia','Times New Roman',serif", weathering:0.1
+        };
+        FontMason.MATERIALS['barn_wood'] = {
+            chars: ['▬','▬','▬','▬','▬'], textColor:'#5c3a1f', mortarColor:'#3d2b1f',
+            fontSize:18, lineHeight:0.5, letterSpacing:-1, fontFamily:'monospace', weathering:0.15
+        };
+        FontMason.MATERIALS['silo_stone'] = {
+            chars: ['▓','▒','░','▓','▒'], textColor:'#4a3f35', mortarColor:'#2a2520',
+            fontSize:30, lineHeight:0.5, letterSpacing:-2, fontFamily:'monospace', weathering:0.08
+        };
+        FontMason.MATERIALS['fence_wood'] = {
+            chars: ['╎','│','╎','│','╎'], textColor:'#3d2b1f', mortarColor:'#2a1f15',
+            fontSize:14, lineHeight:0.5, letterSpacing:1, fontFamily:'monospace', weathering:0.2
+        };
+        FontMason.MATERIALS['well_stone'] = {
+            chars: ['▓','▒','░','▓','▒'], textColor:'#5c4f42', mortarColor:'#3a3028',
+            fontSize:24, lineHeight:0.5, letterSpacing:-1, fontFamily:'monospace', weathering:0.12
+        };
+
+        // ═══════════════════════════════════
+        // SKY
+        // ═══════════════════════════════════
+        // Birds
+        for (let i = 0; i < 4; i++) {
+            const bird = document.createElement('div');
+            bird.style.cssText = `position:absolute;left:${80+i*200}px;top:${20+i*15}px;color:#6a7a8a;font-size:8px;font-family:Georgia,serif;pointer-events:none;z-index:1;animation:birdGlide ${6+i*2}s ease-in-out ${i*1.5}s infinite;`;
+            bird.textContent = '⌣';
+            container.appendChild(bird);
+        }
+
+        // Clouds
+        m.buildWall({
+            chars: ['⌒','⌣','~','⋅','⌒'],
+            textColor: '#d8e0e8', mortarColor: 'transparent',
+            fontSize: 14, lineHeight: 0.7, letterSpacing: 4,
+            fontFamily: "'Georgia',serif",
+            x: 60, y: 10, width: 120, height: 20, z: 1
+        });
+        m.buildWall({
+            chars: ['⌒','⌣','~','⋅','⌒'],
+            textColor: '#e0e8f0', mortarColor: 'transparent',
+            fontSize: 12, lineHeight: 0.7, letterSpacing: 3,
+            fontFamily: "'Georgia',serif",
+            x: 620, y: 5, width: 100, height: 16, z: 1
+        });
+
+        // ═══════════════════════════════════
+        // FENCE — perimeter
+        // ═══════════════════════════════════
+        m.buildWall({ ...FontMason.mat('fence_wood'), x:0, y:138, width:900, height:10, z:3 });
+        m.buildWall({ ...FontMason.mat('fence_wood'), x:0, y:138, width:10, height:300, z:3 });
+        m.buildWall({ ...FontMason.mat('fence_wood'), x:890, y:138, width:10, height:300, z:3 });
+
+        // Fence posts
+        for (let px = 50; px < 880; px += 80) {
+            m.buildPillar({ chars:['╎'], textColor:'#3d2b1f', fontSize:16, fontFamily:'monospace', x:px, y:132, width:6, height:22, z:4 });
+        }
+
+        // ═══════════════════════════════════
+        // BARN — left side
+        // ═══════════════════════════════════
+        m.buildWall({ ...FontMason.mat('barn_wood'), x:15, y:160, width:200, height:160, z:3, weathering:0.12 });
+        m.buildWall({ chars:['⌣','⌢','~','⋅','⌣'], textColor:'#4a3020', mortarColor:'#3d2b1f', fontSize:14, lineHeight:0.6, letterSpacing:1, fontFamily:"'Georgia',serif", x:10, y:148, width:210, height:16, z:4 });
+
+        // Barn door
+        m.buildWall({ ...FontMason.mat('barn_wood'), x:80, y:230, width:70, height:90, z:5, openings:[{ x:15, y:10, width:40, height:80, arch:true }] });
+        m.buildInscription({ text:'BARN', x:85, y:218, fontSize:7, color:'#8b7d6b', fontFamily:"'Cinzel',serif", z:6 });
+
+        // Hayloft window
+        m.buildWall({ ...FontMason.mat('void_black'), x:130, y:170, width:30, height:25, z:5 });
+        m.buildInscription({ text:'╔╗\n╚╝', x:135, y:172, fontSize:8, color:'rgba(244,228,193,0.3)', fontFamily:'monospace', z:6 });
+
+        // Barn zone
+        const barnZone = document.createElement('div');
+        barnZone.className = 'zone';
+        barnZone.title = 'Enter the barn';
+        barnZone.style.cssText = 'position:absolute;left:95px;top:240px;width:40px;height:80px;z-index:20;';
+        barnZone.addEventListener('click', () => {
+            const timber = state.playerResources?.Timber || 0;
+            const tools = timber > 0 ? 'Tools hang on the wall. Sacks of seed. Timber stacked.' : 'Tools hang on the wall. The timber rack is empty.';
+            toast(`🏚️ The barn is cool and dark.\n\n${tools}\n\nRadishes stored: ${state.radishesHarvested}`);
+        });
+        container.appendChild(barnZone);
+
+        // ═══════════════════════════════════
+        // SILO — right side
+        // ═══════════════════════════════════
+        m.buildWall({ ...FontMason.mat('silo_stone'), x:690, y:160, width:100, height:180, z:3, shape:'circle' });
+        m.buildWall({ chars:['⌣','⌢','~','⋅','⌣'], textColor:'#3d3028', mortarColor:'#2a2018', fontSize:12, lineHeight:0.6, letterSpacing:1, fontFamily:"'Georgia',serif", x:700, y:148, width:80, height:16, z:4 });
+
+        // Silo cap
+        m.buildWall({ ...FontMason.mat('silo_stone'), x:720, y:155, width:40, height:8, z:5 });
+        m.buildInscription({ text:'SILO', x:715, y:145, fontSize:7, color:'#8b7d6b', fontFamily:"'Cinzel',serif", z:6 });
+
+        // Silo zone
+        const siloZone = document.createElement('div');
+        siloZone.className = 'zone';
+        siloZone.title = 'Check the silo';
+        siloZone.style.cssText = 'position:absolute;left:690px;top:160px;width:100px;height:180px;z-index:20;';
+        siloZone.addEventListener('click', () => {
+            const grain = state.wheatHarvested || 0;
+            toast(`🌾 The silo holds ${grain} measures of grain.\n\n${grain > 20 ? 'Full. The harvest was good.' : grain > 5 ? 'Half-full. Room for more.' : 'Nearly empty. Time to harvest.'}`);
+        });
+        container.appendChild(siloZone);
+
+        // ═══════════════════════════════════
+        // SCARECROW — center-left
+        // ═══════════════════════════════════
+        m.buildPillar({ chars:['║','║','║'], textColor:'#3d2b1f', fontSize:14, fontFamily:'monospace', x:315, y:200, width:8, height:70, z:4 });
+        m.buildWall({ chars:['▬','▬','▬'], textColor:'#4a3020', fontSize:10, lineHeight:0.5, letterSpacing:0, fontFamily:'monospace', x:300, y:215, width:40, height:6, z:5 });
+        // Scarecrow head
+        const scarecrowHead = document.createElement('div');
+        scarecrowHead.style.cssText = `position:absolute;left:305px;top:190px;width:28px;height:28px;background:radial-gradient(circle,#f4e4c1,#c8b898);border-radius:50%;z-index:6;pointer-events:none;animation:scarecrowBob 4s ease-in-out infinite;`;
+        container.appendChild(scarecrowHead);
+        m.buildInscription({ text:'· ·', x:312, y:198, fontSize:6, color:'#1a1410', fontFamily:'monospace', z:7 });
+        m.buildInscription({ text:'⌣', x:316, y:202, fontSize:6, color:'#1a1410', fontFamily:'Georgia', z:7 });
+
+        const scarecrowZone = document.createElement('div');
+        scarecrowZone.className = 'zone';
+        scarecrowZone.title = 'The scarecrow';
+        scarecrowZone.style.cssText = 'position:absolute;left:295px;top:185px;width:50px;height:90px;z-index:20;';
+        scarecrowZone.addEventListener('click', () => {
+            const lines = [
+                'The scarecrow sways. Straw pokes from its sleeves. It has no face, but it watches.',
+                'A crow sits on the scarecrow\'s hat. It knows this is no threat.',
+                'The scarecrow\'s coat is patched with old cloth. Someone mended it recently.',
+            ];
+            toast('🧥 ' + lines[Math.floor(Math.random() * lines.length)]);
+        });
+        container.appendChild(scarecrowZone);
+
+        // ═══════════════════════════════════
+        // WELL — foreground left
+        // ═══════════════════════════════════
+        m.buildWall({ ...FontMason.mat('well_stone'), x:120, y:430, width:70, height:50, z:5, shape:'circle' });
+        m.buildWall({ ...FontMason.mat('void_black'), x:130, y:438, width:50, height:38, z:6, shape:'circle' });
+
+        // Well water shimmer
+        const wellWater = document.createElement('div');
+        wellWater.style.cssText = `position:absolute;left:138px;top:446px;width:34px;height:26px;border-radius:50%;background:radial-gradient(circle,rgba(90,138,184,0.4),rgba(40,80,120,0.6));z-index:7;pointer-events:none;animation:wellGlow 3s ease-in-out infinite;`;
+        container.appendChild(wellWater);
+
+        // Well roof
+        m.buildWall({ chars:['⌣','⌢','~','⋅','⌣'], textColor:'#4a3020', fontSize:10, lineHeight:0.6, letterSpacing:1, fontFamily:"'Georgia',serif", x:130, y:418, width:50, height:10, z:6 });
+        m.buildPillar({ chars:['╎'], textColor:'#3d2b1f', fontSize:8, fontFamily:'monospace', x:145, y:428, width:4, height:16, z:6 });
+        m.buildPillar({ chars:['╎'], textColor:'#3d2b1f', fontSize:8, fontFamily:'monospace', x:165, y:428, width:4, height:16, z:6 });
+
+        m.buildInscription({ text:'WELL', x:134, y:486, fontSize:6, color:'#8b7d6b', fontFamily:"'Cinzel',serif", z:8 });
+
+        const wellZone = document.createElement('div');
+        wellZone.className = 'zone';
+        wellZone.title = 'Draw water from the well';
+        wellZone.style.cssText = 'position:absolute;left:120px;top:430px;width:70px;height:55px;z-index:20;';
+        wellZone.addEventListener('click', () => {
+            state.waterDrawn++;
+            toast('💧 Cool water rises. The bucket is heavy. The field drinks.\n\nWater drawn: ' + state.waterDrawn);
+            saveState();
+        });
+        container.appendChild(wellZone);
+
+        // ═══════════════════════════════════
+        // COMPOST HEAP — right foreground
+        // ═══════════════════════════════════
+        m.buildWall({ chars:['░','▒','▓','▒','░'], textColor:'#3d2f1f', mortarColor:'#2a1a10', fontSize:20, lineHeight:0.5, letterSpacing:-1, fontFamily:'monospace', x:620, y:450, width:100, height:35, z:4, weathering:0.3 });
+        m.buildInscription({ text:'COMPOST', x:638, y:445, fontSize:5, color:'rgba(139,125,107,0.4)', fontFamily:"'Cinzel',serif", z:6 });
+
+        const compostZone = document.createElement('div');
+        compostZone.className = 'zone';
+        compostZone.title = 'Turn the compost';
+        compostZone.style.cssText = 'position:absolute;left:620px;top:450px;width:100px;height:35px;z-index:20;';
+        compostZone.addEventListener('click', () => {
+            toast('🪱 Rich, dark earth. Worms working. The smell is honest. Next season\'s food starts here.');
+        });
+        container.appendChild(compostZone);
+
+        // ═══════════════════════════════════
+        // CROP FIELD — the heart
+        // ═══════════════════════════════════
+        // Field earth background
+        m.buildFloor({ ...FontMason.mat('field_soil'), x:30, y:370, width:840, height:230, z:2, perspectiveStrength:6 });
+
+        // Crop rows
+        const cropData = [
+            { name:'RADISHES', glyph:'◉', color:var(--radish-red), harvestKey:'radishesHarvested', x:80, y:380, count:8, spacing:30, whispers:[
+                'You pull a radish. Small, round, red. The earth clings to it.',
+                'A perfect radish. Cool from the ground. Sharp and clean.',
+                'Pop! The radish comes free. White inside. Ready to eat.',
+                'You tug gently. The radish releases. Another will grow in its place.'
+            ]},
+            { name:'WHEAT', glyph:'╎', color:var(--wheat-pale), harvestKey:'wheatHarvested', x:80, y:430, count:14, spacing:20, whispers:[
+                'You cut a sheaf of wheat. Golden. Heavy with grain.',
+                'The wheat rustles. A good harvest. The bread will be plenty.',
+                'You gather the stalks. They whisper against each other.',
+                'A sheaf in hand. The field gives freely.'
+            ]},
+            { name:'CARROTS', glyph:'▼', color:var(--carrot), harvestKey:'carrotsHarvested', x:80, y:475, count:10, spacing:25, whispers:[
+                'You pull a carrot. Long and orange. It snaps from the soil.',
+                'The carrot comes up clean. Sweet smell. The rabbits will be jealous.',
+                'A fine carrot. Still cool. The earth holds its flavor.',
+                'You brush the dirt off. Crunchy. Fresh. Perfect for stew.'
+            ]},
+            { name:'CABBAGES', glyph:'◆', color:var(--cabbage), harvestKey:'cabbagesHarvested', x:80, y:515, count:7, spacing:35, whispers:[
+                'You lift a cabbage. Heavy. Layer after layer of green.',
+                'The cabbage comes free with a twist. Solid. Good weight.',
+                'A beautiful cabbage. Tight leaves. The core is pale and sweet.',
+                'You cradle the cabbage. It\'s a whole meal in your hands.'
+            ]},
+        ];
+
+        cropData.forEach(crop => {
+            // Row label
+            m.buildInscription({
+                text: crop.name,
+                x: crop.x - 5, y: crop.y - 16,
+                fontSize: 5, color: 'rgba(244,228,193,0.35)',
+                fontFamily: "'Cinzel',serif", z: 6
+            });
+
+            // Plant each crop in the row
+            for (let i = 0; i < crop.count; i++) {
+                const px = crop.x + i * crop.spacing;
+                const py = crop.y + Math.sin(i * 0.7) * 4; // slight natural variation
+
+                // Crop glyph
+                m.buildInscription({
+                    text: crop.glyph,
+                    x: px, y: py,
+                    fontSize: 12 + Math.random() * 4,
+                    color: crop.color,
+                    fontFamily: "'Georgia',serif",
+                    z: 5
+                });
+
+                // Harvest zone for each individual crop
+                const cropZone = document.createElement('div');
+                cropZone.className = 'zone';
+                cropZone.title = `Harvest ${crop.name.toLowerCase().slice(0, -1)}`;
+                cropZone.style.cssText = `position:absolute;left:${px-8}px;top:${py-6}px;width:20px;height:20px;z-index:20;`;
+                cropZone.addEventListener('click', () => {
+                    state[crop.harvestKey]++;
+                    const whisper = crop.whispers[state[crop.harvestKey] % crop.whispers.length];
+                    const emoji = crop.name === 'RADISHES' ? '◉' : crop.name === 'WHEAT' ? '🌾' : crop.name === 'CARROTS' ? '🥕' : '🥬';
+                    toast(`${emoji} ${whisper}\n\nTotal ${crop.name.toLowerCase()}: ${state[crop.harvestKey]}`);
+                    saveState();
+                });
+                container.appendChild(cropZone);
+            }
+        });
+
+        // ═══════════════════════════════════
+        // TOOL SHED — bottom center
+        // ═══════════════════════════════════
+        m.buildWall({ ...FontMason.mat('barn_wood'), x:370, y:600, width:160, height:80, z:4, weathering:0.18 });
+        m.buildWall({ chars:['⌣','⌢','~','⋅','⌣'], textColor:'#4a3020', fontSize:12, lineHeight:0.6, letterSpacing:1, fontFamily:"'Georgia',serif", x:365, y:590, width:170, height:14, z:5 });
+        m.buildWall({ ...FontMason.mat('barn_wood'), x:420, y:630, width:60, height:50, z:5, openings:[{ x:12, y:8, width:36, height:42, arch:true }] });
+        m.buildInscription({ text:'TOOLS', x:425, y:618, fontSize:6, color:'#8b7d6b', fontFamily:"'Cinzel',serif", z:6 });
+
+        // Tools displayed
+        m.buildPillar({ chars:['╎'], textColor:'#6b5d4f', fontSize:10, fontFamily:'monospace', x:385, y:620, width:4, height:40, z:6 });
+        m.buildInscription({ text:'▬', x:390, y:618, fontSize:8, color:'#6b5d4f', fontFamily:'monospace', z:7 });
+        m.buildPillar({ chars:['╎'], textColor:'#6b5d4f', fontSize:10, fontFamily:'monospace', x:400, y:625, width:4, height:35, z:6 });
+        m.buildInscription({ text:'▼', x:395, y:620, fontSize:7, color:'#8b7d6b', fontFamily:'monospace', z:7 });
+
+        const toolZone = document.createElement('div');
+        toolZone.className = 'zone';
+        toolZone.title = 'Take a tool';
+        toolZone.style.cssText = 'position:absolute;left:370px;top:600px;width:160px;height:80px;z-index:20;';
+        toolZone.addEventListener('click', () => {
+            const tools = ['A hoe. The handle is worn smooth by many hands.', 'A spade. Sharp. Ready for digging.', 'A rake. Wooden tines. Good for turning soil.', 'A trowel. Small. Perfect for radishes.'];
+            toast(`🔧 ${tools[Math.floor(Math.random() * tools.length)]}`);
+        });
+        container.appendChild(toolZone);
+
+        // ═══════════════════════════════════
+        // PATHS — navigation
+        // ═══════════════════════════════════
+        m.buildFloor({ chars:['▓','░','▒','█','░'], textColor:'#5c4f42', mortarColor:'#3a3028', fontSize:22, lineHeight:0.47, letterSpacing:-2, fontFamily:"'Georgia','Times New Roman',serif", x:0, y:690, width:900, height:40, z:3, perspectiveStrength:3 });
+
+        m.buildInscription({ text:'HARBOR →', x:60, y:702, fontSize:7, color:'#8b7d6b', fontFamily:"'Cinzel',serif", z:6 });
+        m.buildInscription({ text:'← CHAPEL', x:680, y:715, fontSize:7, color:'#8b7d6b', fontFamily:"'Cinzel',serif", z:6 });
+
+        // Navigation zones
+        const harborZone = document.createElement('div');
+        harborZone.className = 'zone';
+        harborZone.title = 'Walk to the harbor';
+        harborZone.style.cssText = 'position:absolute;left:20px;top:690px;width:150px;height:40px;z-index:20;';
+        harborZone.addEventListener('click', () => { saveState(); setTimeout(() => { window.location.href = 'harbor.html?from=farm'; }, 800); });
+        container.appendChild(harborZone);
+
+        const chapelZone = document.createElement('div');
+        chapelZone.className = 'zone';
+        chapelZone.title = 'Walk to the Coal Chapel';
+        chapelZone.style.cssText = 'position:absolute;left:630px;top:700px;width:150px;height:35px;z-index:20;';
+        chapelZone.addEventListener('click', () => { saveState(); setTimeout(() => { window.location.href = 'chapel.html?from=farm'; }, 800); });
+        container.appendChild(chapelZone);
+
+        // ═══════════════════════════════════
+        // AMBIENT
+        // ═══════════════════════════════════
+        m.buildLight({ color:'#ffd599', radius:120, x:'50%', y:'8%', pulse:true, z:0 });
+        m.spawnParticles({ type:'dust', count:10, color:'rgba(244,228,193,0.1)', minSize:1, maxSize:2, zone:{x:30,y:370,w:840,h:230}, duration:{min:15,max:30}, z:2 });
+
+        return m;
+    }
+
+    // ═══════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════
+
+    function init() {
+        const loaded = loadState();
+        if (!loaded) saveState();
+
+        state.farmVisits = (state.farmVisits || 0) + 1;
+        saveState();
+
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('from')) {
+            toast(`🌾 You arrive at the farm from the ${params.get('from')}. The fields stretch before you.`);
+            window.history.replaceState({}, '', 'farm.html');
+        } else {
+            const welcome = state.farmVisits > 1
+                ? '🌾 The farm remembers you. The radishes have grown.'
+                : '🌾 The Ealdor Farm. Rich soil. Ready crops. The scarecrow nods.';
+            toast(welcome);
+        }
+
+        buildFarm();
+
+        document.addEventListener('click', (e) => {
+            if (Math.random() > 0.75 && !e.target.closest('.zone')) {
+                const spark = document.createElement('div');
+                spark.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:3px;height:3px;background:#d4af37;border-radius:50%;box-shadow:0 0 10px #d4af37;pointer-events:none;z-index:150;animation:sparkFade 1.2s ease-out forwards;`;
+                document.body.appendChild(spark);
+                setTimeout(() => spark.remove(), 1300);
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && !e.target.closest('input,textarea')) {
+                e.preventDefault();
+                const radish = document.querySelector('[title="Harvest radish"]');
+                if (radish) radish.click();
+            }
+        });
+    }
+
+    init();
+    </script>
+</body>
+</html>
