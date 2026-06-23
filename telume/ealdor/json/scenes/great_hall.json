@@ -1,0 +1,132 @@
+{
+  "name": "The Great Hall · Thing-Stead of Ealdor",
+  "size": { "w": 820, "h": 600 },
+  "background": "starfield",
+  "room": {
+    "farWall": {
+      "material": "ashlar_limestone",
+      "features": [
+        { "type": "throne", "position": { "x": 310, "y": 40 } },
+        { "type": "torch_sconce", "position": { "x": 80, "y": 60 } },
+        { "type": "torch_sconce", "position": { "x": 540, "y": 60 } }
+      ],
+      "openings": [
+        { "type": "window", "x": 330, "y": 15, "width": 100, "height": 140, "arch": true }
+      ]
+    },
+    "leftWall": {
+      "material": "ashlar_dark",
+      "features": [
+        { "type": "tally_wall", "position": { "x": 8, "y": 80 } }
+      ]
+    },
+    "rightWall": {
+      "material": "ashlar_dark",
+      "features": [
+        { "type": "banner", "position": { "x": 15, "y": 60 } }
+      ]
+    },
+    "floor": {
+      "material": "flagstone_worn",
+      "features": [
+        { "type": "glyph_circle", "position": { "x": 180, "y": 60 } },
+        { "type": "round_table", "position": { "x": 260, "y": 40 } },
+        { "type": "fire_pit", "position": { "x": 370, "y": 100 } }
+      ]
+    },
+    "ceiling": {
+      "material": "vault_stone",
+      "ribs": [
+        { "x": 210, "depth": 8, "color": "#3d362f" },
+        { "x": 410, "depth": 12, "color": "#4a4138" },
+        { "x": 610, "depth": 8, "color": "#3d362f" }
+      ]
+    }
+  },
+  "objects": [
+    { "type": "throne", "x": 370, "y": 120 },
+    { "type": "round_table", "x": 350, "y": 280 },
+    { "type": "fire_pit", "x": 390, "y": 330 },
+    { "type": "torch_sconce", "x": 100, "y": 180 },
+    { "type": "torch_sconce", "x": 680, "y": 180 }
+  ],
+  "npcs": [],
+  "exits": [
+    { "direction": "south", "target": "index.html", "param": "great_hall", "label": "Courtyard" },
+    { "direction": "east", "target": "scriptorium.html", "param": "great_hall", "label": "Scriptorium" }
+  ],
+  "atmosphere": {
+    "particles": [
+      { "type": "dust", "count": 25, "color": "rgba(244,228,193,0.2)", "minSize": 1, "maxSize": 2, "zone": { "x": 100, "y": 80, "w": 600, "h": 350 } },
+      { "type": "ember", "count": 8, "color": "rgba(255,100,30,0.5)", "minSize": 1, "maxSize": 3, "zone": { "x": 360, "y": 300, "w": 80, "h": 60 } }
+    ]
+  },
+  "objectDefinitions": {
+    "throne": {
+      "bounds": { "width": 80, "height": 120 },
+      "layers": [
+        { "type": "wall", "material": "dressed_granite", "position": { "x": 0, "y": 40, "z": 10 }, "dimensions": { "width": 70, "height": 80 } },
+        { "type": "wall", "material": "dressed_granite", "position": { "x": -5, "y": 30, "z": 11 }, "dimensions": { "width": 80, "height": 15 } },
+        { "type": "pillar", "material": "dressed_granite", "position": { "x": 0, "y": 25, "z": 12 }, "dimensions": { "width": 12, "height": 55 } },
+        { "type": "pillar", "material": "dressed_granite", "position": { "x": 58, "y": 25, "z": 12 }, "dimensions": { "width": 12, "height": 55 } },
+        { "type": "inscription", "content": "𐤓", "position": { "x": 28, "y": 10, "z": 13 }, "style": { "fontSize": 22, "color": "rgba(184,134,11,0.3)", "fontFamily": "'Georgia',serif" } }
+      ],
+      "interaction": {
+        "zone": { "x": -10, "y": 0, "width": 90, "height": 130 },
+        "action": "observe_throne",
+        "label": "The Empty Throne — no king has ever sat here"
+      }
+    },
+    "round_table": {
+      "bounds": { "width": 200, "height": 80 },
+      "layers": [
+        { "type": "wall", "material": "ashlar_limestone", "position": { "x": 40, "y": 20, "z": 8 }, "dimensions": { "width": 120, "height": 15 }, "shape": "circle" },
+        { "type": "inscription", "content": "◉  ◉  ◉  ◉  ◉  ◉", "position": { "x": 45, "y": 8, "z": 9 }, "style": { "fontSize": 14, "color": "#4a3f35", "fontFamily": "monospace", "letterSpacing": "8px" } }
+      ],
+      "interaction": {
+        "zone": { "x": 30, "y": 5, "width": 140, "height": 50 },
+        "action": "convene_thing",
+        "label": "Convene the Thing — the council gathers"
+      }
+    },
+    "fire_pit": {
+      "bounds": { "width": 60, "height": 40 },
+      "layers": [
+        { "type": "wall", "material": "ashlar_limestone", "position": { "x": 5, "y": 15, "z": 9 }, "dimensions": { "width": 50, "height": 12 } },
+        { "type": "wall", "material": "coal_ember", "position": { "x": 12, "y": 8, "z": 10 }, "dimensions": { "width": 36, "height": 15 } }
+      ],
+      "interaction": {
+        "zone": { "x": 0, "y": 0, "width": 60, "height": 40 },
+        "action": "tend_fire",
+        "label": "Tend the council fire"
+      }
+    },
+    "torch_sconce": {
+      "bounds": { "width": 20, "height": 50 },
+      "layers": [
+        { "type": "pillar", "material": "iron_dark", "position": { "x": 5, "y": 15, "z": 8 }, "dimensions": { "width": 8, "height": 35 } },
+        { "type": "wall", "material": "flame_orange", "position": { "x": 2, "y": 2, "z": 9 }, "dimensions": { "width": 14, "height": 20 } }
+      ]
+    },
+    "tally_wall": {
+      "layers": [
+        { "type": "inscription", "content": "|||| |||| |||| |||| ||||", "position": { "x": 0, "y": 0, "z": 5 }, "style": { "fontSize": 8, "color": "rgba(244,228,193,0.2)", "fontFamily": "'Courier New',monospace", "rotation": "-2deg" } }
+      ]
+    },
+    "glyph_circle": {
+      "layers": [
+        { "type": "inscription", "content": "𐤃  𐤀  𐤕  𐤔  𐤐  𐤌  𐤇", "position": { "x": 0, "y": 0, "z": 4 }, "style": { "fontSize": 18, "color": "rgba(184,134,11,0.08)", "fontFamily": "'Georgia',serif", "letterSpacing": "12px" } }
+      ]
+    },
+    "banner": {
+      "layers": [
+        { "type": "wall", "material": "ashlar_limestone", "position": { "x": 2, "y": 5, "z": 6 }, "dimensions": { "width": 8, "height": 50 } },
+        { "type": "wall", "material": "cloth_dark", "position": { "x": 8, "y": 0, "z": 7 }, "dimensions": { "width": 30, "height": 40 } },
+        { "type": "inscription", "content": "𐤃", "position": { "x": 16, "y": 12, "z": 8 }, "style": { "fontSize": 20, "color": "rgba(184,134,11,0.5)", "fontFamily": "'Georgia',serif" } }
+      ]
+    }
+  },
+  "materials": {
+    "cloth_dark": { "chars": ["║","╎","│","╎","║"], "textColor": "#4a3030", "mortarColor": "#3a2020", "fontSize": 16, "lineHeight": 0.5, "letterSpacing": 0, "fontFamily": "monospace" }
+  }
+}
