@@ -1,0 +1,163 @@
+{
+  "name": "Harbor at Dawn",
+  "description": "Watercolor on typographic paper. The ships wait for the tide. Pale gold sky. Calm water. A fishing vessel with furled sail.",
+  "size": { "w": 800, "h": 500 },
+  "background": "#ffd599",
+  "materials": {
+    "dawn_sky": {
+      "characters": ["⌒","⌣","~","⋅","⌒"],
+      "textColor": "#ffe8cc",
+      "mortarColor": "#ffd599",
+      "fontSize": 16,
+      "lineHeight": 0.6,
+      "letterSpacing": 3,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    },
+    "cloud_wisps": {
+      "characters": ["⌒","⌣","~","⋅"],
+      "textColor": "#ffccaa",
+      "mortarColor": "transparent",
+      "fontSize": 14,
+      "lineHeight": 0.55,
+      "letterSpacing": 4,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    },
+    "harbor_water": {
+      "characters": ["~","≈","≋","~","≈"],
+      "textColor": "#3a5a7a",
+      "mortarColor": "#2a4a6a",
+      "fontSize": 20,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    },
+    "water_light": {
+      "characters": ["~","⋅","≋","⋅","~"],
+      "textColor": "#5a8ab8",
+      "mortarColor": "transparent",
+      "fontSize": 16,
+      "lineHeight": 0.45,
+      "letterSpacing": 1,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    },
+    "vessel_hull": {
+      "characters": ["▬","▬","▬","▬","▬"],
+      "textColor": "#3d2b1f",
+      "mortarColor": "#2a1f15",
+      "fontSize": 10,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "monospace",
+      "weathering": 0
+    },
+    "mast_pine": {
+      "characters": ["╎"],
+      "textColor": "#4a3020",
+      "mortarColor": "transparent",
+      "fontSize": 8,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "monospace",
+      "weathering": 0
+    },
+    "sail_furled": {
+      "characters": ["⌣","⌢","~"],
+      "textColor": "#5c4a3a",
+      "mortarColor": "transparent",
+      "fontSize": 6,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    },
+    "harbor_wall": {
+      "characters": ["▓","▒","░","▓","▒"],
+      "textColor": "#4a3f35",
+      "mortarColor": "#3d362f",
+      "fontSize": 14,
+      "lineHeight": 0.5,
+      "letterSpacing": -1,
+      "fontFamily": "monospace",
+      "weathering": 0
+    },
+    "morning_windows": {
+      "characters": ["◆","◇"],
+      "textColor": "#daa520",
+      "mortarColor": "transparent",
+      "fontSize": 5,
+      "lineHeight": 0.5,
+      "letterSpacing": 6,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    }
+  },
+  "objects": [
+    {
+      "type": "dawn-sky",
+      "x": 0, "y": 0,
+      "layers": [
+        { "type": "wall", "material": "dawn_sky", "dimensions": { "width": 800, "height": 150 }, "position": { "z": 1 } }
+      ]
+    },
+    {
+      "type": "cloud-wisps",
+      "x": 0, "y": 30,
+      "layers": [
+        { "type": "wall", "material": "cloud_wisps", "dimensions": { "width": 800, "height": 100 }, "position": { "z": 2 } }
+      ]
+    },
+    {
+      "type": "harbor-water",
+      "x": 0, "y": 200,
+      "layers": [
+        { "type": "wall", "material": "harbor_water", "dimensions": { "width": 800, "height": 200 }, "position": { "z": 3 } }
+      ]
+    },
+    {
+      "type": "water-light",
+      "x": 0, "y": 220,
+      "layers": [
+        { "type": "wall", "material": "water_light", "dimensions": { "width": 800, "height": 160 }, "position": { "z": 4 } }
+      ]
+    },
+    {
+      "type": "vessel",
+      "x": 200, "y": 280,
+      "layers": [
+        { "type": "wall", "material": "vessel_hull", "dimensions": { "width": 120, "height": 30 }, "position": { "z": 5 } }
+      ]
+    },
+    {
+      "type": "mast",
+      "x": 245, "y": 260,
+      "layers": [
+        { "type": "pillar", "material": "mast_pine", "dimensions": { "width": 4, "height": 25 }, "position": { "z": 6 } }
+      ]
+    },
+    {
+      "type": "sail",
+      "x": 238, "y": 255,
+      "layers": [
+        { "type": "wall", "material": "sail_furled", "dimensions": { "width": 16, "height": 10 }, "position": { "z": 7 } }
+      ]
+    },
+    {
+      "type": "harbor-wall",
+      "x": 0, "y": 380,
+      "layers": [
+        { "type": "wall", "material": "harbor_wall", "dimensions": { "width": 800, "height": 80 }, "position": { "z": 8 } }
+      ]
+    },
+    {
+      "type": "morning-windows",
+      "x": 0, "y": 395,
+      "layers": [
+        { "type": "wall", "material": "morning_windows", "dimensions": { "width": 800, "height": 20 }, "position": { "z": 9 } }
+      ]
+    }
+  ]
+}
