@@ -60,6 +60,7 @@
         @keyframes wellGlow { 0%,100%{box-shadow:0 0 4px rgba(90,138,184,0.2)} 50%{box-shadow:0 0 12px rgba(90,138,184,0.5)} }
         @keyframes sparkFade { 0%{transform:scale(0.5);opacity:1} 100%{transform:scale(2.5);opacity:0} }
         @keyframes birdGlide { 0%{transform:translate(0,0)} 50%{transform:translate(60px,-8px)} 100%{transform:translate(120px,0)} }
+        @keyframes canopySway { 0%,100%{transform:translateX(0)} 50%{transform:translateX(2px)} }
     </style>
 </head>
 <body>
@@ -73,6 +74,7 @@
      * ═══════════════════════════════════════════════════════
      * THE EALDOR FARM
      * Loads farm.json → builds with FontMason v2
+     * Trees, crops, buildings, tools, well, paths.
      * ═══════════════════════════════════════════════════════
      */
 
@@ -91,7 +93,6 @@
             const saved = JSON.parse(raw);
             state = { ...DEFAULT_STATE, ...saved };
             if (!state.playerResources) state.playerResources = { ...DEFAULT_STATE.playerResources };
-            // Ensure crop resources exist
             ['Radishes','Carrots','Cabbages','Grain'].forEach(r => {
                 if (state.playerResources[r] === undefined) state.playerResources[r] = 0;
             });
@@ -107,152 +108,129 @@
         clearTimeout(toastTimer); toastTimer = setTimeout(() => toastEl.classList.remove('show'), d);
     }
 
-    // ═══════════════════════════════════
-    // RESOLVE TEMPLATE STRINGS
-    // ═══════════════════════════════════
     function resolveTemplate(template) {
         if (Array.isArray(template)) {
             return template[Math.floor(Math.random() * template.length)];
         }
         if (typeof template !== 'string') return template;
         return template.replace(/\$(\w+)/g, (_, key) => {
-            if (state.playerResources && state.playerResources[key] !== undefined) {
-                return state.playerResources[key];
-            }
+            if (state.playerResources && state.playerResources[key] !== undefined) return state.playerResources[key];
             if (state[key] !== undefined) return state[key];
             return '0';
         });
     }
 
     function resolveConditionalToast(template) {
-        // Handle simple conditionals like "$Grain > 5 ? 'full' : 'empty'"
         const resolved = template.replace(/\$(\w+)/g, (_, key) => {
-            if (state.playerResources && state.playerResources[key] !== undefined) {
-                return state.playerResources[key];
-            }
+            if (state.playerResources && state.playerResources[key] !== undefined) return state.playerResources[key];
             if (state[key] !== undefined) return state[key];
             return '0';
         });
-        // Evaluate safe conditionals
         try {
             return resolved.replace(/(\d+)\s*>\s*(\d+)\s*\?\s*'([^']+)'\s*:\s*'([^']+)'/g, (_, a, b, t, f) => {
                 return parseInt(a) > parseInt(b) ? t : f;
             });
-        } catch(e) {
-            return resolved;
+        } catch(e) { return resolved; }
+    }
+
+    function resolveMaterial(obj, farmData) {
+        const matName = obj.material;
+        if (!matName) return FontMason.mat('cyclopean');
+        if (farmData.materials && farmData.materials[matName]) {
+            const m = farmData.materials[matName];
+            return {
+                chars: m.characters || m.chars || ['▓'],
+                textColor: m.textColor || '#5c4f42',
+                mortarColor: m.mortarColor || '#3a3028',
+                fontSize: m.fontSize || 28,
+                lineHeight: m.lineHeight || 0.5,
+                letterSpacing: m.letterSpacing || -2,
+                fontFamily: m.fontFamily || 'monospace',
+                weathering: m.weathering || 0.1,
+            };
         }
+        if (FontMason.MATERIALS[matName]) return FontMason.mat(matName);
+        return {
+            chars: obj.chars || ['▓'],
+            textColor: obj.textColor || '#5c4f42',
+            mortarColor: obj.mortarColor || '#3a3028',
+            fontSize: obj.fontSize || 28,
+            lineHeight: 0.5,
+            letterSpacing: -2,
+            fontFamily: 'monospace',
+            weathering: 0.1,
+        };
     }
 
     // ═══════════════════════════════════
-    // BUILD FROM JSON
+    // BUILD TREE FROM JSON
     // ═══════════════════════════════════
 
-    async function buildFarm() {
-        const container = document.getElementById('farm-field');
-        container.innerHTML = '';
+    function buildTree(m, container, tree) {
+        const tx = tree.position.x;
+        const ty = tree.position.y;
+        const trunk = tree.trunk;
 
-        // Load farm.json
-        let farmData;
-        try {
-            const resp = await fetch('json/farm.json');
-            if (!resp.ok) throw new Error('farm.json not found');
-            farmData = await resp.json();
-        } catch(e) {
-            toast('Farm data unavailable. The fields lie fallow.');
-            return;
+        const trunkEl = m.buildPillar({
+            chars: trunk.chars,
+            textColor: trunk.textColor,
+            mortarColor: '#2a1f15',
+            fontSize: Math.max(10, trunk.width * 0.75),
+            fontFamily: 'monospace',
+            x: tx + (trunk.offsetX || 0),
+            y: ty,
+            width: trunk.width,
+            height: trunk.height,
+            z: 4
+        });
+        if (trunkEl) {
+            trunkEl.style.animation = `canopySway ${5 + Math.random() * 4}s ease-in-out infinite`;
         }
 
-        const m = new FontMason('farm-field');
+        let prevBottom = ty;
+        const canopy = tree.canopy || [];
+        canopy.forEach((layer, i) => {
+            const lx = tx + (layer.offsetX || 0);
+            const ly = i === 0
+                ? ty + (layer.offsetY || 0)
+                : prevBottom - layer.height + (layer.overlap || 15);
 
-        // ── BIRDS ──
-        if (farmData.scene?.background?.birds) {
-            const birds = farmData.scene.background.birds;
-            for (let i = 0; i < birds.count; i++) {
-                const bird = document.createElement('div');
-                bird.style.cssText = `position:absolute;left:${80+i*200}px;top:${15+i*15}px;color:${birds.color};font-size:8px;font-family:Georgia,serif;pointer-events:none;z-index:1;animation:birdGlide ${6+i*2}s ease-in-out ${i*1.5}s infinite;`;
-                bird.textContent = birds.glyph;
-                container.appendChild(bird);
-            }
-        }
-
-        // ── BUILD OBJECTS ──
-        const objects = farmData.objects || [];
-        for (const obj of objects) {
-            buildObject(m, container, obj, farmData);
-        }
-
-        // ── BUILD CROPS ──
-        const crops = farmData.crops || [];
-        crops.forEach(crop => {
-            // Row label
-            m.buildInscription({
-                text: crop.name.toUpperCase(),
-                x: crop.row.x - 5,
-                y: crop.row.y - 16,
-                fontSize: 5,
-                color: 'rgba(244,228,193,0.35)',
-                fontFamily: "'Cinzel',serif",
-                z: 6
+            const el = m.buildWall({
+                chars: layer.chars,
+                textColor: layer.textColor,
+                mortarColor: layer.mortarColor || 'transparent',
+                fontSize: layer.fontSize,
+                lineHeight: layer.lineHeight || 0.42,
+                letterSpacing: layer.letterSpacing || -2,
+                fontFamily: layer.fontFamily || 'monospace',
+                x: lx, y: ly,
+                width: layer.width,
+                height: layer.height,
+                z: layer.z || 5,
+                weathering: layer.weathering || 0.05
             });
-
-            // Individual crop plants
-            for (let i = 0; i < crop.row.count; i++) {
-                const px = crop.row.x + i * crop.row.spacing;
-                const py = crop.row.y + Math.sin(i * 0.7) * 4;
-
-                m.buildInscription({
-                    text: crop.glyph,
-                    x: px, y: py,
-                    fontSize: 12 + Math.random() * 4,
-                    color: crop.color,
-                    fontFamily: "'Georgia',serif",
-                    z: 5
-                });
-
-                // Harvest zone
-                const cropZone = document.createElement('div');
-                cropZone.className = 'zone';
-                cropZone.title = `Harvest ${crop.name.toLowerCase().slice(0, -1)}`;
-                cropZone.style.cssText = `position:absolute;left:${px-8}px;top:${py-6}px;width:20px;height:20px;z-index:20;`;
-                cropZone.addEventListener('click', () => {
-                    const resource = crop.resource;
-                    state.playerResources[resource] = (state.playerResources[resource] || 0) + 1;
-                    const whisper = resolveTemplate(crop.whispers);
-                    const emoji = crop.glyph;
-                    toast(`${emoji} ${whisper}\n\nTotal ${crop.name.toLowerCase()}: ${state.playerResources[resource]}`);
-                    saveState();
-                });
-                container.appendChild(cropZone);
+            if (el) {
+                el.style.animation = `canopySway ${4 + Math.random() * 3}s ease-in-out infinite`;
             }
+            prevBottom = ly;
         });
 
-        // ── LIGHTS ──
-        if (farmData.atmosphere?.lights) {
-            farmData.atmosphere.lights.forEach(l => {
-                m.buildLight({ color: l.color, radius: l.radius, x: l.x, y: l.y, pulse: l.pulse, z: l.z });
+        if (tree.interaction) {
+            const iz = tree.interaction.zone;
+            const zone = document.createElement('div');
+            zone.className = 'zone';
+            zone.title = tree.interaction.label || '';
+            zone.style.cssText = `position:absolute;left:${iz.x}px;top:${iz.y}px;width:${iz.width}px;height:${iz.height}px;z-index:20;`;
+            zone.addEventListener('click', () => {
+                const msg = resolveTemplate(tree.interaction.toast);
+                toast(msg);
             });
+            container.appendChild(zone);
         }
-
-        // ── PARTICLES ──
-        if (farmData.atmosphere?.particles) {
-            const p = farmData.atmosphere.particles;
-            m.spawnParticles({
-                type: p.type,
-                count: p.count,
-                color: p.color,
-                minSize: p.minSize,
-                maxSize: p.maxSize,
-                zone: { x: p.zone.x, y: p.zone.y, w: p.zone.width, h: p.zone.height },
-                duration: p.duration,
-                z: p.z
-            });
-        }
-
-        return m;
     }
 
     // ═══════════════════════════════════
-    // BUILD A SINGLE OBJECT FROM JSON
+    // BUILD OBJECT FROM JSON
     // ═══════════════════════════════════
 
     function buildObject(m, container, obj, farmData) {
@@ -267,7 +245,7 @@
                     x: pos.x, y: pos.y,
                     width: dim.width, height: dim.height,
                     z: pos.z || 1,
-                    weathering: obj.weathering || mat.weathering || 0.05,
+                    weathering: obj.weathering !== undefined ? obj.weathering : (mat.weathering || 0.05),
                     openings: obj.openings || null,
                 };
                 if (obj.shape) wallConfig.shape = obj.shape;
@@ -284,7 +262,7 @@
                     x: pos.x, y: pos.y,
                     width: dim.width, height: dim.height,
                     z: pos.z || 2,
-                    chars: obj.chars || mat.characters || ['╎'],
+                    chars: obj.chars || mat.chars || ['╎'],
                     fontSize: obj.fontSize || 14,
                     capital: obj.capital || false,
                     capitalHeight: obj.capitalHeight || 0,
@@ -317,14 +295,12 @@
             }
         }
 
-        // ── NESTED COMPONENTS ──
+        // Nested components
         if (obj.components) {
-            obj.components.forEach(comp => {
-                buildComponent(m, container, comp, obj, farmData);
-            });
+            obj.components.forEach(comp => buildComponent(m, container, comp, obj, farmData));
         }
 
-        // ── INTERACTION ZONE ──
+        // Interaction zone
         if (obj.interaction) {
             const iz = obj.interaction.zone || { x: pos.x, y: pos.y, width: dim.width, height: dim.height };
             const zone = document.createElement('div');
@@ -333,29 +309,22 @@
             zone.style.cssText = `position:absolute;left:${iz.x}px;top:${iz.y}px;width:${iz.width}px;height:${iz.height}px;z-index:20;`;
 
             zone.addEventListener('click', () => {
-                // Handle transitions
                 if (obj.interaction.transition) {
                     saveState();
                     setTimeout(() => { window.location.href = obj.interaction.transition; }, 600);
                     return;
                 }
-
-                // Handle action
                 if (obj.interaction.action === 'drawWater') {
                     state.waterDrawn = (state.waterDrawn || 0) + 1;
                     saveState();
                 }
-
-                // Toast
                 let msg = '';
                 if (obj.interaction.toast_success) {
                     msg = resolveTemplate(obj.interaction.toast_success) + `\n\nWater drawn: ${state.waterDrawn}`;
                 } else if (obj.interaction.toast) {
                     const t = resolveTemplate(obj.interaction.toast);
-                    msg = resolveConditionalToast(Array.isArray(obj.interaction.toast) ? t : obj.interaction.toast);
-                    if (typeof msg === 'string') {
-                        msg = resolveConditionalToast(msg);
-                    }
+                    msg = resolveConditionalToast(typeof t === 'string' ? t : obj.interaction.toast);
+                    if (typeof msg === 'string') msg = resolveConditionalToast(msg);
                 }
                 if (msg) toast(msg);
             });
@@ -379,6 +348,7 @@
                     z: pos.z || 5,
                 };
                 if (comp.openings) wc.openings = comp.openings;
+                if (comp.shape) wc.shape = comp.shape;
                 m.buildWall(wc);
                 break;
             }
@@ -426,42 +396,106 @@
         }
     }
 
-    function resolveMaterial(obj, farmData) {
-        // Check Ealdor materials first, then farm-specific, then FontMason built-ins
-        const matName = obj.material;
-        if (!matName) return FontMason.mat(obj.chars ? null : 'cyclopean');
+    // ═══════════════════════════════════
+    // BUILD FARM FROM JSON
+    // ═══════════════════════════════════
 
-        // Try farm-specific materials
-        if (farmData.materials && farmData.materials[matName]) {
-            const m = farmData.materials[matName];
-            return {
-                chars: m.characters || m.chars || ['▓'],
-                textColor: m.textColor || '#5c4f42',
-                mortarColor: m.mortarColor || '#3a3028',
-                fontSize: m.fontSize || 28,
-                lineHeight: m.lineHeight || 0.5,
-                letterSpacing: m.letterSpacing || -2,
-                fontFamily: m.fontFamily || 'monospace',
-                weathering: m.weathering || 0.1,
-            };
+    async function buildFarm() {
+        const container = document.getElementById('farm-field');
+        container.innerHTML = '';
+
+        let farmData;
+        try {
+            const resp = await fetch('json/farm.json');
+            if (!resp.ok) throw new Error('farm.json not found');
+            farmData = await resp.json();
+        } catch(e) {
+            toast('Farm data unavailable. The fields lie fallow.');
+            return;
         }
 
-        // Fall back to FontMason's built-in materials
-        if (FontMason.MATERIALS[matName]) {
-            return FontMason.mat(matName);
+        const m = new FontMason('farm-field');
+
+        // ── BIRDS ──
+        if (farmData.scene?.background?.birds) {
+            const birds = farmData.scene.background.birds;
+            for (let i = 0; i < birds.count; i++) {
+                const bird = document.createElement('div');
+                bird.style.cssText = `position:absolute;left:${80+i*200}px;top:${15+i*15}px;color:${birds.color};font-size:8px;font-family:Georgia,serif;pointer-events:none;z-index:1;animation:birdGlide ${6+i*2}s ease-in-out ${i*1.5}s infinite;`;
+                bird.textContent = birds.glyph;
+                container.appendChild(bird);
+            }
         }
 
-        // Last resort: use provided chars/textColor etc.
-        return {
-            chars: obj.chars || ['▓'],
-            textColor: obj.textColor || '#5c4f42',
-            mortarColor: obj.mortarColor || '#3a3028',
-            fontSize: obj.fontSize || 28,
-            lineHeight: 0.5,
-            letterSpacing: -2,
-            fontFamily: 'monospace',
-            weathering: 0.1,
-        };
+        // ── BUILD OBJECTS ──
+        (farmData.objects || []).forEach(obj => buildObject(m, container, obj, farmData));
+
+        // ── BUILD CROPS ──
+        (farmData.crops || []).forEach(crop => {
+            m.buildInscription({
+                text: crop.name.toUpperCase(),
+                x: crop.row.x - 5,
+                y: crop.row.y - 16,
+                fontSize: 5,
+                color: 'rgba(244,228,193,0.35)',
+                fontFamily: "'Cinzel',serif",
+                z: 6
+            });
+
+            for (let i = 0; i < crop.row.count; i++) {
+                const px = crop.row.x + i * crop.row.spacing;
+                const py = crop.row.y + Math.sin(i * 0.7) * 4;
+
+                m.buildInscription({
+                    text: crop.glyph,
+                    x: px, y: py,
+                    fontSize: 12 + Math.random() * 4,
+                    color: crop.color,
+                    fontFamily: "'Georgia',serif",
+                    z: 5
+                });
+
+                const cropZone = document.createElement('div');
+                cropZone.className = 'zone';
+                cropZone.title = `Harvest ${crop.name.toLowerCase().slice(0, -1)}`;
+                cropZone.style.cssText = `position:absolute;left:${px-8}px;top:${py-6}px;width:20px;height:20px;z-index:20;`;
+                cropZone.addEventListener('click', () => {
+                    const resource = crop.resource;
+                    state.playerResources[resource] = (state.playerResources[resource] || 0) + 1;
+                    const whisper = resolveTemplate(crop.whispers);
+                    toast(`${crop.glyph} ${whisper}\n\nTotal ${crop.name.toLowerCase()}: ${state.playerResources[resource]}`);
+                    saveState();
+                });
+                container.appendChild(cropZone);
+            }
+        });
+
+        // ── BUILD TREES ──
+        (farmData.trees || []).forEach(tree => buildTree(m, container, tree));
+
+        // ── LIGHTS ──
+        if (farmData.atmosphere?.lights) {
+            farmData.atmosphere.lights.forEach(l => {
+                m.buildLight({ color: l.color, radius: l.radius, x: l.x, y: l.y, pulse: l.pulse, z: l.z });
+            });
+        }
+
+        // ── PARTICLES ──
+        if (farmData.atmosphere?.particles) {
+            const p = farmData.atmosphere.particles;
+            m.spawnParticles({
+                type: p.type,
+                count: p.count,
+                color: p.color,
+                minSize: p.minSize,
+                maxSize: p.maxSize,
+                zone: { x: p.zone.x, y: p.zone.y, w: p.zone.width, h: p.zone.height },
+                duration: p.duration,
+                z: p.z
+            });
+        }
+
+        return m;
     }
 
     // ═══════════════════════════════════
@@ -481,8 +515,8 @@
             window.history.replaceState({}, '', 'farm.html');
         } else {
             const welcome = state.farmVisits > 1
-                ? '🌾 The farm remembers you. The radishes have grown.'
-                : '🌾 The Ealdor Farm. Rich soil. Ready crops. The scarecrow nods.';
+                ? '🌾 The farm remembers you. The radishes have grown. The trees have thickened.'
+                : '🌾 The Ealdor Farm. Rich soil. Ready crops. Oak and pine watch over the fields.';
             toast(welcome);
         }
 
