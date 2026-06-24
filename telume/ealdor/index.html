@@ -243,70 +243,66 @@
     // ═══════════════════════════════════
 
     async function buildCourtyard() {
-        const loader = new SceneLoader('courtyard-scene');
-        loader.setState(state);
+    const loader = new SceneLoader('courtyard-scene');
 
-        // ── Interaction handler ──
-        loader.onInteract = (objectName, action) => {
-            switch (action) {
-                case 'draw_water':
-                    state.morale = Math.min(100, state.morale + 2);
-                    toast('💧 You draw water from the well. Cold. Clear. The taste of the mountains.\n\nMorale +2');
-                    break;
-                case 'check_notice':
-                    const iceLevel = state.ice;
-                    const warnings = [
-                        iceLevel < 30 ? 'Ice: Light. Fjord open. Ships pass freely.' :
-                        iceLevel < 55 ? 'Ice: Moderate. Passages narrowing. Caution advised.' :
-                        iceLevel < 80 ? 'Ice: Heavy. Most passages closed. Harbor quiet.' :
-                        'Ice: Severe. Fjord frozen. The harbor is locked in.',
-                        state.thingConvened ? 'The Thing has convened. Decisions were made.' : 'The Thing has not yet convened this season.',
-                        `Tablets: ${state.tabletFragments || 0}/7 fragments found.`,
-                    ];
-                    toast('📋 Courtyard Notice Board\n\n' + warnings.join('\n'));
-                    break;
-                case 'tend_garden':
-                    state.morale = Math.min(100, state.morale + 1);
-                    toast('🌿 You tend the herb garden. Rosemary. Thyme. Plants that survive the cold.\n\nMorale +1');
-                    break;
-                case 'visit_forge':
-                    const iron = state.playerResources.Iron || 0;
-                    const timber = state.playerResources.Timber || 0;
-                    if (iron > 0) {
-                        state.playerResources.Iron -= 1;
-                        state.playerResources.Stone = (state.playerResources.Stone || 0) + 2;
-                        toast('🔨 Forge: 1 Iron → 2 Stone. The hammer rings across the yard.');
-                    } else if (timber >= 2) {
-                        state.playerResources.Timber -= 2;
-                        state.playerResources.Cloth = (state.playerResources.Cloth || 0) + 1;
-                        toast('🪵 Workshop: 2 Timber → 1 Cloth. The looms turn.');
-                    } else {
-                        toast('⚠️ Not enough materials. Need 1 Iron or 2 Timber to craft.');
-                    }
-                    break;
-            }
-            saveState();
-            renderStats();
-        };
+    // ── Interaction handler ──
+    loader.onInteract = (objectName, action) => {
+        switch (action) {
+            case 'draw_water':
+                state.morale = Math.min(100, state.morale + 2);
+                toast('💧 You draw water from the well. Cold. Clear. The taste of the mountains.\n\nMorale +2');
+                break;
+            case 'check_notice':
+                const iceLevel = state.ice;
+                const warnings = [
+                    iceLevel < 30 ? 'Ice: Light. Fjord open. Ships pass freely.' :
+                    iceLevel < 55 ? 'Ice: Moderate. Passages narrowing. Caution advised.' :
+                    iceLevel < 80 ? 'Ice: Heavy. Most passages closed. Harbor quiet.' :
+                    'Ice: Severe. Fjord frozen. The harbor is locked in.',
+                    state.thingConvened ? 'The Thing has convened. Decisions were made.' : 'The Thing has not yet convened this season.',
+                    `Tablets: ${state.tabletFragments || 0}/7 fragments found.`,
+                ];
+                toast('📋 Courtyard Notice Board\n\n' + warnings.join('\n'));
+                break;
+            case 'tend_garden':
+                state.morale = Math.min(100, state.morale + 1);
+                toast('🌿 You tend the herb garden. Rosemary. Thyme. Plants that survive the cold.\n\nMorale +1');
+                break;
+            case 'visit_forge':
+                const iron = state.playerResources.Iron || 0;
+                const timber = state.playerResources.Timber || 0;
+                if (iron > 0) {
+                    state.playerResources.Iron -= 1;
+                    state.playerResources.Stone = (state.playerResources.Stone || 0) + 2;
+                    toast('🔨 Forge: 1 Iron → 2 Stone. The hammer rings across the yard.');
+                } else if (timber >= 2) {
+                    state.playerResources.Timber -= 2;
+                    state.playerResources.Cloth = (state.playerResources.Cloth || 0) + 1;
+                    toast('🪵 Workshop: 2 Timber → 1 Cloth. The looms turn.');
+                } else {
+                    toast('⚠️ Not enough materials. Need 1 Iron or 2 Timber to craft.');
+                }
+                break;
+        }
+        saveState();
+        renderStats();
+    };
 
-        // ── Exit handler ──
-        loader.onExit = (exit) => {
-            saveState();
-            toast(`🚶 Walking to the ${exit.label || exit.target}...`);
-        };
+    // ── Exit handler ──
+    loader.onExit = (exit) => {
+        saveState();
+        toast(`🚶 Walking to the ${exit.label || exit.target}...`);
+    };
 
-        // ── Load the courtyard scene ──
-        await loader.load('json/scenes/courtyard.json');
+    // ── Load the courtyard scene ──
+    await loader.load('json/scenes/courtyard.json');
+    loader.setState(state);  // ← moved here, after load
 
-        // ── Post-load: add water shimmer to fountain ──
-        addFountainEffects();
-        
-        // ── Post-load: add lantern glow ──
-        addLanternEffects();
+    addFountainEffects();
+    addLanternEffects();
 
-        return loader;
-    }
-
+    return loader;
+}
     function addFountainEffects() {
         const container = document.getElementById('courtyard-scene');
         if (!container) return;
