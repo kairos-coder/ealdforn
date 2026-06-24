@@ -1,6 +1,6 @@
 {
   "name": "Ealdor Farm",
-  "description": "The farm fields of Ealdor. Barn, silo, well, scarecrow. Crop rows of radishes, wheat, carrots, and cabbages. Each plant harvestable. State tracks every pull.",
+  "description": "The farm fields of Ealdor. Barn, silo, well, scarecrow. Crop rows of radishes, wheat, carrots, and cabbages. Oak, pine, and apple trees frame the field. Each plant harvestable. State tracks every pull.",
   "scene": {
     "size": { "width": 900, "height": 730 },
     "background": {
@@ -48,37 +48,70 @@
       "fontFamily": "monospace",
       "weathering": 0.08
     },
-    "radish_red": {
-      "characters": ["◉"],
+    "apple_red": {
+      "characters": ["●","○","●"],
       "textColor": "#c84444",
       "mortarColor": "transparent",
-      "fontSize": 14,
+      "fontSize": 10,
       "lineHeight": 0.5,
-      "letterSpacing": 0,
-      "fontFamily": "'Georgia',serif",
-      "weathering": 0
-    },
-    "carrot_orange": {
-      "characters": ["▼"],
-      "textColor": "#e87830",
-      "mortarColor": "transparent",
-      "fontSize": 14,
-      "lineHeight": 0.5,
-      "letterSpacing": 0,
-      "fontFamily": "'Georgia',serif",
-      "weathering": 0
-    },
-    "cabbage_green": {
-      "characters": ["◆"],
-      "textColor": "#6a8a4a",
-      "mortarColor": "transparent",
-      "fontSize": 16,
-      "lineHeight": 0.5,
-      "letterSpacing": 0,
+      "letterSpacing": 2,
       "fontFamily": "'Georgia',serif",
       "weathering": 0
     }
   },
+
+  "trees": [
+    {
+      "id": "oak-northwest",
+      "variant": "oak",
+      "position": { "x": 40, "y": 250 },
+      "trunk": { "chars": ["║","║","║"], "textColor": "#3d2b1f", "width": 14, "height": 80 },
+      "canopy": [
+        { "chars": ["▲","▲","▼","▲","◆"], "textColor": "#2d3a1f", "mortarColor": "#1a2a0f", "fontSize": 24, "width": 80, "height": 50, "offsetX": -33, "offsetY": -40, "z": 5 },
+        { "chars": ["▲","◆","▲","▼","▲"], "textColor": "#3d5a2a", "mortarColor": "#2d3a1f", "fontSize": 20, "width": 65, "height": 38, "offsetX": -25, "offsetY": -30, "overlap": 16, "z": 6 }
+      ]
+    },
+    {
+      "id": "oak-northeast",
+      "variant": "oak",
+      "position": { "x": 750, "y": 260 },
+      "trunk": { "chars": ["║","║","║"], "textColor": "#3d2b1f", "width": 14, "height": 75 },
+      "canopy": [
+        { "chars": ["▲","▲","▼","▲","◆"], "textColor": "#2d3a1f", "mortarColor": "#1a2a0f", "fontSize": 22, "width": 75, "height": 48, "offsetX": -30, "offsetY": -38, "z": 5 },
+        { "chars": ["▲","◆","▲","▼","▲"], "textColor": "#3d5a2a", "mortarColor": "#2d3a1f", "fontSize": 18, "width": 60, "height": 35, "offsetX": -22, "offsetY": -28, "overlap": 15, "z": 6 }
+      ]
+    },
+    {
+      "id": "pine-southwest",
+      "variant": "pine",
+      "position": { "x": 20, "y": 480 },
+      "trunk": { "chars": ["║","║"], "textColor": "#2a1f15", "width": 10, "height": 60 },
+      "canopy": [
+        { "chars": ["▲","▲","▲","◆","▲"], "textColor": "#1a3a1a", "mortarColor": "#0f1f0f", "fontSize": 28, "width": 50, "height": 55, "offsetX": -20, "offsetY": -50, "z": 5 },
+        { "chars": ["▲","▲","▲"], "textColor": "#2a4a2a", "mortarColor": "#1a3a1a", "fontSize": 22, "width": 35, "height": 40, "offsetX": -12, "offsetY": -38, "overlap": 18, "z": 6 },
+        { "chars": ["▲"], "textColor": "#3a5a3a", "mortarColor": "#2a4a2a", "fontSize": 16, "width": 18, "height": 22, "offsetX": -4, "offsetY": -25, "overlap": 14, "z": 7 }
+      ]
+    },
+    {
+      "id": "apple-orchard-1",
+      "variant": "fruit",
+      "position": { "x": 600, "y": 470 },
+      "trunk": { "chars": ["║","║"], "textColor": "#4a3525", "width": 12, "height": 55 },
+      "canopy": [
+        { "chars": ["▲","◆","▲","▼","▲"], "textColor": "#3d5a2a", "mortarColor": "#2d3a1f", "fontSize": 18, "width": 65, "height": 40, "offsetX": -26, "offsetY": -32, "z": 5 },
+        { "chars": ["●","○","●"], "textColor": "#c84444", "mortarColor": "transparent", "fontSize": 10, "width": 40, "height": 12, "offsetX": -14, "offsetY": -24, "overlap": 12, "z": 7, "fontFamily": "'Georgia',serif", "letterSpacing": 2 }
+      ],
+      "interaction": {
+        "label": "Pick an apple",
+        "zone": { "x": 570, "y": 430, "width": 60, "height": 50 },
+        "toast": [
+          "You pick a small red apple. Tart. Crisp. The tree offers freely.",
+          "An apple falls into your hand. It's warm from the sun.",
+          "You twist an apple from the branch. The tree shivers, grateful."
+        ]
+      }
+    }
+  ],
 
   "objects": [
     {
