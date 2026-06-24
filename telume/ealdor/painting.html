@@ -407,58 +407,56 @@
     // ═══════════════════════════════════
 
     function renderPainting(painting) {
-        const container = document.createElement('div');
-        container.style.display = 'flex';
-        container.style.flexDirection = 'column';
-        container.style.alignItems = 'center';
+    const container = document.createElement('div');
+    container.style.display = 'flex';
+    container.style.flexDirection = 'column';
+    container.style.alignItems = 'center';
 
-        // Create a unique container for this painting's Mason
-        const frameId = `painting-${painting.id}`;
-        const frame = document.createElement('div');
-        frame.id = frameId;
-        frame.className = 'painting-frame';
-        frame.style.width = painting.width + 'px';
-        frame.style.height = painting.height + 'px';
-        container.appendChild(frame);
+    const frameId = `painting-${painting.id}`;
+    const frame = document.createElement('div');
+    frame.id = frameId;
+    frame.className = 'painting-frame';
+    frame.style.width = painting.width + 'px';
+    frame.style.height = painting.height + 'px';
+    
+    // ADD TO DOM FIRST
+    container.appendChild(frame);
 
-        // Label
-        const label = document.createElement('div');
-        label.className = 'painting-label';
-        label.textContent = painting.title;
-        container.appendChild(label);
+    // Label
+    const label = document.createElement('div');
+    label.className = 'painting-label';
+    label.textContent = painting.title;
+    container.appendChild(label);
 
-        // Caption
-        const caption = document.createElement('div');
-        caption.className = 'painting-caption';
-        caption.textContent = painting.caption;
-        container.appendChild(caption);
+    // Caption
+    const caption = document.createElement('div');
+    caption.className = 'painting-caption';
+    caption.textContent = painting.caption;
+    container.appendChild(caption);
 
-        // Build with Mason
-        const m = new FontMason(frameId);
+    // NOW build with FontMason — element is in the DOM
+    const m = new FontMason(frameId);
 
-        painting.layers.forEach((layer, i) => {
-            const config = {
-                chars: layer.chars,
-                textColor: layer.textColor,
-                mortarColor: layer.mortarColor || 'transparent',
-                fontSize: layer.fontSize || 16,
-                lineHeight: layer.lineHeight || 0.5,
-                letterSpacing: layer.letterSpacing || 0,
-                fontFamily: layer.fontFamily || "'Georgia','Times New Roman',serif",
-                x: layer.x || 0,
-                y: layer.y || 0,
-                width: layer.width || painting.width,
-                height: layer.height || painting.height,
-                z: i + 1,
-                weathering: 0,
-                highlightColor: layer.highlightColor || 'rgba(255,255,255,0.02)',
-                shadowColor: layer.shadowColor || 'rgba(0,0,0,0.05)',
-            };
-            m.buildWall(config);
+    painting.layers.forEach((layer, i) => {
+        m.buildWall({
+            chars: layer.chars,
+            textColor: layer.textColor,
+            mortarColor: layer.mortarColor || 'transparent',
+            fontSize: layer.fontSize || 16,
+            lineHeight: layer.lineHeight || 0.5,
+            letterSpacing: layer.letterSpacing || 0,
+            fontFamily: layer.fontFamily || "'Georgia','Times New Roman',serif",
+            x: layer.x || 0,
+            y: layer.y || 0,
+            width: layer.width || painting.width,
+            height: layer.height || painting.height,
+            z: i + 1,
+            weathering: 0,
         });
+    });
 
-        return container;
-    }
+    return container;
+}
 
     // ═══════════════════════════════════
     // INIT
