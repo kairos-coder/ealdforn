@@ -68,7 +68,7 @@
     <div id="gallery"></div>
     <div id="toast"></div>
 
-    <script src="../gaia/js/gaia-mason.js"></script>
+    <script src="js/font-mason.js"></script>
     <script>
     /*
      * ═══════════════════════════════════════════════════════
@@ -434,7 +434,7 @@
         container.appendChild(caption);
 
         // Build with Mason
-        const m = new GaiaMason(frameId);
+        const m = new FontMason(frameId);
 
         painting.layers.forEach((layer, i) => {
             const config = {
