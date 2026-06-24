@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Typographic Gallery · GAIA</title>
+    <title>The Typographic Gallery · Ealdor</title>
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --void: #0a0806;
-            --gold: #b8860b;
-            --parchment: #f4e4c1;
+            --void: #0a0806; --gold: #b8860b; --parchment: #f4e4c1;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -18,11 +16,18 @@
             font-family: 'Georgia','Times New Roman',serif;
             display: flex; flex-direction: column; align-items: center;
             min-height: 100vh; overflow-x: hidden;
+            background-image:
+                radial-gradient(ellipse at 50% 0%, rgba(200,168,72,0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(10,8,6,0.98) 0%, transparent 50%);
         }
 
         #gallery {
-            display: flex; flex-direction: column; align-items: center; gap: 2rem;
+            display: flex; flex-direction: column; align-items: center; gap: 2.5rem;
             padding: 2rem 1rem; width: 100%; max-width: 1000px;
+        }
+
+        .painting-wrapper {
+            display: flex; flex-direction: column; align-items: center;
         }
 
         .painting-frame {
@@ -51,418 +56,113 @@
             margin-top: 0.2rem;
         }
 
-        #toast {
-            position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-            background: rgba(10,8,6,0.94); border: 1px solid var(--gold);
-            border-radius: 6px; padding: 0.5rem 1.2rem;
-            font-family: 'Georgia',serif; font-size: 0.78rem;
-            z-index: 200; opacity: 0; transition: opacity 0.35s;
-            pointer-events: none; text-align: center; max-width: 420px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+        .nav-path {
+            text-align: center;
+            font-family: 'Cinzel',serif;
+            font-size: 0.6rem;
+            letter-spacing: 3px;
+            color: rgba(139,125,107,0.4);
+            margin-top: 1rem;
+            padding: 1rem;
+            border-top: 1px solid rgba(139,125,107,0.1);
+            width: 100%;
         }
-        #toast.show { opacity: 1; }
+
+        .nav-path .zone {
+            cursor: pointer;
+            transition: color 0.3s;
+            color: #8b7d6b;
+        }
+        .nav-path .zone:hover {
+            color: #b8860b;
+        }
+
+        @keyframes sparkFade {
+            0% { transform: scale(0.5); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
     <div id="gallery"></div>
-    <div id="toast"></div>
 
     <script src="js/font-mason.js"></script>
+    <script src="js/scene-loader.js"></script>
     <script>
     /*
      * ═══════════════════════════════════════════════════════
-     * THE TYPOGRAPHIC GALLERY
-     * Paintings rendered as layered typography.
-     * Each painting is a JSON object. Each layer is a wall.
-     * Characters are brushstrokes. CSS colors are pigments.
+     * THE TYPOGRAPHIC GALLERY · Ealdor
+     * Paintings as SceneLoader scenes.
+     * Each painting is a JSON file. SceneLoader builds them.
+     * FontMason is the brush. Characters are the pigment.
      * ═══════════════════════════════════════════════════════
      */
 
-    // ═══════════════════════════════════
-    // PAINTING COLLECTION
-    // ═══════════════════════════════════
-
-    const PAINTINGS = [
+    const PAINTING_MANIFEST = [
         {
             id: "starry-night",
-            title: "Starry Night Over the Fjord",
-            caption: "Oil on typographic canvas · The sky remembers every star",
-            width: 800,
-            height: 500,
-            layers: [
-                {
-                    chars: ["⌒","⌣","~","⋅","⌒","⌣","~"],
-                    textColor: "#0a1a3a",
-                    mortarColor: "#0a1830",
-                    fontSize: 22,
-                    lineHeight: 0.55,
-                    letterSpacing: 1,
-                    y: 0,
-                    height: 320,
-                    description: "Deep night sky base"
-                },
-                {
-                    chars: ["⌒","~","⌣","⌒","~","⋅","⌣"],
-                    textColor: "#1a3a5a",
-                    mortarColor: "transparent",
-                    fontSize: 20,
-                    lineHeight: 0.5,
-                    letterSpacing: 2,
-                    y: 20,
-                    height: 280,
-                    description: "Mid sky — swirling currents"
-                },
-                {
-                    chars: ["✦","✧","·","✦","✧","·","✦"],
-                    textColor: "#ffcc44",
-                    mortarColor: "transparent",
-                    fontSize: 10,
-                    lineHeight: 0.8,
-                    letterSpacing: 6,
-                    y: 40,
-                    height: 200,
-                    description: "Stars scattered across the upper sky"
-                },
-                {
-                    chars: ["⌒","⌣","~","⌒","⌣"],
-                    textColor: "#2a4a6a",
-                    mortarColor: "transparent",
-                    fontSize: 24,
-                    lineHeight: 0.45,
-                    letterSpacing: 0,
-                    y: 80,
-                    height: 180,
-                    description: "The great swirl — the painting's heart"
-                },
-                {
-                    chars: ["✦","✧","·","✦"],
-                    textColor: "#ffdd66",
-                    mortarColor: "transparent",
-                    fontSize: 8,
-                    lineHeight: 0.9,
-                    letterSpacing: 8,
-                    y: 100,
-                    height: 140,
-                    description: "Bright stars in the swirl"
-                },
-                {
-                    chars: ["▲","▲","▼","▲","◆"],
-                    textColor: "#0f1f0f",
-                    mortarColor: "#0a150a",
-                    fontSize: 16,
-                    lineHeight: 0.5,
-                    letterSpacing: -1,
-                    y: 300,
-                    height: 80,
-                    description: "Dark cypress tree silhouette — reaching up"
-                },
-                {
-                    chars: ["⌒","⌣","~","⋅","⌒"],
-                    textColor: "#1a3040",
-                    mortarColor: "#0f1f2f",
-                    fontSize: 14,
-                    lineHeight: 0.5,
-                    letterSpacing: 2,
-                    y: 340,
-                    height: 80,
-                    description: "Rolling hills below"
-                },
-                {
-                    chars: ["▓","░","▒","▓","░"],
-                    textColor: "#2a3a4a",
-                    mortarColor: "#1a2a3a",
-                    fontSize: 12,
-                    lineHeight: 0.5,
-                    letterSpacing: -1,
-                    y: 380,
-                    height: 60,
-                    description: "Sleeping village — warm windows"
-                },
-                {
-                    chars: ["◆","◇","◈","◆","◇"],
-                    textColor: "#daa520",
-                    mortarColor: "transparent",
-                    fontSize: 6,
-                    lineHeight: 0.6,
-                    letterSpacing: 4,
-                    y: 390,
-                    height: 35,
-                    description: "Village lights glowing in the dark"
-                }
-            ]
+            scene: "json/scenes/painting-starry-night.json",
+            label: "Starry Night Over the Fjord",
+            caption: "Oil on typographic canvas · The sky remembers every star"
         },
         {
             id: "harbor-dawn",
-            title: "Harbor at Dawn",
-            caption: "Watercolor on typographic paper · The ships wait for the tide",
-            width: 800,
-            height: 500,
-            layers: [
-                {
-                    chars: ["⌒","⌣","~","⋅","⌒"],
-                    textColor: "#ffe8cc",
-                    mortarColor: "#ffd599",
-                    fontSize: 16,
-                    lineHeight: 0.6,
-                    letterSpacing: 3,
-                    y: 0,
-                    height: 150,
-                    description: "Dawn sky — pale gold"
-                },
-                {
-                    chars: ["⌒","⌣","~","⋅"],
-                    textColor: "#ffccaa",
-                    mortarColor: "transparent",
-                    fontSize: 14,
-                    lineHeight: 0.55,
-                    letterSpacing: 4,
-                    y: 30,
-                    height: 100,
-                    description: "Cloud wisps catching first light"
-                },
-                {
-                    chars: ["~","≈","≋","~","≈"],
-                    textColor: "#3a5a7a",
-                    mortarColor: "#2a4a6a",
-                    fontSize: 20,
-                    lineHeight: 0.5,
-                    letterSpacing: 0,
-                    y: 200,
-                    height: 200,
-                    description: "Calm harbor water"
-                },
-                {
-                    chars: ["~","⋅","≋","⋅","~"],
-                    textColor: "#5a8ab8",
-                    mortarColor: "transparent",
-                    fontSize: 16,
-                    lineHeight: 0.45,
-                    letterSpacing: 1,
-                    y: 220,
-                    height: 160,
-                    description: "Light playing on the water surface"
-                },
-                {
-                    chars: ["▬","▬","▬","▬","▬"],
-                    textColor: "#3d2b1f",
-                    mortarColor: "#2a1f15",
-                    fontSize: 10,
-                    lineHeight: 0.5,
-                    letterSpacing: 0,
-                    y: 280,
-                    height: 30,
-                    width: 120,
-                    x: 200,
-                    description: "Fishing vessel — hull dark against water"
-                },
-                {
-                    chars: ["╎"],
-                    textColor: "#4a3020",
-                    mortarColor: "transparent",
-                    fontSize: 8,
-                    lineHeight: 0.5,
-                    letterSpacing: 0,
-                    y: 260,
-                    height: 25,
-                    width: 4,
-                    x: 245,
-                    description: "Mast"
-                },
-                {
-                    chars: ["⌣","⌢","~"],
-                    textColor: "#5c4a3a",
-                    mortarColor: "transparent",
-                    fontSize: 6,
-                    lineHeight: 0.5,
-                    letterSpacing: 0,
-                    y: 255,
-                    height: 10,
-                    width: 16,
-                    x: 238,
-                    description: "Sail — furled"
-                },
-                {
-                    chars: ["▓","▒","░","▓","▒"],
-                    textColor: "#4a3f35",
-                    mortarColor: "#3d362f",
-                    fontSize: 14,
-                    lineHeight: 0.5,
-                    letterSpacing: -1,
-                    y: 380,
-                    height: 80,
-                    description: "Harbor wall and buildings"
-                },
-                {
-                    chars: ["◆","◇"],
-                    textColor: "#daa520",
-                    mortarColor: "transparent",
-                    fontSize: 5,
-                    lineHeight: 0.5,
-                    letterSpacing: 6,
-                    y: 395,
-                    height: 20,
-                    description: "Morning windows lit"
-                }
-            ]
+            scene: "json/scenes/painting-harbor-dawn.json",
+            label: "Harbor at Dawn",
+            caption: "Watercolor on typographic paper · The ships wait for the tide"
         },
         {
             id: "radish-still-life",
-            title: "Still Life with Radishes",
-            caption: "Charcoal and earth on typographic paper · The humble root",
-            width: 600,
-            height: 450,
-            layers: [
-                {
-                    chars: ["▓","░","▒","▓","░"],
-                    textColor: "#3d2f1f",
-                    mortarColor: "#2a1f12",
-                    fontSize: 24,
-                    lineHeight: 0.5,
-                    letterSpacing: -2,
-                    y: 0,
-                    height: 450,
-                    description: "Dark earth background"
-                },
-                {
-                    chars: ["▓","░","▒"],
-                    textColor: "#5c4f42",
-                    mortarColor: "transparent",
-                    fontSize: 28,
-                    lineHeight: 0.48,
-                    letterSpacing: -2,
-                    y: 300,
-                    height: 120,
-                    description: "Wooden table surface"
-                },
-                {
-                    chars: ["◉","◉","◉"],
-                    textColor: "#c84444",
-                    mortarColor: "transparent",
-                    fontSize: 22,
-                    lineHeight: 0.5,
-                    letterSpacing: 3,
-                    y: 260,
-                    height: 40,
-                    width: 80,
-                    x: 150,
-                    description: "Three radishes — red against dark"
-                },
-                {
-                    chars: ["╎"],
-                    textColor: "#a8d8a8",
-                    mortarColor: "transparent",
-                    fontSize: 8,
-                    lineHeight: 0.5,
-                    letterSpacing: 0,
-                    y: 248,
-                    height: 16,
-                    width: 4,
-                    x: 160,
-                    description: "Radish greens"
-                },
-                {
-                    chars: ["◉","◉"],
-                    textColor: "#f0d8d8",
-                    mortarColor: "transparent",
-                    fontSize: 18,
-                    lineHeight: 0.5,
-                    letterSpacing: 4,
-                    y: 270,
-                    height: 30,
-                    width: 60,
-                    x: 350,
-                    description: "Two white radishes — cut open"
-                },
-                {
-                    chars: ["▼"],
-                    textColor: "#e87830",
-                    mortarColor: "transparent",
-                    fontSize: 20,
-                    lineHeight: 0.5,
-                    letterSpacing: 0,
-                    y: 280,
-                    height: 25,
-                    width: 20,
-                    x: 280,
-                    description: "A single carrot — fallen"
-                },
-                {
-                    chars: ["░","▒","░"],
-                    textColor: "rgba(244,228,193,0.15)",
-                    mortarColor: "transparent",
-                    fontSize: 12,
-                    lineHeight: 0.5,
-                    letterSpacing: 2,
-                    y: 60,
-                    height: 80,
-                    description: "Soft light falling from above left"
-                }
-            ]
+            scene: "json/scenes/painting-radish-still-life.json",
+            label: "Still Life with Radishes",
+            caption: "Charcoal and earth on typographic paper · The humble root"
         }
     ];
 
     // ═══════════════════════════════════
-    // RENDER A PAINTING
+    // RENDER A PAINTING VIA SCENE LOADER
     // ═══════════════════════════════════
 
-    function renderPainting(painting) {
-    const container = document.createElement('div');
-    container.style.display = 'flex';
-    container.style.flexDirection = 'column';
-    container.style.alignItems = 'center';
+    async function renderPainting(paintingDef) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'painting-wrapper';
 
-    const frameId = `painting-${painting.id}`;
-    const frame = document.createElement('div');
-    frame.id = frameId;
-    frame.className = 'painting-frame';
-    frame.style.width = painting.width + 'px';
-    frame.style.height = painting.height + 'px';
-    
-    // ADD TO DOM FIRST
-    container.appendChild(frame);
+        // Create container for SceneLoader
+        const containerId = `painting-${paintingDef.id}`;
+        const container = document.createElement('div');
+        container.id = containerId;
+        container.className = 'painting-frame';
+        wrapper.appendChild(container);
 
-    // Label
-    const label = document.createElement('div');
-    label.className = 'painting-label';
-    label.textContent = painting.title;
-    container.appendChild(label);
+        // Label
+        const label = document.createElement('div');
+        label.className = 'painting-label';
+        label.textContent = paintingDef.label;
+        wrapper.appendChild(label);
 
-    // Caption
-    const caption = document.createElement('div');
-    caption.className = 'painting-caption';
-    caption.textContent = painting.caption;
-    container.appendChild(caption);
+        // Caption
+        const caption = document.createElement('div');
+        caption.className = 'painting-caption';
+        caption.textContent = paintingDef.caption;
+        wrapper.appendChild(caption);
 
-    // NOW build with FontMason — element is in the DOM
-    const m = new FontMason(frameId);
+        // Load scene via SceneLoader
+        const loader = new SceneLoader(containerId);
+        try {
+            await loader.load(paintingDef.scene);
+        } catch(e) {
+            container.innerHTML = `<div style="color:#8b7d6b;text-align:center;padding:2rem;font-style:italic;">Painting unavailable.<br>The canvas is blank.</div>`;
+        }
 
-    painting.layers.forEach((layer, i) => {
-        m.buildWall({
-            chars: layer.chars,
-            textColor: layer.textColor,
-            mortarColor: layer.mortarColor || 'transparent',
-            fontSize: layer.fontSize || 16,
-            lineHeight: layer.lineHeight || 0.5,
-            letterSpacing: layer.letterSpacing || 0,
-            fontFamily: layer.fontFamily || "'Georgia','Times New Roman',serif",
-            x: layer.x || 0,
-            y: layer.y || 0,
-            width: layer.width || painting.width,
-            height: layer.height || painting.height,
-            z: i + 1,
-            weathering: 0,
-        });
-    });
-
-    return container;
-}
+        return wrapper;
+    }
 
     // ═══════════════════════════════════
     // INIT
     // ═══════════════════════════════════
 
-    function init() {
+    async function init() {
         const gallery = document.getElementById('gallery');
 
         // Title
@@ -477,15 +177,38 @@
         gallery.appendChild(subtitle);
 
         // Render each painting
-        PAINTINGS.forEach(painting => {
-            gallery.appendChild(renderPainting(painting));
+        for (const paintingDef of PAINTING_MANIFEST) {
+            const painting = await renderPainting(paintingDef);
+            gallery.appendChild(painting);
+        }
+
+        // Navigation
+        const nav = document.createElement('div');
+        nav.className = 'nav-path';
+        nav.innerHTML = '<span class="zone" title="Return to the farm">← FARM</span> &nbsp;·&nbsp; <span class="zone" title="Walk to the harbor">HARBOR →</span>';
+        nav.querySelector('.zone:first-child').addEventListener('click', () => {
+            window.location.href = 'farm.html?from=gallery';
         });
+        nav.querySelector('.zone:last-child').addEventListener('click', () => {
+            window.location.href = 'harbor.html?from=gallery';
+        });
+        gallery.appendChild(nav);
 
         // Footer
         const footer = document.createElement('div');
-        footer.style.cssText = 'text-align:center;font-family:Cinzel,serif;font-size:0.5rem;letter-spacing:3px;color:rgba(139,125,107,0.3);margin-top:2rem;padding:1rem;';
-        footer.textContent = 'NO IMAGES · NO CANVAS · ONLY CHARACTERS';
+        footer.style.cssText = 'text-align:center;font-family:Cinzel,serif;font-size:0.5rem;letter-spacing:3px;color:rgba(139,125,107,0.3);margin-top:1rem;padding:1rem;';
+        footer.textContent = 'NO IMAGES · NO CANVAS · ONLY CHARACTERS · SCENE LOADER';
         gallery.appendChild(footer);
+
+        // Ambient sparks
+        document.addEventListener('click', (e) => {
+            if (Math.random() > 0.7 && !e.target.closest('.zone')) {
+                const spark = document.createElement('div');
+                spark.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:3px;height:3px;background:#d4af37;border-radius:50%;box-shadow:0 0 10px #d4af37;pointer-events:none;z-index:150;animation:sparkFade 1.2s ease-out forwards;`;
+                document.body.appendChild(spark);
+                setTimeout(() => spark.remove(), 1300);
+            }
+        });
     }
 
     init();
