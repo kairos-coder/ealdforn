@@ -75,55 +75,57 @@
       "weathering": 0
     }
   },
-  "objects": [
-    {
-      "type": "earth-bg",
-      "x": 0, "y": 0,
+  "objectDefinitions": {
+    "earth-bg": {
+      "bounds": { "width": 600, "height": 450 },
       "layers": [
         { "type": "wall", "material": "earth_bg", "dimensions": { "width": 600, "height": 450 }, "position": { "z": 1 } }
       ]
     },
-    {
-      "type": "table",
-      "x": 0, "y": 300,
+    "table": {
+      "bounds": { "width": 600, "height": 120 },
       "layers": [
         { "type": "wall", "material": "table_wood", "dimensions": { "width": 600, "height": 120 }, "position": { "z": 2 } }
       ]
     },
-    {
-      "type": "radishes-red",
-      "x": 150, "y": 260,
+    "radishes-red": {
+      "bounds": { "width": 80, "height": 40 },
       "layers": [
         { "type": "wall", "material": "radish_red", "dimensions": { "width": 80, "height": 40 }, "position": { "z": 3 } }
       ]
     },
-    {
-      "type": "radish-greens",
-      "x": 160, "y": 248,
+    "radish-greens": {
+      "bounds": { "width": 4, "height": 16 },
       "layers": [
         { "type": "pillar", "material": "radish_greens", "dimensions": { "width": 4, "height": 16 }, "position": { "z": 4 } }
       ]
     },
-    {
-      "type": "radishes-white",
-      "x": 350, "y": 270,
+    "radishes-white": {
+      "bounds": { "width": 60, "height": 30 },
       "layers": [
         { "type": "wall", "material": "radish_white", "dimensions": { "width": 60, "height": 30 }, "position": { "z": 5 } }
       ]
     },
-    {
-      "type": "carrot",
-      "x": 280, "y": 280,
+    "carrot": {
+      "bounds": { "width": 20, "height": 25 },
       "layers": [
         { "type": "wall", "material": "carrot_fallen", "dimensions": { "width": 20, "height": 25 }, "position": { "z": 6 } }
       ]
     },
-    {
-      "type": "light",
-      "x": 0, "y": 60,
+    "light": {
+      "bounds": { "width": 600, "height": 80 },
       "layers": [
         { "type": "wall", "material": "soft_light", "dimensions": { "width": 600, "height": 80 }, "position": { "z": 7 } }
       ]
     }
+  },
+  "objects": [
+    { "type": "earth-bg", "x": 0, "y": 0 },
+    { "type": "table", "x": 0, "y": 300 },
+    { "type": "radishes-red", "x": 150, "y": 260 },
+    { "type": "radish-greens", "x": 160, "y": 248 },
+    { "type": "radishes-white", "x": 350, "y": 270 },
+    { "type": "carrot", "x": 280, "y": 280 },
+    { "type": "light", "x": 0, "y": 60 }
   ]
 }
