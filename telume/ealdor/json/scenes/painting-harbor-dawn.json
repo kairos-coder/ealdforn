@@ -95,69 +95,71 @@
       "weathering": 0
     }
   },
-  "objects": [
-    {
-      "type": "dawn-sky",
-      "x": 0, "y": 0,
+  "objectDefinitions": {
+    "dawn-sky": {
+      "bounds": { "width": 800, "height": 150 },
       "layers": [
         { "type": "wall", "material": "dawn_sky", "dimensions": { "width": 800, "height": 150 }, "position": { "z": 1 } }
       ]
     },
-    {
-      "type": "cloud-wisps",
-      "x": 0, "y": 30,
+    "cloud-wisps": {
+      "bounds": { "width": 800, "height": 100 },
       "layers": [
         { "type": "wall", "material": "cloud_wisps", "dimensions": { "width": 800, "height": 100 }, "position": { "z": 2 } }
       ]
     },
-    {
-      "type": "harbor-water",
-      "x": 0, "y": 200,
+    "harbor-water": {
+      "bounds": { "width": 800, "height": 200 },
       "layers": [
         { "type": "wall", "material": "harbor_water", "dimensions": { "width": 800, "height": 200 }, "position": { "z": 3 } }
       ]
     },
-    {
-      "type": "water-light",
-      "x": 0, "y": 220,
+    "water-light": {
+      "bounds": { "width": 800, "height": 160 },
       "layers": [
         { "type": "wall", "material": "water_light", "dimensions": { "width": 800, "height": 160 }, "position": { "z": 4 } }
       ]
     },
-    {
-      "type": "vessel",
-      "x": 200, "y": 280,
+    "vessel": {
+      "bounds": { "width": 120, "height": 30 },
       "layers": [
         { "type": "wall", "material": "vessel_hull", "dimensions": { "width": 120, "height": 30 }, "position": { "z": 5 } }
       ]
     },
-    {
-      "type": "mast",
-      "x": 245, "y": 260,
+    "mast": {
+      "bounds": { "width": 4, "height": 25 },
       "layers": [
         { "type": "pillar", "material": "mast_pine", "dimensions": { "width": 4, "height": 25 }, "position": { "z": 6 } }
       ]
     },
-    {
-      "type": "sail",
-      "x": 238, "y": 255,
+    "sail": {
+      "bounds": { "width": 16, "height": 10 },
       "layers": [
         { "type": "wall", "material": "sail_furled", "dimensions": { "width": 16, "height": 10 }, "position": { "z": 7 } }
       ]
     },
-    {
-      "type": "harbor-wall",
-      "x": 0, "y": 380,
+    "harbor-wall": {
+      "bounds": { "width": 800, "height": 80 },
       "layers": [
         { "type": "wall", "material": "harbor_wall", "dimensions": { "width": 800, "height": 80 }, "position": { "z": 8 } }
       ]
     },
-    {
-      "type": "morning-windows",
-      "x": 0, "y": 395,
+    "morning-windows": {
+      "bounds": { "width": 800, "height": 20 },
       "layers": [
         { "type": "wall", "material": "morning_windows", "dimensions": { "width": 800, "height": 20 }, "position": { "z": 9 } }
       ]
     }
+  },
+  "objects": [
+    { "type": "dawn-sky", "x": 0, "y": 0 },
+    { "type": "cloud-wisps", "x": 0, "y": 30 },
+    { "type": "harbor-water", "x": 0, "y": 200 },
+    { "type": "water-light", "x": 0, "y": 220 },
+    { "type": "vessel", "x": 200, "y": 280 },
+    { "type": "mast", "x": 245, "y": 260 },
+    { "type": "sail", "x": 238, "y": 255 },
+    { "type": "harbor-wall", "x": 0, "y": 380 },
+    { "type": "morning-windows", "x": 0, "y": 395 }
   ]
 }
