@@ -4,165 +4,431 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kingdom of Ealdor · The Courtyard</title>
-    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --stone: #3d362f; --deep-stone: #2a2520; --mortar: #1a1612;
-            --parchment: #f4e4c1; --ember: #c44f1c; --ember-bright: #e85d2c;
-            --ash: #8b7d6b; --frost: #c8d8e4; --gold: #b8860b;
-            --deep: #1a1410; --void: #0a0806; --water: #3a6b8c;
-            --leaf: #2d3a1f; --leaf-light: #4a6b35;
+            --void:       #0a0806;
+            --deep:       #1a1410;
+            --mortar:     #1a1612;
+            --stone:      #3d362f;
+            --deep-stone: #2a2520;
+            --ash:        #8b7d6b;
+            --parchment:  #f4e4c1;
+            --gold:       #b8860b;
+            --gold-bright:#d4af37;
+            --ember:      #c44f1c;
+            --ember-bright:#e85d2c;
+            --frost:      #c8d8e4;
+            --water:      #3a6b8c;
+            --leaf:       #2d3a1f;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             background: var(--void);
             color: var(--parchment);
-            font-family: 'Georgia','Times New Roman',serif;
-            display: flex; flex-direction: column; align-items: center;
-            min-height: 100vh; overflow-x: hidden;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            /* Ember warmth from center, deep cold at edges */
             background-image:
-                radial-gradient(ellipse at 50% 0%, rgba(196,79,28,0.04) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 100%, rgba(26,20,16,0.9) 0%, transparent 50%);
+                radial-gradient(ellipse 80% 40% at 50% 0%,   rgba(196,79,28,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 100% 50% at 50% 100%, rgba(10,8,6,0.98)    0%, transparent 60%);
         }
 
-        /* ── HEADER ── */
-        .courtyard-header {
-            text-align: center; padding: 1.2rem 1rem 0.3rem; width: 100%; z-index: 10;
+        /* ══════════════════════════════════
+           LINTEL — top stone bar
+        ══════════════════════════════════ */
+        .lintel {
+            width: 100%;
+            background: var(--mortar);
+            border-bottom: 2px solid var(--deep-stone);
+            padding: 0.18rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'Cinzel', serif;
+            font-size: 0.5rem;
+            color: rgba(139,125,107,0.5);
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
-        .courtyard-header h1 {
-            font-family: 'UnifrakturMaguntia',cursive;
-            font-size: clamp(1.8rem,4.5vw,2.8rem);
+        .lintel-year { color: rgba(184,134,11,0.4); }
+
+        /* ══════════════════════════════════
+           HEADER — the temple face
+        ══════════════════════════════════ */
+        .temple-header {
+            text-align: center;
+            padding: 2rem 1rem 0.8rem;
+            position: relative;
+        }
+
+        /* Signature element: stone lintel bars above and below title */
+        .temple-header::before,
+        .temple-header::after {
+            content: '';
+            display: block;
+            width: 340px;
+            max-width: 90vw;
+            height: 3px;
+            margin: 0 auto;
+            background: linear-gradient(to right, transparent, var(--deep-stone) 20%, var(--stone) 50%, var(--deep-stone) 80%, transparent);
+        }
+        .temple-header::before { margin-bottom: 1rem; }
+        .temple-header::after  { margin-top: 1rem; }
+
+        .temple-title {
+            font-family: 'UnifrakturMaguntia', cursive;
+            font-size: clamp(2rem, 5.5vw, 3.2rem);
             color: var(--gold);
-            text-shadow: 0 0 15px rgba(184,134,11,0.4), 2px 2px 0 var(--void);
-            letter-spacing: 4px;
-        }
-        .courtyard-header .subtitle {
-            font-family: 'Cinzel',serif; font-size: 0.7rem; color: var(--ash);
-            letter-spacing: 5px; text-transform: uppercase;
-        }
-        .glyph-divider {
-            color: var(--gold); opacity: 0.4; font-size: 0.7rem;
-            letter-spacing: 8px; text-align: center; margin-top: 0.1rem;
+            text-shadow:
+                0 0 20px rgba(184,134,11,0.35),
+                0 0 60px rgba(184,134,11,0.1),
+                2px 3px 0 var(--void);
+            letter-spacing: 6px;
+            line-height: 1;
         }
 
-        /* ── STAT PILLS ── */
-        .stats-bar {
-            display: flex; flex-wrap: wrap; gap: 0.3rem;
-            justify-content: center; padding: 0.4rem; z-index: 10; width: 100%;
+        .temple-subtitle {
+            font-family: 'Cinzel', serif;
+            font-size: 0.62rem;
+            color: var(--ash);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+            opacity: 0.7;
         }
-        .stat-pill {
-            background: rgba(26,20,16,0.75);
-            border: 1px solid rgba(139,125,107,0.4);
-            border-radius: 20px; padding: 0.2rem 0.6rem;
-            font-size: 0.6rem; display: flex; align-items: center; gap: 0.2rem;
-            font-family: 'Cinzel',serif; backdrop-filter: blur(4px);
-        }
-        .stat-pill .stat-icon { font-size: 0.75rem; }
-        .stat-pill .stat-value { font-weight: bold; color: var(--gold); }
-        .stat-pill .stat-value.low { color: #7a1c1c; }
-        .stat-pill .stat-value.warn { color: var(--ember); }
 
-        /* ── COURTYARD SCENE ── */
+        /* Seven glyphs — the threshold grammar */
+        .glyph-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+            margin-top: 0.8rem;
+        }
+        .glyph-mark {
+            font-family: 'Georgia', serif;
+            font-size: 0.9rem;
+            color: rgba(184,134,11,0.22);
+            padding: 0 0.5rem;
+            transition: color 0.3s, text-shadow 0.3s;
+            cursor: default;
+        }
+        .glyph-mark:hover {
+            color: rgba(184,134,11,0.7);
+            text-shadow: 0 0 12px rgba(184,134,11,0.3);
+        }
+        .glyph-sep {
+            color: rgba(139,125,107,0.2);
+            font-size: 0.5rem;
+        }
+
+        /* ══════════════════════════════════
+           RESOURCE BAND
+        ══════════════════════════════════ */
+        .resource-band {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0;
+            width: 100%;
+            max-width: 860px;
+            margin: 0.6rem auto 0;
+            border-top: 1px solid var(--deep-stone);
+            border-bottom: 1px solid var(--deep-stone);
+            background: rgba(26,22,18,0.6);
+        }
+        .resource-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.35rem 0.8rem;
+            border-right: 1px solid var(--deep-stone);
+            min-width: 64px;
+            gap: 0.1rem;
+        }
+        .resource-item:last-child { border-right: none; }
+        .resource-icon { font-size: 0.75rem; line-height: 1; }
+        .resource-value {
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gold);
+            line-height: 1;
+            transition: color 0.3s;
+        }
+        .resource-value.low  { color: #7a1c1c; }
+        .resource-value.warn { color: var(--ember); }
+        .resource-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.38rem;
+            color: rgba(139,125,107,0.5);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* ══════════════════════════════════
+           SCENE CONTAINER
+        ══════════════════════════════════ */
         #courtyard-scene {
-            position: relative; width: 860px; max-width: 98vw;
-            height: 550px; margin: 0.3rem auto 0.8rem; overflow: hidden;
+            position: relative;
+            width: 860px;
+            max-width: 98vw;
+            height: 550px;
+            margin: 0.6rem auto;
+            overflow: hidden;
             background: var(--void);
-            border: 4px solid var(--deep-stone); border-radius: 6px;
-            box-shadow: 0 0 80px rgba(0,0,0,0.6), 0 0 160px rgba(0,0,0,0.3), inset 0 0 40px rgba(0,0,0,0.2);
+            border: 3px solid var(--deep-stone);
+            box-shadow:
+                0 0 0 1px #1a1612,
+                0 0 60px rgba(0,0,0,0.7),
+                0 0 120px rgba(0,0,0,0.4),
+                inset 0 0 60px rgba(0,0,0,0.3);
         }
         @media (max-width: 880px) {
-            #courtyard-scene { width: 98vw; height: calc(98vw * 0.64); }
+            #courtyard-scene { height: calc(98vw * 0.64); }
         }
 
-        .zone { cursor: pointer; transition: filter 0.25s, transform 0.25s; }
-        .zone:hover { filter: brightness(1.35); z-index: 50 !important; }
-        .zone:active { transform: scale(0.94); }
+        .zone {
+            cursor: pointer;
+            transition: filter 0.2s, transform 0.2s;
+        }
+        .zone:hover  { filter: brightness(1.35); z-index: 50 !important; }
+        .zone:active { transform: scale(0.94); transition: transform 0.08s; }
 
-        /* ── TOAST ── */
+        /* ══════════════════════════════════
+           CHRONICLE — bottom stone tablet
+        ══════════════════════════════════ */
+        .chronicle {
+            width: 100%;
+            max-width: 860px;
+            margin: 0 auto 2rem;
+            background: linear-gradient(160deg, #3d3428 0%, #2a2418 100%);
+            border: 3px solid var(--deep-stone);
+            border-top: none;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.03);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Stone course texture behind chronicle */
+        .chronicle::before {
+            content: 'MWNHM MWNHM MWNHM MWNHM MWNHM MWNHM MWNHM MWNHM MWNHM MWNHM MWNHM MWNHM MWNHM MWNHM MWNHM MWNHM';
+            position: absolute;
+            inset: 0;
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            line-height: 0.52;
+            letter-spacing: -2px;
+            color: rgba(61,54,47,0.18);
+            word-break: break-all;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .chronicle-inner {
+            position: relative;
+            z-index: 1;
+            padding: 0.8rem 1rem;
+        }
+
+        .chronicle-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 0.6rem;
+        }
+        .chronicle-stat {
+            font-family: 'Cinzel', serif;
+            font-size: 0.58rem;
+            color: rgba(244,228,193,0.55);
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            letter-spacing: 0.5px;
+        }
+        .chronicle-stat-val {
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 0.65rem;
+        }
+        .chronicle-stat-val.low  { color: #7a1c1c; }
+        .chronicle-stat-val.warn { color: var(--ember); }
+
+        .chronicle-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(184,134,11,0.2), transparent);
+            margin-bottom: 0.5rem;
+        }
+
+        .chronicle-notice {
+            text-align: center;
+            font-style: italic;
+            font-size: 0.68rem;
+            color: rgba(244,228,193,0.4);
+            letter-spacing: 0.5px;
+            line-height: 1.5;
+        }
+
+        /* ══════════════════════════════════
+           TOAST
+        ══════════════════════════════════ */
         #toast {
-            position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-            background: rgba(10,8,6,0.94); border: 1px solid var(--gold);
-            border-radius: 6px; padding: 0.5rem 1.2rem;
-            font-family: 'Georgia',serif; font-size: 0.78rem;
-            z-index: 200; opacity: 0; transition: opacity 0.35s;
-            pointer-events: none; text-align: center; max-width: 420px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.5); white-space: pre-line;
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10,8,6,0.96);
+            border: 1px solid rgba(184,134,11,0.4);
+            border-radius: 4px;
+            padding: 0.55rem 1.3rem;
+            font-family: 'Georgia', serif;
+            font-size: 0.76rem;
+            line-height: 1.5;
+            z-index: 200;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            text-align: center;
+            max-width: 440px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6), 0 0 0 1px rgba(184,134,11,0.1);
+            white-space: pre-line;
+            color: var(--parchment);
         }
         #toast.show { opacity: 1; }
 
-        /* ── NOTICE BOARD ── */
-        .notice-board {
-            width: 90%; max-width: 550px; margin: 0 auto 1.5rem;
-            background: linear-gradient(#5c4f42,#4a3f35);
-            border: 5px solid #2a2520; border-radius: 3px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5), 0 5px 16px rgba(0,0,0,0.5), 0 0 0 2px #1a1410;
-            padding: 0.6rem 0.8rem; position: relative;
-        }
-        .notice-board::before, .notice-board::after {
-            content:'✦'; position:absolute; top:-8px; color:#2a2018; font-size:10px;
-        }
-        .notice-board::before { left:10px; } .notice-board::after { right:10px; }
-        .notice-board .stats-row {
-            display:flex; flex-wrap:wrap; gap:0.4rem; justify-content:center; margin-bottom:0.4rem;
-        }
-        .notice-board .stat-item {
-            font-family:'Cinzel',serif; font-size:0.6rem; color:var(--parchment);
-            display:flex; align-items:center; gap:0.2rem;
-        }
-        .notice-board .stat-value { color:var(--gold); font-weight:bold; font-size:0.7rem; }
-        .notice-board .stat-value.low { color:#7a1c1c; }
-        .notice-board .stat-value.warn { color:var(--ember); }
-        .notice-board .notice-text {
-            text-align:center; font-style:italic; font-size:0.7rem;
-            color:rgba(244,228,193,0.55); border-top:1px solid rgba(244,228,193,0.1);
-            padding-top:0.4rem; letter-spacing:0.5px;
-        }
-
+        /* ══════════════════════════════════
+           ANIMATIONS
+        ══════════════════════════════════ */
         @keyframes sparkFade {
-            0%{transform:scale(0.5);opacity:1}
-            100%{transform:scale(2.5);opacity:0}
+            0%   { transform: scale(0.5); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
         }
         @keyframes waterShimmer {
-            0%,100%{opacity:0.25} 50%{opacity:0.6}
+            0%,100% { opacity: 0.25; }
+            50%     { opacity: 0.6; }
         }
         @keyframes rippleExpand {
-            0%{transform:scale(0.3);opacity:0.5}
-            100%{transform:scale(2);opacity:0}
+            0%   { transform: scale(0.3); opacity: 0.5; }
+            100% { transform: scale(2);   opacity: 0; }
         }
         @keyframes lanternGlow {
-            0%,100%{box-shadow:0 0 6px #daa520,0 0 14px rgba(218,165,32,0.2)}
-            50%{box-shadow:0 0 12px #ffd700,0 0 24px rgba(218,165,32,0.4)}
+            0%,100% { box-shadow: 0 0 6px #daa520, 0 0 14px rgba(218,165,32,0.2); }
+            50%     { box-shadow: 0 0 12px #ffd700, 0 0 28px rgba(218,165,32,0.4); }
         }
+        @keyframes titleBreath {
+            0%,100% { text-shadow: 0 0 20px rgba(184,134,11,0.35), 0 0 60px rgba(184,134,11,0.1),  2px 3px 0 var(--void); }
+            50%     { text-shadow: 0 0 30px rgba(184,134,11,0.55), 0 0 80px rgba(184,134,11,0.18), 2px 3px 0 var(--void); }
+        }
+        .temple-title { animation: titleBreath 6s ease-in-out infinite; }
     </style>
 </head>
 <body>
 
-    <header class="courtyard-header">
-        <h1>𐤃 Kingdom of Ealdor 𐤃</h1>
-        <div class="subtitle">The People's Yard · Heart of the Threshold</div>
-        <div class="glyph-divider">𐤃 · 𐤀 · 𐤕 · 𐤔 · 𐤐 · 𐤌 · 𐤇</div>
-    </header>
-
-    <div class="stats-bar">
-        <div class="stat-pill"><span class="stat-icon">🌾</span> Timber: <span class="stat-value" id="timberStat">3</span></div>
-        <div class="stat-pill"><span class="stat-icon">❤️</span> Faith: <span class="stat-value" id="faithStat">60</span></div>
-        <div class="stat-pill"><span class="stat-icon">☀️</span> Morale: <span class="stat-value" id="moraleStat">70</span></div>
-        <div class="stat-pill"><span class="stat-icon">❄️</span> Ice: <span class="stat-value warn" id="iceStat">15%</span></div>
-        <div class="stat-pill"><span class="stat-icon">📜</span> Tablets: <span class="stat-value" id="tabletStat">0</span>/7</div>
+    <!-- Stone lintel bar -->
+    <div class="lintel">
+        <span>𐤃 · 𐤀 · 𐤕 · 𐤔 · 𐤐 · 𐤌 · 𐤇</span>
+        <span class="lintel-year" id="lintelYear">Year 3450 · Season of the Deep Cold</span>
+        <span>ealdforn · telumë · ealdor</span>
     </div>
 
+    <!-- Navigation inserted here by navigation.js -->
+
+    <!-- Temple header -->
+    <header class="temple-header">
+        <h1 class="temple-title">Kingdom of Ealdor</h1>
+        <p class="temple-subtitle">The People's Yard &nbsp;·&nbsp; Heart of the Threshold</p>
+        <div class="glyph-row">
+            <span class="glyph-mark" title="Door">𐤃</span><span class="glyph-sep">·</span>
+            <span class="glyph-mark" title="Ox / Breath">𐤀</span><span class="glyph-sep">·</span>
+            <span class="glyph-mark" title="Mark">𐤕</span><span class="glyph-sep">·</span>
+            <span class="glyph-mark" title="Tooth / Return">𐤔</span><span class="glyph-sep">·</span>
+            <span class="glyph-mark" title="Mouth / Gate">𐤐</span><span class="glyph-sep">·</span>
+            <span class="glyph-mark" title="Water">𐤌</span><span class="glyph-sep">·</span>
+            <span class="glyph-mark" title="Fence / Threshold">𐤇</span>
+        </div>
+    </header>
+
+    <!-- Resource band -->
+    <div class="resource-band">
+        <div class="resource-item">
+            <span class="resource-icon">🌾</span>
+            <span class="resource-value" id="rsTimber">3</span>
+            <span class="resource-label">Timber</span>
+        </div>
+        <div class="resource-item">
+            <span class="resource-icon">🪨</span>
+            <span class="resource-value" id="rsStone">4</span>
+            <span class="resource-label">Stone</span>
+        </div>
+        <div class="resource-item">
+            <span class="resource-icon">🌾</span>
+            <span class="resource-value" id="rsGrain">5</span>
+            <span class="resource-label">Grain</span>
+        </div>
+        <div class="resource-item">
+            <span class="resource-icon">⚒️</span>
+            <span class="resource-value" id="rsIron">2</span>
+            <span class="resource-label">Iron</span>
+        </div>
+        <div class="resource-item">
+            <span class="resource-icon">🧂</span>
+            <span class="resource-value" id="rsSalt">2</span>
+            <span class="resource-label">Salt</span>
+        </div>
+        <div class="resource-item">
+            <span class="resource-icon">🧵</span>
+            <span class="resource-value" id="rsCloth">3</span>
+            <span class="resource-label">Cloth</span>
+        </div>
+        <div class="resource-item">
+            <span class="resource-icon">❤️</span>
+            <span class="resource-value" id="rsFaith">60</span>
+            <span class="resource-label">Faith</span>
+        </div>
+        <div class="resource-item">
+            <span class="resource-icon">☀️</span>
+            <span class="resource-value" id="rsMorale">70</span>
+            <span class="resource-label">Morale</span>
+        </div>
+        <div class="resource-item">
+            <span class="resource-icon">❄️</span>
+            <span class="resource-value" id="rsIce">15%</span>
+            <span class="resource-label">Ice</span>
+        </div>
+        <div class="resource-item">
+            <span class="resource-icon">📜</span>
+            <span class="resource-value" id="rsTablets">0/7</span>
+            <span class="resource-label">Tablets</span>
+        </div>
+    </div>
+
+    <!-- Main scene -->
     <div id="courtyard-scene"></div>
 
-    <div class="notice-board">
-        <div class="stats-row">
-            <div class="stat-item">🌾 Timber: <span class="stat-value" id="nbTimber">3</span></div>
-            <div class="stat-item">🪨 Stone: <span class="stat-value" id="nbStone">4</span></div>
-            <div class="stat-item">🌾 Grain: <span class="stat-value" id="nbGrain">5</span></div>
-            <div class="stat-item">⚒️ Iron: <span class="stat-value" id="nbIron">2</span></div>
-            <div class="stat-item">🧂 Salt: <span class="stat-value" id="nbSalt">2</span></div>
-            <div class="stat-item">🧵 Cloth: <span class="stat-value" id="nbCloth">3</span></div>
+    <!-- Chronicle tablet -->
+    <div class="chronicle">
+        <div class="chronicle-inner">
+            <div class="chronicle-stats">
+                <span class="chronicle-stat">Population <span class="chronicle-stat-val" id="chPop">100</span></span>
+                <span class="chronicle-stat">·</span>
+                <span class="chronicle-stat">Crises <span class="chronicle-stat-val" id="chCrisis">0</span></span>
+                <span class="chronicle-stat">·</span>
+                <span class="chronicle-stat">Fragments <span class="chronicle-stat-val" id="chFragments">0</span>/7</span>
+                <span class="chronicle-stat">·</span>
+                <span class="chronicle-stat">Thing <span class="chronicle-stat-val" id="chThing">Not convened</span></span>
+            </div>
+            <div class="chronicle-divider"></div>
+            <p class="chronicle-notice" id="chronicleNotice">
+                "The fire holds. The vault is open. The seventh tablet is still blank."
+            </p>
         </div>
-        <div class="notice-text" id="noticeText">"The fire holds. The vault is open. The seventh tablet is still blank."</div>
     </div>
 
     <div id="toast"></div>
@@ -172,14 +438,15 @@
     <script src="js/navigation.js"></script>
     <script>
     /*
-     * ═══════════════════════════════════════════════
+     * ═══════════════════════════════════════════════════════
      * THE COURTYARD · Kingdom of Ealdor
-     * index.html — the hub of the world
-     * Built with SceneLoader + FontMason
-     * ═══════════════════════════════════════════════
+     * index.html — hub of the world
+     * SceneLoader + FontMason + Navigation
+     * ═══════════════════════════════════════════════════════
      */
 
-    // ── STATE ──
+    // ── STATE ─────────────────────────────────────────────
+
     const DEFAULT_STATE = {
         year: 3450, season: 0, ice: 15,
         playerResources: { Stone: 4, Timber: 3, Grain: 5, Iron: 2, Salt: 2, Cloth: 3 },
@@ -192,223 +459,258 @@
     function loadState() {
         const raw = localStorage.getItem('ealdor_save');
         if (!raw) return false;
-        try { state = { ...DEFAULT_STATE, ...JSON.parse(raw) }; return true; } catch(e) { return false; }
+        try { state = { ...DEFAULT_STATE, ...JSON.parse(raw) }; return true; }
+        catch(e) { return false; }
     }
-    function saveState() { localStorage.setItem('ealdor_save', JSON.stringify(state)); }
+    function saveState() {
+        localStorage.setItem('ealdor_save', JSON.stringify(state));
+    }
+
+    // ── TOAST ─────────────────────────────────────────────
 
     const toastEl = document.getElementById('toast');
     let toastTimer;
     function toast(msg, d = 2800) {
-        toastEl.textContent = msg; toastEl.classList.add('show');
-        clearTimeout(toastTimer); toastTimer = setTimeout(() => toastEl.classList.remove('show'), d);
+        toastEl.textContent = msg;
+        toastEl.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toastEl.classList.remove('show'), d);
     }
 
-    // ── RENDER STATS ──
+    // ── RENDER STATS ──────────────────────────────────────
+
+    const SEASONS = ['Deep Cold', 'Thaw', 'High Summer', 'Harvest'];
+
     function renderStats() {
         const r = state.playerResources;
-        document.getElementById('timberStat').textContent = r.Timber || 0;
-        document.getElementById('faithStat').textContent = state.faith;
-        document.getElementById('moraleStat').textContent = state.morale;
-        document.getElementById('iceStat').textContent = state.ice + '%';
-        document.getElementById('tabletStat').textContent = (state.tabletFragments || 0);
 
-        document.getElementById('nbTimber').textContent = r.Timber || 0;
-        document.getElementById('nbStone').textContent = r.Stone || 0;
-        document.getElementById('nbGrain').textContent = r.Grain || 0;
-        document.getElementById('nbIron').textContent = r.Iron || 0;
-        document.getElementById('nbSalt').textContent = r.Salt || 0;
-        document.getElementById('nbCloth').textContent = r.Cloth || 0;
-
-        ['faithStat','moraleStat','nbTimber','nbStone','nbGrain','nbIron','nbSalt','nbCloth'].forEach(id => {
+        // Resource band
+        const setVal = (id, val, warnBelow = 1, warnAt = 2) => {
             const el = document.getElementById(id);
             if (!el) return;
-            const v = parseInt(el.textContent) || 0;
-            el.className = 'stat-value' + (v === 0 ? ' low' : '');
-        });
-        const iceEl = document.getElementById('iceStat');
-        if (iceEl) {
-            iceEl.className = 'stat-value' + (state.ice > 70 ? ' low' : state.ice > 40 ? ' warn' : '');
-        }
+            el.textContent = val;
+            el.className = 'resource-value' + (val === 0 || val === '0' ? ' low' : val <= warnAt ? ' warn' : '');
+        };
 
-        // Update notice text
+        setVal('rsTimber', r.Timber || 0);
+        setVal('rsStone',  r.Stone  || 0);
+        setVal('rsGrain',  r.Grain  || 0);
+        setVal('rsIron',   r.Iron   || 0);
+        setVal('rsSalt',   r.Salt   || 0);
+        setVal('rsCloth',  r.Cloth  || 0);
+        setVal('rsFaith',  state.faith,  30, 50);
+        setVal('rsMorale', state.morale, 30, 50);
+
+        const iceEl = document.getElementById('rsIce');
+        if (iceEl) {
+            iceEl.textContent = state.ice + '%';
+            iceEl.className = 'resource-value' + (state.ice > 70 ? ' low' : state.ice > 40 ? ' warn' : '');
+        }
+        const tabEl = document.getElementById('rsTablets');
+        if (tabEl) tabEl.textContent = `${state.tabletFragments || 0}/7`;
+
+        // Lintel year
+        const yearEl = document.getElementById('lintelYear');
+        if (yearEl) yearEl.textContent = `Year ${state.year} · Season of the ${SEASONS[state.season || 0]}`;
+
+        // Chronicle
+        document.getElementById('chPop').textContent       = state.population || 100;
+        document.getElementById('chCrisis').textContent    = (state.crisisHistory || []).length;
+        document.getElementById('chFragments').textContent = state.tabletFragments || 0;
+        document.getElementById('chThing').textContent     = state.thingConvened ? 'Convened' : 'Not convened';
+
+        // Rotating notice
         const notices = [
             '"The fire holds. The vault is open. The seventh tablet is still blank."',
-            state.ice > 60 ? '"The ice thickens. The Thing must decide soon."' : '"The yard is quiet. The people work. The Threshold holds."',
-            state.rabbitAppeared ? '"The Rabbit was seen near the wild wood. Yellow feet. Split lip."' : '"Se deret, se deretai. Whoever holds is held."',
+            state.ice > 60
+                ? '"The ice thickens. The Thing must decide soon."'
+                : '"The yard is quiet. The people work. The Threshold holds."',
+            state.rabbitAppeared
+                ? '"The Rabbit was seen near the wild wood. Yellow feet. Split lip."'
+                : '"Se deret, se deretai. Whoever holds is held."',
         ];
-        document.getElementById('noticeText').textContent = notices[Math.floor(Date.now() / 10000) % notices.length];
+        document.getElementById('chronicleNotice').textContent =
+            notices[Math.floor(Date.now() / 10000) % notices.length];
     }
 
-    // ═══════════════════════════════════
-    // BUILD COURTYARD
-    // ═══════════════════════════════════
+    // ── BUILD COURTYARD ───────────────────────────────────
 
     async function buildCourtyard() {
-    const loader = new SceneLoader('courtyard-scene');
+        const loader = new SceneLoader('courtyard-scene');
 
-    // ── Interaction handler ──
-    loader.onInteract = (objectName, action) => {
-        switch (action) {
-            case 'draw_water':
-                state.morale = Math.min(100, state.morale + 2);
-                toast('💧 You draw water from the well. Cold. Clear. The taste of the mountains.\n\nMorale +2');
-                break;
-            case 'check_notice':
-                const iceLevel = state.ice;
-                const warnings = [
-                    iceLevel < 30 ? 'Ice: Light. Fjord open. Ships pass freely.' :
-                    iceLevel < 55 ? 'Ice: Moderate. Passages narrowing. Caution advised.' :
-                    iceLevel < 80 ? 'Ice: Heavy. Most passages closed. Harbor quiet.' :
-                    'Ice: Severe. Fjord frozen. The harbor is locked in.',
-                    state.thingConvened ? 'The Thing has convened. Decisions were made.' : 'The Thing has not yet convened this season.',
-                    `Tablets: ${state.tabletFragments || 0}/7 fragments found.`,
-                ];
-                toast('📋 Courtyard Notice Board\n\n' + warnings.join('\n'));
-                break;
-            case 'tend_garden':
-                state.morale = Math.min(100, state.morale + 1);
-                toast('🌿 You tend the herb garden. Rosemary. Thyme. Plants that survive the cold.\n\nMorale +1');
-                break;
-            case 'visit_forge':
-                const iron = state.playerResources.Iron || 0;
-                const timber = state.playerResources.Timber || 0;
-                if (iron > 0) {
-                    state.playerResources.Iron -= 1;
-                    state.playerResources.Stone = (state.playerResources.Stone || 0) + 2;
-                    toast('🔨 Forge: 1 Iron → 2 Stone. The hammer rings across the yard.');
-                } else if (timber >= 2) {
-                    state.playerResources.Timber -= 2;
-                    state.playerResources.Cloth = (state.playerResources.Cloth || 0) + 1;
-                    toast('🪵 Workshop: 2 Timber → 1 Cloth. The looms turn.');
-                } else {
-                    toast('⚠️ Not enough materials. Need 1 Iron or 2 Timber to craft.');
+        loader.onInteract = (objectName, action) => {
+            switch (action) {
+                case 'draw_water':
+                    state.morale = Math.min(100, state.morale + 2);
+                    toast('💧 You draw water from the well. Cold. Clear. The taste of the mountains.\n\nMorale +2');
+                    break;
+                case 'check_notice': {
+                    const ice = state.ice;
+                    const lines = [
+                        ice < 30 ? 'Ice: Light. Fjord open. Ships pass freely.'      :
+                        ice < 55 ? 'Ice: Moderate. Passages narrowing. Caution.'     :
+                        ice < 80 ? 'Ice: Heavy. Most passages closed. Harbor quiet.' :
+                                   'Ice: Severe. Fjord frozen. The harbor is locked in.',
+                        state.thingConvened
+                            ? 'The Thing has convened. Decisions were made.'
+                            : 'The Thing has not yet convened this season.',
+                        `Tablets: ${state.tabletFragments || 0}/7 fragments found.`,
+                    ];
+                    toast('📋 Courtyard Notice Board\n\n' + lines.join('\n'));
+                    break;
                 }
-                break;
-        }
-        saveState();
-        renderStats();
-    };
+                case 'tend_garden':
+                    state.morale = Math.min(100, state.morale + 1);
+                    toast('🌿 You tend the herb garden. Rosemary. Thyme. Plants that survive the cold.\n\nMorale +1');
+                    break;
+                case 'visit_forge': {
+                    const iron   = state.playerResources.Iron   || 0;
+                    const timber = state.playerResources.Timber || 0;
+                    if (iron > 0) {
+                        state.playerResources.Iron  -= 1;
+                        state.playerResources.Stone  = (state.playerResources.Stone || 0) + 2;
+                        toast('🔨 Forge: 1 Iron → 2 Stone. The hammer rings across the yard.');
+                    } else if (timber >= 2) {
+                        state.playerResources.Timber -= 2;
+                        state.playerResources.Cloth   = (state.playerResources.Cloth || 0) + 1;
+                        toast('🪵 Workshop: 2 Timber → 1 Cloth. The looms turn.');
+                    } else {
+                        toast('⚠️ Not enough materials. Need 1 Iron or 2 Timber to craft.');
+                    }
+                    break;
+                }
+            }
+            saveState();
+            renderStats();
+        };
 
-    // ── Exit handler ──
-    loader.onExit = (exit) => {
-        saveState();
-        toast(`🚶 Walking to the ${exit.label || exit.target}...`);
-    };
+        loader.onExit = (exit) => {
+            saveState();
+            toast(`🚶 Walking to the ${exit.label || exit.target}...`);
+        };
 
-    // ── Load the courtyard scene ──
-    await loader.load('json/scenes/courtyard.json');
-    loader.setState(state);  // ← moved here, after load
+        await loader.load('json/scenes/courtyard.json');
+        loader.setState(state);
 
-    addFountainEffects();
-    addLanternEffects();
+        addFountainEffects();
+        addLanternEffects();
 
-    return loader;
-}
+        return loader;
+    }
+
+    // ── POST-LOAD EFFECTS ─────────────────────────────────
+
     function addFountainEffects() {
-        const container = document.getElementById('courtyard-scene');
-        if (!container) return;
+        const c = document.getElementById('courtyard-scene');
+        if (!c) return;
 
-        // Water shimmer overlay
         const shimmer = document.createElement('div');
         shimmer.style.cssText = `
-            position: absolute; left: 355px; top: 348px;
-            width: 170px; height: 24px; z-index: 15;
-            color: #8ac8e8; font-size: 14px;
-            font-family: Georgia,serif; line-height: 0.45;
-            letter-spacing: 1px; pointer-events: none;
-            animation: waterShimmer 2s ease-in-out infinite;
+            position:absolute; left:355px; top:348px;
+            width:170px; height:24px; z-index:15;
+            color:#8ac8e8; font-size:14px;
+            font-family:Georgia,serif; line-height:0.45;
+            letter-spacing:1px; pointer-events:none;
+            animation:waterShimmer 2s ease-in-out infinite;
         `;
         shimmer.textContent = '~ · ~ · ≋ · ~ · ≈ · ~ · ≋ · ~';
-        container.appendChild(shimmer);
+        c.appendChild(shimmer);
 
-        // Ripples
         const ripples = document.createElement('div');
         ripples.style.cssText = `
-            position: absolute; left: 420px; top: 355px; z-index: 14;
-            color: rgba(200,230,255,0.4); font-size: 9px;
-            font-family: Georgia,serif; pointer-events: none;
-            animation: rippleExpand 3s ease-out infinite;
+            position:absolute; left:420px; top:355px; z-index:14;
+            color:rgba(200,230,255,0.4); font-size:9px;
+            font-family:Georgia,serif; pointer-events:none;
+            animation:rippleExpand 3s ease-out infinite;
         `;
         ripples.textContent = '○  ◌  ○  ◌  ○';
-        container.appendChild(ripples);
+        c.appendChild(ripples);
 
-        // Water spout
         const spout = document.createElement('div');
         spout.style.cssText = `
-            position: absolute; left: 438px; top: 305px; z-index: 16;
-            color: #8ac8e8; font-size: 10px;
-            font-family: Georgia,serif; pointer-events: none;
+            position:absolute; left:438px; top:305px; z-index:16;
+            color:#8ac8e8; font-size:10px;
+            font-family:Georgia,serif; pointer-events:none;
         `;
         spout.textContent = '│  │  │  ╎  │';
-        container.appendChild(spout);
+        c.appendChild(spout);
     }
 
     function addLanternEffects() {
-        const container = document.getElementById('courtyard-scene');
-        if (!container) return;
+        const c = document.getElementById('courtyard-scene');
+        if (!c) return;
 
-        // Lantern by the gate
         const lantern = document.createElement('div');
         lantern.style.cssText = `
-            position: absolute; left: 698px; top: 85px;
-            width: 8px; height: 8px; background: #daa520;
-            border-radius: 50%; z-index: 12;
-            animation: lanternGlow 3s ease-in-out infinite;
-            pointer-events: none;
+            position:absolute; left:698px; top:85px;
+            width:8px; height:8px; background:#daa520;
+            border-radius:50%; z-index:12;
+            animation:lanternGlow 3s ease-in-out infinite;
+            pointer-events:none;
         `;
-        container.appendChild(lantern);
+        c.appendChild(lantern);
     }
 
- async function init() {
-    const loaded = loadState();
-    if (!loaded) saveState();
+    // ── INIT ──────────────────────────────────────────────
 
-    const params = new URLSearchParams(window.location.search);
-    const from = params.get('from');
-    if (from) {
-        const locationNames = {
-            chapel: 'Coal Chapel',
-            harbor: 'Fjord Harbor',
-            great_hall: 'Great Hall',
-            scriptorium: 'Scriptorium',
-            vault: 'Tablet Vault',
-            wild_wood: 'Wild Wood',
-        };
-        toast(`🚶 You return to the courtyard from the ${locationNames[from] || from}.`);
-        window.history.replaceState({}, '', 'index.html');
-    } else {
-        toast('🏰 The Courtyard of Ealdor. The People\'s Yard. The heart of the Threshold.');
-    }
+    async function init() {
+        const loaded = loadState();
+        if (!loaded) saveState();
 
-    renderStats();
-    Navigation.render('courtyard', { saveCallback: saveState }); // ← add this
+        // Navigation — renders stone threshold bar at top of body
+        Navigation.render('courtyard', { saveCallback: saveState });
 
-    await buildCourtyard();
-
-    // ice blocking example — call after state loads
-    if (state.ice > 80) {
-        Navigation.update('courtyard', ['harbor']);
-    }
-
-    document.addEventListener('click', (e) => {
-        if (Math.random() > 0.72 && !e.target.closest('.zone')) {
-            const spark = document.createElement('div');
-            spark.style.cssText = `
-                position: fixed;
-                left: ${e.clientX}px; top: ${e.clientY}px;
-                width: 3px; height: 3px;
-                background: #d4af37;
-                border-radius: 50%;
-                box-shadow: 0 0 10px #d4af37, 0 0 20px rgba(196,79,28,0.3);
-                pointer-events: none;
-                z-index: 150;
-                animation: sparkFade 1.4s ease-out forwards;
-            `;
-            document.body.appendChild(spark);
-            setTimeout(() => spark.remove(), 1500);
+        // Arrival toast
+        const params = new URLSearchParams(window.location.search);
+        const from = params.get('from');
+        if (from) {
+            const names = {
+                chapel:     'Coal Chapel',
+                harbor:     'Fjord Harbor',
+                great_hall: 'Great Hall',
+                scriptorium:'Scriptorium',
+                vault:      'Tablet Vault',
+                wild_wood:  'Wild Wood',
+                farm:       'The Farm',
+                dungeon:    'The Dungeon',
+                citadel:    'The Citadel',
+            };
+            toast(`🚶 You return from the ${names[from] || from}.`);
+            window.history.replaceState({}, '', 'index.html');
+        } else {
+            toast('🏰 The Courtyard of Ealdor. The People\'s Yard. The heart of the Threshold.');
         }
-    });
-}
+
+        renderStats();
+        await buildCourtyard();
+
+        // Block harbor if frozen
+        if (state.ice > 80) {
+            Navigation.update('courtyard', ['harbor']);
+        }
+
+        // Prayer sparks on ambient click
+        document.addEventListener('click', (e) => {
+            if (Math.random() > 0.72 && !e.target.closest('.zone, .nav-stone, a')) {
+                const spark = document.createElement('div');
+                spark.style.cssText = `
+                    position:fixed;
+                    left:${e.clientX}px; top:${e.clientY}px;
+                    width:3px; height:3px;
+                    background:#d4af37;
+                    border-radius:50%;
+                    box-shadow:0 0 10px #d4af37, 0 0 20px rgba(196,79,28,0.3);
+                    pointer-events:none;
+                    z-index:150;
+                    animation:sparkFade 1.4s ease-out forwards;
+                `;
+                document.body.appendChild(spark);
+                setTimeout(() => spark.remove(), 1500);
+            }
+        });
+    }
+
+    init();
     </script>
 </body>
 </html>
