@@ -169,6 +169,7 @@
 
     <script src="js/font-mason.js"></script>
     <script src="js/scene-loader.js"></script>
+    <script src="js/navigation.js"></script>
     <script>
     /*
      * ═══════════════════════════════════════════════
@@ -358,56 +359,56 @@
         container.appendChild(lantern);
     }
 
-    // ═══════════════════════════════════
-    // INIT
-    // ═══════════════════════════════════
+ async function init() {
+    const loaded = loadState();
+    if (!loaded) saveState();
 
-    async function init() {
-        const loaded = loadState();
-        if (!loaded) saveState();
-
-        const params = new URLSearchParams(window.location.search);
-        const from = params.get('from');
-        if (from) {
-            const locationNames = {
-                chapel: 'Coal Chapel',
-                harbor: 'Fjord Harbor',
-                great_hall: 'Great Hall',
-                scriptorium: 'Scriptorium',
-                vault: 'Tablet Vault',
-                wild_wood: 'Wild Wood',
-            };
-            toast(`🚶 You return to the courtyard from the ${locationNames[from] || from}.`);
-            window.history.replaceState({}, '', 'index.html');
-        } else {
-            toast('🏰 The Courtyard of Ealdor. The People\'s Yard. The heart of the Threshold.');
-        }
-
-        renderStats();
-        await buildCourtyard();
-
-        // Prayer sparks
-        document.addEventListener('click', (e) => {
-            if (Math.random() > 0.72 && !e.target.closest('.zone')) {
-                const spark = document.createElement('div');
-                spark.style.cssText = `
-                    position: fixed;
-                    left: ${e.clientX}px; top: ${e.clientY}px;
-                    width: 3px; height: 3px;
-                    background: #d4af37;
-                    border-radius: 50%;
-                    box-shadow: 0 0 10px #d4af37, 0 0 20px rgba(196,79,28,0.3);
-                    pointer-events: none;
-                    z-index: 150;
-                    animation: sparkFade 1.4s ease-out forwards;
-                `;
-                document.body.appendChild(spark);
-                setTimeout(() => spark.remove(), 1500);
-            }
-        });
+    const params = new URLSearchParams(window.location.search);
+    const from = params.get('from');
+    if (from) {
+        const locationNames = {
+            chapel: 'Coal Chapel',
+            harbor: 'Fjord Harbor',
+            great_hall: 'Great Hall',
+            scriptorium: 'Scriptorium',
+            vault: 'Tablet Vault',
+            wild_wood: 'Wild Wood',
+        };
+        toast(`🚶 You return to the courtyard from the ${locationNames[from] || from}.`);
+        window.history.replaceState({}, '', 'index.html');
+    } else {
+        toast('🏰 The Courtyard of Ealdor. The People\'s Yard. The heart of the Threshold.');
     }
 
-    init();
+    renderStats();
+    Navigation.render('courtyard', { saveCallback: saveState }); // ← add this
+
+    await buildCourtyard();
+
+    // ice blocking example — call after state loads
+    if (state.ice > 80) {
+        Navigation.update('courtyard', ['harbor']);
+    }
+
+    document.addEventListener('click', (e) => {
+        if (Math.random() > 0.72 && !e.target.closest('.zone')) {
+            const spark = document.createElement('div');
+            spark.style.cssText = `
+                position: fixed;
+                left: ${e.clientX}px; top: ${e.clientY}px;
+                width: 3px; height: 3px;
+                background: #d4af37;
+                border-radius: 50%;
+                box-shadow: 0 0 10px #d4af37, 0 0 20px rgba(196,79,28,0.3);
+                pointer-events: none;
+                z-index: 150;
+                animation: sparkFade 1.4s ease-out forwards;
+            `;
+            document.body.appendChild(spark);
+            setTimeout(() => spark.remove(), 1500);
+        }
+    });
+}
     </script>
 </body>
 </html>
