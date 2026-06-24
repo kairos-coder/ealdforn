@@ -95,69 +95,71 @@
       "weathering": 0
     }
   },
-  "objects": [
-    {
-      "type": "sky-deep",
-      "x": 0, "y": 0,
+  "objectDefinitions": {
+    "sky-deep": {
+      "bounds": { "width": 800, "height": 320 },
       "layers": [
         { "type": "wall", "material": "sky_deep", "dimensions": { "width": 800, "height": 320 }, "position": { "z": 1 } }
       ]
     },
-    {
-      "type": "sky-mid",
-      "x": 0, "y": 20,
+    "sky-mid": {
+      "bounds": { "width": 800, "height": 280 },
       "layers": [
         { "type": "wall", "material": "sky_mid", "dimensions": { "width": 800, "height": 280 }, "position": { "z": 2 } }
       ]
     },
-    {
-      "type": "stars-scattered",
-      "x": 0, "y": 40,
+    "stars-scattered": {
+      "bounds": { "width": 800, "height": 200 },
       "layers": [
         { "type": "wall", "material": "stars_scattered", "dimensions": { "width": 800, "height": 200 }, "position": { "z": 3 } }
       ]
     },
-    {
-      "type": "swirl-great",
-      "x": 0, "y": 80,
+    "swirl-great": {
+      "bounds": { "width": 800, "height": 180 },
       "layers": [
         { "type": "wall", "material": "swirl_great", "dimensions": { "width": 800, "height": 180 }, "position": { "z": 4 } }
       ]
     },
-    {
-      "type": "stars-bright",
-      "x": 0, "y": 100,
+    "stars-bright": {
+      "bounds": { "width": 800, "height": 140 },
       "layers": [
         { "type": "wall", "material": "stars_bright", "dimensions": { "width": 800, "height": 140 }, "position": { "z": 5 } }
       ]
     },
-    {
-      "type": "cypress",
-      "x": 0, "y": 300,
+    "cypress": {
+      "bounds": { "width": 800, "height": 80 },
       "layers": [
         { "type": "wall", "material": "cypress_dark", "dimensions": { "width": 800, "height": 80 }, "position": { "z": 6 } }
       ]
     },
-    {
-      "type": "hills",
-      "x": 0, "y": 340,
+    "hills": {
+      "bounds": { "width": 800, "height": 80 },
       "layers": [
         { "type": "wall", "material": "hills_rolling", "dimensions": { "width": 800, "height": 80 }, "position": { "z": 7 } }
       ]
     },
-    {
-      "type": "village",
-      "x": 0, "y": 380,
+    "village": {
+      "bounds": { "width": 800, "height": 60 },
       "layers": [
         { "type": "wall", "material": "village_sleeping", "dimensions": { "width": 800, "height": 60 }, "position": { "z": 8 } }
       ]
     },
-    {
-      "type": "lights",
-      "x": 0, "y": 390,
+    "lights": {
+      "bounds": { "width": 800, "height": 35 },
       "layers": [
         { "type": "wall", "material": "lights_glowing", "dimensions": { "width": 800, "height": 35 }, "position": { "z": 9 } }
       ]
     }
+  },
+  "objects": [
+    { "type": "sky-deep", "x": 0, "y": 0 },
+    { "type": "sky-mid", "x": 0, "y": 20 },
+    { "type": "stars-scattered", "x": 0, "y": 40 },
+    { "type": "swirl-great", "x": 0, "y": 80 },
+    { "type": "stars-bright", "x": 0, "y": 100 },
+    { "type": "cypress", "x": 0, "y": 300 },
+    { "type": "hills", "x": 0, "y": 340 },
+    { "type": "village", "x": 0, "y": 380 },
+    { "type": "lights", "x": 0, "y": 390 }
   ]
 }
