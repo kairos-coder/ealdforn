@@ -1,0 +1,163 @@
+{
+  "name": "Starry Night Over the Fjord",
+  "description": "Oil on typographic canvas. The sky remembers every star. A cypress reaches up. The village sleeps below.",
+  "size": { "w": 800, "h": 500 },
+  "background": "#0a1830",
+  "materials": {
+    "sky_deep": {
+      "characters": ["⌒","⌣","~","⋅","⌒","⌣","~"],
+      "textColor": "#0a1a3a",
+      "mortarColor": "#0a1830",
+      "fontSize": 22,
+      "lineHeight": 0.55,
+      "letterSpacing": 1,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    },
+    "sky_mid": {
+      "characters": ["⌒","~","⌣","⌒","~","⋅","⌣"],
+      "textColor": "#1a3a5a",
+      "mortarColor": "transparent",
+      "fontSize": 20,
+      "lineHeight": 0.5,
+      "letterSpacing": 2,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    },
+    "stars_scattered": {
+      "characters": ["✦","✧","·","✦","✧","·","✦"],
+      "textColor": "#ffcc44",
+      "mortarColor": "transparent",
+      "fontSize": 10,
+      "lineHeight": 0.8,
+      "letterSpacing": 6,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    },
+    "swirl_great": {
+      "characters": ["⌒","⌣","~","⌒","⌣"],
+      "textColor": "#2a4a6a",
+      "mortarColor": "transparent",
+      "fontSize": 24,
+      "lineHeight": 0.45,
+      "letterSpacing": 0,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    },
+    "stars_bright": {
+      "characters": ["✦","✧","·","✦"],
+      "textColor": "#ffdd66",
+      "mortarColor": "transparent",
+      "fontSize": 8,
+      "lineHeight": 0.9,
+      "letterSpacing": 8,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    },
+    "cypress_dark": {
+      "characters": ["▲","▲","▼","▲","◆"],
+      "textColor": "#0f1f0f",
+      "mortarColor": "#0a150a",
+      "fontSize": 16,
+      "lineHeight": 0.5,
+      "letterSpacing": -1,
+      "fontFamily": "monospace",
+      "weathering": 0
+    },
+    "hills_rolling": {
+      "characters": ["⌒","⌣","~","⋅","⌒"],
+      "textColor": "#1a3040",
+      "mortarColor": "#0f1f2f",
+      "fontSize": 14,
+      "lineHeight": 0.5,
+      "letterSpacing": 2,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    },
+    "village_sleeping": {
+      "characters": ["▓","░","▒","▓","░"],
+      "textColor": "#2a3a4a",
+      "mortarColor": "#1a2a3a",
+      "fontSize": 12,
+      "lineHeight": 0.5,
+      "letterSpacing": -1,
+      "fontFamily": "monospace",
+      "weathering": 0
+    },
+    "lights_glowing": {
+      "characters": ["◆","◇","◈","◆","◇"],
+      "textColor": "#daa520",
+      "mortarColor": "transparent",
+      "fontSize": 6,
+      "lineHeight": 0.6,
+      "letterSpacing": 4,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    }
+  },
+  "objects": [
+    {
+      "type": "sky-deep",
+      "x": 0, "y": 0,
+      "layers": [
+        { "type": "wall", "material": "sky_deep", "dimensions": { "width": 800, "height": 320 }, "position": { "z": 1 } }
+      ]
+    },
+    {
+      "type": "sky-mid",
+      "x": 0, "y": 20,
+      "layers": [
+        { "type": "wall", "material": "sky_mid", "dimensions": { "width": 800, "height": 280 }, "position": { "z": 2 } }
+      ]
+    },
+    {
+      "type": "stars-scattered",
+      "x": 0, "y": 40,
+      "layers": [
+        { "type": "wall", "material": "stars_scattered", "dimensions": { "width": 800, "height": 200 }, "position": { "z": 3 } }
+      ]
+    },
+    {
+      "type": "swirl-great",
+      "x": 0, "y": 80,
+      "layers": [
+        { "type": "wall", "material": "swirl_great", "dimensions": { "width": 800, "height": 180 }, "position": { "z": 4 } }
+      ]
+    },
+    {
+      "type": "stars-bright",
+      "x": 0, "y": 100,
+      "layers": [
+        { "type": "wall", "material": "stars_bright", "dimensions": { "width": 800, "height": 140 }, "position": { "z": 5 } }
+      ]
+    },
+    {
+      "type": "cypress",
+      "x": 0, "y": 300,
+      "layers": [
+        { "type": "wall", "material": "cypress_dark", "dimensions": { "width": 800, "height": 80 }, "position": { "z": 6 } }
+      ]
+    },
+    {
+      "type": "hills",
+      "x": 0, "y": 340,
+      "layers": [
+        { "type": "wall", "material": "hills_rolling", "dimensions": { "width": 800, "height": 80 }, "position": { "z": 7 } }
+      ]
+    },
+    {
+      "type": "village",
+      "x": 0, "y": 380,
+      "layers": [
+        { "type": "wall", "material": "village_sleeping", "dimensions": { "width": 800, "height": 60 }, "position": { "z": 8 } }
+      ]
+    },
+    {
+      "type": "lights",
+      "x": 0, "y": 390,
+      "layers": [
+        { "type": "wall", "material": "lights_glowing", "dimensions": { "width": 800, "height": 35 }, "position": { "z": 9 } }
+      ]
+    }
+  ]
+}
