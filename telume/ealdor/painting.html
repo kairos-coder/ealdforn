@@ -124,7 +124,7 @@
     // RENDER A PAINTING VIA SCENE LOADER
     // ═══════════════════════════════════
 
-    async function renderPainting(paintingDef) {
+    async function renderPainting(paintingDef, gallery) {
         const wrapper = document.createElement('div');
         wrapper.className = 'painting-wrapper';
 
@@ -146,6 +146,9 @@
         caption.className = 'painting-caption';
         caption.textContent = paintingDef.caption;
         wrapper.appendChild(caption);
+
+        // ADD TO DOM FIRST — SceneLoader needs the element in the document
+        gallery.appendChild(wrapper);
 
         // Load scene via SceneLoader
         const loader = new SceneLoader(containerId);
@@ -178,8 +181,7 @@
 
         // Render each painting
         for (const paintingDef of PAINTING_MANIFEST) {
-            const painting = await renderPainting(paintingDef);
-            gallery.appendChild(painting);
+            await renderPainting(paintingDef, gallery);
         }
 
         // Navigation
