@@ -786,7 +786,7 @@ class SceneLoader {
     // ═══════════════════════════════════
 
     _refreshBindings() {
-        if (!this.state) return;
+    if (!this.state || !this.scene) return;
 
         // Update frost on windows
         if (this.scene.room?.farWall?.openings) {
