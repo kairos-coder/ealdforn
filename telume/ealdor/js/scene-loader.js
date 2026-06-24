@@ -167,27 +167,27 @@ class SceneLoader {
     }
 
     async _loadObject(name) {
-        if (this.objectCache[name]) return this.objectCache[name];
+    if (this.objectCache[name]) return this.objectCache[name];
 
-        try {
-            const resp = await fetch(`json/objects/${name}.json`);
-            if (resp.ok) {
-                const obj = await resp.json();
-                this.objectCache[name] = obj;
-                return obj;
-            }
-        } catch (e) {
-            // Object JSON not found — will use inline definition or default
-        }
-
-        // Check if it's defined inline in the scene
-        if (this.scene.objectDefinitions && this.scene.objectDefinitions[name]) {
-            this.objectCache[name] = this.scene.objectDefinitions[name];
-            return this.scene.objectDefinitions[name];
-        }
-
-        return null;
+    // Check inline definitions FIRST — before trying external fetch
+    if (this.scene.objectDefinitions && this.scene.objectDefinitions[name]) {
+        this.objectCache[name] = this.scene.objectDefinitions[name];
+        return this.scene.objectDefinitions[name];
     }
+
+    try {
+        const resp = await fetch(`json/objects/${name}.json`);
+        if (resp.ok) {
+            const obj = await resp.json();
+            this.objectCache[name] = obj;
+            return obj;
+        }
+    } catch (e) {
+        // Object JSON not found
+    }
+
+    return null;
+}
 
     // ═══════════════════════════════════
     // BACKGROUND
