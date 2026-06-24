@@ -1,0 +1,129 @@
+{
+  "name": "Still Life with Radishes",
+  "description": "Charcoal and earth on typographic paper. The humble root. Red radishes, white radishes cut open, a fallen carrot. Soft light from above.",
+  "size": { "w": 600, "h": 450 },
+  "background": "#2a1f12",
+  "materials": {
+    "earth_bg": {
+      "characters": ["▓","░","▒","▓","░"],
+      "textColor": "#3d2f1f",
+      "mortarColor": "#2a1f12",
+      "fontSize": 24,
+      "lineHeight": 0.5,
+      "letterSpacing": -2,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    },
+    "table_wood": {
+      "characters": ["▓","░","▒"],
+      "textColor": "#5c4f42",
+      "mortarColor": "transparent",
+      "fontSize": 28,
+      "lineHeight": 0.48,
+      "letterSpacing": -2,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    },
+    "radish_red": {
+      "characters": ["◉","◉","◉"],
+      "textColor": "#c84444",
+      "mortarColor": "transparent",
+      "fontSize": 22,
+      "lineHeight": 0.5,
+      "letterSpacing": 3,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    },
+    "radish_greens": {
+      "characters": ["╎"],
+      "textColor": "#a8d8a8",
+      "mortarColor": "transparent",
+      "fontSize": 8,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "monospace",
+      "weathering": 0
+    },
+    "radish_white": {
+      "characters": ["◉","◉"],
+      "textColor": "#f0d8d8",
+      "mortarColor": "transparent",
+      "fontSize": 18,
+      "lineHeight": 0.5,
+      "letterSpacing": 4,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    },
+    "carrot_fallen": {
+      "characters": ["▼"],
+      "textColor": "#e87830",
+      "mortarColor": "transparent",
+      "fontSize": 20,
+      "lineHeight": 0.5,
+      "letterSpacing": 0,
+      "fontFamily": "monospace",
+      "weathering": 0
+    },
+    "soft_light": {
+      "characters": ["░","▒","░"],
+      "textColor": "rgba(244,228,193,0.15)",
+      "mortarColor": "transparent",
+      "fontSize": 12,
+      "lineHeight": 0.5,
+      "letterSpacing": 2,
+      "fontFamily": "'Georgia',serif",
+      "weathering": 0
+    }
+  },
+  "objects": [
+    {
+      "type": "earth-bg",
+      "x": 0, "y": 0,
+      "layers": [
+        { "type": "wall", "material": "earth_bg", "dimensions": { "width": 600, "height": 450 }, "position": { "z": 1 } }
+      ]
+    },
+    {
+      "type": "table",
+      "x": 0, "y": 300,
+      "layers": [
+        { "type": "wall", "material": "table_wood", "dimensions": { "width": 600, "height": 120 }, "position": { "z": 2 } }
+      ]
+    },
+    {
+      "type": "radishes-red",
+      "x": 150, "y": 260,
+      "layers": [
+        { "type": "wall", "material": "radish_red", "dimensions": { "width": 80, "height": 40 }, "position": { "z": 3 } }
+      ]
+    },
+    {
+      "type": "radish-greens",
+      "x": 160, "y": 248,
+      "layers": [
+        { "type": "pillar", "material": "radish_greens", "dimensions": { "width": 4, "height": 16 }, "position": { "z": 4 } }
+      ]
+    },
+    {
+      "type": "radishes-white",
+      "x": 350, "y": 270,
+      "layers": [
+        { "type": "wall", "material": "radish_white", "dimensions": { "width": 60, "height": 30 }, "position": { "z": 5 } }
+      ]
+    },
+    {
+      "type": "carrot",
+      "x": 280, "y": 280,
+      "layers": [
+        { "type": "wall", "material": "carrot_fallen", "dimensions": { "width": 20, "height": 25 }, "position": { "z": 6 } }
+      ]
+    },
+    {
+      "type": "light",
+      "x": 0, "y": 60,
+      "layers": [
+        { "type": "wall", "material": "soft_light", "dimensions": { "width": 600, "height": 80 }, "position": { "z": 7 } }
+      ]
+    }
+  ]
+}
