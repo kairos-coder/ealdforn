@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portrait · Font-Mason Figure Workshop</title>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --void: #0a0806; --deep: #1a1410;
+            --stone: #3d362f; --stone-light: #5c5044;
+            --parchment: #f4e4c1; --gold: #b8860b;
+            --ember: #c44f1c; --water: #3a6b8c;
+            --wool-brown: #5c4a35; --wool-dark: #3d2b1f;
+            --linen: #d8d0b8; --leather: #4a3020;
+            --skin-warm: #6b5d4f; --skin-pale: #8b7d6b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--void);
+            color: var(--parchment);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            min-height: 100vh; display: flex;
+            flex-direction: column; align-items: center;
+            background-image:
+                radial-gradient(ellipse at 50% 0%, rgba(196,79,28,0.04) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 100%, rgba(10,8,6,0.98) 0%, transparent 60%);
+        }
+
+        .workshop-header {
+            text-align: center; padding: 2rem 1rem 1rem;
+        }
+        .workshop-title {
+            font-family: 'UnifrakturMaguntia', cursive;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            color: var(--gold); letter-spacing: 4px;
+            text-shadow: 0 0 20px rgba(184,134,11,0.2);
+        }
+        .workshop-sub {
+            font-family: 'Cinzel', serif; font-size: 0.5rem;
+            letter-spacing: 5px; color: #8b7d6b;
+            text-transform: uppercase; margin-top: 0.3rem;
+        }
+
+        /* ── FIGURE STAGE ── */
+        #portrait-stage {
+            position: relative; width: 400px; max-width: 90vw;
+            height: 500px; margin: 1rem auto;
+            background: radial-gradient(ellipse at 50% 80%, rgba(26,20,16,0.8) 0%, var(--void) 70%);
+            border: 2px solid #2a2520; border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(0,0,0,0.5);
+        }
+
+        /* ── CONTROLS ── */
+        .controls {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            justify-content: center; padding: 1rem;
+            max-width: 600px; margin: 0 auto;
+        }
+        .ctrl-btn {
+            font-family: 'Cinzel', serif; font-size: 0.5rem;
+            letter-spacing: 2px; text-transform: uppercase;
+            padding: 6px 14px; border-radius: 4px;
+            border: 1px solid #2a2520; background: rgba(26,20,16,0.6);
+            color: #8b7d6b; cursor: pointer; transition: all 0.2s;
+        }
+        .ctrl-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .ctrl-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(184,134,11,0.1); }
+
+        /* ── TOAST ── */
+        #toast {
+            position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+            background: rgba(10,8,6,0.94); border: 1px solid var(--gold);
+            border-radius: 6px; padding: 0.5rem 1.2rem;
+            font-family: 'Georgia', serif; font-size: 0.76rem;
+            z-index: 200; opacity: 0; transition: opacity 0.35s;
+            pointer-events: none; text-align: center; max-width: 420px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5); white-space: pre-line;
+        }
+        #toast.show { opacity: 1; }
+
+        @keyframes gentleSway { 0%,100%{transform:translateX(0)} 50%{transform:translateX(2px)} }
+        @keyframes breathe { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(1.02)} }
+        @keyframes sparkFade { 0%{transform:scale(0.5);opacity:1} 100%{transform:scale(2.5);opacity:0} }
+    </style>
+</head>
+<body>
+
+    <div class="workshop-header">
+        <h1 class="workshop-title">The Portrait Workshop</h1>
+        <p class="workshop-sub">Font-Mason Figure Craft</p>
+    </div>
+
+    <div id="portrait-stage"></div>
+
+    <div class="controls" id="controls">
+        <button class="ctrl-btn active" data-figure="fisherman">🎣 Fisherman</button>
+        <button class="ctrl-btn" data-figure="farmer">🌾 Farmer</button>
+        <button class="ctrl-btn" data-figure="brother">🧘 Brother</button>
+        <button class="ctrl-btn" data-figure="guard">⚔️ Guard</button>
+        <button class="ctrl-btn" data-figure="elder">📜 Elder</button>
+        <button class="ctrl-btn" data-figure="child">🧒 Child</button>
+    </div>
+
+    <div id="toast"></div>
+
+    <script src="js/font-mason.js"></script>
+    <script>
+    /*
+     * ═══════════════════════════════════════════════════════
+     * PORTRAIT WORKSHOP · Font-Mason Figure System
+     * Build a person from typography.
+     * ═══════════════════════════════════════════════════════
+     */
+
+    const toastEl = document.getElementById('toast');
+    let toastTimer;
+    function toast(msg, d = 2400) {
+        toastEl.textContent = msg; toastEl.classList.add('show');
+        clearTimeout(toastTimer); toastTimer = setTimeout(() => toastEl.classList.remove('show'), d);
+    }
+
+    // ═══════════════════════════════════
+    // FIGURE DEFINITIONS
+    // ═══════════════════════════════════
+
+    const FIGURES = {
+        fisherman: {
+            name: 'Agnar', role: 'Fisherman',
+            head: { type:'glyph', char:'🎣', size:22, color:'#f4e4c1', offsetY:0 },
+            body: { material:'wool_dark', width:24, height:40, color:'#4a3528' },
+            robe: { material:'wool_brown', width:34, height:50, color:'#5c4a35' },
+            tool: { type:'pillar', x:18, y:18, width:3, height:50, color:'#3d2b1f', label:'Rod' },
+            tool2: { type:'inscription', text:'│', x:19, y:-15, size:20, color:'#3d2b1f' },
+            animation: 'gentleSway 4s ease-in-out infinite',
+            dialogue: 'The fjord is cold today. Fish are deep. But the ice is coming — I can feel it.'
+        },
+        farmer: {
+            name: 'Elda', role: 'Farmer',
+            head: { type:'glyph', char:'🌾', size:20, color:'#e8c878', offsetY:0 },
+            body: { material:'wool_brown', width:22, height:36, color:'#5c4a35' },
+            robe: { material:'linen_pale', width:30, height:46, color:'#d8d0b8' },
+            tool: { type:'inscription', text:'╎', x:14, y:14, size:22, color:'#6a8a4a', label:'Hoe' },
+            tool2: { type:'inscription', text:'▬', x:10, y:18, size:10, color:'#4a3020' },
+            hat: { type:'inscription', text:'⌒', x:0, y:-12, size:16, color:'#8b7d6b' },
+            animation: 'breathe 3s ease-in-out infinite',
+            dialogue: 'The radishes are doing well. Take what you need. Leave what you can.'
+        },
+        brother: {
+            name: 'Silent Brother', role: 'Keeper of the Coal',
+            head: { type:'circle', size:18, color:'#2a2018', offsetY:0 },
+            hood: { type:'circle', size:26, color:'#1a1410', offsetY:-2 },
+            body: { material:'wool_dark', width:20, height:38, color:'#3d362f' },
+            robe: { material:'deep_stone', width:36, height:54, color:'#2a2520' },
+            animation: 'breathe 6s ease-in-out infinite',
+            dialogue: '...'
+        },
+        guard: {
+            name: 'Sigurd', role: 'Harbor Watch',
+            head: { type:'glyph', char:'⚔️', size:18, color:'#d8d0c8', offsetY:0 },
+            body: { material:'iron_dark', width:22, height:42, color:'#3d362f' },
+            robe: { material:'storm_grey', width:32, height:52, color:'#4a4550' },
+            tool: { type:'pillar', x:16, y:10, width:4, height:44, color:'#6b5d4f', label:'Spear' },
+            helm: { type:'inscription', text:'⌒', x:0, y:-14, size:20, color:'#6b5d4f' },
+            animation: 'none',
+            dialogue: 'Nothing moves on the ice. Nothing will. The Watch stands.'
+        },
+        elder: {
+            name: 'Thora', role: 'Elder',
+            head: { type:'glyph', char:'📜', size:18, color:'#f4e4c1', offsetY:0 },
+            body: { material:'wool_dark', width:18, height:32, color:'#4a3f35' },
+            robe: { material:'linen_pale', width:28, height:44, color:'#c8c0b8' },
+            staff: { type:'pillar', x:14, y:0, width:4, height:50, color:'#5c4f42', label:'Staff' },
+            hair: { type:'inscription', text:'≈≈≈', x:-6, y:-14, size:10, color:'#a09888' },
+            animation: 'gentleSway 5s ease-in-out infinite',
+            dialogue: 'I remember the winter of 3440. This is nothing. Light the fire and wait.'
+        },
+        child: {
+            name: 'Kari', role: 'Netmender\'s Child',
+            head: { type:'glyph', char:'🧒', size:16, color:'#f4e4c1', offsetY:0 },
+            body: { material:'wool_brown', width:12, height:20, color:'#5c4a35' },
+            robe: { material:'linen_pale', width:18, height:26, color:'#d8d0b8' },
+            animation: 'gentleSway 2s ease-in-out infinite',
+            dialogue: 'My father says the ice will break soon. He says the fish are waiting underneath.'
+        }
+    };
+
+    // ═══════════════════════════════════
+    // BUILD FIGURE
+    // ═══════════════════════════════════
+
+    function buildFigure(figureId) {
+        const stage = document.getElementById('portrait-stage');
+        stage.innerHTML = '';
+        
+        const fig = FIGURES[figureId];
+        if (!fig) return;
+        
+        const cx = 200; // center X
+        const baseY = 320; // feet position
+        
+        // ── SHADOW ──
+        const shadow = document.createElement('div');
+        shadow.style.cssText = `
+            position:absolute; left:${cx - 22}px; top:${baseY + fig.robe.height - 8}px;
+            width:44px; height:8px; background:rgba(0,0,0,0.4);
+            border-radius:50%; pointer-events:none; z-index:0;
+        `;
+        stage.appendChild(shadow);
+        
+        // ── TOOL / STAFF (behind figure) ──
+        if (fig.tool) {
+            const tool = buildFigurePart(fig.tool, cx, baseY, fig, 'tool');
+            if (tool) stage.appendChild(tool);
+        }
+        
+        // ── ROBE ──
+        if (fig.robe) {
+            const robe = document.createElement('div');
+            const height = fig.robe.height || 50;
+            robe.style.cssText = `
+                position:absolute;
+                left:${cx - (fig.robe.width / 2)}px;
+                top:${baseY - height + 14}px;
+                width:${fig.robe.width}px; height:${height}px;
+                background:linear-gradient(180deg, ${fig.robe.color || '#5c4a35'} 0%, ${fig.body?.color || '#3d362f'} 100%);
+                border-radius:${fig.robe.width/2}px ${fig.robe.width/2}px 4px 4px;
+                z-index:1;
+                box-shadow:inset 0 2px 4px rgba(255,255,255,0.04), 0 2px 8px rgba(0,0,0,0.3);
+                ${fig.animation ? `animation:${fig.animation};` : ''}
+            `;
+            // Texture lines on robe
+            for (let i = 0; i < 3; i++) {
+                const line = document.createElement('div');
+                line.style.cssText = `
+                    position:absolute; left:6px; right:6px;
+                    top:${10 + i * 14}px; height:1px;
+                    background:rgba(255,255,255,0.04);
+                    border-radius:1px;
+                `;
+                robe.appendChild(line);
+            }
+            stage.appendChild(robe);
+        }
+        
+        // ── HOOD ──
+        if (fig.hood) {
+            const hood = document.createElement('div');
+            const hoodSize = fig.hood.size || 30;
+            hood.style.cssText = `
+                position:absolute;
+                left:${cx - hoodSize/2}px;
+                top:${baseY - fig.robe.height - hoodSize/2 + 22}px;
+                width:${hoodSize}px; height:${hoodSize + 8}px;
+                background:radial-gradient(ellipse at 50% 60%, ${fig.hood.color || '#1a1410'} 0%, #0a0806 100%);
+                border-radius:50% 50% 30% 30%;
+                z-index:2;
+                box-shadow:inset 0 -4px 8px rgba(0,0,0,0.5);
+            `;
+            stage.appendChild(hood);
+        }
+        
+        // ── HEAD ──
+        if (fig.head) {
+            const head = document.createElement('div');
+            const headSize = fig.head.size || 18;
+            
+            if (fig.head.type === 'glyph') {
+                head.textContent = fig.head.char;
+                head.style.cssText = `
+                    position:absolute;
+                    left:${cx - headSize/2}px;
+                    top:${baseY - fig.robe.height - headSize/2 + (fig.head.offsetY || 0) + 18}px;
+                    width:${headSize + 4}px; height:${headSize + 4}px;
+                    font-size:${headSize}px; color:${fig.head.color || '#f4e4c1'};
+                    text-align:center; line-height:${headSize + 4}px;
+                    z-index:3; pointer-events:none;
+                    filter:drop-shadow(0 2px 3px rgba(0,0,0,0.4));
+                `;
+            } else if (fig.head.type === 'circle') {
+                head.style.cssText = `
+                    position:absolute;
+                    left:${cx - headSize/2}px;
+                    top:${baseY - fig.robe.height - headSize/2 + (fig.head.offsetY || 0) + 18}px;
+                    width:${headSize}px; height:${headSize}px;
+                    background:radial-gradient(circle at 40% 35%, ${fig.head.color || '#5c4f42'} 0%, #2a2018 100%);
+                    border-radius:50%; z-index:3;
+                    box-shadow:0 2px 4px rgba(0,0,0,0.4);
+                `;
+            }
+            stage.appendChild(head);
+        }
+        
+        // ── HAT / HELM ──
+        if (fig.hat) {
+            const hat = document.createElement('div');
+            hat.textContent = fig.hat.text;
+            hat.style.cssText = `
+                position:absolute;
+                left:${cx + (fig.hat.x || 0) - 10}px;
+                top:${baseY - fig.robe.height + (fig.hat.y || 0) + 6}px;
+                font-size:${fig.hat.size || 14}px; color:${fig.hat.color};
+                z-index:4; pointer-events:none; font-family:Georgia,serif;
+            `;
+            stage.appendChild(hat);
+        }
+        
+        // ── HAIR ──
+        if (fig.hair) {
+            const hair = document.createElement('div');
+            hair.textContent = fig.hair.text;
+            hair.style.cssText = `
+                position:absolute;
+                left:${cx + (fig.hair.x || 0) - 10}px;
+                top:${baseY - fig.robe.height + (fig.hair.y || 0) + 6}px;
+                font-size:${fig.hair.size || 10}px; color:${fig.hair.color};
+                z-index:4; pointer-events:none; font-family:Georgia,serif;
+            `;
+            stage.appendChild(hair);
+        }
+        
+        // ── TOOL2 (in front) ──
+        if (fig.tool2) {
+            const tool2 = buildFigurePart(fig.tool2, cx, baseY, fig, 'tool2');
+            if (tool2) stage.appendChild(tool2);
+        }
+        
+        // ── CLICK INTERACTION ──
+        const zone = document.createElement('div');
+        zone.style.cssText = `
+            position:absolute; left:${cx - 40}px; top:${baseY - fig.robe.height - 20}px;
+            width:80px; height:${fig.robe.height + 40}px;
+            z-index:10; cursor:pointer;
+        `;
+        zone.title = `${fig.name} · ${fig.role}`;
+        zone.addEventListener('click', () => {
+            const d = fig.dialogue;
+            const line = Array.isArray(d) ? d[Math.floor(Math.random() * d.length)] : d;
+            toast(`${fig.head?.char || ''} ${fig.name} (${fig.role}):\n\n"${line}"`);
+        });
+        stage.appendChild(zone);
+        
+        // ── NAME LABEL ──
+        const label = document.createElement('div');
+        label.style.cssText = `
+            position:absolute; left:${cx - 50}px;
+            top:${baseY + 10}px; width:100px;
+            text-align:center; font-family:'Cinzel',serif;
+            font-size:7px; letter-spacing:2px;
+            color:rgba(139,125,107,0.6); z-index:5;
+            pointer-events:none;
+        `;
+        label.textContent = fig.name.toUpperCase();
+        stage.appendChild(label);
+        
+        // ── ROLE LABEL ──
+        const roleLabel = document.createElement('div');
+        roleLabel.style.cssText = `
+            position:absolute; left:${cx - 50}px;
+            top:${baseY + 20}px; width:100px;
+            text-align:center; font-family:'Cinzel',serif;
+            font-size:5px; letter-spacing:3px;
+            color:rgba(139,125,107,0.35); z-index:5;
+            pointer-events:none; text-transform:uppercase;
+        `;
+        roleLabel.textContent = fig.role;
+        stage.appendChild(roleLabel);
+    }
+
+    function buildFigurePart(part, cx, baseY, fig, key) {
+        const el = document.createElement('div');
+        const px = cx + (part.x || 0);
+        const py = baseY - (fig.robe?.height || 40) + (part.y || 0);
+        
+        if (part.type === 'pillar') {
+            el.style.cssText = `
+                position:absolute;
+                left:${px - (part.width/2)}px; top:${py}px;
+                width:${part.width}px; height:${part.height}px;
+                background:linear-gradient(180deg, ${part.color} 0%, ${part.color}dd 100%);
+                border-radius:2px; z-index:${key==='tool'?0:4};
+                pointer-events:none;
+                box-shadow:0 1px 3px rgba(0,0,0,0.3);
+            `;
+        } else if (part.type === 'inscription') {
+            el.textContent = part.text;
+            el.style.cssText = `
+                position:absolute;
+                left:${px - 6}px; top:${py}px;
+                font-size:${part.size || 12}px; color:${part.color};
+                z-index:${key==='tool'?0:4}; pointer-events:none;
+                font-family:monospace;
+            `;
+        }
+        return el;
+    }
+
+    // ═══════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════
+
+    function init() {
+        buildFigure('fisherman');
+        
+        // Control buttons
+        document.querySelectorAll('.ctrl-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.ctrl-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                buildFigure(btn.dataset.figure);
+            });
+        });
+        
+        // Ambient sparks
+        document.addEventListener('click', (e) => {
+            if (Math.random() > 0.7 && !e.target.closest('.ctrl-btn')) {
+                const spark = document.createElement('div');
+                spark.style.cssText = `
+                    position:fixed; left:${e.clientX}px; top:${e.clientY}px;
+                    width:3px; height:3px; background:#d4af37;
+                    border-radius:50%; box-shadow:0 0 10px #d4af37;
+                    pointer-events:none; z-index:150;
+                    animation:sparkFade 1.2s ease-out forwards;
+                `;
+                document.body.appendChild(spark);
+                setTimeout(() => spark.remove(), 1300);
+            }
+        });
+    }
+
+    init();
+    </script>
+</body>
+</html>
