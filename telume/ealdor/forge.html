@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Forge · Font-Mason Primitive Workshop</title>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Monaco Editor -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs/editor/editor.main.css">
+    
+    <style>
+        :root {
+            --void: #0a0806; --deep: #1a1410;
+            --stone: #2a2520; --stone-light: #3d362f;
+            --parchment: #f4e4c1; --gold: #b8860b; --gold-bright: #d4af37;
+            --ember: #c44f1c; --water: #3a6b8c;
+            --text: #d8d0c0; --text-dim: #8b7d6b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--void);
+            color: var(--text);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            height: 100vh; overflow: hidden;
+            display: flex; flex-direction: column;
+        }
+
+        /* ── HEADER ── */
+        .forge-header {
+            height: 44px; background: var(--deep);
+            border-bottom: 1px solid #2a2520;
+            display: flex; align-items: center;
+            justify-content: space-between;
+            padding: 0 16px; flex-shrink: 0;
+        }
+        .forge-title {
+            font-family: 'UnifrakturMaguntia', cursive;
+            font-size: 1rem; color: var(--gold);
+            letter-spacing: 3px;
+        }
+        .forge-actions {
+            display: flex; gap: 8px; align-items: center;
+        }
+        .forge-btn {
+            font-family: 'Cinzel', serif; font-size: 0.45rem;
+            letter-spacing: 2px; text-transform: uppercase;
+            padding: 5px 12px; border-radius: 3px;
+            border: 1px solid #3d362f; background: rgba(26,20,16,0.8);
+            color: #8b7d6b; cursor: pointer; transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .forge-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .forge-btn.primary { border-color: var(--gold); color: var(--gold); background: rgba(184,134,11,0.1); }
+        .forge-btn.danger { border-color: #7a2a2a; color: #c44f1c; }
+        .forge-btn.danger:hover { border-color: #c44f1c; }
+        .forge-select {
+            font-family: 'Cinzel', serif; font-size: 0.45rem;
+            padding: 5px 8px; border-radius: 3px;
+            border: 1px solid #3d362f; background: rgba(26,20,16,0.8);
+            color: #8b7d6b; cursor: pointer;
+        }
+
+        /* ── MAIN LAYOUT ── */
+        .forge-main {
+            display: flex; flex: 1; overflow: hidden;
+        }
+
+        /* ── LEFT: MONACO EDITOR ── */
+        .forge-editor-panel {
+            width: 50%; min-width: 300px;
+            border-right: 1px solid #2a2520;
+            display: flex; flex-direction: column;
+        }
+        .editor-tabs {
+            display: flex; background: #1a1410;
+            border-bottom: 1px solid #2a2520;
+            padding: 0 8px;
+        }
+        .editor-tab {
+            font-family: 'Cinzel', serif; font-size: 0.4rem;
+            letter-spacing: 2px; text-transform: uppercase;
+            padding: 6px 12px; cursor: pointer;
+            color: #5c4f42; border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .editor-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+        .editor-tab:hover { color: #8b7d6b; }
+        #monaco-editor { flex: 1; }
+
+        /* ── RIGHT: RENDER PANEL ── */
+        .forge-render-panel {
+            width: 50%; display: flex; flex-direction: column;
+            background: var(--void);
+        }
+        .render-toolbar {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 6px 12px; background: #1a1410;
+            border-bottom: 1px solid #2a2520;
+            flex-shrink: 0;
+        }
+        .render-label {
+            font-family: 'Cinzel', serif; font-size: 0.4rem;
+            letter-spacing: 3px; color: #8b7d6b;
+            text-transform: uppercase;
+        }
+        .render-zoom {
+            font-family: 'Cinzel', serif; font-size: 0.4rem;
+            color: #8b7d6b;
+        }
+        #forge-render {
+            flex: 1; overflow: auto;
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+        }
+        #forge-canvas {
+            position: relative;
+            border: 2px solid #2a2520;
+            box-shadow: 0 0 30px rgba(0,0,0,0.4);
+        }
+
+        /* ── TOAST ── */
+        #toast {
+            position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%);
+            background: rgba(10,8,6,0.96); border: 1px solid var(--gold);
+            border-radius: 4px; padding: 0.4rem 1rem;
+            font-family: 'Cinzel', serif; font-size: 0.5rem; letter-spacing: 1px;
+            z-index: 200; opacity: 0; transition: opacity 0.3s;
+            pointer-events: none; text-align: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+        }
+        #toast.show { opacity: 1; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 700px) {
+            .forge-main { flex-direction: column; }
+            .forge-editor-panel { width: 100%; height: 45%; min-width: 0; }
+            .forge-render-panel { width: 100%; height: 55%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="forge-header">
+        <span class="forge-title">⚒ The Forge</span>
+        <div class="forge-actions">
+            <select class="forge-select" id="primitiveSelect" onchange="loadPrimitive(this.value)">
+                <option value="">— Load Primitive —</option>
+            </select>
+            <button class="forge-btn primary" onclick="renderPrimitive()">⟳ Render</button>
+            <button class="forge-btn" onclick="savePrimitive()">💾 Save</button>
+            <button class="forge-btn danger" onclick="newPrimitive()">✦ New</button>
+        </div>
+    </div>
+
+    <div class="forge-main">
+        <!-- EDITOR PANEL -->
+        <div class="forge-editor-panel">
+            <div class="editor-tabs">
+                <span class="editor-tab active">Primitive.json</span>
+            </div>
+            <div id="monaco-editor"></div>
+        </div>
+
+        <!-- RENDER PANEL -->
+        <div class="forge-render-panel">
+            <div class="render-toolbar">
+                <span class="render-label">Font-Mason Render</span>
+                <span class="render-zoom" id="renderSize">500 × 400</span>
+            </div>
+            <div id="forge-render">
+                <div id="forge-canvas"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast"></div>
+
+    <!-- Monaco Loader -->
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs/loader.js"></script>
+    <script src="js/font-mason.js"></script>
+    
+    <script>
+    /*
+     * ═══════════════════════════════════════════════════════
+     * THE FORGE · Font-Mason Primitive Workshop
+     * Monaco editor + live FontMason render.
+     * Craft the building blocks of faces.
+     * ═══════════════════════════════════════════════════════
+     */
+
+    // ── TOAST ──
+    const toastEl = document.getElementById('toast');
+    let toastTimer;
+    function toast(msg, d = 2000) {
+        toastEl.textContent = msg; toastEl.classList.add('show');
+        clearTimeout(toastTimer); toastTimer = setTimeout(() => toastEl.classList.remove('show'), d);
+    }
+
+    // ── DEFAULT PRIMITIVE ──
+    const DEFAULT_PRIMITIVE = {
+        name: "new_primitive",
+        category: "face",
+        canvas: { width: 500, height: 400 },
+        background: {
+            material: "void_black",
+            wall: { x: 0, y: 0, width: 500, height: 400, z: 0 }
+        },
+        objects: [
+            {
+                name: "brow_ridge",
+                build: "wall",
+                material: "skin_shadow",
+                position: { x: 200, y: 170, z: 4 },
+                dimensions: { width: 100, height: 14 },
+                note: "The shadow band above the eyes"
+            }
+        ],
+        materials: {
+            skin_shadow: {
+                chars: ["▒","░","▒","▓","▒"],
+                textColor: "#5c4f42",
+                mortarColor: "transparent",
+                fontSize: 16,
+                lineHeight: 0.32,
+                letterSpacing: 0,
+                fontFamily: "monospace",
+                weathering: 0
+            }
+        }
+    };
+
+    let editor;
+    let currentPrimitiveName = 'new_primitive';
+    let primitiveLibrary = {};
+
+    // ═══════════════════════════════════
+    // MONACO EDITOR
+    // ═══════════════════════════════════
+
+    require.config({ 
+        paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs' }
+    });
+    
+    require(['vs/editor/editor.main'], function() {
+        // Define a dark theme
+        monaco.editor.defineTheme('forgeTheme', {
+            base: 'vs-dark',
+            inherit: true,
+            rules: [
+                { token: 'string.key.json', foreground: '#d4af37' },
+                { token: 'string.value.json', foreground: '#f4e4c1' },
+                { token: 'number', foreground: '#c44f1c' },
+                { token: 'keyword', foreground: '#8b7d6b' },
+            ],
+            colors: {
+                'editor.background': '#0a0806',
+                'editor.foreground': '#d8d0c0',
+                'editor.lineHighlightBackground': '#1a1410',
+                'editor.selectionBackground': '#2a2520',
+                'editor.inactiveSelectionBackground': '#1a1410',
+                'editorCursor.foreground': '#d4af37',
+                'editorLineNumber.foreground': '#3d362f',
+                'editorLineNumber.activeForeground': '#8b7d6b',
+            }
+        });
+
+        editor = monaco.editor.create(document.getElementById('monaco-editor'), {
+            value: JSON.stringify(DEFAULT_PRIMITIVE, null, 2),
+            language: 'json',
+            theme: 'forgeTheme',
+            fontSize: 13,
+            fontFamily: "'Cascadia Code', 'Fira Code', 'Courier New', monospace",
+            minimap: { enabled: false },
+            lineNumbers: 'on',
+            scrollBeyondLastLine: false,
+            wordWrap: 'on',
+            tabSize: 2,
+            automaticLayout: true,
+        });
+
+        // Keyboard shortcut: Ctrl+Enter to render
+        editor.addAction({
+            id: 'render-primitive',
+            label: 'Render Primitive',
+            keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter],
+            run: () => renderPrimitive()
+        });
+
+        // Keyboard shortcut: Ctrl+S to save
+        editor.addAction({
+            id: 'save-primitive',
+            label: 'Save Primitive',
+            keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS],
+            run: () => savePrimitive()
+        });
+
+        // Load saved primitives
+        loadPrimitiveList();
+        renderPrimitive();
+    });
+
+    // ═══════════════════════════════════
+    // PRIMITIVE LIBRARY (localStorage)
+    // ═══════════════════════════════════
+
+    function loadPrimitiveList() {
+        const saved = localStorage.getItem('forge_primitives');
+        if (saved) {
+            try { primitiveLibrary = JSON.parse(saved); } catch(e) { primitiveLibrary = {}; }
+        }
+        
+        const select = document.getElementById('primitiveSelect');
+        select.innerHTML = '<option value="">— Load Primitive —</option>';
+        Object.keys(primitiveLibrary).sort().forEach(name => {
+            const opt = document.createElement('option');
+            opt.value = name;
+            opt.textContent = name;
+            select.appendChild(opt);
+        });
+    }
+
+    function loadPrimitive(name) {
+        if (!name || !primitiveLibrary[name]) return;
+        currentPrimitiveName = name;
+        editor.setValue(JSON.stringify(primitiveLibrary[name], null, 2));
+        renderPrimitive();
+        toast(`📂 Loaded: ${name}`);
+    }
+
+    function savePrimitive() {
+        let data;
+        try {
+            data = JSON.parse(editor.getValue());
+        } catch(e) {
+            toast('❌ Invalid JSON. Fix errors before saving.');
+            return;
+        }
+        
+        const name = data.name || currentPrimitiveName;
+        if (!name || name === 'new_primitive') {
+            const newName = prompt('Name this primitive:', '');
+            if (!newName) return;
+            data.name = newName;
+            currentPrimitiveName = newName;
+        }
+        
+        primitiveLibrary[data.name] = data;
+        localStorage.setItem('forge_primitives', JSON.stringify(primitiveLibrary));
+        loadPrimitiveList();
+        document.getElementById('primitiveSelect').value = data.name;
+        toast(`💾 Saved: ${data.name}`);
+    }
+
+    function newPrimitive() {
+        currentPrimitiveName = 'new_primitive';
+        editor.setValue(JSON.stringify(DEFAULT_PRIMITIVE, null, 2));
+        renderPrimitive();
+        toast('✦ New primitive');
+    }
+
+    // ═══════════════════════════════════
+    // FONT-MASON RENDERER
+    // ═══════════════════════════════════
+
+    function renderPrimitive() {
+        const container = document.getElementById('forge-canvas');
+        container.innerHTML = '';
+        
+        let data;
+        try {
+            data = JSON.parse(editor.getValue());
+        } catch(e) {
+            container.innerHTML = `<div style="color:#c44f1c;padding:40px;text-align:center;font-family:monospace;">❌ JSON Error: ${e.message}</div>`;
+            return;
+        }
+        
+        const canvasW = data.canvas?.width || 500;
+        const canvasH = data.canvas?.height || 400;
+        container.style.width = canvasW + 'px';
+        container.style.height = canvasH + 'px';
+        document.getElementById('renderSize').textContent = `${canvasW} × ${canvasH}`;
+        
+        // Create a unique container ID for FontMason
+        const renderId = 'forge-render-target';
+        const target = document.createElement('div');
+        target.id = renderId;
+        target.style.cssText = `position:relative;width:${canvasW}px;height:${canvasH}px;`;
+        container.appendChild(target);
+        
+        const m = new FontMason(renderId);
+        
+        // Register custom materials
+        if (data.materials) {
+            Object.entries(data.materials).forEach(([name, mat]) => {
+                FontMason.MATERIALS[name] = {
+                    chars: mat.chars || mat.characters || ['▓'],
+                    textColor: mat.textColor || '#5c4f42',
+                    mortarColor: mat.mortarColor || 'transparent',
+                    fontSize: mat.fontSize || 16,
+                    lineHeight: mat.lineHeight || 0.35,
+                    letterSpacing: mat.letterSpacing || 0,
+                    fontFamily: mat.fontFamily || 'monospace',
+                    weathering: mat.weathering || 0,
+                };
+            });
+        }
+        
+        // Build background
+        if (data.background?.wall) {
+            const bg = data.background;
+            const bgMat = bg.material ? FontMason.mat(bg.material) : FontMason.mat('marble_white');
+            m.buildWall({
+                ...bgMat,
+                x: bg.wall.x || 0,
+                y: bg.wall.y || 0,
+                width: bg.wall.width || canvasW,
+                height: bg.wall.height || canvasH,
+                z: bg.wall.z || 0
+            });
+        }
+        
+        // Build objects
+        (data.objects || []).forEach(obj => {
+            const mat = obj.material ? FontMason.mat(obj.material) : FontMason.mat('marble_white');
+            const pos = obj.position || {};
+            const dim = obj.dimensions || {};
+            
+            switch (obj.build) {
+                case 'wall': {
+                    const config = {
+                        ...mat,
+                        x: pos.x || 0, y: pos.y || 0,
+                        width: dim.width || 100, height: dim.height || 20,
+                        z: pos.z || 1,
+                    };
+                    if (obj.chars) config.chars = obj.chars;
+                    if (obj.textColor) config.textColor = obj.textColor;
+                    if (obj.mortarColor) config.mortarColor = obj.mortarColor;
+                    if (obj.fontSize) config.fontSize = obj.fontSize;
+                    if (obj.shape) config.shape = obj.shape;
+                    if (obj.weathering !== undefined) config.weathering = obj.weathering;
+                    m.buildWall(config);
+                    break;
+                }
+                case 'pillar': {
+                    m.buildPillar({
+                        ...mat,
+                        x: pos.x || 0, y: pos.y || 0,
+                        width: dim.width || 10, height: dim.height || 40,
+                        z: pos.z || 2,
+                        chars: obj.chars || mat.chars,
+                        fontSize: obj.fontSize || mat.fontSize,
+                        capital: obj.capital || false,
+                        capitalHeight: obj.capitalHeight || 0,
+                    });
+                    break;
+                }
+                case 'floor': {
+                    m.buildFloor({
+                        ...mat,
+                        x: pos.x || 0, y: pos.y || 0,
+                        width: dim.width || 200, height: dim.height || 100,
+                        z: pos.z || 0,
+                        perspectiveStrength: obj.perspectiveStrength || 6,
+                    });
+                    break;
+                }
+                case 'arch': {
+                    m.buildArch({
+                        chars: obj.chars || mat.chars,
+                        textColor: obj.textColor || mat.textColor,
+                        fontSize: obj.fontSize || mat.fontSize,
+                        fontFamily: obj.fontFamily || mat.fontFamily,
+                        cx: pos.x || 250, cy: pos.y || 200,
+                        innerRadius: dim.width || 50,
+                        stoneCount: obj.stoneCount || 12,
+                        stoneDepth: dim.height || 14,
+                        z: pos.z || 4,
+                        keystoneChar: obj.keystoneChar || '◆',
+                        keystoneOversize: obj.keystoneOversize || 1.4,
+                        fullCircle: obj.fullCircle || false,
+                    });
+                    break;
+                }
+                case 'inscription': {
+                    m.buildInscription({
+                        text: obj.text || '',
+                        x: pos.x || 0, y: pos.y || 0,
+                        fontSize: obj.fontSize || 10,
+                        color: obj.color || '#8b7d6b',
+                        fontFamily: obj.fontFamily || "'Cinzel',serif",
+                        z: pos.z || 5,
+                        rotation: obj.rotation || 0,
+                    });
+                    break;
+                }
+            }
+        });
+        
+        // Build atmosphere
+        if (data.atmosphere?.lights) {
+            data.atmosphere.lights.forEach(l => {
+                m.buildLight({
+                    color: l.color || '#d4af37',
+                    radius: l.radius || 60,
+                    x: l.x || 250,
+                    y: l.y || 200,
+                    pulse: l.pulse || false,
+                    z: l.z || 0
+                });
+            });
+        }
+        
+        if (data.atmosphere?.particles) {
+            const p = data.atmosphere.particles;
+            m.spawnAmbientFall({
+                count: p.count || 5,
+                color: p.color || 'rgba(200,160,64,0.1)',
+                minSize: p.minSize || 1,
+                maxSize: p.maxSize || 2,
+                speedMin: p.speedMin || 20,
+                speedMax: p.speedMax || 40,
+                z: p.z || 8
+            });
+        }
+        
+        toast('⟳ Rendered');
+    }
+
+    // ═══════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════
+
+    window.loadPrimitive = loadPrimitive;
+    window.savePrimitive = savePrimitive;
+    window.newPrimitive = newPrimitive;
+    window.renderPrimitive = renderPrimitive;
+    </script>
+</body>
+</html>
