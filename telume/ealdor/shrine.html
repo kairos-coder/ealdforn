@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Threshold Shrine · Ealdor</title>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --void: #0a0806; --deep: #1a1410; --mortar: #1a1612;
+            --stone: #3d362f; --deep-stone: #2a2520; --ash: #8b7d6b;
+            --parchment: #f4e4c1; --gold: #b8860b; --gold-bright: #d4af37;
+            --ember: #c44f1c; --water: #3a6b8c; --leaf: #2d3a1f;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--void);
+            color: var(--parchment);
+            font-family: 'Georgia','Times New Roman',serif;
+            min-height: 100vh; overflow-x: hidden;
+            background-image:
+                radial-gradient(ellipse 80% 40% at 50% 0%, rgba(196,79,28,0.04) 0%, transparent 60%),
+                radial-gradient(ellipse 100% 50% at 50% 100%, rgba(10,8,6,0.98) 0%, transparent 60%);
+        }
+
+        /* ── LINTEL ── */
+        .lintel {
+            width: 100%; background: var(--mortar);
+            border-bottom: 2px solid var(--deep-stone);
+            padding: 0.18rem 1rem;
+            display: flex; align-items: center; justify-content: space-between;
+            font-family: 'Cinzel',serif; font-size: 0.5rem;
+            color: rgba(139,125,107,0.5); letter-spacing: 3px; text-transform: uppercase;
+        }
+        .lintel-year { color: rgba(184,134,11,0.4); }
+
+        /* ── STONE NAV ── */
+        .stone-nav {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 0; background: var(--mortar);
+            border-bottom: 2px solid var(--deep-stone);
+            padding: 0.2rem 0.5rem;
+        }
+        .nav-stone {
+            display: flex; flex-direction: column; align-items: center;
+            padding: 0.3rem 0.6rem; text-decoration: none;
+            border-right: 1px solid var(--deep-stone);
+            transition: background 0.2s; min-width: 55px;
+        }
+        .nav-stone:last-child { border-right: none; }
+        .nav-stone:hover { background: rgba(184,134,11,0.08); }
+        .nav-stone.active { background: rgba(184,134,11,0.12); }
+        .nav-stone .nav-glyph { font-size: 0.85rem; line-height: 1.1; }
+        .nav-stone .nav-label {
+            font-family: 'Cinzel',serif; font-size: 0.38rem;
+            letter-spacing: 1.5px; color: rgba(139,125,107,0.5);
+            text-transform: uppercase; margin-top: 0.1rem;
+        }
+        .nav-stone.active .nav-label { color: var(--gold); }
+        .nav-stone.active .nav-glyph { filter: drop-shadow(0 0 4px rgba(184,134,11,0.4)); }
+
+        /* ── TEMPLE HEADER ── */
+        .temple-header { text-align: center; padding: 1.5rem 1rem 0.5rem; }
+        .temple-header::before, .temple-header::after {
+            content: ''; display: block;
+            width: 300px; max-width: 80vw; height: 2px;
+            margin: 0 auto;
+            background: linear-gradient(to right, transparent, var(--deep-stone) 20%, var(--stone) 50%, var(--deep-stone) 80%, transparent);
+        }
+        .temple-header::before { margin-bottom: 0.8rem; }
+        .temple-header::after  { margin-top: 0.8rem; }
+        .temple-title {
+            font-family: 'UnifrakturMaguntia',cursive;
+            font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(184,134,11,0.3), 2px 3px 0 var(--void);
+            letter-spacing: 5px; line-height: 1;
+        }
+        .temple-subtitle {
+            font-family: 'Cinzel',serif; font-size: 0.55rem;
+            color: var(--ash); letter-spacing: 5px;
+            text-transform: uppercase; margin-top: 0.4rem; opacity: 0.6;
+        }
+
+        /* ── SCENE ── */
+        #shrine-scene {
+            position: relative; width: 820px; max-width: 98vw;
+            height: 620px; margin: 0 auto;
+            overflow: hidden; background: var(--void);
+            border: 3px solid var(--deep-stone);
+            box-shadow: 0 0 60px rgba(0,0,0,0.6), 0 0 120px rgba(0,0,0,0.3);
+        }
+        @media (max-width: 840px) {
+            #shrine-scene { height: calc(98vw * 0.76); }
+        }
+
+        .zone { cursor: pointer; transition: filter 0.25s, transform 0.25s; }
+        .zone:hover { filter: brightness(1.3); z-index: 50 !important; }
+        .zone:active { transform: scale(0.94); transition: transform 0.1s; }
+
+        /* ── TOAST ── */
+        #toast {
+            position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+            background: rgba(10,8,6,0.94); border: 1px solid var(--gold);
+            border-radius: 6px; padding: 0.55rem 1.3rem;
+            font-family: 'Georgia',serif; font-size: 0.76rem; line-height: 1.5;
+            z-index: 200; opacity: 0; transition: opacity 0.35s;
+            pointer-events: none; text-align: center; max-width: 420px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5); white-space: pre-line;
+        }
+        #toast.show { opacity: 1; }
+
+        /* ── ANIMATIONS ── */
+        @keyframes hearthGlow {
+            0%,100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.15); }
+        }
+        @keyframes sparkFade {
+            0% { transform: scale(0.5); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+        @keyframes canopySway {
+            0%,100% { transform: translateX(0); }
+            50% { transform: translateX(2px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="shrine-scene"></div>
+    <div id="toast"></div>
+
+    <script src="js/font-mason.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+    /*
+     * ═══════════════════════════════════════════════════════
+     * THE THRESHOLD SHRINE · Ealdor
+     * Seven standing stones. One fire. The wild wood beyond.
+     * Built with FontMason. Painted in the dark by DeepSeek.
+     * ═══════════════════════════════════════════════════════
+     */
+
+    const DEFAULT_STATE = { year: 3450, season: 0, shrineVisits: 0, offerings: 0 };
+    let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+
+    function loadState() {
+        const raw = localStorage.getItem('ealdor_save');
+        if (!raw) return false;
+        try { state = { ...DEFAULT_STATE, ...JSON.parse(raw) }; return true; }
+        catch(e) { return false; }
+    }
+    function saveState() { localStorage.setItem('ealdor_save', JSON.stringify(state)); }
+
+    const toastEl = document.getElementById('toast');
+    let toastTimer;
+    function toast(msg, d = 3200) {
+        toastEl.textContent = msg; toastEl.classList.add('show');
+        clearTimeout(toastTimer); toastTimer = setTimeout(() => toastEl.classList.remove('show'), d);
+    }
+
+    // ═══════════════════════════════════
+    // BUILD SHRINE FROM JSON
+    // ═══════════════════════════════════
+
+    async function buildShrine() {
+        const container = document.getElementById('shrine-scene');
+        container.innerHTML = '';
+
+        let shrineData;
+        try {
+            const resp = await fetch('json/shrine.json');
+            if (!resp.ok) throw new Error('shrine.json not found');
+            shrineData = await resp.json();
+        } catch(e) {
+            toast('The shrine is shrouded in mist. Try again at dawn.');
+            return;
+        }
+
+        const m = new FontMason('shrine-scene');
+
+        // Custom materials
+        if (shrineData.materials) {
+            Object.entries(shrineData.materials).forEach(([name, mat]) => {
+                FontMason.MATERIALS[name] = {
+                    chars: mat.characters || mat.chars || ['▓'],
+                    textColor: mat.textColor || '#5c5044',
+                    mortarColor: mat.mortarColor || '#3a3028',
+                    fontSize: mat.fontSize || 28,
+                    lineHeight: mat.lineHeight || 0.5,
+                    letterSpacing: mat.letterSpacing || -2,
+                    fontFamily: mat.fontFamily || 'monospace',
+                    weathering: mat.weathering || 0.1,
+                };
+            });
+        }
+
+        // Build objects (same pattern as farm)
+        (shrineData.objects || []).forEach(obj => {
+            const mat = obj.material ? FontMason.mat(obj.material) : FontMason.mat('cyclopean');
+            const pos = obj.position || {};
+            const dim = obj.dimensions || {};
+
+            switch (obj.build) {
+                case 'wall': {
+                    m.buildWall({
+                        ...mat,
+                        x: pos.x, y: pos.y, width: dim.width, height: dim.height, z: pos.z || 1,
+                        weathering: obj.weathering !== undefined ? obj.weathering : (mat.weathering || 0.05),
+                    });
+                    break;
+                }
+                case 'pillar': {
+                    m.buildPillar({
+                        ...mat,
+                        x: pos.x, y: pos.y, width: dim.width, height: dim.height, z: pos.z || 2,
+                        chars: obj.chars || mat.chars, fontSize: obj.fontSize || mat.fontSize,
+                    });
+                    break;
+                }
+                case 'floor': {
+                    m.buildFloor({
+                        ...mat,
+                        x: pos.x, y: pos.y, width: dim.width, height: dim.height, z: pos.z || 0,
+                        perspectiveStrength: obj.perspectiveStrength || 6,
+                    });
+                    break;
+                }
+            }
+
+            // Components
+            if (obj.components) {
+                obj.components.forEach(comp => {
+                    const cpx = (pos.x || 0) + (comp.position?.x || 0);
+                    const cpy = (pos.y || 0) + (comp.position?.y || 0);
+                    if (comp.type === 'inscription') {
+                        m.buildInscription({
+                            text: comp.text || '',
+                            x: cpx, y: cpy,
+                            fontSize: comp.fontSize || 7,
+                            color: comp.color || '#8b7d6b',
+                            fontFamily: comp.fontFamily || "'Cinzel',serif",
+                            z: comp.z || 7,
+                            rotation: comp.rotation || 0,
+                        });
+                    }
+                    if (comp.type === 'circle') {
+                        const el = document.createElement('div');
+                        el.style.cssText = `
+                            position:absolute; left:${cpx}px; top:${cpy}px;
+                            width:${(comp.radius||14)*2}px; height:${(comp.radius||14)*2}px;
+                            border-radius:50%; pointer-events:none; z-index:${comp.z||7};
+                            ${comp.style?.background ? `background:${comp.style.background};` : ''}
+                            ${comp.style?.animation ? `animation:${comp.style.animation};` : ''}
+                        `;
+                        container.appendChild(el);
+                    }
+                });
+            }
+
+            // Interaction zone
+            if (obj.interaction) {
+                const iz = obj.interaction.zone || { x: pos.x, y: pos.y, width: dim.width, height: dim.height };
+                const zone = document.createElement('div');
+                zone.className = 'zone';
+                zone.title = obj.interaction.label || obj.name || '';
+                zone.style.cssText = `position:absolute;left:${iz.x}px;top:${iz.y}px;width:${iz.width}px;height:${iz.height}px;z-index:20;`;
+                zone.addEventListener('click', () => {
+                    if (obj.interaction.transition) {
+                        saveState();
+                        setTimeout(() => { window.location.href = obj.interaction.transition; }, 600);
+                        return;
+                    }
+                    if (obj.interaction.toast) {
+                        toast(obj.interaction.toast);
+                    }
+                });
+                container.appendChild(zone);
+            }
+        });
+
+        // Trees
+        (shrineData.trees || []).forEach(tree => {
+            const tx = tree.position.x, ty = tree.position.y;
+            const trunk = tree.trunk;
+            m.buildPillar({
+                chars: trunk.chars, textColor: trunk.textColor,
+                mortarColor: '#2a1f15',
+                fontSize: Math.max(10, trunk.width * 0.7),
+                fontFamily: 'monospace',
+                x: tx + (trunk.offsetX || 0), y: ty,
+                width: trunk.width, height: trunk.height, z: 4
+            });
+            let prevBottom = ty;
+            (tree.canopy || []).forEach((layer, i) => {
+                const lx = tx + (layer.offsetX || 0);
+                const ly = i === 0 ? ty + (layer.offsetY || 0) : prevBottom - layer.height + (layer.overlap || 15);
+                m.buildWall({
+                    chars: layer.chars, textColor: layer.textColor,
+                    mortarColor: 'transparent',
+                    fontSize: layer.fontSize, lineHeight: layer.lineHeight || 0.42,
+                    letterSpacing: layer.letterSpacing || -2,
+                    fontFamily: layer.fontFamily || 'monospace',
+                    x: lx, y: ly, width: layer.width, height: layer.height,
+                    z: layer.z || 5, weathering: layer.weathering || 0.05
+                });
+                prevBottom = ly;
+            });
+        });
+
+        // Atmosphere
+        if (shrineData.atmosphere?.lights) {
+            shrineData.atmosphere.lights.forEach(l => {
+                m.buildLight({ color: l.color, radius: l.radius, x: l.x, y: l.y, pulse: l.pulse, z: l.z });
+            });
+        }
+        if (shrineData.atmosphere?.particles) {
+            m.spawnAmbientFall({
+                count: shrineData.atmosphere.particles.count,
+                color: shrineData.atmosphere.particles.color,
+                minSize: shrineData.atmosphere.particles.minSize,
+                maxSize: shrineData.atmosphere.particles.maxSize,
+                speedMin: shrineData.atmosphere.particles.speedMin,
+                speedMax: shrineData.atmosphere.particles.speedMax,
+                z: shrineData.atmosphere.particles.z
+            });
+        }
+
+        return m;
+    }
+
+    // ═══════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════
+
+    async function init() {
+        const loaded = loadState();
+        if (!loaded) saveState();
+
+        Navigation.render('shrine', { year: state.year, season: state.season });
+
+        state.shrineVisits = (state.shrineVisits || 0) + 1;
+        saveState();
+
+        await buildShrine();
+
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('from')) {
+            toast(`🕯️ You arrive at the Threshold Shrine from the ${params.get('from')}. Seven stones stand in a circle. The fire holds.`);
+            window.history.replaceState({}, '', 'shrine.html');
+        } else {
+            toast('🕯️ The Threshold Shrine. Seven stones. Seven glyphs. One fire. The wild wood waits beyond the boundary.');
+        }
+
+        document.addEventListener('click', (e) => {
+            if (Math.random() > 0.7 && !e.target.closest('.zone')) {
+                const spark = document.createElement('div');
+                spark.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:3px;height:3px;background:#d4af37;border-radius:50%;box-shadow:0 0 10px #d4af37;pointer-events:none;z-index:150;animation:sparkFade 1.2s ease-out forwards;`;
+                document.body.appendChild(spark);
+                setTimeout(() => spark.remove(), 1300);
+            }
+        });
+    }
+
+    init();
+    </script>
+</body>
+</html>
