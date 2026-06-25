@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Gallery · Generative Portraits · Ealdor</title>
+    <title>The Gallery · Font-Mason Portraits · Ealdor</title>
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
             --void: #0a0806; --deep: #1a1410;
             --parchment: #f4e4c1; --gold: #b8860b;
-            --ember: #c44f1c; --water: #3a6b8c;
             --frame: #3d362f; --frame-light: #5c4f42;
+            --skin-highlight: #8b7d6b; --skin-mid: #6b5d4f;
+            --skin-shadow: #5c4f42; --skin-deep: #3d3028;
+            --skin-darkest: #2a2018;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -23,67 +25,66 @@
                 radial-gradient(ellipse at 50% 0%, rgba(184,134,11,0.04) 0%, transparent 60%);
         }
 
-        /* ── GALLERY HEADER ── */
         .gallery-header {
-            text-align: center; padding: 1.5rem 1rem 0.5rem;
+            text-align: center; padding: 1rem 1rem 0.3rem;
             position: relative; z-index: 10;
         }
         .gallery-title {
             font-family: 'UnifrakturMaguntia', cursive;
-            font-size: clamp(1.4rem, 3.5vw, 2rem);
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
             color: var(--gold); letter-spacing: 4px;
             text-shadow: 0 0 20px rgba(184,134,11,0.2);
         }
         .gallery-sub {
-            font-family: 'Cinzel', serif; font-size: 0.45rem;
+            font-family: 'Cinzel', serif; font-size: 0.4rem;
             letter-spacing: 5px; color: #8b7d6b;
-            text-transform: uppercase; margin-top: 0.3rem;
+            text-transform: uppercase; margin-top: 0.2rem;
         }
 
-        /* ── CONTROLS ── */
         .gallery-controls {
-            display: flex; gap: 10px; justify-content: center;
-            padding: 0.8rem; position: relative; z-index: 10;
+            display: flex; gap: 8px; justify-content: center;
+            padding: 0.5rem; position: relative; z-index: 10;
+            flex-wrap: wrap;
         }
         .gallery-btn {
-            font-family: 'Cinzel', serif; font-size: 0.5rem;
-            letter-spacing: 3px; text-transform: uppercase;
-            padding: 8px 18px; border-radius: 4px;
+            font-family: 'Cinzel', serif; font-size: 0.45rem;
+            letter-spacing: 2px; text-transform: uppercase;
+            padding: 6px 14px; border-radius: 4px;
             border: 1px solid #3d362f; background: rgba(26,20,16,0.7);
             color: #8b7d6b; cursor: pointer; transition: all 0.3s;
         }
         .gallery-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(184,134,11,0.08); }
         .gallery-btn.primary { border-color: var(--gold); color: var(--gold); }
 
-        /* ── CANVAS ── */
-        #painting-canvas {
-            display: block; margin: 0 auto;
-            max-width: 98vw; border: 8px solid var(--frame);
+        #portrait-frame {
+            position: relative; width: 500px; max-width: 96vw;
+            height: 660px; margin: 0.5rem auto;
+            border: 8px solid var(--frame);
             box-shadow: 
                 0 0 0 2px var(--frame-light),
                 0 0 0 10px var(--deep),
-                0 0 60px rgba(0,0,0,0.6),
-                0 0 120px rgba(0,0,0,0.3),
-                inset 0 0 40px rgba(0,0,0,0.2);
-            image-rendering: pixelated;
+                0 0 40px rgba(0,0,0,0.5);
+            overflow: hidden;
+            background: #1a1410;
+        }
+        @media (max-width: 520px) {
+            #portrait-frame { height: calc(96vw * 1.32); }
         }
 
-        /* ── PLAQUE ── */
         .plaque {
-            text-align: center; padding: 0.8rem;
-            font-family: 'Cinzel', serif; max-width: 600px;
+            text-align: center; padding: 0.5rem;
+            font-family: 'Cinzel', serif; max-width: 500px;
             position: relative; z-index: 10;
         }
         .plaque-title {
-            font-size: 0.7rem; letter-spacing: 4px;
+            font-size: 0.65rem; letter-spacing: 3px;
             color: var(--gold); text-transform: uppercase;
         }
         .plaque-artist {
-            font-size: 0.45rem; letter-spacing: 3px;
-            color: #8b7d6b; margin-top: 0.3rem;
+            font-size: 0.4rem; letter-spacing: 2px;
+            color: #8b7d6b; margin-top: 0.2rem;
         }
 
-        /* ── TOAST ── */
         #toast {
             position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
             background: rgba(10,8,6,0.94); border: 1px solid var(--gold);
@@ -98,24 +99,27 @@
         @keyframes sparkFade {
             0%{transform:scale(0.5);opacity:1} 100%{transform:scale(2.5);opacity:0}
         }
+        @keyframes gentlePulse {
+            0%,100%{opacity:0.7} 50%{opacity:1}
+        }
     </style>
 </head>
 <body>
 
     <div class="gallery-header">
         <h1 class="gallery-title">The Generative Gallery</h1>
-        <p class="gallery-sub">Portraits Rendered in the Font-Mason's Craft</p>
+        <p class="gallery-sub">Portraits Built in the Font-Mason's Craft</p>
     </div>
 
     <div class="gallery-controls">
-        <button class="gallery-btn primary" onclick="generatePortrait()">⟳ New Portrait</button>
+        <button class="gallery-btn primary" onclick="generatePortrait()">⟳ New Face</button>
         <button class="gallery-btn" onclick="generatePortrait('noble')">👑 Noble</button>
         <button class="gallery-btn" onclick="generatePortrait('warrior')">⚔️ Warrior</button>
         <button class="gallery-btn" onclick="generatePortrait('seer')">🔮 Seer</button>
-        <button class="gallery-btn" onclick="generatePortrait('commoner')">🧑 Commoner</button>
+        <button class="gallery-btn" onclick="generatePortrait('elder')">📜 Elder</button>
     </div>
 
-    <canvas id="painting-canvas" width="600" height="800"></canvas>
+    <div id="portrait-frame"></div>
 
     <div class="plaque">
         <div class="plaque-title" id="plaqueTitle">Portrait of a Citizen</div>
@@ -124,12 +128,13 @@
 
     <div id="toast"></div>
 
+    <script src="js/font-mason.js"></script>
     <script>
     /*
      * ═══════════════════════════════════════════════════════
-     * THE GENERATIVE GALLERY · Portrait Renderer
-     * Each portrait is a unique composition of typography.
-     * No two are alike. Each is a generative act.
+     * THE GENERATIVE GALLERY · FontMason Portrait Engine
+     * Every face built from placed blocks.
+     * Every glyph a brushstroke. Every portrait a construction.
      * ═══════════════════════════════════════════════════════
      */
 
@@ -138,14 +143,6 @@
         toastEl.textContent = msg; toastEl.classList.add('show');
         setTimeout(() => toastEl.classList.remove('show'), 2400);
     }
-
-    const canvas = document.getElementById('painting-canvas');
-    const ctx = canvas.getContext('2d');
-    const W = 600, H = 800;
-
-    // ═══════════════════════════════════
-    // SEEDED RANDOM — same portrait if you go back
-    // ═══════════════════════════════════
 
     let seed = Date.now();
     function random() {
@@ -156,234 +153,397 @@
     function pick(arr) { return arr[Math.floor(random() * arr.length)]; }
 
     // ═══════════════════════════════════
-    // COLOR PALETTES
+    // FONT-MASON MATERIALS FOR SKIN
     // ═══════════════════════════════════
 
-    const PALETTES = {
-        noble:    { bg:['#1a1410','#1a1814','#141210'], skin:['#6b5d4f','#7a6b5c'], robe:['#4a1040','#6b1860','#3a0830'], trim:['#b8860b','#d4af37'], hair:['#2a2018','#3d3028','#1a1410'] },
-        warrior:  { bg:['#14181a','#101418','#181410'], skin:['#5c4f42','#6b5d4f'], robe:['#2a3540','#3d4a55','#1a2530'], trim:['#6b7b8b','#8b9baa'], hair:['#1a1814','#2a2520'] },
-        seer:     { bg:['#0a0f14','#0a0c10','#0f141a'], skin:['#5c5044','#6b5d4f'], robe:['#1a2a3a','#2a3a5a','#1a1a3a'], trim:['#3a6b8c','#5a8ab8'], hair:['#8b7d6b','#a09080','#c8c0b0'] },
-        commoner: { bg:['#1a1810','#1a1610','#141210'], skin:['#5c4f42','#6b5d4f'], robe:['#3d3028','#4a3a30','#5c4a3a'], trim:['#6b5d4f','#8b7d6b'], hair:['#2a2018','#3d3028','#5c4a35'] },
+    const SKIN_MATERIALS = {
+        highlight:  { chars:['·','∘','○','·','·'], textColor:'#8b7d6b', mortarColor:'transparent', fontSize:18, lineHeight:0.35, letterSpacing:2, fontFamily:"'Georgia',serif", weathering:0 },
+        midtone:    { chars:['░','⋅','░','⋅','▒'], textColor:'#6b5d4f', mortarColor:'transparent', fontSize:18, lineHeight:0.35, letterSpacing:1, fontFamily:"'Georgia',serif", weathering:0 },
+        shadow:     { chars:['▒','░','▒','▓','▒'], textColor:'#5c4f42', mortarColor:'transparent', fontSize:16, lineHeight:0.32, letterSpacing:0, fontFamily:'monospace', weathering:0 },
+        deepShadow: { chars:['▓','▒','▓','█','▓'], textColor:'#3d3028', mortarColor:'transparent', fontSize:14, lineHeight:0.30, letterSpacing:-1, fontFamily:'monospace', weathering:0 },
+        darkest:    { chars:['█','▓','█','▓','█'], textColor:'#2a2018', mortarColor:'transparent', fontSize:12, lineHeight:0.28, letterSpacing:-1, fontFamily:'monospace', weathering:0 },
+    };
+
+    const HAIR_MATERIALS = {
+        brown:  { chars:['≈','≋','~','≈','≋'], textColor:'#3d3028', mortarColor:'transparent', fontSize:20, lineHeight:0.30, letterSpacing:-1, fontFamily:"'Georgia',serif", weathering:0 },
+        dark:   { chars:['▓','▒','░','▓','▒'], textColor:'#2a2018', mortarColor:'transparent', fontSize:18, lineHeight:0.28, letterSpacing:-2, fontFamily:'monospace', weathering:0 },
+        grey:   { chars:['≈','~','≋','≈','~'], textColor:'#8b7d6b', mortarColor:'transparent', fontSize:20, lineHeight:0.30, letterSpacing:-1, fontFamily:"'Georgia',serif", weathering:0 },
+        white:  { chars:['~','≈','⋅','~','≈'], textColor:'#c8c0b0', mortarColor:'transparent', fontSize:20, lineHeight:0.30, letterSpacing:-1, fontFamily:"'Georgia',serif", weathering:0 },
+        red:    { chars:['≋','≈','≋','≈','≋'], textColor:'#8b4a2a', mortarColor:'transparent', fontSize:20, lineHeight:0.30, letterSpacing:-1, fontFamily:"'Georgia',serif", weathering:0 },
+    };
+
+    const ROBE_MATERIALS = {
+        noble:  { chars:['◆','◇','◆','◇','◆'], textColor:'#6b1860', mortarColor:'#3a0830', fontSize:22, lineHeight:0.40, letterSpacing:0, fontFamily:"'Georgia',serif", weathering:0.02 },
+        warrior:{ chars:['▬','▬','▬','▬','▬'], textColor:'#3d4a55', mortarColor:'#1a2530', fontSize:20, lineHeight:0.38, letterSpacing:-1, fontFamily:'monospace', weathering:0.04 },
+        seer:   { chars:['◈','◇','◈','◇','◈'], textColor:'#2a3a5a', mortarColor:'#1a1a3a', fontSize:20, lineHeight:0.38, letterSpacing:0, fontFamily:"'Georgia',serif", weathering:0.02 },
+        elder:  { chars:['▓','▒','░','▓','▒'], textColor:'#4a3a30', mortarColor:'#2a2018', fontSize:20, lineHeight:0.38, letterSpacing:-1, fontFamily:'monospace', weathering:0.06 },
+    };
+
+    const TRIM_MATERIALS = {
+        gold:   { chars:['◆','◇','◆','◇','◆'], textColor:'#d4af37', mortarColor:'transparent', fontSize:14, lineHeight:0.35, letterSpacing:1, fontFamily:"'Georgia',serif", weathering:0 },
+        silver: { chars:['◇','◈','◇','◈','◇'], textColor:'#a0a8b8', mortarColor:'transparent', fontSize:14, lineHeight:0.35, letterSpacing:1, fontFamily:"'Georgia',serif", weathering:0 },
+        bronze: { chars:['◆','◆','◆','◆','◆'], textColor:'#b8860b', mortarColor:'transparent', fontSize:14, lineHeight:0.35, letterSpacing:1, fontFamily:"'Georgia',serif", weathering:0 },
     };
 
     // ═══════════════════════════════════
-    // TYPOGRAPHIC ELEMENTS
+    // FACE DATA
     // ═══════════════════════════════════
 
     const FACE_GLYPHS = {
-        eyes:    ['◉','◎','◈','◆','◇','⊙','◯','⬤'],
-        nose:    ['◂','◃','▸','▹','┃','╎','│'],
-        mouth:   ['▂','▃','▅','▁','⌣','⌢','▔','—'],
-        brow:    ['⌒','⌢','—','˜','˘'],
-        cheek:   ['( ',')','·','∘'],
-        beard:   ['≈','≋','~','∿','﹏'],
+        eyes:      ['◉','◎','◈','◆','⊙','◯','⬤','⏺'],
+        brows:     ['⌣','⌢','—','˜','∼'],
+        nose:      ['▾','▴','▸','◂','│'],
+        mouth:     ['▂','▃','▅','▁','⌣','▔'],
+        eyeHighlight: ['⋅','∘','·'],
     };
 
-    const ROBE_PATTERNS = [
-        '▓▒░▓▒░▓▒░▓▒░▓▒░▓',
-        '▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬',
-        '║╎│╎║╎│╎║╎│╎║╎│',
-        '◆◇◆◇◆◇◆◇◆◇◆◇◆◇',
-        '▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚',
-    ];
+    const HEADPIECES = {
+        noble:  { glyph:'◆', color:'#d4af37', size:22, y:-4 },
+        warrior:{ glyph:'⌒', color:'#8b9baa', size:24, y:-6 },
+        seer:   { glyph:'✧', color:'#5a8ab8', size:20, y:-2 },
+        elder:  { glyph:'⌣', color:'#8b7d6b', size:18, y:-2 },
+    };
 
-    const BACKGROUND_PATTERNS = [
-        '· ✦ · ✧ · ✦ · ✧ · ✦',
-        '○ ◌ ○ ◌ ○ ◌ ○ ◌ ○',
-        '⌒ ⌣ ⌒ ⌣ ⌒ ⌣ ⌒ ⌣ ⌒',
-    ];
+    const NAMES = {
+        noble:   ['Lady Elara von Stone','Lord Aldric the Gilded','Countess Mira Thal','Duke Severin Black'],
+        warrior: ['Captain Sigurd Ironside','Shield-Maiden Freya','Warlord Torben Helm-Splitter','Knight-Commander Aldis'],
+        seer:    ['Oracle Thalia Far-Eye','Seer Caspian the Veiled','Prophetess Morna Deep-Sight','The Silent Watcher'],
+        elder:   ['Old Agnar of the Fjord','Grandmother Elda','Thora the Rememberer','Ealdorman Oswin'],
+    };
 
     // ═══════════════════════════════════
-    // GENERATE PORTRAIT
+    // BUILD FACE WITH FONT-MASON
     // ═══════════════════════════════════
 
     function generatePortrait(type) {
         seed = Date.now();
-        const types = ['noble','warrior','seer','commoner'];
+        const types = ['noble','warrior','seer','elder'];
         const chosenType = type || pick(types);
-        const palette = PALETTES[chosenType];
+        
+        const container = document.getElementById('portrait-frame');
+        container.innerHTML = '';
+        
+        const m = new FontMason('portrait-frame');
+        const CX = 250; // center X of the 500px frame
+        const CY = 270; // center Y of the face
+        
+        // Register skin materials
+        Object.entries(SKIN_MATERIALS).forEach(([name, mat]) => {
+            FontMason.MATERIALS['skin_'+name] = mat;
+        });
+        Object.entries(HAIR_MATERIALS).forEach(([name, mat]) => {
+            FontMason.MATERIALS['hair_'+name] = mat;
+        });
+        Object.entries(ROBE_MATERIALS).forEach(([name, mat]) => {
+            FontMason.MATERIALS['robe_'+name] = mat;
+        });
+        Object.entries(TRIM_MATERIALS).forEach(([name, mat]) => {
+            FontMason.MATERIALS['trim_'+name] = mat;
+        });
         
         // ── BACKGROUND ──
-        const bgColor = pick(palette.bg);
-        ctx.fillStyle = bgColor;
-        ctx.fillRect(0, 0, W, H);
+        m.buildWall({
+            chars:['·','·','·','✦','·'], textColor:'#1a1410', mortarColor:'#0a0806',
+            fontSize:16, lineHeight:0.6, letterSpacing:4, fontFamily:"'Georgia',serif",
+            x:0, y:0, width:500, height:660, z:0
+        });
         
-        // Background texture — scattered glyphs
-        const bgPattern = pick(BACKGROUND_PATTERNS);
-        ctx.fillStyle = 'rgba(255,255,255,0.03)';
-        ctx.font = '14px Georgia, serif';
-        for (let i = 0; i < 20; i++) {
-            const bx = random() * W;
-            const by = random() * H;
-            ctx.fillText(bgPattern[Math.floor(random() * bgPattern.length)], bx, by);
+        // ── BACKGROUND TEXTURE — sparse stars ──
+        for (let i = 0; i < 15; i++) {
+            const sx = randInt(20, 460);
+            const sy = randInt(20, 620);
+            m.buildInscription({
+                text: pick(['·','✦','✧','⋅']),
+                x: sx, y: sy,
+                fontSize: randInt(6, 14),
+                color: `rgba(200,180,150,${0.05 + random() * 0.1})`,
+                fontFamily: "'Georgia',serif",
+                z: 0
+            });
         }
         
-        // ── FRAME INNER SHADOW ──
-        const frameGrad = ctx.createRadialGradient(W/2, H/2, 200, W/2, H/2, 500);
-        frameGrad.addColorStop(0, 'transparent');
-        frameGrad.addColorStop(1, 'rgba(0,0,0,0.5)');
-        ctx.fillStyle = frameGrad;
-        ctx.fillRect(0, 0, W, H);
+        // ── ROBE / SHOULDERS ──
+        const robeMat = 'robe_' + chosenType;
+        m.buildWall({
+            ...FontMason.mat(robeMat),
+            x: 40, y: CY + 100, width: 420, height: 300, z: 1
+        });
         
-        // ── SHOULDERS / ROBE ──
-        const robeColor = pick(palette.robe);
-        const robePattern = pick(ROBE_PATTERNS);
+        // Robe collar — arch shape
+        m.buildWall({
+            ...FontMason.mat(robeMat),
+            x: 150, y: CY + 55, width: 200, height: 50, z: 3,
+            shape: 'circle'
+        });
         
-        // Robe fill — arch shape
-        ctx.fillStyle = robeColor;
-        ctx.beginPath();
-        ctx.moveTo(50, H);
-        ctx.quadraticCurveTo(150, 480, 300, 420);
-        ctx.quadraticCurveTo(450, 480, 550, H);
-        ctx.fill();
-        
-        // Robe texture lines
-        ctx.fillStyle = 'rgba(255,255,255,0.04)';
-        ctx.font = '16px monospace';
-        for (let y = 440; y < H; y += 22) {
-            const width = 100 + (y - 440) * 1.4;
-            const chars = Math.floor(width / 10);
-            let line = '';
-            for (let c = 0; c < chars; c++) {
-                line += robePattern[c % robePattern.length];
-            }
-            ctx.fillText(line, 300 - width/2, y);
-        }
-        
-        // Robe trim
-        const trimColor = pick(palette.trim);
-        ctx.fillStyle = trimColor;
-        ctx.font = '20px Cinzel, serif';
-        const trimPattern = '◆ ◇ ◆ ◇ ◆ ◇ ◆ ◇ ◆ ◇ ◆';
-        for (let y = 440; y < H; y += 28) {
-            ctx.fillText(trimPattern, 300 - 120, y);
-            ctx.fillText(trimPattern, 300 + 40, y);
-        }
-        
-        // Collar
-        ctx.fillStyle = trimColor;
-        ctx.font = '24px Georgia, serif';
-        ctx.fillText('⌒', 278, 430);
-        ctx.fillText('⌒', 308, 430);
+        // Collar trim
+        const trimMat = chosenType === 'noble' ? 'trim_gold' : chosenType === 'warrior' ? 'trim_silver' : 'trim_bronze';
+        m.buildArch({
+            ...FontMason.mat(trimMat),
+            cx: CX, cy: CY + 80, innerRadius: 90,
+            stoneCount: 15, stoneDepth: 12, z: 4,
+            keystoneChar: pick(['◆','◇','◆']),
+            keystoneOversize: 1.3
+        });
         
         // ── NECK ──
-        const skinColor = pick(palette.skin);
-        ctx.fillStyle = skinColor;
-        ctx.fillRect(282, 350, 36, 50);
+        m.buildWall({
+            ...FontMason.mat('skin_midtone'),
+            x: CX - 18, y: CY + 40, width: 36, height: 40, z: 2
+        });
         
-        // ── HEAD ──
-        ctx.fillStyle = skinColor;
-        ctx.beginPath();
-        ctx.ellipse(300, 280, 70, 85, 0, 0, Math.PI * 2);
-        ctx.fill();
+        // Neck shadow on sides
+        m.buildWall({
+            ...FontMason.mat('skin_shadow'),
+            x: CX - 22, y: CY + 40, width: 6, height: 40, z: 3
+        });
+        m.buildWall({
+            ...FontMason.mat('skin_shadow'),
+            x: CX + 16, y: CY + 40, width: 6, height: 40, z: 3
+        });
         
-        // Head outline
-        ctx.strokeStyle = 'rgba(0,0,0,0.3)';
-        ctx.lineWidth = 2;
-        ctx.stroke();
+        // ── HEAD SHAPE — built from layered walls ──
         
-        // ── HAIR ──
-        const hairColor = pick(palette.hair);
-        ctx.fillStyle = hairColor;
-        ctx.font = 'bold 20px Georgia, serif';
-        const hairChars = '≈ ≋ ~ ∿ ﹏ ≈ ≋ ~ ∿';
-        for (let y = 200; y < 260; y += 12) {
-            const offset = Math.sin((y - 200) * 0.1) * 20;
-            ctx.fillText(hairChars, 230 + offset, y);
-        }
-        // Hair sides
-        ctx.font = '18px Georgia, serif';
-        for (let y = 240; y < 340; y += 14) {
-            ctx.fillText('≈≋≈', 225, y);
-            ctx.fillText('≈≋≈', 340, y);
-        }
+        // Skull cap (top of head) — highlight
+        m.buildWall({
+            ...FontMason.mat('skin_highlight'),
+            x: CX - 55, y: CY - 100, width: 110, height: 50, z: 2,
+            shape: 'circle'
+        });
+        
+        // Upper face — midtone, broad
+        m.buildWall({
+            ...FontMason.mat('skin_midtone'),
+            x: CX - 60, y: CY - 70, width: 120, height: 80, z: 2,
+            shape: 'circle'
+        });
+        
+        // Forehead highlight
+        m.buildWall({
+            ...FontMason.mat('skin_highlight'),
+            x: CX - 35, y: CY - 75, width: 70, height: 30, z: 3
+        });
+        
+        // ── BROW RIDGE ──
+        m.buildWall({
+            ...FontMason.mat('skin_shadow'),
+            x: CX - 50, y: CY - 30, width: 100, height: 14, z: 4
+        });
+        
+        // Brow arch
+        const browGlyph = pick(FACE_GLYPHS.brows);
+        m.buildArch({
+            chars: [browGlyph, browGlyph, browGlyph],
+            textColor: pick(['#2a2018','#1a1410','#3d3028']),
+            fontSize: 16,
+            fontFamily: "'Georgia',serif",
+            cx: CX, cy: CY - 28, innerRadius: 40,
+            stoneCount: 9, stoneDepth: 8, z: 5
+        });
+        
+        // ── EYE SOCKETS — deep shadow ──
+        m.buildWall({
+            ...FontMason.mat('skin_deepShadow'),
+            x: CX - 45, y: CY - 20, width: 30, height: 22, z: 3,
+            shape: 'circle'
+        });
+        m.buildWall({
+            ...FontMason.mat('skin_deepShadow'),
+            x: CX + 15, y: CY - 20, width: 30, height: 22, z: 3,
+            shape: 'circle'
+        });
         
         // ── EYES ──
         const eyeGlyph = pick(FACE_GLYPHS.eyes);
-        ctx.fillStyle = pick(palette.bg);
-        ctx.font = '28px Georgia, serif';
-        ctx.fillText(eyeGlyph, 270, 275);
-        ctx.fillText(eyeGlyph, 312, 275);
+        m.buildInscription({
+            text: eyeGlyph, x: CX - 34, y: CY - 16,
+            fontSize: 16, color: pick(['#f4e4c1','#e8d8b0','#ffe8c0']),
+            fontFamily: "'Georgia',serif", z: 6
+        });
+        m.buildInscription({
+            text: eyeGlyph, x: CX + 26, y: CY - 16,
+            fontSize: 16, color: pick(['#f4e4c1','#e8d8b0','#ffe8c0']),
+            fontFamily: "'Georgia',serif", z: 6
+        });
         
         // Eye highlights
-        ctx.fillStyle = 'rgba(255,255,255,0.4)';
-        ctx.font = '10px Georgia, serif';
-        ctx.fillText('·', 274, 272);
-        ctx.fillText('·', 316, 272);
+        const highlightDot = pick(FACE_GLYPHS.eyeHighlight);
+        m.buildInscription({
+            text: highlightDot, x: CX - 32, y: CY - 20,
+            fontSize: 8, color: 'rgba(255,255,255,0.6)',
+            fontFamily: "'Georgia',serif", z: 7
+        });
+        m.buildInscription({
+            text: highlightDot, x: CX + 28, y: CY - 20,
+            fontSize: 8, color: 'rgba(255,255,255,0.6)',
+            fontFamily: "'Georgia',serif", z: 7
+        });
         
-        // ── BROWS ──
-        const browGlyph = pick(FACE_GLYPHS.brow);
-        ctx.fillStyle = hairColor;
-        ctx.font = '22px Georgia, serif';
-        ctx.fillText(browGlyph, 265, 258);
-        ctx.fillText(browGlyph, 310, 258);
+        // ── CHEEKBONES ──
+        m.buildWall({
+            ...FontMason.mat('skin_highlight'),
+            x: CX - 55, y: CY + 5, width: 20, height: 12, z: 3
+        });
+        m.buildWall({
+            ...FontMason.mat('skin_highlight'),
+            x: CX + 35, y: CY + 5, width: 20, height: 12, z: 3
+        });
+        
+        // Cheek hollows — shadow below cheekbones
+        m.buildWall({
+            ...FontMason.mat('skin_shadow'),
+            x: CX - 52, y: CY + 16, width: 25, height: 20, z: 3,
+            shape: 'circle'
+        });
+        m.buildWall({
+            ...FontMason.mat('skin_shadow'),
+            x: CX + 27, y: CY + 16, width: 25, height: 20, z: 3,
+            shape: 'circle'
+        });
         
         // ── NOSE ──
+        // Bridge — vertical highlight
+        m.buildWall({
+            ...FontMason.mat('skin_highlight'),
+            x: CX - 6, y: CY - 18, width: 12, height: 35, z: 5
+        });
+        
+        // Nose sides — shadow
+        m.buildWall({
+            ...FontMason.mat('skin_shadow'),
+            x: CX - 14, y: CY - 8, width: 6, height: 30, z: 4
+        });
+        m.buildWall({
+            ...FontMason.mat('skin_shadow'),
+            x: CX + 8, y: CY - 8, width: 6, height: 30, z: 4
+        });
+        
+        // Nose tip — brightest
+        m.buildWall({
+            ...FontMason.mat('skin_highlight'),
+            x: CX - 8, y: CY + 12, width: 16, height: 10, z: 6,
+            shape: 'circle'
+        });
+        
+        // Nostrils — darkest
         const noseGlyph = pick(FACE_GLYPHS.nose);
-        ctx.fillStyle = 'rgba(0,0,0,0.2)';
-        ctx.font = '18px Georgia, serif';
-        ctx.fillText(noseGlyph, 296, 295);
+        m.buildInscription({
+            text: noseGlyph, x: CX - 4, y: CY + 14,
+            fontSize: 10, color: '#2a2018',
+            fontFamily: "'Georgia',serif", z: 7
+        });
+        
+        // ── UNDER-NOSE SHADOW ──
+        m.buildWall({
+            ...FontMason.mat('skin_deepShadow'),
+            x: CX - 14, y: CY + 20, width: 28, height: 6, z: 4
+        });
         
         // ── MOUTH ──
         const mouthGlyph = pick(FACE_GLYPHS.mouth);
-        ctx.fillStyle = 'rgba(0,0,0,0.35)';
-        ctx.font = '20px Georgia, serif';
-        ctx.fillText(mouthGlyph, 290, 325);
+        m.buildInscription({
+            text: mouthGlyph, x: CX - 12, y: CY + 32,
+            fontSize: 14, color: '#2a2018',
+            fontFamily: "'Georgia',serif", z: 6
+        });
         
-        // ── CHEEKS ──
-        if (random() > 0.5) {
-            ctx.fillStyle = 'rgba(196,79,28,0.12)';
-            ctx.font = '14px Georgia, serif';
-            ctx.fillText('(', 258, 295);
-            ctx.fillText(')', 335, 295);
-        }
+        // Upper lip highlight
+        m.buildWall({
+            ...FontMason.mat('skin_highlight'),
+            x: CX - 10, y: CY + 26, width: 20, height: 4, z: 5
+        });
         
-        // ── BEARD (if warrior or elder type) ──
-        if (chosenType === 'warrior' || (chosenType === 'seer' && random() > 0.5)) {
-            const beardGlyph = pick(FACE_GLYPHS.beard);
-            ctx.fillStyle = hairColor;
-            ctx.font = '16px Georgia, serif';
-            for (let y = 335; y < 370; y += 10) {
-                ctx.fillText(beardGlyph, 270, y);
-            }
+        // Lower lip — midtone
+        m.buildWall({
+            ...FontMason.mat('skin_midtone'),
+            x: CX - 8, y: CY + 35, width: 16, height: 5, z: 5
+        });
+        
+        // ── CHIN ──
+        m.buildWall({
+            ...FontMason.mat('skin_highlight'),
+            x: CX - 14, y: CY + 44, width: 28, height: 16, z: 4,
+            shape: 'circle'
+        });
+        
+        // Under-chin shadow
+        m.buildWall({
+            ...FontMason.mat('skin_shadow'),
+            x: CX - 16, y: CY + 56, width: 32, height: 10, z: 3
+        });
+        
+        // ── JAWLINE — shadow on the edges ──
+        m.buildWall({
+            ...FontMason.mat('skin_shadow'),
+            x: CX - 55, y: CY + 20, width: 12, height: 40, z: 2,
+            shape: 'circle'
+        });
+        m.buildWall({
+            ...FontMason.mat('skin_shadow'),
+            x: CX + 43, y: CY + 20, width: 12, height: 40, z: 2,
+            shape: 'circle'
+        });
+        
+        // ── HAIR ──
+        const hairOptions = chosenType === 'elder' ? ['grey','white'] : 
+                             chosenType === 'warrior' ? ['dark','brown','red'] :
+                             ['brown','dark','red'];
+        const hairMat = 'hair_' + pick(hairOptions);
+        
+        // Hair — top
+        m.buildWall({
+            ...FontMason.mat(hairMat),
+            x: CX - 60, y: CY - 100, width: 120, height: 30, z: 6,
+            shape: 'circle'
+        });
+        
+        // Hair — sides
+        m.buildWall({
+            ...FontMason.mat(hairMat),
+            x: CX - 62, y: CY - 70, width: 16, height: 120, z: 6
+        });
+        m.buildWall({
+            ...FontMason.mat(hairMat),
+            x: CX + 46, y: CY - 70, width: 16, height: 120, z: 6
+        });
+        
+        // Hair — top dome
+        m.buildWall({
+            ...FontMason.mat(hairMat),
+            x: CX - 50, y: CY - 110, width: 100, height: 24, z: 7
+        });
+        
+        // ── BEARD (warrior/elder) ──
+        if (chosenType === 'warrior' || chosenType === 'elder') {
+            m.buildWall({
+                ...FontMason.mat(hairMat),
+                x: CX - 20, y: CY + 52, width: 40, height: 30, z: 5,
+                shape: 'circle'
+            });
         }
         
         // ── HEADPIECE ──
-        if (chosenType === 'noble') {
-            ctx.fillStyle = trimColor;
-            ctx.font = '28px Georgia, serif';
-            ctx.fillText('◆', 286, 195);
-            ctx.fillText('◇', 270, 205);
-            ctx.fillText('◇', 315, 205);
-        } else if (chosenType === 'warrior') {
-            ctx.fillStyle = pick(palette.trim);
-            ctx.font = '22px Georgia, serif';
-            ctx.fillText('⌒', 280, 200);
-            ctx.fillText('◆', 290, 190);
-        } else if (chosenType === 'seer') {
-            ctx.fillStyle = trimColor;
-            ctx.font = '16px Georgia, serif';
-            const stars = '✧ ✦ ✧ ✦ ✧';
-            ctx.fillText(stars, 265, 200);
-        }
+        const hp = HEADPIECES[chosenType];
+        m.buildInscription({
+            text: hp.glyph, x: CX - (hp.size/2), y: CY - 118 + (hp.y || 0),
+            fontSize: hp.size, color: hp.color,
+            fontFamily: "'Georgia',serif", z: 8
+        });
         
-        // ── SIGNATURE GLYPH (bottom corner) ──
-        ctx.fillStyle = 'rgba(184,134,11,0.3)';
-        ctx.font = '12px Georgia, serif';
-        ctx.fillText('𐤇 𐤌 𐤐', 520, 760);
+        // ── SIGNATURE ──
+        m.buildInscription({
+            text: 'FONT · MASON · FECIT',
+            x: 340, y: 630,
+            fontSize: 5, color: 'rgba(184,134,11,0.3)',
+            fontFamily: "'Cinzel',serif", z: 9
+        });
         
         // ── UPDATE PLAQUE ──
-        const names = {
-            noble: ['Lady Elara of House Stone','Lord Aldric the Gilded','Countess Mira von Thal'],
-            warrior: ['Captain Sigurd Ironside','Shield-Maiden Freya','Warlord Torben'],
-            seer: ['Oracle Thalia','Seer Caspian the Far-Eyed','The Veiled Prophet'],
-            commoner: ['Agnar of the Fjord','Elda the Radish Farmer','Old Thora of Ealdor'],
-        };
-        const name = pick(names[chosenType]);
+        const name = pick(NAMES[chosenType]);
         document.getElementById('plaqueTitle').textContent = `Portrait of ${name}`;
-        document.getElementById('plaqueArtist').textContent = `Generated by the Font-Mason · ${chosenType.charAt(0).toUpperCase() + chosenType.slice(1)} Type · Ealdor Gallery`;
+        document.getElementById('plaqueArtist').textContent = `Built by the Font-Mason · ${chosenType.charAt(0).toUpperCase() + chosenType.slice(1)} Type · Ealdor Gallery`;
         
-        toast(`🎨 ${name}\n\nA new portrait materializes from the typographic ether. Each glyph placed by the Font-Mason's hand. Each composition unique. Each face a generative act.`);
+        toast(`🎨 ${name}\n\nA face constructed from ${chosenType} materials. Each glyph placed by the mason's hand. The skin is ${Object.keys(SKIN_MATERIALS).length} densities of shadow. The portrait is a generative act.`);
     }
 
     // ═══════════════════════════════════
