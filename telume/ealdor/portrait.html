@@ -3,70 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portrait · Font-Mason Figure Workshop</title>
+    <title>The Gallery · Generative Portraits · Ealdor</title>
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
             --void: #0a0806; --deep: #1a1410;
-            --stone: #3d362f; --stone-light: #5c5044;
             --parchment: #f4e4c1; --gold: #b8860b;
             --ember: #c44f1c; --water: #3a6b8c;
-            --wool-brown: #5c4a35; --wool-dark: #3d2b1f;
-            --linen: #d8d0b8; --leather: #4a3020;
-            --skin-warm: #6b5d4f; --skin-pale: #8b7d6b;
+            --frame: #3d362f; --frame-light: #5c4f42;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: var(--void);
             color: var(--parchment);
             font-family: 'Cormorant Garamond', Georgia, serif;
-            min-height: 100vh; display: flex;
-            flex-direction: column; align-items: center;
+            min-height: 100vh; overflow-x: hidden;
+            display: flex; flex-direction: column; align-items: center;
             background-image:
-                radial-gradient(ellipse at 50% 0%, rgba(196,79,28,0.04) 0%, transparent 60%),
-                radial-gradient(ellipse at 50% 100%, rgba(10,8,6,0.98) 0%, transparent 60%);
+                radial-gradient(ellipse at 50% 0%, rgba(184,134,11,0.04) 0%, transparent 60%);
         }
 
-        .workshop-header {
-            text-align: center; padding: 2rem 1rem 1rem;
+        /* ── GALLERY HEADER ── */
+        .gallery-header {
+            text-align: center; padding: 1.5rem 1rem 0.5rem;
+            position: relative; z-index: 10;
         }
-        .workshop-title {
+        .gallery-title {
             font-family: 'UnifrakturMaguntia', cursive;
-            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-size: clamp(1.4rem, 3.5vw, 2rem);
             color: var(--gold); letter-spacing: 4px;
             text-shadow: 0 0 20px rgba(184,134,11,0.2);
         }
-        .workshop-sub {
-            font-family: 'Cinzel', serif; font-size: 0.5rem;
+        .gallery-sub {
+            font-family: 'Cinzel', serif; font-size: 0.45rem;
             letter-spacing: 5px; color: #8b7d6b;
             text-transform: uppercase; margin-top: 0.3rem;
         }
 
-        /* ── FIGURE STAGE ── */
-        #portrait-stage {
-            position: relative; width: 400px; max-width: 90vw;
-            height: 500px; margin: 1rem auto;
-            background: radial-gradient(ellipse at 50% 80%, rgba(26,20,16,0.8) 0%, var(--void) 70%);
-            border: 2px solid #2a2520; border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 0 60px rgba(0,0,0,0.5);
+        /* ── CONTROLS ── */
+        .gallery-controls {
+            display: flex; gap: 10px; justify-content: center;
+            padding: 0.8rem; position: relative; z-index: 10;
+        }
+        .gallery-btn {
+            font-family: 'Cinzel', serif; font-size: 0.5rem;
+            letter-spacing: 3px; text-transform: uppercase;
+            padding: 8px 18px; border-radius: 4px;
+            border: 1px solid #3d362f; background: rgba(26,20,16,0.7);
+            color: #8b7d6b; cursor: pointer; transition: all 0.3s;
+        }
+        .gallery-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(184,134,11,0.08); }
+        .gallery-btn.primary { border-color: var(--gold); color: var(--gold); }
+
+        /* ── CANVAS ── */
+        #painting-canvas {
+            display: block; margin: 0 auto;
+            max-width: 98vw; border: 8px solid var(--frame);
+            box-shadow: 
+                0 0 0 2px var(--frame-light),
+                0 0 0 10px var(--deep),
+                0 0 60px rgba(0,0,0,0.6),
+                0 0 120px rgba(0,0,0,0.3),
+                inset 0 0 40px rgba(0,0,0,0.2);
+            image-rendering: pixelated;
         }
 
-        /* ── CONTROLS ── */
-        .controls {
-            display: flex; flex-wrap: wrap; gap: 8px;
-            justify-content: center; padding: 1rem;
-            max-width: 600px; margin: 0 auto;
+        /* ── PLAQUE ── */
+        .plaque {
+            text-align: center; padding: 0.8rem;
+            font-family: 'Cinzel', serif; max-width: 600px;
+            position: relative; z-index: 10;
         }
-        .ctrl-btn {
-            font-family: 'Cinzel', serif; font-size: 0.5rem;
-            letter-spacing: 2px; text-transform: uppercase;
-            padding: 6px 14px; border-radius: 4px;
-            border: 1px solid #2a2520; background: rgba(26,20,16,0.6);
-            color: #8b7d6b; cursor: pointer; transition: all 0.2s;
+        .plaque-title {
+            font-size: 0.7rem; letter-spacing: 4px;
+            color: var(--gold); text-transform: uppercase;
         }
-        .ctrl-btn:hover { border-color: var(--gold); color: var(--gold); }
-        .ctrl-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(184,134,11,0.1); }
+        .plaque-artist {
+            font-size: 0.45rem; letter-spacing: 3px;
+            color: #8b7d6b; margin-top: 0.3rem;
+        }
 
         /* ── TOAST ── */
         #toast {
@@ -80,320 +95,295 @@
         }
         #toast.show { opacity: 1; }
 
-        @keyframes gentleSway { 0%,100%{transform:translateX(0)} 50%{transform:translateX(2px)} }
-        @keyframes breathe { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(1.02)} }
-        @keyframes sparkFade { 0%{transform:scale(0.5);opacity:1} 100%{transform:scale(2.5);opacity:0} }
+        @keyframes sparkFade {
+            0%{transform:scale(0.5);opacity:1} 100%{transform:scale(2.5);opacity:0}
+        }
     </style>
 </head>
 <body>
 
-    <div class="workshop-header">
-        <h1 class="workshop-title">The Portrait Workshop</h1>
-        <p class="workshop-sub">Font-Mason Figure Craft</p>
+    <div class="gallery-header">
+        <h1 class="gallery-title">The Generative Gallery</h1>
+        <p class="gallery-sub">Portraits Rendered in the Font-Mason's Craft</p>
     </div>
 
-    <div id="portrait-stage"></div>
+    <div class="gallery-controls">
+        <button class="gallery-btn primary" onclick="generatePortrait()">⟳ New Portrait</button>
+        <button class="gallery-btn" onclick="generatePortrait('noble')">👑 Noble</button>
+        <button class="gallery-btn" onclick="generatePortrait('warrior')">⚔️ Warrior</button>
+        <button class="gallery-btn" onclick="generatePortrait('seer')">🔮 Seer</button>
+        <button class="gallery-btn" onclick="generatePortrait('commoner')">🧑 Commoner</button>
+    </div>
 
-    <div class="controls" id="controls">
-        <button class="ctrl-btn active" data-figure="fisherman">🎣 Fisherman</button>
-        <button class="ctrl-btn" data-figure="farmer">🌾 Farmer</button>
-        <button class="ctrl-btn" data-figure="brother">🧘 Brother</button>
-        <button class="ctrl-btn" data-figure="guard">⚔️ Guard</button>
-        <button class="ctrl-btn" data-figure="elder">📜 Elder</button>
-        <button class="ctrl-btn" data-figure="child">🧒 Child</button>
+    <canvas id="painting-canvas" width="600" height="800"></canvas>
+
+    <div class="plaque">
+        <div class="plaque-title" id="plaqueTitle">Portrait of a Citizen</div>
+        <div class="plaque-artist" id="plaqueArtist">Attributed to the Font-Mason · Ealdor Gallery</div>
     </div>
 
     <div id="toast"></div>
 
-    <script src="js/font-mason.js"></script>
     <script>
     /*
      * ═══════════════════════════════════════════════════════
-     * PORTRAIT WORKSHOP · Font-Mason Figure System
-     * Build a person from typography.
+     * THE GENERATIVE GALLERY · Portrait Renderer
+     * Each portrait is a unique composition of typography.
+     * No two are alike. Each is a generative act.
      * ═══════════════════════════════════════════════════════
      */
 
     const toastEl = document.getElementById('toast');
-    let toastTimer;
-    function toast(msg, d = 2400) {
+    function toast(msg) {
         toastEl.textContent = msg; toastEl.classList.add('show');
-        clearTimeout(toastTimer); toastTimer = setTimeout(() => toastEl.classList.remove('show'), d);
+        setTimeout(() => toastEl.classList.remove('show'), 2400);
     }
 
+    const canvas = document.getElementById('painting-canvas');
+    const ctx = canvas.getContext('2d');
+    const W = 600, H = 800;
+
     // ═══════════════════════════════════
-    // FIGURE DEFINITIONS
+    // SEEDED RANDOM — same portrait if you go back
     // ═══════════════════════════════════
 
-    const FIGURES = {
-        fisherman: {
-            name: 'Agnar', role: 'Fisherman',
-            head: { type:'glyph', char:'🎣', size:22, color:'#f4e4c1', offsetY:0 },
-            body: { material:'wool_dark', width:24, height:40, color:'#4a3528' },
-            robe: { material:'wool_brown', width:34, height:50, color:'#5c4a35' },
-            tool: { type:'pillar', x:18, y:18, width:3, height:50, color:'#3d2b1f', label:'Rod' },
-            tool2: { type:'inscription', text:'│', x:19, y:-15, size:20, color:'#3d2b1f' },
-            animation: 'gentleSway 4s ease-in-out infinite',
-            dialogue: 'The fjord is cold today. Fish are deep. But the ice is coming — I can feel it.'
-        },
-        farmer: {
-            name: 'Elda', role: 'Farmer',
-            head: { type:'glyph', char:'🌾', size:20, color:'#e8c878', offsetY:0 },
-            body: { material:'wool_brown', width:22, height:36, color:'#5c4a35' },
-            robe: { material:'linen_pale', width:30, height:46, color:'#d8d0b8' },
-            tool: { type:'inscription', text:'╎', x:14, y:14, size:22, color:'#6a8a4a', label:'Hoe' },
-            tool2: { type:'inscription', text:'▬', x:10, y:18, size:10, color:'#4a3020' },
-            hat: { type:'inscription', text:'⌒', x:0, y:-12, size:16, color:'#8b7d6b' },
-            animation: 'breathe 3s ease-in-out infinite',
-            dialogue: 'The radishes are doing well. Take what you need. Leave what you can.'
-        },
-        brother: {
-            name: 'Silent Brother', role: 'Keeper of the Coal',
-            head: { type:'circle', size:18, color:'#2a2018', offsetY:0 },
-            hood: { type:'circle', size:26, color:'#1a1410', offsetY:-2 },
-            body: { material:'wool_dark', width:20, height:38, color:'#3d362f' },
-            robe: { material:'deep_stone', width:36, height:54, color:'#2a2520' },
-            animation: 'breathe 6s ease-in-out infinite',
-            dialogue: '...'
-        },
-        guard: {
-            name: 'Sigurd', role: 'Harbor Watch',
-            head: { type:'glyph', char:'⚔️', size:18, color:'#d8d0c8', offsetY:0 },
-            body: { material:'iron_dark', width:22, height:42, color:'#3d362f' },
-            robe: { material:'storm_grey', width:32, height:52, color:'#4a4550' },
-            tool: { type:'pillar', x:16, y:10, width:4, height:44, color:'#6b5d4f', label:'Spear' },
-            helm: { type:'inscription', text:'⌒', x:0, y:-14, size:20, color:'#6b5d4f' },
-            animation: 'none',
-            dialogue: 'Nothing moves on the ice. Nothing will. The Watch stands.'
-        },
-        elder: {
-            name: 'Thora', role: 'Elder',
-            head: { type:'glyph', char:'📜', size:18, color:'#f4e4c1', offsetY:0 },
-            body: { material:'wool_dark', width:18, height:32, color:'#4a3f35' },
-            robe: { material:'linen_pale', width:28, height:44, color:'#c8c0b8' },
-            staff: { type:'pillar', x:14, y:0, width:4, height:50, color:'#5c4f42', label:'Staff' },
-            hair: { type:'inscription', text:'≈≈≈', x:-6, y:-14, size:10, color:'#a09888' },
-            animation: 'gentleSway 5s ease-in-out infinite',
-            dialogue: 'I remember the winter of 3440. This is nothing. Light the fire and wait.'
-        },
-        child: {
-            name: 'Kari', role: 'Netmender\'s Child',
-            head: { type:'glyph', char:'🧒', size:16, color:'#f4e4c1', offsetY:0 },
-            body: { material:'wool_brown', width:12, height:20, color:'#5c4a35' },
-            robe: { material:'linen_pale', width:18, height:26, color:'#d8d0b8' },
-            animation: 'gentleSway 2s ease-in-out infinite',
-            dialogue: 'My father says the ice will break soon. He says the fish are waiting underneath.'
-        }
+    let seed = Date.now();
+    function random() {
+        seed = (seed * 1664525 + 1013904223) & 0xffffffff;
+        return (seed >>> 0) / 0xffffffff;
+    }
+    function randInt(min, max) { return Math.floor(random() * (max - min + 1)) + min; }
+    function pick(arr) { return arr[Math.floor(random() * arr.length)]; }
+
+    // ═══════════════════════════════════
+    // COLOR PALETTES
+    // ═══════════════════════════════════
+
+    const PALETTES = {
+        noble:    { bg:['#1a1410','#1a1814','#141210'], skin:['#6b5d4f','#7a6b5c'], robe:['#4a1040','#6b1860','#3a0830'], trim:['#b8860b','#d4af37'], hair:['#2a2018','#3d3028','#1a1410'] },
+        warrior:  { bg:['#14181a','#101418','#181410'], skin:['#5c4f42','#6b5d4f'], robe:['#2a3540','#3d4a55','#1a2530'], trim:['#6b7b8b','#8b9baa'], hair:['#1a1814','#2a2520'] },
+        seer:     { bg:['#0a0f14','#0a0c10','#0f141a'], skin:['#5c5044','#6b5d4f'], robe:['#1a2a3a','#2a3a5a','#1a1a3a'], trim:['#3a6b8c','#5a8ab8'], hair:['#8b7d6b','#a09080','#c8c0b0'] },
+        commoner: { bg:['#1a1810','#1a1610','#141210'], skin:['#5c4f42','#6b5d4f'], robe:['#3d3028','#4a3a30','#5c4a3a'], trim:['#6b5d4f','#8b7d6b'], hair:['#2a2018','#3d3028','#5c4a35'] },
     };
 
     // ═══════════════════════════════════
-    // BUILD FIGURE
+    // TYPOGRAPHIC ELEMENTS
     // ═══════════════════════════════════
 
-    function buildFigure(figureId) {
-        const stage = document.getElementById('portrait-stage');
-        stage.innerHTML = '';
+    const FACE_GLYPHS = {
+        eyes:    ['◉','◎','◈','◆','◇','⊙','◯','⬤'],
+        nose:    ['◂','◃','▸','▹','┃','╎','│'],
+        mouth:   ['▂','▃','▅','▁','⌣','⌢','▔','—'],
+        brow:    ['⌒','⌢','—','˜','˘'],
+        cheek:   ['( ',')','·','∘'],
+        beard:   ['≈','≋','~','∿','﹏'],
+    };
+
+    const ROBE_PATTERNS = [
+        '▓▒░▓▒░▓▒░▓▒░▓▒░▓',
+        '▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬',
+        '║╎│╎║╎│╎║╎│╎║╎│',
+        '◆◇◆◇◆◇◆◇◆◇◆◇◆◇',
+        '▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚',
+    ];
+
+    const BACKGROUND_PATTERNS = [
+        '· ✦ · ✧ · ✦ · ✧ · ✦',
+        '○ ◌ ○ ◌ ○ ◌ ○ ◌ ○',
+        '⌒ ⌣ ⌒ ⌣ ⌒ ⌣ ⌒ ⌣ ⌒',
+    ];
+
+    // ═══════════════════════════════════
+    // GENERATE PORTRAIT
+    // ═══════════════════════════════════
+
+    function generatePortrait(type) {
+        seed = Date.now();
+        const types = ['noble','warrior','seer','commoner'];
+        const chosenType = type || pick(types);
+        const palette = PALETTES[chosenType];
         
-        const fig = FIGURES[figureId];
-        if (!fig) return;
+        // ── BACKGROUND ──
+        const bgColor = pick(palette.bg);
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(0, 0, W, H);
         
-        const cx = 200; // center X
-        const baseY = 320; // feet position
-        
-        // ── SHADOW ──
-        const shadow = document.createElement('div');
-        shadow.style.cssText = `
-            position:absolute; left:${cx - 22}px; top:${baseY + fig.robe.height - 8}px;
-            width:44px; height:8px; background:rgba(0,0,0,0.4);
-            border-radius:50%; pointer-events:none; z-index:0;
-        `;
-        stage.appendChild(shadow);
-        
-        // ── TOOL / STAFF (behind figure) ──
-        if (fig.tool) {
-            const tool = buildFigurePart(fig.tool, cx, baseY, fig, 'tool');
-            if (tool) stage.appendChild(tool);
+        // Background texture — scattered glyphs
+        const bgPattern = pick(BACKGROUND_PATTERNS);
+        ctx.fillStyle = 'rgba(255,255,255,0.03)';
+        ctx.font = '14px Georgia, serif';
+        for (let i = 0; i < 20; i++) {
+            const bx = random() * W;
+            const by = random() * H;
+            ctx.fillText(bgPattern[Math.floor(random() * bgPattern.length)], bx, by);
         }
         
-        // ── ROBE ──
-        if (fig.robe) {
-            const robe = document.createElement('div');
-            const height = fig.robe.height || 50;
-            robe.style.cssText = `
-                position:absolute;
-                left:${cx - (fig.robe.width / 2)}px;
-                top:${baseY - height + 14}px;
-                width:${fig.robe.width}px; height:${height}px;
-                background:linear-gradient(180deg, ${fig.robe.color || '#5c4a35'} 0%, ${fig.body?.color || '#3d362f'} 100%);
-                border-radius:${fig.robe.width/2}px ${fig.robe.width/2}px 4px 4px;
-                z-index:1;
-                box-shadow:inset 0 2px 4px rgba(255,255,255,0.04), 0 2px 8px rgba(0,0,0,0.3);
-                ${fig.animation ? `animation:${fig.animation};` : ''}
-            `;
-            // Texture lines on robe
-            for (let i = 0; i < 3; i++) {
-                const line = document.createElement('div');
-                line.style.cssText = `
-                    position:absolute; left:6px; right:6px;
-                    top:${10 + i * 14}px; height:1px;
-                    background:rgba(255,255,255,0.04);
-                    border-radius:1px;
-                `;
-                robe.appendChild(line);
+        // ── FRAME INNER SHADOW ──
+        const frameGrad = ctx.createRadialGradient(W/2, H/2, 200, W/2, H/2, 500);
+        frameGrad.addColorStop(0, 'transparent');
+        frameGrad.addColorStop(1, 'rgba(0,0,0,0.5)');
+        ctx.fillStyle = frameGrad;
+        ctx.fillRect(0, 0, W, H);
+        
+        // ── SHOULDERS / ROBE ──
+        const robeColor = pick(palette.robe);
+        const robePattern = pick(ROBE_PATTERNS);
+        
+        // Robe fill — arch shape
+        ctx.fillStyle = robeColor;
+        ctx.beginPath();
+        ctx.moveTo(50, H);
+        ctx.quadraticCurveTo(150, 480, 300, 420);
+        ctx.quadraticCurveTo(450, 480, 550, H);
+        ctx.fill();
+        
+        // Robe texture lines
+        ctx.fillStyle = 'rgba(255,255,255,0.04)';
+        ctx.font = '16px monospace';
+        for (let y = 440; y < H; y += 22) {
+            const width = 100 + (y - 440) * 1.4;
+            const chars = Math.floor(width / 10);
+            let line = '';
+            for (let c = 0; c < chars; c++) {
+                line += robePattern[c % robePattern.length];
             }
-            stage.appendChild(robe);
+            ctx.fillText(line, 300 - width/2, y);
         }
         
-        // ── HOOD ──
-        if (fig.hood) {
-            const hood = document.createElement('div');
-            const hoodSize = fig.hood.size || 30;
-            hood.style.cssText = `
-                position:absolute;
-                left:${cx - hoodSize/2}px;
-                top:${baseY - fig.robe.height - hoodSize/2 + 22}px;
-                width:${hoodSize}px; height:${hoodSize + 8}px;
-                background:radial-gradient(ellipse at 50% 60%, ${fig.hood.color || '#1a1410'} 0%, #0a0806 100%);
-                border-radius:50% 50% 30% 30%;
-                z-index:2;
-                box-shadow:inset 0 -4px 8px rgba(0,0,0,0.5);
-            `;
-            stage.appendChild(hood);
+        // Robe trim
+        const trimColor = pick(palette.trim);
+        ctx.fillStyle = trimColor;
+        ctx.font = '20px Cinzel, serif';
+        const trimPattern = '◆ ◇ ◆ ◇ ◆ ◇ ◆ ◇ ◆ ◇ ◆';
+        for (let y = 440; y < H; y += 28) {
+            ctx.fillText(trimPattern, 300 - 120, y);
+            ctx.fillText(trimPattern, 300 + 40, y);
         }
+        
+        // Collar
+        ctx.fillStyle = trimColor;
+        ctx.font = '24px Georgia, serif';
+        ctx.fillText('⌒', 278, 430);
+        ctx.fillText('⌒', 308, 430);
+        
+        // ── NECK ──
+        const skinColor = pick(palette.skin);
+        ctx.fillStyle = skinColor;
+        ctx.fillRect(282, 350, 36, 50);
         
         // ── HEAD ──
-        if (fig.head) {
-            const head = document.createElement('div');
-            const headSize = fig.head.size || 18;
-            
-            if (fig.head.type === 'glyph') {
-                head.textContent = fig.head.char;
-                head.style.cssText = `
-                    position:absolute;
-                    left:${cx - headSize/2}px;
-                    top:${baseY - fig.robe.height - headSize/2 + (fig.head.offsetY || 0) + 18}px;
-                    width:${headSize + 4}px; height:${headSize + 4}px;
-                    font-size:${headSize}px; color:${fig.head.color || '#f4e4c1'};
-                    text-align:center; line-height:${headSize + 4}px;
-                    z-index:3; pointer-events:none;
-                    filter:drop-shadow(0 2px 3px rgba(0,0,0,0.4));
-                `;
-            } else if (fig.head.type === 'circle') {
-                head.style.cssText = `
-                    position:absolute;
-                    left:${cx - headSize/2}px;
-                    top:${baseY - fig.robe.height - headSize/2 + (fig.head.offsetY || 0) + 18}px;
-                    width:${headSize}px; height:${headSize}px;
-                    background:radial-gradient(circle at 40% 35%, ${fig.head.color || '#5c4f42'} 0%, #2a2018 100%);
-                    border-radius:50%; z-index:3;
-                    box-shadow:0 2px 4px rgba(0,0,0,0.4);
-                `;
-            }
-            stage.appendChild(head);
-        }
+        ctx.fillStyle = skinColor;
+        ctx.beginPath();
+        ctx.ellipse(300, 280, 70, 85, 0, 0, Math.PI * 2);
+        ctx.fill();
         
-        // ── HAT / HELM ──
-        if (fig.hat) {
-            const hat = document.createElement('div');
-            hat.textContent = fig.hat.text;
-            hat.style.cssText = `
-                position:absolute;
-                left:${cx + (fig.hat.x || 0) - 10}px;
-                top:${baseY - fig.robe.height + (fig.hat.y || 0) + 6}px;
-                font-size:${fig.hat.size || 14}px; color:${fig.hat.color};
-                z-index:4; pointer-events:none; font-family:Georgia,serif;
-            `;
-            stage.appendChild(hat);
-        }
+        // Head outline
+        ctx.strokeStyle = 'rgba(0,0,0,0.3)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
         
         // ── HAIR ──
-        if (fig.hair) {
-            const hair = document.createElement('div');
-            hair.textContent = fig.hair.text;
-            hair.style.cssText = `
-                position:absolute;
-                left:${cx + (fig.hair.x || 0) - 10}px;
-                top:${baseY - fig.robe.height + (fig.hair.y || 0) + 6}px;
-                font-size:${fig.hair.size || 10}px; color:${fig.hair.color};
-                z-index:4; pointer-events:none; font-family:Georgia,serif;
-            `;
-            stage.appendChild(hair);
+        const hairColor = pick(palette.hair);
+        ctx.fillStyle = hairColor;
+        ctx.font = 'bold 20px Georgia, serif';
+        const hairChars = '≈ ≋ ~ ∿ ﹏ ≈ ≋ ~ ∿';
+        for (let y = 200; y < 260; y += 12) {
+            const offset = Math.sin((y - 200) * 0.1) * 20;
+            ctx.fillText(hairChars, 230 + offset, y);
+        }
+        // Hair sides
+        ctx.font = '18px Georgia, serif';
+        for (let y = 240; y < 340; y += 14) {
+            ctx.fillText('≈≋≈', 225, y);
+            ctx.fillText('≈≋≈', 340, y);
         }
         
-        // ── TOOL2 (in front) ──
-        if (fig.tool2) {
-            const tool2 = buildFigurePart(fig.tool2, cx, baseY, fig, 'tool2');
-            if (tool2) stage.appendChild(tool2);
+        // ── EYES ──
+        const eyeGlyph = pick(FACE_GLYPHS.eyes);
+        ctx.fillStyle = pick(palette.bg);
+        ctx.font = '28px Georgia, serif';
+        ctx.fillText(eyeGlyph, 270, 275);
+        ctx.fillText(eyeGlyph, 312, 275);
+        
+        // Eye highlights
+        ctx.fillStyle = 'rgba(255,255,255,0.4)';
+        ctx.font = '10px Georgia, serif';
+        ctx.fillText('·', 274, 272);
+        ctx.fillText('·', 316, 272);
+        
+        // ── BROWS ──
+        const browGlyph = pick(FACE_GLYPHS.brow);
+        ctx.fillStyle = hairColor;
+        ctx.font = '22px Georgia, serif';
+        ctx.fillText(browGlyph, 265, 258);
+        ctx.fillText(browGlyph, 310, 258);
+        
+        // ── NOSE ──
+        const noseGlyph = pick(FACE_GLYPHS.nose);
+        ctx.fillStyle = 'rgba(0,0,0,0.2)';
+        ctx.font = '18px Georgia, serif';
+        ctx.fillText(noseGlyph, 296, 295);
+        
+        // ── MOUTH ──
+        const mouthGlyph = pick(FACE_GLYPHS.mouth);
+        ctx.fillStyle = 'rgba(0,0,0,0.35)';
+        ctx.font = '20px Georgia, serif';
+        ctx.fillText(mouthGlyph, 290, 325);
+        
+        // ── CHEEKS ──
+        if (random() > 0.5) {
+            ctx.fillStyle = 'rgba(196,79,28,0.12)';
+            ctx.font = '14px Georgia, serif';
+            ctx.fillText('(', 258, 295);
+            ctx.fillText(')', 335, 295);
         }
         
-        // ── CLICK INTERACTION ──
-        const zone = document.createElement('div');
-        zone.style.cssText = `
-            position:absolute; left:${cx - 40}px; top:${baseY - fig.robe.height - 20}px;
-            width:80px; height:${fig.robe.height + 40}px;
-            z-index:10; cursor:pointer;
-        `;
-        zone.title = `${fig.name} · ${fig.role}`;
-        zone.addEventListener('click', () => {
-            const d = fig.dialogue;
-            const line = Array.isArray(d) ? d[Math.floor(Math.random() * d.length)] : d;
-            toast(`${fig.head?.char || ''} ${fig.name} (${fig.role}):\n\n"${line}"`);
-        });
-        stage.appendChild(zone);
-        
-        // ── NAME LABEL ──
-        const label = document.createElement('div');
-        label.style.cssText = `
-            position:absolute; left:${cx - 50}px;
-            top:${baseY + 10}px; width:100px;
-            text-align:center; font-family:'Cinzel',serif;
-            font-size:7px; letter-spacing:2px;
-            color:rgba(139,125,107,0.6); z-index:5;
-            pointer-events:none;
-        `;
-        label.textContent = fig.name.toUpperCase();
-        stage.appendChild(label);
-        
-        // ── ROLE LABEL ──
-        const roleLabel = document.createElement('div');
-        roleLabel.style.cssText = `
-            position:absolute; left:${cx - 50}px;
-            top:${baseY + 20}px; width:100px;
-            text-align:center; font-family:'Cinzel',serif;
-            font-size:5px; letter-spacing:3px;
-            color:rgba(139,125,107,0.35); z-index:5;
-            pointer-events:none; text-transform:uppercase;
-        `;
-        roleLabel.textContent = fig.role;
-        stage.appendChild(roleLabel);
-    }
-
-    function buildFigurePart(part, cx, baseY, fig, key) {
-        const el = document.createElement('div');
-        const px = cx + (part.x || 0);
-        const py = baseY - (fig.robe?.height || 40) + (part.y || 0);
-        
-        if (part.type === 'pillar') {
-            el.style.cssText = `
-                position:absolute;
-                left:${px - (part.width/2)}px; top:${py}px;
-                width:${part.width}px; height:${part.height}px;
-                background:linear-gradient(180deg, ${part.color} 0%, ${part.color}dd 100%);
-                border-radius:2px; z-index:${key==='tool'?0:4};
-                pointer-events:none;
-                box-shadow:0 1px 3px rgba(0,0,0,0.3);
-            `;
-        } else if (part.type === 'inscription') {
-            el.textContent = part.text;
-            el.style.cssText = `
-                position:absolute;
-                left:${px - 6}px; top:${py}px;
-                font-size:${part.size || 12}px; color:${part.color};
-                z-index:${key==='tool'?0:4}; pointer-events:none;
-                font-family:monospace;
-            `;
+        // ── BEARD (if warrior or elder type) ──
+        if (chosenType === 'warrior' || (chosenType === 'seer' && random() > 0.5)) {
+            const beardGlyph = pick(FACE_GLYPHS.beard);
+            ctx.fillStyle = hairColor;
+            ctx.font = '16px Georgia, serif';
+            for (let y = 335; y < 370; y += 10) {
+                ctx.fillText(beardGlyph, 270, y);
+            }
         }
-        return el;
+        
+        // ── HEADPIECE ──
+        if (chosenType === 'noble') {
+            ctx.fillStyle = trimColor;
+            ctx.font = '28px Georgia, serif';
+            ctx.fillText('◆', 286, 195);
+            ctx.fillText('◇', 270, 205);
+            ctx.fillText('◇', 315, 205);
+        } else if (chosenType === 'warrior') {
+            ctx.fillStyle = pick(palette.trim);
+            ctx.font = '22px Georgia, serif';
+            ctx.fillText('⌒', 280, 200);
+            ctx.fillText('◆', 290, 190);
+        } else if (chosenType === 'seer') {
+            ctx.fillStyle = trimColor;
+            ctx.font = '16px Georgia, serif';
+            const stars = '✧ ✦ ✧ ✦ ✧';
+            ctx.fillText(stars, 265, 200);
+        }
+        
+        // ── SIGNATURE GLYPH (bottom corner) ──
+        ctx.fillStyle = 'rgba(184,134,11,0.3)';
+        ctx.font = '12px Georgia, serif';
+        ctx.fillText('𐤇 𐤌 𐤐', 520, 760);
+        
+        // ── UPDATE PLAQUE ──
+        const names = {
+            noble: ['Lady Elara of House Stone','Lord Aldric the Gilded','Countess Mira von Thal'],
+            warrior: ['Captain Sigurd Ironside','Shield-Maiden Freya','Warlord Torben'],
+            seer: ['Oracle Thalia','Seer Caspian the Far-Eyed','The Veiled Prophet'],
+            commoner: ['Agnar of the Fjord','Elda the Radish Farmer','Old Thora of Ealdor'],
+        };
+        const name = pick(names[chosenType]);
+        document.getElementById('plaqueTitle').textContent = `Portrait of ${name}`;
+        document.getElementById('plaqueArtist').textContent = `Generated by the Font-Mason · ${chosenType.charAt(0).toUpperCase() + chosenType.slice(1)} Type · Ealdor Gallery`;
+        
+        toast(`🎨 ${name}\n\nA new portrait materializes from the typographic ether. Each glyph placed by the Font-Mason's hand. Each composition unique. Each face a generative act.`);
     }
 
     // ═══════════════════════════════════
@@ -401,20 +391,10 @@
     // ═══════════════════════════════════
 
     function init() {
-        buildFigure('fisherman');
+        generatePortrait();
         
-        // Control buttons
-        document.querySelectorAll('.ctrl-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.ctrl-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                buildFigure(btn.dataset.figure);
-            });
-        });
-        
-        // Ambient sparks
         document.addEventListener('click', (e) => {
-            if (Math.random() > 0.7 && !e.target.closest('.ctrl-btn')) {
+            if (Math.random() > 0.75 && !e.target.closest('button')) {
                 const spark = document.createElement('div');
                 spark.style.cssText = `
                     position:fixed; left:${e.clientX}px; top:${e.clientY}px;
@@ -427,8 +407,16 @@
                 setTimeout(() => spark.remove(), 1300);
             }
         });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && !e.target.closest('input,textarea')) {
+                e.preventDefault();
+                generatePortrait();
+            }
+        });
     }
 
+    window.generatePortrait = generatePortrait;
     init();
     </script>
 </body>
