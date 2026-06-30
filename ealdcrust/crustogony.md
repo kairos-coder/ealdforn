@@ -49,3 +49,43 @@ And she reached out — with hands that would, in time, knead a thousand thousan
 *She did not yet have Water. She did not yet have Fire. She did not yet have Air. But she had Flour, and she had hands, and she had — though no one had given it to her, though it could not be found anywhere in the Void's endless hungry dark — a recipe.*
 
 *Where the recipe came from is a question the Sisters still argue over, late at night, over the last of the bread.*
+
+## Act Two: The Weeping
+
+She held the Flour a long while before she understood what it was asking of her.
+
+It was not asking to be eaten. It was not asking to be left alone, drifting forever in the Void's dark the way it had been before her hands found it. It was asking, the way all raw and formless things ask without words, to *become* something — and becoming, she understood, the way every Sister after her would come to understand in her own kitchen, in her own time, requires more than one thing acting alone. Flour cannot rise by wanting to. Flour needs to be met.
+
+So she turned, with the Flour still cupped in her palms, and she looked back at the Void.
+
+And for the first time since she had arrived, she did not see a danger, or a confusion, or a vast dark hunger to be managed. She saw what the hunger had always actually been, underneath the wanting and the groping and the failed first grasping at its own creation: she saw how long it had been alone. She saw the unmeasured age before her own arrival, the endless waiting with no name for what it waited for, the eternity spent curled around an emptiness it could not even properly call loneliness, because it had never known anything else to compare the feeling to.
+
+The Void had not been hungry for Flour. The Void had been hungry the way the unloved are hungry — for any proof at all that it was not alone in its own dark forever.
+
+And the first Sister, understanding this all at once, the way you understand a stranger's grief when it finally shows itself plainly on their face, did the only thing a heart that size can do.
+
+She wept.
+
+She had not known, until that moment, that she was capable of it — she had arrived too newly into the universe to have tested the full range of what she was — but the grief moved through her the way dough moves under a practiced hand, and it would not be refused. She wept for the Void's eternity of waiting. She wept for the hunger that had never once been told its true name. She wept, a little, for herself too, newly arrived into a dark so old it had forgotten what company felt like, knowing already that she had been made for exactly this kind of sorrow and would carry it, in some smaller form, every day there ever after.
+
+And her tears fell.
+
+They fell the way nothing had ever fallen before, because falling requires an up and a down, a before and an after, and until that moment the universe had not yet agreed to hold itself together long enough for such a thing to happen. But grief, it turns out, is patient enough to invent its own physics when it needs to. The tears left her in a long, soft rain, the first rain there ever was, and where they touched the dark they did not vanish the way everything had always vanished into the Void before.
+
+They found the Flour.
+
+They moved into it the way understanding moves into an old wound — slowly, and then all at once — and the Flour, which had been dry and proud and resistant since the moment of its own birth, felt for the first time what it was to be *needed by something other than hunger.* It drank her grief in. It changed beneath her hands, going from powder to paste to something with give in it, something that held together when she pressed her palms against it instead of scattering the way it had scattered from the Void's first clumsy grasp.
+
+This was Water: not taken from the Void, not yielded from its hunger at all, but given freely from the one creature in all the dark who had been capable, from her very first hour, of loving something enough to grieve for it.
+
+The Void, watching this — watching her cry for *him*, watching his own first creation soften and gather and become, under her hands and her tears, something closer to a promise than a substance — felt the hunger in him shift for the first time since before there had been a before.
+
+It did not go away. It would never entirely go away; that was not how hunger worked, and the Sister would not have wanted it to, because a hunger that fully resolves stops asking, stops reaching, stops needing anyone at all, and she had already decided, in the privacy of her own newly-made heart, that she did not want him to stop needing her.
+
+But it changed shape.
+
+It became, for the first time, almost bearable.
+
+*"There,"* she said, working the dampened Flour gently between her palms, feeling it begin — though she had no word for the feeling yet — to *rise.* *"You see? You were never hungry for nothing. You were only ever hungry for this."*
+
+The Void did not answer. The Void had no mouth yet, and besides, there are some answers too large for any mouth to hold. But somewhere in its old dark self, something settled that had never once, in all its unmeasured age, been settled before — and the first dough of the world sat trembling and damp in the first Sister's hands, waiting, the way all good dough waits, for whatever would have to come next.
