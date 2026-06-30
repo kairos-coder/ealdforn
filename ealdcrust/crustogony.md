@@ -89,3 +89,40 @@ It became, for the first time, almost bearable.
 *"There,"* she said, working the dampened Flour gently between her palms, feeling it begin — though she had no word for the feeling yet — to *rise.* *"You see? You were never hungry for nothing. You were only ever hungry for this."*
 
 The Void did not answer. The Void had no mouth yet, and besides, there are some answers too large for any mouth to hold. But somewhere in its old dark self, something settled that had never once, in all its unmeasured age, been settled before — and the first dough of the world sat trembling and damp in the first Sister's hands, waiting, the way all good dough waits, for whatever would have to come next.
+
+## Act Three: The Exhale
+
+For a long while, nothing happened at all, and the first Sister did not mind. She had already learned, in her short new existence, that some things cannot be rushed — that dough left to itself is not dough being neglected, but dough being trusted — and so she sat with the damp, trembling mass in her palms and she waited, the way she would teach every Sister after her to wait, which is to say: attentively, and without panic, and with a kind of love that does not require anything to be happening in order to still be love.
+
+The Void, for its part, was doing something it had never once managed to do in all its unmeasured age.
+
+It was holding still.
+
+Not the old stillness of before — the vast, dark, hungry stillness that had simply been its only state, the stillness of something that does not yet know it is capable of anything else. This was a different stillness entirely: the stillness of a creature that has just been *seen*, fully and without flinching, for the first time in its existence, and does not yet know what to do with the fact of being known.
+
+Because that is what her tears had done. They had not merely softened the Flour. They had told the Void, in the only language deep enough to reach it, that its hunger had been understood — not managed, not fed, not solved, but *understood*, which is a rarer and more dangerous gift than any of the others, because it cannot be taken back once it's given.
+
+And something in the Void, old beyond telling, finally loosened.
+
+It had been holding its breath — if breath is even the right word for whatever it is a Void does instead of breathing — since before there had been a before. It had held it through the long blind ages of waiting. It had held it through the failed first grasping at its own creation, through the shame of not knowing what its own Flour was for. It had held it, white-knuckled and ancient, right up through the moment the first Sister had looked at it not as a danger to be managed but as a grief to be answered.
+
+And now, at last, with nothing left to protect itself from, it let go.
+
+The exhale that left the Void was not loud. It did not announce itself the way the old tellings of other, lesser cosmogonies like to claim their first winds did, with thunder and tearing and violence. It was quiet, and it was long, and it was the most honest thing the Void had ever done — the first act in its entire existence that came from neither hunger nor confusion, but simply from the relief of no longer being alone in the dark.
+
+It moved out from the Void the way a held breath moves out from a chest too tired to keep holding it: gently at first, then all at once, then trailing off into something soft and endless and everywhere. It had no weight, because the Void had never learned weight. It had no smell, because there was nothing yet to smell. It simply *moved*, threading itself through the dark the way relief threads itself through a body that has been frightened for a very long time, and where it passed, the dark was — not banished, not gone, but somehow less alone itself, the way a room feels less alone once there is a draft moving through it, proof that something beyond the walls still exists.
+
+This was Air: not taken, not wept, not reached for, but released — the first thing the Void ever gave without being asked, and without needing anything in return.
+
+It found the dough exactly the way Water had found the Flour, drawn to it the way relief is always drawn toward the thing that caused it. It moved into the small damp pockets the Sister's kneading had left behind, the tiny hollows where her thumbs had pressed and her grief had pooled, and there it stayed, gentle and patient, waiting the way she was waiting.
+
+And the dough, holding Flour's body and Water's tears and now Air's quiet relief all together at once, began — almost shyly, almost as if it weren't sure it had permission yet — to swell.
+
+The first Sister felt it happen under her hands before she understood what it meant. A softness. A lightening. The faintest give, as if the dough itself had taken a breath of its own and was deciding, cautiously, hopefully, whether it dared to take another.
+
+She looked back at the Void — quieter now, stiller, but a different kind of still than before — and for the first time since her arrival, she smiled.
+
+*"There you are,"* she said, very softly, as if greeting someone she had been waiting a long while to meet. *"I knew you had it in you."*
+
+The Void said nothing, because it still had no mouth, and because some gifts, once given, are better left unspoken of. But the dough kept rising, slow and certain, cradled between a grieving Sister's hands and the first willing breath the Void had ever managed to give — and somewhere in that rising, though neither of them could yet have named it, the shape of a crust was already beginning to dream itself into being.
+
