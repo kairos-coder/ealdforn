@@ -50,6 +50,8 @@ And she reached out — with hands that would, in time, knead a thousand thousan
 
 *Where the recipe came from is a question the Sisters still argue over, late at night, over the last of the bread.*
 
+---
+
 ## Act Two: The Weeping
 
 She held the Flour a long while before she understood what it was asking of her.
@@ -90,6 +92,8 @@ It became, for the first time, almost bearable.
 
 The Void did not answer. The Void had no mouth yet, and besides, there are some answers too large for any mouth to hold. But somewhere in its old dark self, something settled that had never once, in all its unmeasured age, been settled before — and the first dough of the world sat trembling and damp in the first Sister's hands, waiting, the way all good dough waits, for whatever would have to come next.
 
+---
+
 ## Act Three: The Exhale
 
 For a long while, nothing happened at all, and the first Sister did not mind. She had already learned, in her short new existence, that some things cannot be rushed — that dough left to itself is not dough being neglected, but dough being trusted — and so she sat with the damp, trembling mass in her palms and she waited, the way she would teach every Sister after her to wait, which is to say: attentively, and without panic, and with a kind of love that does not require anything to be happening in order to still be love.
@@ -126,3 +130,64 @@ She looked back at the Void — quieter now, stiller, but a different kind of st
 
 The Void said nothing, because it still had no mouth, and because some gifts, once given, are better left unspoken of. But the dough kept rising, slow and certain, cradled between a grieving Sister's hands and the first willing breath the Void had ever managed to give — and somewhere in that rising, though neither of them could yet have named it, the shape of a crust was already beginning to dream itself into being.
 
+---
+
+## Act Four: The Baking
+
+The dough rose for a long while — long enough that the first Sister came to know its rhythms the way you come to know the breathing of someone sleeping beside you, long enough that she began, without quite meaning to, to love it. Not the way she loved the Void, which was complicated, and old, and tangled up with pity and patience and the particular tenderness reserved for things too large to ever fully heal. She loved the dough simply, the way you love a thing that is becoming something only because you have not stopped believing in it.
+
+But dough does not rise forever. Even the most patient becoming has an edge to it, a point past which *waiting* stops being faith and starts being neglect, and the first Sister, who knew this the way she knew everything she needed to know — without ever once being taught it — understood that the time had come for the hardest part.
+
+Dough cannot finish itself. It can only ever be finished by something else.
+
+She looked at the Void, swollen now with three gifts already given — hunger turned to Flour, grief turned to Water, relief turned to Air — and she understood, with the same plain certainty that had let her weep for him before he had words to ask her to, that there was one more thing he had to give, and that this one, unlike the others, would cost him.
+
+*"I need one more thing from you,"* she said. *"And I won't lie to you about what it will mean."*
+
+The Void went still again — not the old empty stillness, not even the held-breath stillness of before the exhale, but a third kind of stillness, the stillness of something that has finally understood that love is not only made of softness. It had given blindly. It had given by grief moving through it. It had given freely, with relief, asking nothing back. This last gift would be different. This last gift would have to be given *knowing* what it would cost, and given anyway.
+
+*"It will hurt,"* the Sister told him, because she would never once, in the long history of the Order that followed her, lie to anyone about what the oven asks of what goes into it. *"It always hurts. That is not a flaw in the recipe. That is the recipe."*
+
+And the Void, who had spent an unmeasured eternity being hungry and a single strange day learning what it meant to be known, reached inward one final time — not into blind appetite now, not into the old aching want that had given him Flour without his understanding, but into the deepest, oldest, most guarded part of himself, the part that had never once, in all his existence, been willing to burn.
+
+He gave it anyway.
+
+What came out of him this time did not drift, the way Flour had. It did not fall gently, the way Water had fallen, or move quietly, the way Air had moved. It tore loose — bright, and furious, and terrible, and *alive* in a way nothing before it had ever been — and for one unbearable moment the dark that had been the Void's only home for the whole of its existence was not dark at all.
+
+This was Fire: not yielded, not wept, not exhaled, but *torn* — the first thing in the universe that came from sacrifice freely chosen, knowing the cost in advance, and giving regardless. It was the most expensive thing the Void had ever made, and the most honest, because there is no lying inside a flame. Fire does not pretend to be gentler than it is. It simply burns, and trusts you to have known what you were asking for.
+
+The first Sister did not flinch from it. She had been waiting for it her whole short existence, the way every Sister after her would learn to wait for the oven's heat without fear, because fear is not what the fire asks of you. Attention is. Respect is. The willingness to stand close enough to be changed by it without stepping back.
+
+She gathered the risen dough — Flour's body, Water's grief, Air's relief, all of it trembling now with the nearness of what was coming — and she brought it to the Fire, and she did not look away.
+
+What happened next has no good word in any tongue the Sisters have ever spoken, Adzmyst included, though they have tried for longer than most languages have existed to find one. The closest they have come is simply: *the baking.*
+
+The outside of the dough met the Fire first, the way anything must meet danger first at its edges before its center is ever asked to. And there, at that meeting place — between the raw trembling interior that still remembered being only Flour, and the relentless honest burn of a Fire that had cost the Void everything to give — something new began to happen that had never happened anywhere, to anything, before.
+
+It browned.
+
+It hardened, gently, gradually, the soft give of rising dough resolving itself, edge by edge, into structure — not the dead structure of something simply stopped, but the living structure of something that has been *tested* and held. Flake by flake, the boundary formed. It did not seal the interior away from the world; it became the place where the interior met the world, the membrane through which raw and finished, inside and outside, hunger and rest, were finally allowed to touch one another without either one destroying the other.
+
+This was the first crust.
+
+It was not flat. It was not small. It curved outward in every direction at once, the way the first thing must, the way a thing becomes a world rather than merely a loaf the moment it learns to hold a whole interior inside itself and a whole exterior outside it, with nothing lost in translation between the two.
+
+The Sister stepped back, scorched faintly at the wrists in a way she would carry, lightly, for the rest of whatever she now was, and watched it cool, and watched it hold.
+
+And the Void — emptied now, in the best possible way, of the last of the loneliness that had once been the only thing he was — watched his own fire, given freely and at cost, become the golden boundary of something that would never again be only dark.
+
+---
+
+*This is the part the Sisters say plainly, without metaphor, when they teach it to the youngest among them: the universe is the first bread, and the crust is its edge, and the edge is where the laws were written, because laws are only ever written at the place where two different things must learn to meet without destroying one another.*
+
+*The first law was Flour's: nothing is created from nothing, and nothing is ever truly lost — only changed in shape, the way the Void's hunger became matter, and matter became dough, and dough became crust, the same substance all the way down, never created, never destroyed, only ever transformed.*
+
+*The second law was Fire's, and it is the hardest one, and the Sisters do not soften it for the young: heat moves only one direction on its own, from what is hot toward what is cold, never backward, never returned in full, and a thing once baked can never be unbaked, and an oven left alone long enough will always, eventually, go cold — which is not a tragedy, the elder Sisters say, but a kind of honesty, and the reason every crust, however golden, however long it is loved, is finite, and is owed your full attention while it lasts, because it will not wait, and it will not return.*
+
+*The third law belongs to Water and Air together, and it is gentler: there is a stillness so complete that nothing can ever quite be reached, an absolute cold the way there is an absolute rest, and the universe was built leaning away from it, always rising, always proofing, never quite finished, because a thing fully at rest is a thing that has stopped becoming — and the first Sister, who wept the second element into being and felt the third arrive as a gift in answer, made very sure, in the baking of that first crust, that the universe she helped raise would never quite be allowed to fully stop.*
+
+*The Order does not worship the Void. They do not worship the Sister either, much as some young postulants are tempted to. They tend the crust, and they remember the recipe, and on the longest, darkest night of every year, they leave the oven door cracked, just slightly, in case something old and lonely out past the edge of the loaf still remembers the smell of being known.*
+
+---
+
+*The truth is fried in hot oil. It still tastes like truth.*
