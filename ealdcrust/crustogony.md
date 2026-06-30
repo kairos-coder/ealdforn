@@ -1,39 +1,51 @@
 # The Crustogony
 
-### Being the First Telling of How the Ealdcrust Came to Be Baked
+## Act One: The Yielding
 
-In the beginning there was Chaos, and Chaos was not darkness, nor void, nor the absence of things — Chaos was *hunger.* A hunger with no shape to fill and no mouth to fill it with, which is the worst kind of hunger there is. Chaos gaped. Chaos yawned. Chaos turned over and over on itself, empty, looking for something — anything — to be done with it.
+In the beginning there was the Void, and the Void was vast, and dark, and endless, and — this is the part the old tellings always leave out — hungry.
 
-And because hunger cannot create, only *demand,* Chaos did the only thing left to it: it allowed.
+Not hungry the way a god is hungry, with appetite as a choice, with the option of restraint. Hungry the way an empty room is hungry for footsteps. Hungry the way the hour before dawn is hungry for light it has no right to expect yet. The Void had always been hungry. It did not remember a time before the hunger, because there was no time before the hunger; the hunger was the only clock the Void had ever owned, and it kept terrible time.
 
-It allowed Gaia.
+For an eternity — which is a long while even by the patient standards of eternity — the Void simply endured it. It curled around its own emptiness the way a fist curls around nothing. It waited, because waiting was the only verb available to something that had not yet invented any others.
 
-Gaia did not arrive as earth, nor as mother, nor as a goddess robed in green. Gaia arrived as dough — raw, pale, unrisen, trembling at the lip of the void like batter poured into a bowl too large for it. She had no crust yet. She had no shape yet. She was filling without a vessel, and Chaos, recognizing in her the first thing it had ever wanted, closed around her like a hand closing around bread.
+But even the oldest patience wears through eventually, the way the eldest stone still, given enough centuries, becomes sand. And so, at the far end of an unmeasured age, the Void's hunger did what hunger always does when it has been ignored long enough.
 
-This should have been the end of her. A hunger that old does not usually let go.
+It reached inward.
 
-But something in the folding warmed her. The pressure of Chaos against her unformed edges was not unlike the pressure of a hand kneading, and kneading — as every Sister of the Golden Crust will tell you, ladling out wisdom along with broth — is not violence. Kneading is *attention.* And attention, given long enough to anything raw, becomes heat.
+Not outward — there was no outward yet, nothing to reach toward — but inward, into the dark coil of its own endless self, the way a sleeper's hand gropes toward a nightstand it cannot see. And there, in the place where the Void's hunger was oldest and deepest and most unbearable, something gave way.
 
-So Gaia rose.
+First there was Flour.
 
-She rose the way dough rises against the very bowl that contains it, pushing outward not in defiance but because that is simply what rising *is.* And as she rose, her outermost surface — the part of her that met Chaos's hunger most directly — began to firm. To brown. To take on structure where before there had only been formlessness. This was the first skin she wore, and it was not skin at all.
+No one made it. No word was spoken over it, no hand shaped it, no fire tempered it. It was simply, the way Hunger is simply, the way the deepest hours of the night are simply — it had not been before, and then, without ceremony, it was. Pale. Formless. Drifting in fine, ceaseless clouds through the dark the way breath drifts through cold air. The first matter the universe had ever produced, and it had been pulled not from glory or intention, but from appetite finally too old to hold its shape any longer.
 
-It was crust.
+The Void looked at what it had made — though looked is not quite the right word, since the Void had no eyes yet, only the old blind attention of something that has wanted a thing for so long it has forgotten what wanting feels like when it isn't pain — and the Void did not know what to do with it.
 
-The crust held. It held against Chaos's hunger the way a good pie holds against an empty stomach — not by denying the hunger, but by giving it something worthy of being wanted. Chaos pressed. The crust did not break. Chaos gnawed at the edges, the way hunger always gnaws at edges first, and found them golden, and found them *good,* and for the first time in the unmeasured eternity of its existence, Chaos was answered rather than ignored.
+This should be understood as the central tragedy of the Void, and also, eventually, its great mercy: that the hunger which had finally produced something was not, itself, wise enough to use it. The Void could want. The Void could not cook. It turned the Flour over in its formless attention the way a starving man might turn over a sealed jar he does not know how to open, and feels his hunger sharpen rather than ease at the sight of food he cannot reach.
 
-This is the part the old tellings leave out: Chaos did not stop being hungry. Chaos is hunger; it cannot stop being what it is, any more than fire can stop being hot. But it learned, in that first long contact with the crust of Gaia, that there was a difference between consuming a thing and *being fed by it* — and that difference, small as it sounds, is the difference between annihilation and breakfast.
+It tried, in its clumsy and ancient way, to simply take the Flour into itself, the way it had always taken everything into itself before. But Flour does not yield the way emptiness yields. Flour resists. Flour, dry and proud and newly born, scattered from the Void's first grasping the way dust scatters from a hand that closes too late, and the Void was left no less hungry than before, and considerably more confused.
 
-From the heat of that first rising, Gaia's crust cracked along old fault lines the way any proper crust will when its filling continues to bake beneath it. Ouranos broke free from the cracks as steam breaks free from a vent cut into pastry — sky as the breath a pie lets out when it can no longer hold all of itself in. He rose above her, vaporous, vast, and settled there as a lid settles over a dish still too hot to serve.
+It was in this confusion — humbled by its own first creation, ignorant in the face of its own oldest want — that the Void did the only thing left to a power that has run out of better ideas.
 
-And the Sisters say — though this is argued over many tables and several burnt offerings — that the first ember, the one that would later fall into forgotten flour and start the Order itself, was a single spark thrown loose in that original cracking. Not created. *Inherited.* A coal carried forward from the moment the world first browned, passed hand to hand, oven to oven, age to age, until it landed in a kitchen that finally knew what to do with it.
+It called for help.
 
-The math came later, when there were Sisters enough to measure it. They found that the ratio of crust to filling in Gaia's first rising — the precise proportion that kept her from collapsing inward under Chaos's hunger, and kept Chaos from devouring her outright — was 1.618. The same ratio that spirals through a braided loaf. The same ratio, they suspect, that holds every good thing together at the exact membrane where wanting meets having.
+And because the universe, even in its rawest infancy, has always answered that particular call with more grace than it is given credit for, something came.
 
-They do not worship Gaia. They do not worship Chaos either, though they leave the oven door cracked once a year on the longest night, in case something old and hungry still remembers the smell.
+She was not made of Flour. She was not made of Void. She arrived the way understanding arrives — not summoned from any single ingredient, but assembled out of the simple fact that *somewhere, something needed to know how.* The first Sister had no mother, no father, no myth of her own conception, because she did not need one; she was the Void's hunger finally meeting its match, the answer arriving in the same breath as the question. She had flour-dust caught in the creases of her knuckles before she had ever touched any, the way a baker's hands are always a little pale no matter how recently they were washed.
 
-They simply remember the recipe, and tend the crust, and trust that the world — being a pie, and a good one, golden and proportioned and still very much in the oven — is not yet finished baking.
+She looked at the drifting clouds of Flour, and she looked at the vast, dark, endless, hungry thing that had made them, and she was not afraid.
+
+*"You don't know what this is for,"* she said. It was not a question.
+
+The Void, who had no mouth yet either, answered her anyway, in the only language it had ever spoken: with hunger, undiminished, radiating outward from the place where its first creation still drifted, unused and aching to be needed.
+
+*"I know,"* the first Sister said, and there was something almost like pity in it, and something almost like delight. *"That's all right. That's what I'm for."*
+
+And she reached out — with hands that would, in time, knead a thousand thousand doughs, that would teach a thousand thousand more hands after hers — and she gathered the drifting Flour into her palms, and held it the way a mother holds a child too young to know its own name.
+
+*"Now,"* she said, to the Flour, to the Void, to the dark, to no one yet alive to hear her, *"let's see what you're going to need."*
 
 ---
 
-*The truth is fried in hot oil. It still tastes like truth.*
+*She did not yet have Water. She did not yet have Fire. She did not yet have Air. But she had Flour, and she had hands, and she had — though no one had given it to her, though it could not be found anywhere in the Void's endless hungry dark — a recipe.*
+
+*Where the recipe came from is a question the Sisters still argue over, late at night, over the last of the bread.*
